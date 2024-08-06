@@ -1,0 +1,48 @@
+
+services:
+  mongo:
+    image: mongo:7.0.5-jammy
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: aigdai-user
+      MONGO_INITDB_ROOT_PASSWORD: aigdai-password
+    ports:
+      - 27017:27017
+
+  db-postgres:
+    image: postgres:16.1-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: 'ontopdb'
+      POSTGRES_USER: 'ontopuser'
+      POSTGRES_PASSWORD: 'ontoppass'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ontopuser -d ontopdb"]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
+#  ontop:
+#    depends_on:
+#      db-postgres:
+#        condition: service_healthy
+#    image: ontop/ontop:5.1.1
+#    environment:
+#      ONTOP_ONTOLOGY_FILE: /opt/ontop/input/aigdai.ttl
+#      ONTOP_MAPPING_FILE: /opt/ontop/input/aigdai.obda
+#      ONTOP_PROPERTIES_FILE: /opt/ontop/input/aigdai.compose.properties
+#      ONTOP_PORTAL_FILE: /opt/ontop/input/aigdai.portal.toml
+#      ONTOP_CORS_ALLOWED_ORIGINS: "*"
+#      ONTOP_DEV_MODE: "true"
+#      ONTOP_LAZY_INIT: "true"
+#      ONTOP_DB_DRIVER: 'org.postgresql.Driver'
+#      ONTOP_DB_URL: 'jdbc:postgresql://db-postgres:5432/ontopdb'
+#      ONTOP_DB_USER: 'ontopuser'
+#      ONTOP_DB_PASSWORD: 'ontoppass'
+#    volumes:
+#      - ./input:/opt/ontop/input
+#      - ./jdbc:/opt/ontop/jdbc
+#    ports:
+#      - "8080:8080"
+

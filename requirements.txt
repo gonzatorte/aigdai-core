@@ -30,6 +30,7 @@ matplotlib==3.8.2
 matplotlib-inline==0.1.6
 motor==3.3.2
 numpy==1.26.3
+owlready2==0.46
 packaging==23.2
 pandas==1.4.2
 parso==0.8.3
