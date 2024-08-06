@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://purl.org/dc/dcmitype/"
+         xmlns:dcam="http://purl.org/dc/dcam/"
+         xmlns:core="http://www.w3.org/2004/02/skos/core#"
+         xmlns="http://purl.org/dc/dcmitype/">
+
+<owl:Ontology rdf:about="http://purl.org/dc/dcmitype">
+  <owl:imports rdf:resource="http://purl.org/dc/dcam"/>
+  <rdfs:label xml:lang="en">DCMI Type Vocabulary</rdfs:label>
+  <rdfs:comment xml:lang="en">OWL 2 DL ontology for the Dublin Core type vocabulary from the http://purl.org/dc/dcmitype/ namespace</rdfs:comment>
+</owl:Ontology>
+
+<owl:Class rdf:about="Service">
+  <dcam:memberOf rdf:resource="http://purl.org/dc/terms/DCMIType"/>
+  <core:definition xml:lang="en-US">A system that provides one or more functions.</core:definition>
+  <rdfs:label xml:lang="en-US">Service</rdfs:label>
+  <rdfs:comment xml:lang="en-US">Examples include a photocopying service, a banking service, an authentication service, interlibrary loans, a Z39.50 or Web server.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="Collection">
+  <dcam:memberOf rdf:resource="http://purl.org/dc/terms/DCMIType"/>
+  <core:definition xml:lang="en-US">An aggregation of resources.</core:definition>
+  <rdfs:label xml:lang="en-US">Collection</rdfs:label>
+  <rdfs:comment xml:lang="en-US">A collection is described as a group; its parts may also be separately described.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="Dataset">
+  <dcam:memberOf rdf:resource="http://purl.org/dc/terms/DCMIType"/>
+  <core:definition xml:lang="en-US">Data encoded in a defined structure.</core:definition>
+  <rdfs:label xml:lang="en-US">Dataset</rdfs:label>
+  <rdfs:comment xml:lang="en-US">Examples include lists, tables, and databases. A dataset may be useful for direct machine processing.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="Event">
+  <dcam:memberOf rdf:resource="http://purl.org/dc/terms/DCMIType"/>
+  <core:definition xml:lang="en-US">A non-persistent, time-based occurrence.</core:definition>
+  <rdfs:label xml:lang="en-US">Event</rdfs:label>
+  <rdfs:comment xml:lang="en-US">Metadata for an event provides descriptive information that is the basis for discovery of the purpose, location, duration, and responsible agents associated with an event. Examples include an exhibition, webcast, conference, workshop, open day, performance, battle, trial, wedding, tea party, conflagration.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="Image">
+  <dcam:memberOf rdf:resource="http://purl.org/dc/terms/DCMIType"/>
+  <core:definition xml:lang="en-US">A visual representation other than text.</core:definition>
+  <rdfs:label xml:lang="en-US">Image</rdfs:label>
+  <rdfs:comment xml:lang="en-US">Examples include images and photographs of physical objects, paintings, prints, drawings, other images and graphics, animations and moving pictures, film, diagrams, maps, musical notation. Note that Image may include both electronic and physical representations.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="InteractiveResource">
+  <dcam:memberOf rdf:resource="http://purl.org/dc/terms/DCMIType"/>
+  <core:definition xml:lang="en-US">A resource requiring interaction from the user to be understood, executed, or experienced.</core:definition>
+  <rdfs:label xml:lang="en-US">Interactive Resource</rdfs:label>
+  <rdfs:comment xml:lang="en-US">Examples include forms on Web pages, applets, multimedia learning objects, chat services, or virtual reality environments.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="MovingImage">
+  <dcam:memberOf rdf:resource="http://purl.org/dc/terms/DCMIType"/>
+  <rdfs:subClassOf rdf:resource="Image"/>
+  <core:definition xml:lang="en-US">A series of visual representations imparting an impression of motion when shown in succession.</core:definition>
+  <rdfs:label xml:lang="en-US">Moving Image</rdfs:label>
+  <rdfs:comment xml:lang="en-US">Examples include animations, movies, television programs, videos, zoetropes, or visual output from a simulation. Instances of the type Moving Image must also be describable as instances of the broader type Image.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="PhysicalObject">
+  <dcam:memberOf rdf:resource="http://purl.org/dc/terms/DCMIType"/>
+  <core:definition xml:lang="en-US">An inanimate, three-dimensional object or substance.</core:definition>
+  <rdfs:label xml:lang="en-US">Physical Object</rdfs:label>
+  <rdfs:comment xml:lang="en-US">Note that digital representations of, or surrogates for, these objects should use Image, Text or one of the other types.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="Software">
+  <dcam:memberOf rdf:resource="http://purl.org/dc/terms/DCMIType"/>
+  <core:definition xml:lang="en-US">A computer program in source or compiled form.</core:definition>
+  <rdfs:label xml:lang="en-US">Software</rdfs:label>
+  <rdfs:comment xml:lang="en-US">Examples include a C source file, MS-Windows .exe executable, or Perl script.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="Sound">
+  <dcam:memberOf rdf:resource="http://purl.org/dc/terms/DCMIType"/>
+  <core:definition xml:lang="en-US">A resource primarily intended to be heard.</core:definition>
+  <rdfs:label xml:lang="en-US">Sound</rdfs:label>
+  <rdfs:comment xml:lang="en-US">Examples include a music playback file format, an audio compact disc, and recorded speech or sounds.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="StillImage">
+  <dcam:memberOf rdf:resource="http://purl.org/dc/terms/DCMIType"/>
+  <rdfs:subClassOf rdf:resource="Image"/>
+  <core:definition xml:lang="en-US">A static visual representation.</core:definition>
+  <rdfs:label xml:lang="en-US">Still Image</rdfs:label>
+  <rdfs:comment xml:lang="en-US">Examples include paintings, drawings, graphic designs, plans and maps. Recommended best practice is to assign the type Text to images of textual materials. Instances of the type Still Image must also be describable as instances of the broader type Image.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="Text">
+  <dcam:memberOf rdf:resource="http://purl.org/dc/terms/DCMIType"/>
+  <core:definition xml:lang="en-US">A resource consisting primarily of words for reading.</core:definition>
+  <rdfs:label xml:lang="en-US">Text</rdfs:label>
+  <rdfs:comment xml:lang="en-US">Examples include books, letters, dissertations, poems, newspapers, articles, archives of mailing lists. Note that facsimiles or images of texts are still of the genre Text.</rdfs:comment>
+</owl:Class>
+
+
+</rdf:RDF>

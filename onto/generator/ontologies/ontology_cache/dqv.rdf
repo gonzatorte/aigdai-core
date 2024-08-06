@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://www.w3.org/ns/dqv"
+         xmlns="http://www.w3.org/ns/dqv#"
+         xmlns:x_1999="http://www.w3.org/1999/">
+
+<owl:Ontology rdf:about="http://www.w3.org/ns/dqv"/>
+
+<rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#string">
+  <x_1999:xhtmlhtml>
+    <x_1999:xhtmlbody>
+      <x_1999:xhtmldiv>
+        <x_1999:xhtmlp>
+          <x_1999:xhtmla>
+            <x_1999:xhtmlimg/>
+          </x_1999:xhtmla>
+        </x_1999:xhtmlp>
+      </x_1999:xhtmldiv>
+      <x_1999:xhtmlp>
+        <x_1999:xhtmla/>
+      </x_1999:xhtmlp>
+      <x_1999:xhtmladdress>
+        <x_1999:xhtmlbr/>
+      </x_1999:xhtmladdress>
+      <x_1999:xhtmlhr rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></x_1999:xhtmlhr>
+    </x_1999:xhtmlbody>
+  </x_1999:xhtmlhtml>
+</rdf:Description>
+
+<x_1999:xhtmla/>
+
+<x_1999:xhtmla/>
+
+<x_1999:xhtmla/>
+
+<x_1999:xhtmla/>
+
+<x_1999:xhtmlhead>
+  <x_1999:xhtmltitle rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Data Quality Vocabulary Namespace</x_1999:xhtmltitle>
+  <x_1999:xhtmlmeta rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></x_1999:xhtmlmeta>
+  <x_1999:xhtmllink rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></x_1999:xhtmllink>
+</x_1999:xhtmlhead>
+
+
+</rdf:RDF>

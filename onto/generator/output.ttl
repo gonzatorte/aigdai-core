@@ -1,0 +1,1909 @@
+@prefix ns1: <http://test.org/base.owl#> .
+@prefix ns2: <http://test.org/dataset.owl#> .
+@prefix ns3: <http://test.org/repo.owl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://anonymous> a owl:Ontology .
+
+<http://inferrences> a owl:Ontology .
+
+<http://test.org/base.owl> a owl:Ontology .
+
+ns1:10101 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:101 ;
+    ns1:nombre_de_disciplina "Prehistory and World Archaeology"^^xsd:string .
+
+ns1:10102 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:101 ;
+    ns1:nombre_de_disciplina "Classical Philology"^^xsd:string .
+
+ns1:10103 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:101 ;
+    ns1:nombre_de_disciplina "Ancient History"^^xsd:string .
+
+ns1:10104 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:101 ;
+    ns1:nombre_de_disciplina "Classical Archaeology"^^xsd:string .
+
+ns1:10105 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:101 ;
+    ns1:nombre_de_disciplina "Egyptology and Ancient Near Eastern Studies"^^xsd:string .
+
+ns1:10201 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:102 ;
+    ns1:nombre_de_disciplina "Medieval History"^^xsd:string .
+
+ns1:10202 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:102 ;
+    ns1:nombre_de_disciplina "Early Modern History"^^xsd:string .
+
+ns1:10203 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:102 ;
+    ns1:nombre_de_disciplina "Modern and Current History"^^xsd:string .
+
+ns1:10204 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:102 ;
+    ns1:nombre_de_disciplina "History of Science"^^xsd:string .
+
+ns1:10301 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:103 ;
+    ns1:nombre_de_disciplina "Art History"^^xsd:string .
+
+ns1:10302 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:103 ;
+    ns1:nombre_de_disciplina "Musicology"^^xsd:string .
+
+ns1:10303 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:103 ;
+    ns1:nombre_de_disciplina "Theatre and Media Studies"^^xsd:string .
+
+ns1:10401 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:104 ;
+    ns1:nombre_de_disciplina "General and Comparative Linguistics, Typology, Non-European Languages"^^xsd:string .
+
+ns1:10402 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:104 ;
+    ns1:nombre_de_disciplina "Individual Linguistics"^^xsd:string .
+
+ns1:10403 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:104 ;
+    ns1:nombre_de_disciplina "Historical Linguistics"^^xsd:string .
+
+ns1:10404 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:104 ;
+    ns1:nombre_de_disciplina "Applied Linguistics, Experimental Linguistics, Computational Linguistics"^^xsd:string .
+
+ns1:10501 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:105 ;
+    ns1:nombre_de_disciplina "Medieval German Literature"^^xsd:string .
+
+ns1:10502 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:105 ;
+    ns1:nombre_de_disciplina "Modern German Literature"^^xsd:string .
+
+ns1:10503 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:105 ;
+    ns1:nombre_de_disciplina "European and American Literature"^^xsd:string .
+
+ns1:10504 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:105 ;
+    ns1:nombre_de_disciplina "General and Comparative Literature and Cultural Studies"^^xsd:string .
+
+ns1:10601 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:106 ;
+    ns1:nombre_de_disciplina "Social and Cultural Anthropology and Ethnology"^^xsd:string .
+
+ns1:10602 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:106 ;
+    ns1:nombre_de_disciplina "Asian Studies"^^xsd:string .
+
+ns1:10603 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:106 ;
+    ns1:nombre_de_disciplina "African, American and Oceania Studies"^^xsd:string .
+
+ns1:10604 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:106 ;
+    ns1:nombre_de_disciplina "Islamic Studies, Arabian Studies, Semitic Studies"^^xsd:string .
+
+ns1:10605 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:106 ;
+    ns1:nombre_de_disciplina "Religious Studies and Jewish Studies"^^xsd:string .
+
+ns1:10701 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:107 ;
+    ns1:nombre_de_disciplina "Protestant Theology"^^xsd:string .
+
+ns1:10702 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:107 ;
+    ns1:nombre_de_disciplina "Roman Catholic Theology"^^xsd:string .
+
+ns1:10801 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:108 ;
+    ns1:nombre_de_disciplina "History of Philosophy"^^xsd:string .
+
+ns1:10802 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:108 ;
+    ns1:nombre_de_disciplina "Theoretical Philosophy"^^xsd:string .
+
+ns1:10803 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:108 ;
+    ns1:nombre_de_disciplina "Practical Philosophy"^^xsd:string .
+
+ns1:10901 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:109 ;
+    ns1:nombre_de_disciplina "General Education and History of Education"^^xsd:string .
+
+ns1:10902 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:109 ;
+    ns1:nombre_de_disciplina "General and Domain-Specific Teaching and Learning"^^xsd:string .
+
+ns1:10903 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:109 ;
+    ns1:nombre_de_disciplina "Education Systems and Educational Institutions"^^xsd:string .
+
+ns1:10904 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:109 ;
+    ns1:nombre_de_disciplina "Educational Research on Socialisation, Welfare and Professionalism Research"^^xsd:string .
+
+ns1:11001 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:110 ;
+    ns1:nombre_de_disciplina "General, Cognitive and Mathematical Psychology"^^xsd:string .
+
+ns1:11002 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:110 ;
+    ns1:nombre_de_disciplina "Biological Psychology and Cognitive Neuroscience"^^xsd:string .
+
+ns1:11003 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:110 ;
+    ns1:nombre_de_disciplina "Developmental and Educational Psychology"^^xsd:string .
+
+ns1:11004 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:110 ;
+    ns1:nombre_de_disciplina "Social Psychology, Industrial and Organisational Psychology"^^xsd:string .
+
+ns1:11005 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:110 ;
+    ns1:nombre_de_disciplina "Differential, Clinical and Medical Psychology, Methodology"^^xsd:string .
+
+ns1:11101 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:111 ;
+    ns1:nombre_de_disciplina "Sociological Theory"^^xsd:string .
+
+ns1:11102 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:111 ;
+    ns1:nombre_de_disciplina "Empirical Social Research"^^xsd:string .
+
+ns1:11103 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:111 ;
+    ns1:nombre_de_disciplina "Communication Sciences"^^xsd:string .
+
+ns1:11104 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:111 ;
+    ns1:nombre_de_disciplina "Political Science"^^xsd:string .
+
+ns1:11201 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:112 ;
+    ns1:nombre_de_disciplina "Economic Theory"^^xsd:string .
+
+ns1:11202 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:112 ;
+    ns1:nombre_de_disciplina "Economic Policy, Applied Economics"^^xsd:string .
+
+ns1:11203 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:112 ;
+    ns1:nombre_de_disciplina "Business Administration"^^xsd:string .
+
+ns1:11204 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:112 ;
+    ns1:nombre_de_disciplina "Statistics and Econometrics"^^xsd:string .
+
+ns1:11205 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:112 ;
+    ns1:nombre_de_disciplina "Economic and Social History"^^xsd:string .
+
+ns1:11301 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:113 ;
+    ns1:nombre_de_disciplina "Principles of Law and Jurisprudence"^^xsd:string .
+
+ns1:11302 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:113 ;
+    ns1:nombre_de_disciplina "Private Law"^^xsd:string .
+
+ns1:11303 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:113 ;
+    ns1:nombre_de_disciplina "Public Law"^^xsd:string .
+
+ns1:11304 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:113 ;
+    ns1:nombre_de_disciplina "Criminal Law"^^xsd:string .
+
+ns1:11305 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:113 ;
+    ns1:nombre_de_disciplina "Criminology"^^xsd:string .
+
+ns1:20101 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:201 ;
+    ns1:nombre_de_disciplina "Biochemistry"^^xsd:string .
+
+ns1:20102 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:201 ;
+    ns1:nombre_de_disciplina "Biophysics"^^xsd:string .
+
+ns1:20103 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:201 ;
+    ns1:nombre_de_disciplina "Cell Biology"^^xsd:string .
+
+ns1:20104 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:201 ;
+    ns1:nombre_de_disciplina "Structural Biology"^^xsd:string .
+
+ns1:20105 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:201 ;
+    ns1:nombre_de_disciplina "General Genetics and Functional Genome Biology"^^xsd:string .
+
+ns1:20106 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:201 ;
+    ns1:nombre_de_disciplina "Developmental Biology"^^xsd:string .
+
+ns1:20107 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:201 ;
+    ns1:nombre_de_disciplina "Bioinformatics and Theoretical Biology"^^xsd:string .
+
+ns1:20201 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:202 ;
+    ns1:nombre_de_disciplina "Evolution and Systematics of Plants and Fungi"^^xsd:string .
+
+ns1:20202 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:202 ;
+    ns1:nombre_de_disciplina "Ecology and Biodiversity of Plants and Ecosystems"^^xsd:string .
+
+ns1:20203 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:202 ;
+    ns1:nombre_de_disciplina "Organismic Interactions, Chemical Ecology and Microbiomes of Plant Systems"^^xsd:string .
+
+ns1:20204 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:202 ;
+    ns1:nombre_de_disciplina "Plant Physiology"^^xsd:string .
+
+ns1:20205 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:202 ;
+    ns1:nombre_de_disciplina "Plant Biochemistry and Biophysics"^^xsd:string .
+
+ns1:20206 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:202 ;
+    ns1:nombre_de_disciplina "Plant Cell and Developmental Biology"^^xsd:string .
+
+ns1:20207 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:202 ;
+    ns1:nombre_de_disciplina "Plant Genetics"^^xsd:string .
+
+ns1:20301 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:203 ;
+    ns1:nombre_de_disciplina "Systematics and Morphology (Zoology)"^^xsd:string .
+
+ns1:20302 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:203 ;
+    ns1:nombre_de_disciplina "Evolution, Anthropology"^^xsd:string .
+
+ns1:20303 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:203 ;
+    ns1:nombre_de_disciplina "Ecology and Biodiversity of Animals and Ecosystems, Organismic Interactions"^^xsd:string .
+
+ns1:20304 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:203 ;
+    ns1:nombre_de_disciplina "Sensory and Behavioural Biology"^^xsd:string .
+
+ns1:20305 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:203 ;
+    ns1:nombre_de_disciplina "Animal Physiology and Biochemistry"^^xsd:string .
+
+ns1:20306 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:203 ;
+    ns1:nombre_de_disciplina "Evolutionary Cell and Developmental Biology (Zoology)"^^xsd:string .
+
+ns1:20401 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:204 ;
+    ns1:nombre_de_disciplina "Metabolism, Biochemistry and Genetics of Microorganisms"^^xsd:string .
+
+ns1:20402 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:204 ;
+    ns1:nombre_de_disciplina "Microbial Ecology and Applied Microbiology"^^xsd:string .
+
+ns1:20403 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:204 ;
+    ns1:nombre_de_disciplina "Medical Microbiology and Mycology, Hygiene, Molecular Infection Biology"^^xsd:string .
+
+ns1:20404 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:204 ;
+    ns1:nombre_de_disciplina "Virology"^^xsd:string .
+
+ns1:20405 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:204 ;
+    ns1:nombre_de_disciplina "Immunology"^^xsd:string .
+
+ns1:20406 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:204 ;
+    ns1:nombre_de_disciplina "Parasitology and Biology of Tropical Infectious Disease Pathogens"^^xsd:string .
+
+ns1:20501 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Epidemiology and Medical Biometry/Statistics"^^xsd:string .
+
+ns1:20502 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Public Health, Health Services Research, Social Medicine"^^xsd:string .
+
+ns1:20503 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Human Genetics"^^xsd:string .
+
+ns1:20504 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Physiology"^^xsd:string .
+
+ns1:20505 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Nutritional Sciences"^^xsd:string .
+
+ns1:20506 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Pathology"^^xsd:string .
+
+ns1:20507 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Medical Informatics and Medical Bioinformatics"^^xsd:string .
+
+ns1:20508 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Pharmacy"^^xsd:string .
+
+ns1:20509 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Pharmacology"^^xsd:string .
+
+ns1:20510 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Toxicology, Occupational Medicine, Clinical Chemistry"^^xsd:string .
+
+ns1:20511 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Anaesthesiology"^^xsd:string .
+
+ns1:20512 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Cardiology, Angiology"^^xsd:string .
+
+ns1:20513 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Pneumology, Thoracic Surgery"^^xsd:string .
+
+ns1:20514 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Hematology, Oncology"^^xsd:string .
+
+ns1:20515 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Gastroenterology"^^xsd:string .
+
+ns1:20516 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Nephrology"^^xsd:string .
+
+ns1:20517 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Endocrinology, Diabetology, Metabolism"^^xsd:string .
+
+ns1:20518 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Rheumatology"^^xsd:string .
+
+ns1:20519 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Dermatology"^^xsd:string .
+
+ns1:20520 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Pediatric and Adolescent Medicine"^^xsd:string .
+
+ns1:20521 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Gynaecology and Obstetrics"^^xsd:string .
+
+ns1:20522 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Clinical Immunology and Allergology"^^xsd:string .
+
+ns1:20523 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Reproductive Medicine, Urology"^^xsd:string .
+
+ns1:20524 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Biogerontology and Geriatric Medicine"^^xsd:string .
+
+ns1:20525 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "General and Visceral Surgery"^^xsd:string .
+
+ns1:20526 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Cardiac and Vascular Surgery"^^xsd:string .
+
+ns1:20527 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Orthopaedics, Traumatology, Reconstructive Surgery"^^xsd:string .
+
+ns1:20528 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Dentistry, Oral Surgery"^^xsd:string .
+
+ns1:20529 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Otolaryngology"^^xsd:string .
+
+ns1:20530 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Radiology, Nuclear Medicine, Radiotherapy, Radiobiology"^^xsd:string .
+
+ns1:20531 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Clinical Infectiology and Tropical Medicine"^^xsd:string .
+
+ns1:20532 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Medical Physics, Biomedical Technology"^^xsd:string .
+
+ns1:20533 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:205 ;
+    ns1:nombre_de_disciplina "Anatomy"^^xsd:string .
+
+ns1:20601 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:206 ;
+    ns1:nombre_de_disciplina "Developmental Neurobiology"^^xsd:string .
+
+ns1:20602 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:206 ;
+    ns1:nombre_de_disciplina "Molecular Biology and Physiology of Neurons and Glial Cells"^^xsd:string .
+
+ns1:20603 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:206 ;
+    ns1:nombre_de_disciplina "Experimental and Theoretical Network Neuroscience"^^xsd:string .
+
+ns1:20604 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:206 ;
+    ns1:nombre_de_disciplina "Cognitive, Systems and Behavioural Neurobiology"^^xsd:string .
+
+ns1:20605 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:206 ;
+    ns1:nombre_de_disciplina "Experimental Models for the Understanding of Nervous System Diseases"^^xsd:string .
+
+ns1:20606 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:206 ;
+    ns1:nombre_de_disciplina "Molecular and Cellular Neurology and Neuropathology"^^xsd:string .
+
+ns1:20607 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:206 ;
+    ns1:nombre_de_disciplina "Clinical Neurology; Neurosurgery and Neuroradiology"^^xsd:string .
+
+ns1:20608 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:206 ;
+    ns1:nombre_de_disciplina "Human Cognitive and Systems Neuroscience"^^xsd:string .
+
+ns1:20609 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:206 ;
+    ns1:nombre_de_disciplina "Biological Psychiatry"^^xsd:string .
+
+ns1:20610 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:206 ;
+    ns1:nombre_de_disciplina "Clinical Psychiatry, Psychotherapy, Child and Adolescent Psychiatry"^^xsd:string .
+
+ns1:20611 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:206 ;
+    ns1:nombre_de_disciplina "Ophthalmology"^^xsd:string .
+
+ns1:20701 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:207 ;
+    ns1:nombre_de_disciplina "Soil Sciences"^^xsd:string .
+
+ns1:20702 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:207 ;
+    ns1:nombre_de_disciplina "Plant Breeding and Plant Pathology"^^xsd:string .
+
+ns1:20703 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:207 ;
+    ns1:nombre_de_disciplina "Plant Cultivation, Plant Nutrition, Agricultural Technology"^^xsd:string .
+
+ns1:20704 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:207 ;
+    ns1:nombre_de_disciplina "Ecology of Land Use"^^xsd:string .
+
+ns1:20705 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:207 ;
+    ns1:nombre_de_disciplina "Agricultural Economics, Agricultural Policy, Agricultural Sociology"^^xsd:string .
+
+ns1:20706 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:207 ;
+    ns1:nombre_de_disciplina "Forestry"^^xsd:string .
+
+ns1:20707 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:207 ;
+    ns1:nombre_de_disciplina "Animal Breeding, Animal Nutrition, Animal Husbandry"^^xsd:string .
+
+ns1:20708 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:207 ;
+    ns1:nombre_de_disciplina "Veterinary Medical Science"^^xsd:string .
+
+ns1:30701 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:307 ;
+    ns1:nombre_de_disciplina "Experimental Condensed Matter Physics"^^xsd:string .
+
+ns1:30702 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:307 ;
+    ns1:nombre_de_disciplina "Theoretical Condensed Matter Physics"^^xsd:string .
+
+ns1:30801 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:308 ;
+    ns1:nombre_de_disciplina "Optics, Quantum Optics, Atoms, Molecules, Plasmas"^^xsd:string .
+
+ns1:30901 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:309 ;
+    ns1:nombre_de_disciplina "Nuclear and Elementary Particle Physics, Quantum Mechanics, Relativity, Fields"^^xsd:string .
+
+ns1:31001 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:310 ;
+    ns1:nombre_de_disciplina "Statistical Physics, Soft Matter, Biological Physics, Nonlinear Dynamics"^^xsd:string .
+
+ns1:31101 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:311 ;
+    ns1:nombre_de_disciplina "Astrophysics and Astronomy"^^xsd:string .
+
+ns1:31201 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:312 ;
+    ns1:nombre_de_disciplina "Mathematics"^^xsd:string .
+
+ns1:31301 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:313 ;
+    ns1:nombre_de_disciplina "Atmospheric Science"^^xsd:string .
+
+ns1:31302 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:313 ;
+    ns1:nombre_de_disciplina "Oceanography"^^xsd:string .
+
+ns1:31401 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:314 ;
+    ns1:nombre_de_disciplina "Geology and Palaeontology"^^xsd:string .
+
+ns1:31501 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:315 ;
+    ns1:nombre_de_disciplina "Geophysics"^^xsd:string .
+
+ns1:31502 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:315 ;
+    ns1:nombre_de_disciplina "Geodesy, Photogrammetry, Remote Sensing, Geoinformatics, Cartography"^^xsd:string .
+
+ns1:31601 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:316 ;
+    ns1:nombre_de_disciplina "Mineralogy, Petrology and Geochemistry"^^xsd:string .
+
+ns1:31701 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:317 ;
+    ns1:nombre_de_disciplina "Physical Geography"^^xsd:string .
+
+ns1:31702 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:317 ;
+    ns1:nombre_de_disciplina "Human Geography"^^xsd:string .
+
+ns1:31801 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:318 ;
+    ns1:nombre_de_disciplina "Hydrogeology, Hydrology, Limnology, Urban Water Management, Water Chemistry, Integrated Water Resources Management"^^xsd:string .
+
+ns1:32101 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:321 ;
+    ns1:nombre_de_disciplina "Inorganic Molecular Chemistry - Synthesis and Characterisation"^^xsd:string .
+
+ns1:32102 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:321 ;
+    ns1:nombre_de_disciplina "Organic Molecular Chemistry - Synthesis and Characterisation"^^xsd:string .
+
+ns1:32201 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:322 ;
+    ns1:nombre_de_disciplina "Solid State and Surface Chemistry, Material Synthesis"^^xsd:string .
+
+ns1:32202 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:322 ;
+    ns1:nombre_de_disciplina "Physical Chemistry of Solids and Surfaces, Material Characterisation"^^xsd:string .
+
+ns1:32301 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:323 ;
+    ns1:nombre_de_disciplina "Physical Chemistry of Molecules, Liquids and Interfaces, Biophysical Chemistry"^^xsd:string .
+
+ns1:32401 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:324 ;
+    ns1:nombre_de_disciplina "Analytical Chemistry"^^xsd:string .
+
+ns1:32501 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:325 ;
+    ns1:nombre_de_disciplina "Biological and Biomimetic Chemistry"^^xsd:string .
+
+ns1:32502 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:325 ;
+    ns1:nombre_de_disciplina "Food Chemistry"^^xsd:string .
+
+ns1:32601 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:326 ;
+    ns1:nombre_de_disciplina "Preparatory and Physical Chemistry of Polymers"^^xsd:string .
+
+ns1:32602 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:326 ;
+    ns1:nombre_de_disciplina "Experimental and Theoretical Physics of Polymers"^^xsd:string .
+
+ns1:32603 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:326 ;
+    ns1:nombre_de_disciplina "Polymer Materials"^^xsd:string .
+
+ns1:32701 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:327 ;
+    ns1:nombre_de_disciplina "Theoretical Chemistry: Electron Structure, Dynamics, Simulation"^^xsd:string .
+
+ns1:32702 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:327 ;
+    ns1:nombre_de_disciplina "Theoretical Chemistry: Molecules, Materials, Surfaces"^^xsd:string .
+
+ns1:40101 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:401 ;
+    ns1:nombre_de_disciplina "Metal-Cutting and Abrasive Manufacturing Engineering"^^xsd:string .
+
+ns1:40102 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:401 ;
+    ns1:nombre_de_disciplina "Primary Shaping and Reshaping Technology, Additive Manufacturing"^^xsd:string .
+
+ns1:40103 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:401 ;
+    ns1:nombre_de_disciplina "Joining and Separation Technology"^^xsd:string .
+
+ns1:40104 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:401 ;
+    ns1:nombre_de_disciplina "Plastics Engineering"^^xsd:string .
+
+ns1:40105 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:401 ;
+    ns1:nombre_de_disciplina "Production Systems, Operations Management, Quality Management and Factory Planning"^^xsd:string .
+
+ns1:40106 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:401 ;
+    ns1:nombre_de_disciplina "Production Automation"^^xsd:string .
+
+ns1:40201 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:402 ;
+    ns1:nombre_de_disciplina "Engineering Design, Machine Elements, Product Development"^^xsd:string .
+
+ns1:40202 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:402 ;
+    ns1:nombre_de_disciplina "Mechanics"^^xsd:string .
+
+ns1:40203 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:402 ;
+    ns1:nombre_de_disciplina "Lightweight Construction, Textile Technology"^^xsd:string .
+
+ns1:40204 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:402 ;
+    ns1:nombre_de_disciplina "Acoustics"^^xsd:string .
+
+ns1:40301 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:403 ;
+    ns1:nombre_de_disciplina "Chemical and Thermal Process Engineering"^^xsd:string .
+
+ns1:40302 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:403 ;
+    ns1:nombre_de_disciplina "Technical Chemistry"^^xsd:string .
+
+ns1:40303 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:403 ;
+    ns1:nombre_de_disciplina "Mechanical Process Engineering"^^xsd:string .
+
+ns1:40304 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:403 ;
+    ns1:nombre_de_disciplina "Biological Process Engineering"^^xsd:string .
+
+ns1:40401 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:404 ;
+    ns1:nombre_de_disciplina "Energy Process Engineering"^^xsd:string .
+
+ns1:40402 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:404 ;
+    ns1:nombre_de_disciplina "Technical Thermodynamics"^^xsd:string .
+
+ns1:40403 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:404 ;
+    ns1:nombre_de_disciplina "Fluid Mechanics"^^xsd:string .
+
+ns1:40404 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:404 ;
+    ns1:nombre_de_disciplina "Hydraulic and Turbo Engines and Piston Engines"^^xsd:string .
+
+ns1:40501 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:405 ;
+    ns1:nombre_de_disciplina "Metallurgical, Thermal and Thermomechanical Treatment of Materials"^^xsd:string .
+
+ns1:40502 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:405 ;
+    ns1:nombre_de_disciplina "Materials in Sintering Processes and Generative Manufacturing Processes"^^xsd:string .
+
+ns1:40503 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:405 ;
+    ns1:nombre_de_disciplina "Coating and Surface Technology"^^xsd:string .
+
+ns1:40504 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:405 ;
+    ns1:nombre_de_disciplina "Mechanical Properties of Metallic Materials and their Microstructural Origins"^^xsd:string .
+
+ns1:40505 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:405 ;
+    ns1:nombre_de_disciplina "Glass, Ceramics and Derived Composites"^^xsd:string .
+
+ns1:40506 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:405 ;
+    ns1:nombre_de_disciplina "Polymeric and Biogenic Materials and Derived Composites"^^xsd:string .
+
+ns1:40601 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:406 ;
+    ns1:nombre_de_disciplina "Synthesis and Properties of Functional Materials"^^xsd:string .
+
+ns1:40602 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:406 ;
+    ns1:nombre_de_disciplina "Biomaterials"^^xsd:string .
+
+ns1:40603 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:406 ;
+    ns1:nombre_de_disciplina "Thermodynamics and Kinetics as well as Properties of Phases and Microstructure of Materials"^^xsd:string .
+
+ns1:40604 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:406 ;
+    ns1:nombre_de_disciplina "Computer-Aided Design of Materials and Simulation of Materials Behaviour from Atomic to Microscopic Scale"^^xsd:string .
+
+ns1:40701 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:407 ;
+    ns1:nombre_de_disciplina "Automation, Control Systems, Robotics, Mechatronics, Cyber Physical Systems"^^xsd:string .
+
+ns1:40702 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:407 ;
+    ns1:nombre_de_disciplina "Measurement Systems"^^xsd:string .
+
+ns1:40703 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:407 ;
+    ns1:nombre_de_disciplina "Microsystems"^^xsd:string .
+
+ns1:40704 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:407 ;
+    ns1:nombre_de_disciplina "Traffic and Transport Systems, Intelligent and Automated Traffic"^^xsd:string .
+
+ns1:40705 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:407 ;
+    ns1:nombre_de_disciplina "Human Factors, Ergonomics, Human-Machine Systems"^^xsd:string .
+
+ns1:40706 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:407 ;
+    ns1:nombre_de_disciplina "Biomedical Systems Technology"^^xsd:string .
+
+ns1:40801 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:408 ;
+    ns1:nombre_de_disciplina "Electronic Semiconductors, Components, Circuits, Systems"^^xsd:string .
+
+ns1:40802 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:408 ;
+    ns1:nombre_de_disciplina "Communications, High-Frequency and Network Technology, Theoretical Electrical Engineering"^^xsd:string .
+
+ns1:40803 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:408 ;
+    ns1:nombre_de_disciplina "Electrical Energy Generation, Distribution, Application"^^xsd:string .
+
+ns1:40901 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:409 ;
+    ns1:nombre_de_disciplina "Theoretical Computer Science"^^xsd:string .
+
+ns1:40902 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:409 ;
+    ns1:nombre_de_disciplina "Software Engineering and Programming Languages"^^xsd:string .
+
+ns1:40903 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:409 ;
+    ns1:nombre_de_disciplina "Security and Dependability"^^xsd:string .
+
+ns1:40904 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:409 ;
+    ns1:nombre_de_disciplina "Operating, Communication, Database and Distributed Systems"^^xsd:string .
+
+ns1:40905 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:409 ;
+    ns1:nombre_de_disciplina "Interactive and Intelligent Systems, Image and Language Processing, Computer Graphics and Visualisation"^^xsd:string .
+
+ns1:40906 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:409 ;
+    ns1:nombre_de_disciplina "Information Systems, Process and Knowledge Management"^^xsd:string .
+
+ns1:40907 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:409 ;
+    ns1:nombre_de_disciplina "Computer Architecture and Embedded Systems"^^xsd:string .
+
+ns1:40908 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:409 ;
+    ns1:nombre_de_disciplina "Massively Parallel and Data-Intensive Systems"^^xsd:string .
+
+ns1:41001 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:410 ;
+    ns1:nombre_de_disciplina "Architecture, Building and Construction History, Construction Research, Sustainable Building Technology"^^xsd:string .
+
+ns1:41002 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:410 ;
+    ns1:nombre_de_disciplina "Urbanism, Spatial Planning, Transportation and Infrastructure Planning, Landscape Planning"^^xsd:string .
+
+ns1:41003 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:410 ;
+    ns1:nombre_de_disciplina "Construction Material Sciences, Chemistry, Building Physics"^^xsd:string .
+
+ns1:41004 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:410 ;
+    ns1:nombre_de_disciplina "Structural Engineering, Building Informatics and Construction Operation"^^xsd:string .
+
+ns1:41005 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:410 ;
+    ns1:nombre_de_disciplina "Applied Mechanics, Statics and Dynamics"^^xsd:string .
+
+ns1:41006 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:410 ;
+    ns1:nombre_de_disciplina "Geotechnics, Hydraulic Engineering"^^xsd:string .
+
+ns1:ISNI a ns1:tipo_de_identificador_de_organizacion,
+        owl:NamedIndividual .
+
+ns1:ROR a ns1:tipo_de_identificador_de_organizacion,
+        owl:NamedIndividual .
+
+ns1:description a owl:AnnotationProperty .
+
+ns1:es_disciplina_afin a owl:ObjectProperty ;
+    rdfs:domain ns1:disciplina ;
+    rdfs:range ns1:disciplina .
+
+ns1:es_sub_disciplina_de a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:domain ns1:disciplina ;
+    rdfs:range ns1:disciplina .
+
+ns1:escala a rdfs:Datatype ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:oneOf ( "bueno"^^xsd:string "regular"^^xsd:string "malo"^^xsd:string ) ] .
+
+ns1:formato_codifica_tipo_de_archivo a owl:ObjectProperty ;
+    rdfs:domain ns1:formato_de_archivo ;
+    rdfs:range ns1:tipo_de_dato .
+
+ns1:id_de_organizacion a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:organizacion_es_identificada_por ;
+    rdfs:range xsd:string .
+
+ns1:nombre_de_disciplina a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:disciplina ;
+    rdfs:range xsd:string .
+
+ns1:nombre_usual a owl:AnnotationProperty .
+
+ns1:se_ubica_en a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:organizacion ;
+    rdfs:range ns1:pais .
+
+ns1:sinonimo a owl:AnnotationProperty .
+
+ns1:tiene_nombre a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:organizacion ;
+    rdfs:range xsd:string .
+
+ns1:tiene_nombre_alternativo a owl:DatatypeProperty ;
+    rdfs:domain ns1:organizacion ;
+    rdfs:range xsd:string .
+
+ns1:tiene_tipo_de_organizacion a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:organizacion ;
+    rdfs:range ns1:tipo_de_organizacion .
+
+<http://test.org/dataset.owl> a owl:Ontology .
+
+ns2:admite_disciplina a owl:ObjectProperty ;
+    ns1:nombre_usual "admits subject"@en,
+        "admite disciplina"@es ;
+    rdfs:domain ns2:caracteristica_de_cdd ;
+    rdfs:range ns1:disciplina .
+
+ns2:articulo a owl:Class ;
+    rdfs:subClassOf ns2:resultado_de_investigacion .
+
+ns2:cantidad_de_contenedores a owl:Class ;
+    rdfs:subClassOf ns2:tamanio .
+
+ns2:cantidad_de_elementos a owl:Class ;
+    rdfs:subClassOf ns2:tamanio .
+
+ns2:es_producido_por_productor_de_datos a owl:ObjectProperty ;
+    rdfs:domain ns2:cdd ;
+    rdfs:range ns2:productor_de_datos .
+
+ns2:extiende_a_esquema_de_identificador_persistente a owl:ObjectProperty ;
+    rdfs:domain ns2:esquema_de_identificador_persistente ;
+    rdfs:range ns2:esquema_de_identificador_persistente .
+
+ns2:extiende_a_esquema_de_metadatos a owl:ObjectProperty ;
+    rdfs:domain ns2:esquema_de_metadatos ;
+    rdfs:range ns2:esquema_de_metadatos .
+
+ns2:id_de_autor a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns2:autor_es_identificado_por ;
+    rdfs:range xsd:string .
+
+ns2:id_de_cdd a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns2:cdd_es_identificado_por ;
+    rdfs:range xsd:string .
+
+ns2:resultado_relacionado a owl:ObjectProperty ;
+    rdfs:domain ns2:resultado_de_investigacion ;
+    rdfs:range ns2:resultado_de_investigacion .
+
+ns2:tamanio_en_disco a owl:Class ;
+    rdfs:subClassOf ns2:tamanio .
+
+ns2:utiliza_formato_de_archivo a owl:Class ;
+    ns1:nombre_usual "use file format"@en,
+        "utiliza formato de archivo"@es ;
+    rdfs:subClassOf ns2:caracteristica_de_cdd .
+
+ns2:utiliza_tipo_de_dato a owl:Class ;
+    rdfs:subClassOf ns2:caracteristica_de_cdd .
+
+<http://test.org/example_world.owl> a owl:Ontology .
+
+<http://test.org/example_world.owl#4tu_researchdata> a ns3:repositorio,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#ckan> a ns3:motor_de_repositorio,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#doi:10.57715/UNR/PEFY4Q> a ns2:cdd,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#dryad> a ns3:repositorio,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#dspace> a ns3:motor_de_repositorio,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#fairsharing> a ns3:catalogo_de_repositorio,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#google_datasetsearch> a ns3:agregador,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#opendoar> a ns3:catalogo_de_repositorio,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#otro> a ns3:motor_de_repositorio,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#rda_unr> a ns3:repositorio,
+        owl:NamedIndividual ;
+    ns3:es_cosechado_por <http://test.org/example_world.owl#lareferencia> ;
+    ns3:relacionado_con_organizacion <http://test.org/example_world.owl#unr> ;
+    ns3:utiliza_motor <http://test.org/example_world.owl#dataverse> .
+
+<http://test.org/example_world.owl#re3data> a ns3:catalogo_de_repositorio,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#the_world_bank_open_data> a ns3:repositorio,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#worldwide_protein_data_bank> a ns3:repositorio,
+        owl:NamedIndividual .
+
+<http://test.org/fake-foaf.owl> a owl:Ontology .
+
+<http://test.org/fake-foaf.owl#Document> a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+<http://test.org/full.owl> a owl:Ontology .
+
+<http://test.org/repo.owl> a owl:Ontology .
+
+ns3:caracteristica_de_productor_de_datos a owl:Class ;
+    rdfs:subClassOf ns3:soporte_para_caracteristica_de_cdd .
+
+ns3:es_cosechado_por a owl:ObjectProperty ;
+    rdfs:domain ns3:repositorio ;
+    rdfs:range ns3:agregador .
+
+ns3:id_de_repositorio a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns3:es_catalogado_por ;
+    rdfs:range xsd:string .
+
+ns3:tiene_nombre_politica a rdfs:Datatype .
+
+ns3:tiene_periodo_de_relacion_con_organizacion a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns3:relacionado_con_organizacion ;
+    rdfs:range xsd:string .
+
+ns3:tiene_tipo_de_relacion_con_organizacion a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns3:relacionado_con_organizacion ;
+    rdfs:range ns3:tipo_de_relacion_con_organizacion .
+
+ns3:tiene_url_politica a rdfs:Datatype .
+
+ns3:usa_lenguaje a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns3:repositorio ;
+    rdfs:range ns1:lenguaje .
+
+ns3:usa_politica a owl:ObjectProperty ;
+    rdfs:domain ns3:relacionado_con_organizacion ;
+    rdfs:range ns3:politica .
+
+ns3:utiliza_motor a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain ns3:repositorio ;
+    rdfs:range ns3:motor_de_repositorio .
+
+ns1:23 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:2 ;
+    ns1:nombre_de_disciplina "Agriculture, Forestry and Veterinary Medicine"^^xsd:string .
+
+ns1:308 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:31 ;
+    ns1:nombre_de_disciplina "Optics, Quantum Optics and Physics of Atoms, Molecules and Plasmas"^^xsd:string .
+
+ns1:309 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:31 ;
+    ns1:nombre_de_disciplina "Particles, Nuclei and Fields"^^xsd:string .
+
+ns1:310 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:31 ;
+    ns1:nombre_de_disciplina "Statistical Physics, Soft Matter, Biological Physics, Nonlinear Dynamics"^^xsd:string .
+
+ns1:311 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:31 ;
+    ns1:nombre_de_disciplina "Astrophysics and Astronomy"^^xsd:string .
+
+ns1:312 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:32 ;
+    ns1:nombre_de_disciplina "Mathematics"^^xsd:string .
+
+ns1:314 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:33 ;
+    ns1:nombre_de_disciplina "Geology and Palaeontology"^^xsd:string .
+
+ns1:316 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:33 ;
+    ns1:nombre_de_disciplina "Mineralogy, Petrology and Geochemistry"^^xsd:string .
+
+ns1:318 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:33 ;
+    ns1:nombre_de_disciplina "Water Research"^^xsd:string .
+
+ns1:32 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:3 ;
+    ns1:nombre_de_disciplina "Mathematics"^^xsd:string .
+
+ns1:323 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:34 ;
+    ns1:nombre_de_disciplina "Physical Chemistry"^^xsd:string .
+
+ns1:324 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:34 ;
+    ns1:nombre_de_disciplina "Analytical Chemistry"^^xsd:string .
+
+ns1:45 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:4 ;
+    ns1:nombre_de_disciplina "Construction Engineering and Architecture"^^xsd:string .
+
+ns1:lenguaje a rdfs:Datatype ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:oneOf ( "deu"^^xsd:string "eng"^^xsd:string "fra"^^xsd:string "aar"^^xsd:string "abk"^^xsd:string "afr"^^xsd:string "aka"^^xsd:string "amh"^^xsd:string "ara"^^xsd:string "arg"^^xsd:string "asm"^^xsd:string "ava"^^xsd:string "ave"^^xsd:string "aym"^^xsd:string "aze"^^xsd:string "bak"^^xsd:string "bam"^^xsd:string "bel"^^xsd:string "ben"^^xsd:string "bis"^^xsd:string "bod"^^xsd:string "bos"^^xsd:string "bre"^^xsd:string "bul"^^xsd:string "cat"^^xsd:string "ces"^^xsd:string "cha"^^xsd:string "che"^^xsd:string "chu"^^xsd:string "chv"^^xsd:string "cor"^^xsd:string "cos"^^xsd:string "cre"^^xsd:string "cym"^^xsd:string "dan"^^xsd:string "div"^^xsd:string "dzo"^^xsd:string "ell"^^xsd:string "epo"^^xsd:string "est"^^xsd:string "eus"^^xsd:string "ewe"^^xsd:string "fao"^^xsd:string "fas"^^xsd:string "fij"^^xsd:string "fin"^^xsd:string "fry"^^xsd:string "ful"^^xsd:string "gla"^^xsd:string "gle"^^xsd:string "glg"^^xsd:string "glv"^^xsd:string "grn"^^xsd:string "guj"^^xsd:string "hat"^^xsd:string "hau"^^xsd:string "heb"^^xsd:string "her"^^xsd:string "hin"^^xsd:string "hmo"^^xsd:string "hrv"^^xsd:string "hun"^^xsd:string "hye"^^xsd:string "ibo"^^xsd:string "ido"^^xsd:string "iii"^^xsd:string "iku"^^xsd:string "ile"^^xsd:string "ina"^^xsd:string "ind"^^xsd:string "ipk"^^xsd:string "isl"^^xsd:string "ita"^^xsd:string "jav"^^xsd:string "jpn"^^xsd:string "kal"^^xsd:string "kan"^^xsd:string "kas"^^xsd:string "kat"^^xsd:string "kau"^^xsd:string "kaz"^^xsd:string "khm"^^xsd:string "kik"^^xsd:string "kin"^^xsd:string "kir"^^xsd:string "kom"^^xsd:string "kon"^^xsd:string "kor"^^xsd:string "kua"^^xsd:string "kur"^^xsd:string "lao"^^xsd:string "lat"^^xsd:string "lav"^^xsd:string "lim"^^xsd:string "lin"^^xsd:string "lit"^^xsd:string "ltz"^^xsd:string "lub"^^xsd:string "lug"^^xsd:string "mah"^^xsd:string "mal"^^xsd:string "mar"^^xsd:string "mkd"^^xsd:string "mlg"^^xsd:string "mlt"^^xsd:string "mon"^^xsd:string "mri"^^xsd:string "msa"^^xsd:string "mya"^^xsd:string "nau"^^xsd:string "nav"^^xsd:string "nbl"^^xsd:string "nde"^^xsd:string "ndo"^^xsd:string "nep"^^xsd:string "nld"^^xsd:string "nno"^^xsd:string "nob"^^xsd:string "nor"^^xsd:string "nya"^^xsd:string "oci"^^xsd:string "oji"^^xsd:string "ori"^^xsd:string "orm"^^xsd:string "oss"^^xsd:string "pan"^^xsd:string "pli"^^xsd:string "pol"^^xsd:string "por"^^xsd:string "pus"^^xsd:string "que"^^xsd:string "roh"^^xsd:string "ron"^^xsd:string "run"^^xsd:string "rus"^^xsd:string "sag"^^xsd:string "san"^^xsd:string "sin"^^xsd:string "slk"^^xsd:string "slv"^^xsd:string "sme"^^xsd:string "smo"^^xsd:string "sna"^^xsd:string "snd"^^xsd:string "som"^^xsd:string "sot"^^xsd:string "spa"^^xsd:string "sqi"^^xsd:string "srd"^^xsd:string "srp"^^xsd:string "ssw"^^xsd:string "sun"^^xsd:string "swa"^^xsd:string "swe"^^xsd:string "tah"^^xsd:string "tam"^^xsd:string "tat"^^xsd:string "tel"^^xsd:string "tgk"^^xsd:string "tgl"^^xsd:string "tha"^^xsd:string "tir"^^xsd:string "ton"^^xsd:string "tsn"^^xsd:string "tso"^^xsd:string "tuk"^^xsd:string "tur"^^xsd:string "twi"^^xsd:string "uig"^^xsd:string "ukr"^^xsd:string "urd"^^xsd:string "uzb"^^xsd:string "ven"^^xsd:string "vie"^^xsd:string "vol"^^xsd:string "wln"^^xsd:string "wol"^^xsd:string "xho"^^xsd:string "yid"^^xsd:string "yor"^^xsd:string "zha"^^xsd:string "zho"^^xsd:string "zul"^^xsd:string ) ] .
+
+ns1:organizacion_es_identificada_por a owl:ObjectProperty ;
+    rdfs:domain ns1:organizacion ;
+    rdfs:range ns1:tipo_de_identificador_de_organizacion .
+
+ns1:pais a rdfs:Datatype ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:oneOf ( "ABW"^^xsd:string "AFG"^^xsd:string "AGO"^^xsd:string "AIA"^^xsd:string "ALA"^^xsd:string "ALB"^^xsd:string "AND"^^xsd:string "ARE"^^xsd:string "ARG"^^xsd:string "ARM"^^xsd:string "ASM"^^xsd:string "ATA"^^xsd:string "ATF"^^xsd:string "ATG"^^xsd:string "AUS"^^xsd:string "AUT"^^xsd:string "AZE"^^xsd:string "BDI"^^xsd:string "BEL"^^xsd:string "BEN"^^xsd:string "BES"^^xsd:string "BFA"^^xsd:string "BGD"^^xsd:string "BGR"^^xsd:string "BHR"^^xsd:string "BHS"^^xsd:string "BIH"^^xsd:string "BLM"^^xsd:string "BLR"^^xsd:string "BLZ"^^xsd:string "BMU"^^xsd:string "BOL"^^xsd:string "BRA"^^xsd:string "BRB"^^xsd:string "BRN"^^xsd:string "BTN"^^xsd:string "BVT"^^xsd:string "BWA"^^xsd:string "CAF"^^xsd:string "CAN"^^xsd:string "CCK"^^xsd:string "CHE"^^xsd:string "CHL"^^xsd:string "CHN"^^xsd:string "CIV"^^xsd:string "CMR"^^xsd:string "COD"^^xsd:string "COG"^^xsd:string "COK"^^xsd:string "COL"^^xsd:string "COM"^^xsd:string "CPV"^^xsd:string "CRI"^^xsd:string "CUB"^^xsd:string "CUW"^^xsd:string "CXR"^^xsd:string "CYM"^^xsd:string "CYP"^^xsd:string "CZE"^^xsd:string "DEU"^^xsd:string "DJI"^^xsd:string "DMA"^^xsd:string "DNK"^^xsd:string "DOM"^^xsd:string "DZA"^^xsd:string "ECU"^^xsd:string "EGY"^^xsd:string "ERI"^^xsd:string "ESH"^^xsd:string "ESP"^^xsd:string "EST"^^xsd:string "ETH"^^xsd:string "FIN"^^xsd:string "FJI"^^xsd:string "FLK"^^xsd:string "FRA"^^xsd:string "FRO"^^xsd:string "FSM"^^xsd:string "GAB"^^xsd:string "GBR"^^xsd:string "GEO"^^xsd:string "GGY"^^xsd:string "GHA"^^xsd:string "GIB"^^xsd:string "GIN"^^xsd:string "GLP"^^xsd:string "GMB"^^xsd:string "GNB"^^xsd:string "GNQ"^^xsd:string "GRC"^^xsd:string "GRD"^^xsd:string "GRL"^^xsd:string "GTM"^^xsd:string "GUF"^^xsd:string "GUM"^^xsd:string "GUY"^^xsd:string "HKG"^^xsd:string "HMD"^^xsd:string "HND"^^xsd:string "HRV"^^xsd:string "HTI"^^xsd:string "HUN"^^xsd:string "IDN"^^xsd:string "IMN"^^xsd:string "IND"^^xsd:string "IOT"^^xsd:string "IRL"^^xsd:string "IRN"^^xsd:string "IRQ"^^xsd:string "ISL"^^xsd:string "ISR"^^xsd:string "ITA"^^xsd:string "JAM"^^xsd:string "JEY"^^xsd:string "JOR"^^xsd:string "JPN"^^xsd:string "KAZ"^^xsd:string "KEN"^^xsd:string "KGZ"^^xsd:string "KHM"^^xsd:string "KIR"^^xsd:string "KNA"^^xsd:string "KOR"^^xsd:string "KWT"^^xsd:string "LAO"^^xsd:string "LBN"^^xsd:string "LBR"^^xsd:string "LBY"^^xsd:string "LCA"^^xsd:string "LIE"^^xsd:string "LKA"^^xsd:string "LSO"^^xsd:string "LTU"^^xsd:string "LUX"^^xsd:string "LVA"^^xsd:string "MAC"^^xsd:string "MAF"^^xsd:string "MAR"^^xsd:string "MCO"^^xsd:string "MDA"^^xsd:string "MDG"^^xsd:string "MDV"^^xsd:string "MEX"^^xsd:string "MHL"^^xsd:string "MKD"^^xsd:string "MLI"^^xsd:string "MLT"^^xsd:string "MMR"^^xsd:string "MNE"^^xsd:string "MNG"^^xsd:string "MNP"^^xsd:string "MOZ"^^xsd:string "MRT"^^xsd:string "MSR"^^xsd:string "MTQ"^^xsd:string "MUS"^^xsd:string "MWI"^^xsd:string "MYS"^^xsd:string "MYT"^^xsd:string "NAM"^^xsd:string "NCL"^^xsd:string "NER"^^xsd:string "NFK"^^xsd:string "NGA"^^xsd:string "NIC"^^xsd:string "NIU"^^xsd:string "NLD"^^xsd:string "NOR"^^xsd:string "NPL"^^xsd:string "NRU"^^xsd:string "NZL"^^xsd:string "OMN"^^xsd:string "PAK"^^xsd:string "PAN"^^xsd:string "PCN"^^xsd:string "PER"^^xsd:string "PHL"^^xsd:string "PLW"^^xsd:string "PNG"^^xsd:string "POL"^^xsd:string "PRI"^^xsd:string "PRK"^^xsd:string "PRT"^^xsd:string "PRY"^^xsd:string "PSE"^^xsd:string "PYF"^^xsd:string "QAT"^^xsd:string "REU"^^xsd:string "ROU"^^xsd:string "RUS"^^xsd:string "RWA"^^xsd:string "SAU"^^xsd:string "SDN"^^xsd:string "SEN"^^xsd:string "SGP"^^xsd:string "SGS"^^xsd:string "SHN"^^xsd:string "SJM"^^xsd:string "SLB"^^xsd:string "SLE"^^xsd:string "SLV"^^xsd:string "SMR"^^xsd:string "SOM"^^xsd:string "SPM"^^xsd:string "SRB"^^xsd:string "SSD"^^xsd:string "STP"^^xsd:string "SUR"^^xsd:string "SVK"^^xsd:string "SVN"^^xsd:string "SWE"^^xsd:string "SWZ"^^xsd:string "SXM"^^xsd:string "SYC"^^xsd:string "SYR"^^xsd:string "TCA"^^xsd:string "TCD"^^xsd:string "TGO"^^xsd:string "THA"^^xsd:string "TJK"^^xsd:string "TKL"^^xsd:string "TKM"^^xsd:string "TLS"^^xsd:string "TON"^^xsd:string "TTO"^^xsd:string "TUN"^^xsd:string "TUR"^^xsd:string "TUV"^^xsd:string "TWN"^^xsd:string "TZA"^^xsd:string "UGA"^^xsd:string "UKR"^^xsd:string "UMI"^^xsd:string "URY"^^xsd:string "USA"^^xsd:string "UZB"^^xsd:string "VAT"^^xsd:string "VCT"^^xsd:string "VEN"^^xsd:string "VGB"^^xsd:string "VIR"^^xsd:string "VNM"^^xsd:string "VUT"^^xsd:string "WLF"^^xsd:string "WSM"^^xsd:string "YEM"^^xsd:string "ZAF"^^xsd:string "ZMB"^^xsd:string "ZWE"^^xsd:string "EEC"^^xsd:string "AAA"^^xsd:string ) ] .
+
+ns1:tipo_de_organizacion a rdfs:Datatype ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:oneOf ( "comercial"^^xsd:string "no-comercial"^^xsd:string ) ] .
+
+ns2:ark a ns2:esquema_de_identificador_persistente,
+        owl:NamedIndividual .
+
+ns2:authorclaim a ns2:esquema_de_identificador_de_autor,
+        owl:NamedIndividual .
+
+ns2:autor_es_identificado_por a owl:ObjectProperty ;
+    rdfs:domain ns2:autor ;
+    rdfs:range ns2:esquema_de_identificador_de_autor .
+
+ns2:caracteristica_de_productor_de_datos a owl:Class ;
+    rdfs:subClassOf ns2:caracteristica_de_cdd .
+
+ns2:cc0 a ns2:licencia,
+        owl:NamedIndividual .
+
+ns2:cc_by a ns2:licencia,
+        owl:NamedIndividual .
+
+ns2:cdd_es_identificado_por a owl:ObjectProperty ;
+    rdfs:domain ns2:resultado_de_investigacion ;
+    rdfs:range ns2:esquema_de_identificador_persistente .
+
+ns2:dc a ns2:esquema_de_metadatos,
+        owl:NamedIndividual .
+
+ns2:ddi a ns2:esquema_de_metadatos,
+        owl:NamedIndividual .
+
+ns2:doi a ns2:esquema_de_identificador_persistente,
+        owl:NamedIndividual ;
+    ns2:extiende_a_esquema_de_identificador_persistente ns2:handle .
+
+ns2:doi-crossref a ns2:esquema_de_metadatos,
+        owl:NamedIndividual .
+
+ns2:doi-datacite a ns2:esquema_de_metadatos,
+        owl:NamedIndividual .
+
+ns2:gpl a ns2:licencia,
+        owl:NamedIndividual .
+
+ns2:isni a ns2:esquema_de_identificador_de_autor,
+        owl:NamedIndividual .
+
+ns2:mit a ns2:licencia,
+        owl:NamedIndividual .
+
+ns2:oai_pmh a ns2:esquema_de_metadatos,
+        owl:NamedIndividual .
+
+ns2:orcid a ns2:esquema_de_identificador_de_autor,
+        owl:NamedIndividual .
+
+ns2:productor_de_datos a owl:Class ;
+    rdfs:subClassOf ns2:autor .
+
+ns2:purl a ns2:esquema_de_identificador_persistente,
+        owl:NamedIndividual .
+
+ns2:researcherid a ns2:esquema_de_identificador_de_autor,
+        owl:NamedIndividual .
+
+ns2:schemaorg a ns2:esquema_de_metadatos,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#dataverse> a ns3:motor_de_repositorio,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#lareferencia> a ns3:agregador,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#unr> a ns1:organizacion,
+        owl:NamedIndividual .
+
+<http://test.org/fake-foaf.owl#Organization> a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+<http://test.org/fake-foaf.owl#Person> a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+ns3:api_para_cosecha a owl:Class ;
+    ns1:nombre_usual "harvesting api"@en,
+        "api para cosecha"@es ;
+    rdfs:subClassOf ns3:funcionalidad .
+
+ns3:control_de_acceso a owl:Class ;
+    ns1:nombre_usual "access control"@en,
+        "control de acceso"@es ;
+    rdfs:subClassOf ns3:funcionalidad .
+
+ns3:es_catalogado_por a owl:ObjectProperty ;
+    rdfs:domain ns3:repositorio ;
+    rdfs:range ns3:catalogo_de_repositorio .
+
+ns3:exportacion_de_citas a owl:Class ;
+    ns1:nombre_usual "cite export"@en,
+        "exportación de citas"@es ;
+    rdfs:subClassOf ns3:funcionalidad .
+
+ns3:funcionalidad_para_cdd a owl:Class ;
+    ns1:nombre_usual "collection feature"@en,
+        "funcionalidad para colecciones"@es ;
+    rdfs:subClassOf ns3:funcionalidad .
+
+ns3:integracion_con_red_social a owl:Class ;
+    ns1:nombre_usual "social media integration"@en,
+        "integración con red social"@es ;
+    rdfs:subClassOf ns3:funcionalidad .
+
+ns3:interfaz_multilenguaje a owl:Class ;
+    ns1:nombre_usual "multilanguage interface"@en,
+        "interfaz multilenguaje"@es ;
+    rdfs:subClassOf ns3:funcionalidad .
+
+ns3:periodo_de_embargo a owl:Class ;
+    ns1:nombre_usual "embargo period"@en,
+        "período de embargo"@es ;
+    rdfs:subClassOf ns3:funcionalidad .
+
+ns3:politica a owl:Class ;
+    ns1:nombre_usual "policy"@en,
+        "política"@es ;
+    rdfs:subClassOf owl:Thing .
+
+ns3:servicio_de_curaduria a owl:Class ;
+    ns1:nombre_usual "curator service"@en,
+        "servicio de curaduría"@es ;
+    rdfs:subClassOf ns3:funcionalidad .
+
+ns3:soporte_para_caracteristica_de_cdd a owl:Class ;
+    rdfs:subClassOf ns3:funcionalidad_para_cdd .
+
+ns3:tipo_de_relacion_con_organizacion a rdfs:Datatype ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:oneOf ( "financiamiento"^^xsd:string "técnica"^^xsd:string "administrativa"^^xsd:string ) ] .
+
+ns1:1 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:nombre_de_disciplina "Humanities and Social Sciences"^^xsd:string .
+
+ns1:107 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:11 ;
+    ns1:nombre_de_disciplina "Theology"^^xsd:string .
+
+ns1:307 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:31 ;
+    ns1:nombre_de_disciplina "Condensed Matter Physics"^^xsd:string .
+
+ns1:313 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:33 ;
+    ns1:nombre_de_disciplina "Atmospheric Science, Oceanography and Climate Research"^^xsd:string .
+
+ns1:315 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:33 ;
+    ns1:nombre_de_disciplina "Geophysics and Geodesy"^^xsd:string .
+
+ns1:317 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:33 ;
+    ns1:nombre_de_disciplina "Geography"^^xsd:string .
+
+ns1:321 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:34 ;
+    ns1:nombre_de_disciplina "Molecular Chemistry"^^xsd:string .
+
+ns1:322 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:34 ;
+    ns1:nombre_de_disciplina "Chemical Solid State and Surface Research"^^xsd:string .
+
+ns1:325 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:34 ;
+    ns1:nombre_de_disciplina "Biological Chemistry and Food Chemistry"^^xsd:string .
+
+ns1:327 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:34 ;
+    ns1:nombre_de_disciplina "Theoretical Chemistry"^^xsd:string .
+
+ns1:41 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:4 ;
+    ns1:nombre_de_disciplina "Mechanical and industrial Engineering"^^xsd:string .
+
+ns1:42 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:4 ;
+    ns1:nombre_de_disciplina "Thermal Engineering/Process Engineering"^^xsd:string .
+
+ns1:43 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:4 ;
+    ns1:nombre_de_disciplina "Materials Science and Engineering"^^xsd:string .
+
+ns2:autor a owl:Class ;
+    rdfs:subClassOf <http://test.org/fake-foaf.owl#Person> .
+
+ns2:cdd a owl:Class ;
+    ns1:nombre_usual "dataset"@en,
+        "coleccion de datos"@es ;
+    ns1:sinonimo "conjunto de datos"@es ;
+    rdfs:subClassOf ns2:resultado_de_investigacion .
+
+ns2:handle a ns2:esquema_de_identificador_persistente,
+        owl:NamedIndividual .
+
+ns1:103 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:11 ;
+    ns1:nombre_de_disciplina "Art History, Music, Theatre and Media Studies"^^xsd:string .
+
+ns1:108 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:11 ;
+    ns1:nombre_de_disciplina "Philosophy"^^xsd:string .
+
+ns1:2 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:nombre_de_disciplina "Life Sciences"^^xsd:string .
+
+ns1:21 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:2 ;
+    ns1:nombre_de_disciplina "Biology"^^xsd:string .
+
+ns1:22 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:2 ;
+    ns1:nombre_de_disciplina "Medicine"^^xsd:string .
+
+ns1:326 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:34 ;
+    ns1:nombre_de_disciplina "Polymer Research"^^xsd:string .
+
+ns1:408 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:44 ;
+    ns1:nombre_de_disciplina "Electrical Engineering and Information Technology"^^xsd:string .
+
+ns1:44 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:4 ;
+    ns1:nombre_de_disciplina "Computer Science, Electrical and System Engineering"^^xsd:string .
+
+ns1:tipo_de_identificador_de_organizacion a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+ns2:tamanio a owl:Class ;
+    rdfs:subClassOf ns2:caracteristica_de_cdd .
+
+ns3:agregador a owl:Class ;
+    ns1:nombre_usual "aggregator"@en,
+        "agregador"@es ;
+    ns1:sinonimo "buscador"@es ;
+    rdfs:subClassOf owl:Thing .
+
+ns3:relacionado_con_organizacion a owl:ObjectProperty ;
+    rdfs:domain ns3:repositorio ;
+    rdfs:range ns1:organizacion .
+
+ns1:102 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:11 ;
+    ns1:nombre_de_disciplina "History"^^xsd:string .
+
+ns1:104 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:11 ;
+    ns1:nombre_de_disciplina "Linguistics"^^xsd:string .
+
+ns1:105 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:11 ;
+    ns1:nombre_de_disciplina "Literary Studies"^^xsd:string .
+
+ns1:109 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:12 ;
+    ns1:nombre_de_disciplina "Educational Research"^^xsd:string .
+
+ns1:111 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:12 ;
+    ns1:nombre_de_disciplina "Social Sciences"^^xsd:string .
+
+ns1:3 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:nombre_de_disciplina "Natural Sciences"^^xsd:string .
+
+ns1:402 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:41 ;
+    ns1:nombre_de_disciplina "Mechanics and Constructive Mechanical Engineering"^^xsd:string .
+
+ns1:403 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:42 ;
+    ns1:nombre_de_disciplina "Process Engineering, Technical Chemistry"^^xsd:string .
+
+ns1:404 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:42 ;
+    ns1:nombre_de_disciplina "Fluid Mechanics, Technical Thermodynamics and Thermal Energy Engineering"^^xsd:string .
+
+ns1:406 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:43 ;
+    ns1:nombre_de_disciplina "Materials Science"^^xsd:string .
+
+ns1:articulo a ns1:tipo_de_dato,
+        owl:NamedIndividual .
+
+ns1:cuaderno_de_laboratorio a ns1:tipo_de_dato,
+        owl:NamedIndividual .
+
+ns1:entrevista a ns1:tipo_de_dato,
+        owl:NamedIndividual .
+
+ns1:formato_de_archivo a owl:Class ;
+    ns1:nombre_usual "file format"@en,
+        "formato de archivo"@es ;
+    rdfs:subClassOf owl:Thing .
+
+ns1:imagen a ns1:formato_de_archivo,
+        owl:NamedIndividual .
+
+ns1:tabla a ns1:formato_de_archivo,
+        owl:NamedIndividual .
+
+ns1:texto a ns1:formato_de_archivo,
+        owl:NamedIndividual .
+
+ns1:tipo_de_dato a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+ns2:licencia a owl:Class ;
+    rdfs:subClassOf ns2:caracteristica_de_cdd .
+
+ns3:catalogo_de_repositorio a owl:Class ;
+    ns1:nombre_usual "repository_catalog"@en,
+        "catalogo de repositorios"@es ;
+    ns1:sinonimo "proveedor de servicio"@en ;
+    rdfs:subClassOf owl:Thing .
+
+ns1:101 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:11 ;
+    ns1:nombre_de_disciplina "Ancient Cultures"^^xsd:string .
+
+ns1:106 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:11 ;
+    ns1:nombre_de_disciplina "Social and Cultural Anthropology, Non-European Cultures, Jewish Studies and Religious Studies"^^xsd:string .
+
+ns1:110 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:12 ;
+    ns1:nombre_de_disciplina "Psychology"^^xsd:string .
+
+ns1:112 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:12 ;
+    ns1:nombre_de_disciplina "Economics"^^xsd:string .
+
+ns1:113 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:12 ;
+    ns1:nombre_de_disciplina "Jurisprudence"^^xsd:string .
+
+ns1:12 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:1 ;
+    ns1:nombre_de_disciplina "Social and Behavioural Sciences"^^xsd:string .
+
+ns1:31 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:3 ;
+    ns1:nombre_de_disciplina "Physics"^^xsd:string .
+
+ns1:4 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:nombre_de_disciplina "Engineering Sciences"^^xsd:string .
+
+ns2:esquema_de_identificador_de_autor a owl:Class ;
+    ns1:nombre_usual "author identification schema"@en,
+        "esquema de identificador de autores"@es ;
+    ns1:sinonimo "aids"@en ;
+    rdfs:subClassOf ns2:caracteristica_de_productor_de_datos .
+
+ns2:resultado_de_investigacion a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+ns3:motor_de_repositorio a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+ns1:203 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:21 ;
+    ns1:nombre_de_disciplina "Zoology"^^xsd:string .
+
+ns1:204 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:22 ;
+    ns1:nombre_de_disciplina "Microbiology, Virology and Immunology"^^xsd:string .
+
+ns1:33 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:3 ;
+    ns1:nombre_de_disciplina "Geosciences (including Geography)"^^xsd:string .
+
+ns1:401 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:41 ;
+    ns1:nombre_de_disciplina "Production Technology"^^xsd:string .
+
+ns1:405 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:43 ;
+    ns1:nombre_de_disciplina "Materials Engineering"^^xsd:string .
+
+ns1:407 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:44 ;
+    ns1:nombre_de_disciplina "Systems Engineering"^^xsd:string .
+
+ns1:410 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:45 ;
+    ns1:nombre_de_disciplina "Construction Engineering and Architecture"^^xsd:string .
+
+ns1:201 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:21 ;
+    ns1:nombre_de_disciplina "Basic Research in Biology and Medicine"^^xsd:string .
+
+ns1:202 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:21 ;
+    ns1:nombre_de_disciplina "Plant Sciences"^^xsd:string .
+
+ns1:34 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:3 ;
+    ns1:nombre_de_disciplina "Chemistry"^^xsd:string .
+
+ns1:organizacion a owl:Class ;
+    ns1:nombre_usual "organization"@en,
+        "organización"@es ;
+    ns1:sinonimo "institución"@es ;
+    rdfs:subClassOf <http://test.org/fake-foaf.owl#Organization> .
+
+ns2:esquema_de_identificador_persistente a owl:Class ;
+    ns1:nombre_usual "persistent identifier schema"@en,
+        "esquema de identificador persistente"@es ;
+    rdfs:subClassOf ns2:caracteristica_de_cdd .
+
+ns1:11 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:1 ;
+    ns1:nombre_de_disciplina "Humanities"^^xsd:string .
+
+ns1:207 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:23 ;
+    ns1:nombre_de_disciplina "Agriculture, Forestry and Veterinary Medicine"^^xsd:string .
+
+ns1:409 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:44 ;
+    ns1:nombre_de_disciplina "Computer Science"^^xsd:string .
+
+ns2:caracteristica_de_cdd a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+ns2:esquema_de_metadatos a owl:Class ;
+    ns1:nombre_usual "metadata schema"@en,
+        "esquema de metadatos"@es ;
+    rdfs:subClassOf ns2:caracteristica_de_cdd .
+
+ns3:funcionalidad a owl:Class ;
+    ns1:nombre_usual "feature"@en,
+        "funcionalidad"@es ;
+    rdfs:subClassOf owl:Thing .
+
+ns3:repositorio a owl:Class ;
+    ns1:nombre_usual "repository"@en,
+        "repositorio"@es ;
+    ns1:sinonimo "archive"@en,
+        "archivo"@es ;
+    rdfs:subClassOf owl:Thing .
+
+ns1:206 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:22 ;
+    ns1:nombre_de_disciplina "Neurosciences"^^xsd:string .
+
+ns1:205 a ns1:disciplina,
+        owl:NamedIndividual ;
+    ns1:es_sub_disciplina_de ns1:22 ;
+    ns1:nombre_de_disciplina "Medicine"^^xsd:string .
+
+ns1:disciplina a owl:Class ;
+    ns1:nombre_usual "subject"@en,
+        "disciplina"@es ;
+    rdfs:subClassOf owl:Thing .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:imagen ns1:texto ns1:tabla ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:articulo ns1:cuaderno_de_laboratorio ns1:entrevista ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:imagen ns1:texto ns1:tabla ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:articulo ns1:cuaderno_de_laboratorio ns1:entrevista ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns2:authorclaim ns2:isni ns2:orcid ns2:researcherid ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns2:cc_by ns2:cc0 ns2:gpl ns2:mit ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns2:doi ns2:ark ns2:handle ns2:purl ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns2:dc ns2:ddi ns2:oai_pmh ns2:schemaorg ns2:doi-datacite ns2:doi-crossref ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:imagen ns1:texto ns1:tabla ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:articulo ns1:cuaderno_de_laboratorio ns1:entrevista ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( ns3:exportacion_de_citas ns3:api_para_cosecha ns3:control_de_acceso ns3:integracion_con_red_social ns3:interfaz_multilenguaje ns3:periodo_de_embargo ns3:servicio_de_curaduria ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:imagen ns1:texto ns1:tabla ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:articulo ns1:cuaderno_de_laboratorio ns1:entrevista ) .
+
+

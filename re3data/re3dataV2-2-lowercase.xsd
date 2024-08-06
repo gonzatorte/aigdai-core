@@ -1,0 +1,3552 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="http://www.re3data.org/schema/2-2" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.re3data.org/schema/2-2" id="re3data.org">
+  <xs:simpleType name="dateFormat">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:gYear">
+          <xs:minInclusive value="1000" />
+          <xs:maxInclusive value="2999" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:gYearMonth">
+          <xs:minInclusive value="1000-01" />
+          <xs:maxInclusive value="2999-12" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:date">
+          <xs:minInclusive value="1000-01-01" />
+          <xs:maxInclusive value="2999-12-31" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="subject_text">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1 humanities and social sciences" />
+      <xs:enumeration value="11 humanities" />
+      <xs:enumeration value="101 ancient cultures" />
+      <xs:enumeration value="10101 prehistory" />
+      <xs:enumeration value="10102 classical philology" />
+      <xs:enumeration value="10103 ancient history" />
+      <xs:enumeration value="10104 classical archaeology" />
+      <xs:enumeration value="10105 egyptology and ancient near eastern studies" />
+      <xs:enumeration value="102 history" />
+      <xs:enumeration value="10201 medieval history" />
+      <xs:enumeration value="10202 early modern history" />
+      <xs:enumeration value="10203 modern and current history" />
+      <xs:enumeration value="10204 history of science" />
+      <xs:enumeration value="103 fine arts, music, theatre and media studies" />
+      <xs:enumeration value="10301 art history" />
+      <xs:enumeration value="10302 musicology" />
+      <xs:enumeration value="10303 theatre and media studies" />
+      <xs:enumeration value="104 linguistics" />
+      <xs:enumeration value="10401 general and applied linguistics" />
+      <xs:enumeration value="10402 individual linguistics" />
+      <xs:enumeration value="10403 typology, non-european languages, historical linguistics" />
+      <xs:enumeration value="105 literary studies" />
+      <xs:enumeration value="10501 medieval german literature" />
+      <xs:enumeration value="10502 modern german literature" />
+      <xs:enumeration value="10503 european and american literature" />
+      <xs:enumeration value="10504 general and comparative literature and cultural studies" />
+      <xs:enumeration value="106 non-european languages and cultures, social and cultural anthropology, jewish studies and religious studies" />
+      <xs:enumeration value="10601 social and cultural anthropology and ethnology/folklore" />
+      <xs:enumeration value="10602 asian studies" />
+      <xs:enumeration value="10603 african, american and oceania studies" />
+      <xs:enumeration value="10604 islamic studies, arabian studies, semitic studies" />
+      <xs:enumeration value="10605 religious studies and jewish studies" />
+      <xs:enumeration value="107 theology" />
+      <xs:enumeration value="10701 protestant theology" />
+      <xs:enumeration value="10702 roman catholic theology" />
+      <xs:enumeration value="108 philosophy" />
+      <xs:enumeration value="10801 history of philosophy" />
+      <xs:enumeration value="10802 theoretical philosophy" />
+      <xs:enumeration value="10803 practical philosophy" />
+      <xs:enumeration value="12 social and behavioural sciences" />
+      <xs:enumeration value="109 education sciences" />
+      <xs:enumeration value="10901 general education and history of education" />
+      <xs:enumeration value="10902 research on teaching, learning and training" />
+      <xs:enumeration value="10903 research on socialization and educational institutions and professions" />
+      <xs:enumeration value="110 psychology" />
+      <xs:enumeration value="11001 general, biological and mathematical psychology" />
+      <xs:enumeration value="11002 developmental and educational psychology" />
+      <xs:enumeration value="11003 social psychology, industrial and organisational psychology" />
+      <xs:enumeration value="11004 differential psychology, clinical psychology, medical psychology, methodology" />
+      <xs:enumeration value="111 social sciences" />
+      <xs:enumeration value="11101 sociological theory" />
+      <xs:enumeration value="11102 empirical social research" />
+      <xs:enumeration value="11103 communication science" />
+      <xs:enumeration value="11104 political science" />
+      <xs:enumeration value="112 economics" />
+      <xs:enumeration value="11201 economic theory" />
+      <xs:enumeration value="11202 economic and social policy" />
+      <xs:enumeration value="11203 public finance" />
+      <xs:enumeration value="11204 business administration" />
+      <xs:enumeration value="11205 statistics and econometrics" />
+      <xs:enumeration value="11206 economic and social history" />
+      <xs:enumeration value="113 jurisprudence" />
+      <xs:enumeration value="11301 legal and political philosophy, legal history, legal theory" />
+      <xs:enumeration value="11302 private law" />
+      <xs:enumeration value="11303 public law" />
+      <xs:enumeration value="11304 criminal law and law of criminal procedure" />
+      <xs:enumeration value="11305 criminology" />
+      <xs:enumeration value="2 life sciences" />
+      <xs:enumeration value="21 biology" />
+      <xs:enumeration value="201 basic biological and medical research" />
+      <xs:enumeration value="20101 biochemistry" />
+      <xs:enumeration value="20102 biophysics" />
+      <xs:enumeration value="20103 cell biology" />
+      <xs:enumeration value="20104 structural biology" />
+      <xs:enumeration value="20105 general genetics" />
+      <xs:enumeration value="20106 developmental biology" />
+      <xs:enumeration value="20107 bioinformatics and theoretical biology" />
+      <xs:enumeration value="20108 anatomy" />
+      <xs:enumeration value="202 plant sciences" />
+      <xs:enumeration value="20201 plant systematics and evolution" />
+      <xs:enumeration value="20202 plant ecology and ecosystem analysis" />
+      <xs:enumeration value="20203 inter-organismic interactions of plants" />
+      <xs:enumeration value="20204 plant physiology" />
+      <xs:enumeration value="20205 plant biochemistry and biophysics" />
+      <xs:enumeration value="20206 plant cell and developmental biology" />
+      <xs:enumeration value="20207 plant genetics" />
+      <xs:enumeration value="203 zoology" />
+      <xs:enumeration value="20301 systematics and morphology" />
+      <xs:enumeration value="20302 evolution, anthropology" />
+      <xs:enumeration value="20303 animal ecology, biodiversity and ecosystem research" />
+      <xs:enumeration value="20304 sensory and behavioural biology" />
+      <xs:enumeration value="20305 biochemistry and animal physiology" />
+      <xs:enumeration value="20306 animal genetics, cell and developmental biology" />
+      <xs:enumeration value="22 medicine" />
+      <xs:enumeration value="204 microbiology, virology and immunology" />
+      <xs:enumeration value="20401 metabolism, biochemistry and genetics of microorganisms" />
+      <xs:enumeration value="20402 microbial ecology and applied microbiology" />
+      <xs:enumeration value="20403 medical microbiology, molecular infection biology" />
+      <xs:enumeration value="20404 virology" />
+      <xs:enumeration value="20405 immunology" />
+      <xs:enumeration value="205 medicine" />
+      <xs:enumeration value="20501 epidemiology, medical biometry, medical informatics" />
+      <xs:enumeration value="20502 public health, health services research, social medicine" />
+      <xs:enumeration value="20503 human genetics" />
+      <xs:enumeration value="20504 physiology" />
+      <xs:enumeration value="20505 nutritional sciences" />
+      <xs:enumeration value="20506 pathology and forensic medicine" />
+      <xs:enumeration value="20507 clinical chemistry and pathobiochemistry" />
+      <xs:enumeration value="20508 pharmacy" />
+      <xs:enumeration value="20509 pharmacology" />
+      <xs:enumeration value="20510 toxicology and occupational medicine" />
+      <xs:enumeration value="20511 anaesthesiology" />
+      <xs:enumeration value="20512 cardiology, angiology" />
+      <xs:enumeration value="20513 pneumology, clinical infectiology intensive care medicine" />
+      <xs:enumeration value="20514 hematology, oncology, transfusion medicine" />
+      <xs:enumeration value="20515 gastroenterology, metabolism" />
+      <xs:enumeration value="20516 nephrology" />
+      <xs:enumeration value="20517 endocrinology, diabetology" />
+      <xs:enumeration value="20518 rheumatology, clinical immunology, allergology" />
+      <xs:enumeration value="20519 dermatology" />
+      <xs:enumeration value="20520 pediatric and adolescent medicine" />
+      <xs:enumeration value="20521 gynaecology and obstetrics" />
+      <xs:enumeration value="20522 reproductive medicine/biology" />
+      <xs:enumeration value="20523 urology" />
+      <xs:enumeration value="20524 gerontology and geriatric medicine" />
+      <xs:enumeration value="20525 vascular and visceral surgery" />
+      <xs:enumeration value="20526 cardiothoracic surgery" />
+      <xs:enumeration value="20527 traumatology and orthopaedics" />
+      <xs:enumeration value="20528 dentistry, oral surgery" />
+      <xs:enumeration value="20529 otolaryngology" />
+      <xs:enumeration value="20530 radiology and nuclear medicine" />
+      <xs:enumeration value="20531 radiation oncology and radiobiology" />
+      <xs:enumeration value="20532 biomedical technology and medical physics" />
+      <xs:enumeration value="206 neurosciences" />
+      <xs:enumeration value="20601 molecular neuroscience and neurogenetics" />
+      <xs:enumeration value="20602 cellular neuroscience" />
+      <xs:enumeration value="20603 developmental neurobiology" />
+      <xs:enumeration value="20604 systemic neuroscience, computational neuroscience, behaviour" />
+      <xs:enumeration value="20605 comparative neurobiology" />
+      <xs:enumeration value="20606 cognitive neuroscience and neuroimaging" />
+      <xs:enumeration value="20607 molecular neurology" />
+      <xs:enumeration value="20608 clinical neurosciences i - neurology, neurosurgery" />
+      <xs:enumeration value="20609 biological psychiatry" />
+      <xs:enumeration value="20610 clinical neurosciences ii - psychiatry, psychotherapy, psychosomatic medicine" />
+      <xs:enumeration value="20611 clinical neurosciences iii - ophthalmology" />
+      <xs:enumeration value="23 agriculture, forestry, horticulture and veterinary medicine" />
+      <xs:enumeration value="207 agriculture, forestry, horticulture and veterinary medicine" />
+      <xs:enumeration value="20701 soil sciences" />
+      <xs:enumeration value="20702 plant cultivation" />
+      <xs:enumeration value="20703 plant nutrition" />
+      <xs:enumeration value="20704 ecology of agricultural landscapes" />
+      <xs:enumeration value="20705 plant breeding" />
+      <xs:enumeration value="20706 phytomedicine" />
+      <xs:enumeration value="20707 agricultural and food process engineering" />
+      <xs:enumeration value="20708 agricultural economics and sociology" />
+      <xs:enumeration value="20709 inventory control and use of forest resources" />
+      <xs:enumeration value="20710 basic forest research" />
+      <xs:enumeration value="20711 animal husbandry, breeding and hygiene" />
+      <xs:enumeration value="20712 animal nutrition and nutrition physiology" />
+      <xs:enumeration value="20713 basic veterinary medical science" />
+      <xs:enumeration value="20714 basic research on pathogenesis, diagnostics and therapy and clinical veterinary medicine" />
+      <xs:enumeration value="3 natural sciences" />
+      <xs:enumeration value="31 chemistry" />
+      <xs:enumeration value="301 molecular chemistry" />
+      <xs:enumeration value="30101 inorganic molecular chemistry" />
+      <xs:enumeration value="30102 organic molecular chemistry" />
+      <xs:enumeration value="302 chemical solid state and surface research" />
+      <xs:enumeration value="30201 solid state and surface chemistry, material synthesis" />
+      <xs:enumeration value="30202 physical chemistry of solids and surfaces, material characterisation" />
+      <xs:enumeration value="30203 theory and modelling" />
+      <xs:enumeration value="303 physical and theoretical chemistry" />
+      <xs:enumeration value="30301 physical chemistry of molecules, interfaces and liquids - spectroscopy, kinetics" />
+      <xs:enumeration value="30302 general theoretical chemistry" />
+      <xs:enumeration value="304 analytical chemistry, method development (chemistry)" />
+      <xs:enumeration value="30401 analytical chemistry, method development (chemistry)" />
+      <xs:enumeration value="305 biological chemistry and food chemistry" />
+      <xs:enumeration value="30501 biological and biomimetic chemistry" />
+      <xs:enumeration value="30502 food chemistry" />
+      <xs:enumeration value="306 polymer research" />
+      <xs:enumeration value="30601 preparatory and physical chemistry of polymers" />
+      <xs:enumeration value="30602 experimental and theoretical physics of polymers" />
+      <xs:enumeration value="30603 polymer materials" />
+      <xs:enumeration value="32 physics" />
+      <xs:enumeration value="307 condensed matter physics" />
+      <xs:enumeration value="30701 experimental condensed matter physics" />
+      <xs:enumeration value="30702 theoretical condensed matter physics" />
+      <xs:enumeration value="308 optics, quantum optics and physics of atoms, molecules and plasmas" />
+      <xs:enumeration value="30801 optics, quantum optics, atoms, molecules, plasmas" />
+      <xs:enumeration value="309 particles, nuclei and fields" />
+      <xs:enumeration value="30901 particles, nuclei and fields" />
+      <xs:enumeration value="310 statistical physics, soft matter, biological physics, nonlinear dynamics" />
+      <xs:enumeration value="31001 statistical physics, soft matter, biological physics, nonlinear dynamics" />
+      <xs:enumeration value="311 astrophysics and astronomy" />
+      <xs:enumeration value="31101 astrophysics and astronomy" />
+      <xs:enumeration value="33 mathematics" />
+      <xs:enumeration value="312 mathematics" />
+      <xs:enumeration value="31201 mathematics" />
+      <xs:enumeration value="34 geosciences (including geography)" />
+      <xs:enumeration value="313 atmospheric science and oceanography" />
+      <xs:enumeration value="31301 atmospheric science" />
+      <xs:enumeration value="31302 oceanography" />
+      <xs:enumeration value="314 geology and palaeontology" />
+      <xs:enumeration value="31401 geology and palaeontology" />
+      <xs:enumeration value="315 geophysics and geodesy" />
+      <xs:enumeration value="31501 geophysics" />
+      <xs:enumeration value="31502 geodesy, photogrammetry, remote sensing, geoinformatics, cartogaphy" />
+      <xs:enumeration value="316 geochemistry, mineralogy and crystallography" />
+      <xs:enumeration value="31601 geochemistry, mineralogy and crystallography" />
+      <xs:enumeration value="317 geography" />
+      <xs:enumeration value="31701 physical geography" />
+      <xs:enumeration value="31702 human geography" />
+      <xs:enumeration value="318 water research" />
+      <xs:enumeration value="31801 hydrogeology, hydrology, limnology, urban water management, water chemistry, integrated water resources management" />
+      <xs:enumeration value="4 engineering sciences" />
+      <xs:enumeration value="41 mechanical and industrial engineering" />
+      <xs:enumeration value="401 production technology" />
+      <xs:enumeration value="40101 metal-cutting manufacturing engineering" />
+      <xs:enumeration value="40102 primary shaping and reshaping technology" />
+      <xs:enumeration value="40103 micro-, precision, mounting, joining, separation technology" />
+      <xs:enumeration value="40104 plastics engineering" />
+      <xs:enumeration value="40105 production automation, factory operation, operations manangement" />
+      <xs:enumeration value="402 mechanics and constructive mechanical engineering" />
+      <xs:enumeration value="40201 construction, machine elements" />
+      <xs:enumeration value="40202 mechanics" />
+      <xs:enumeration value="40203 lightweight construction, textile technology" />
+      <xs:enumeration value="40204 acoustics" />
+      <xs:enumeration value="42 thermal engineering/process engineering" />
+      <xs:enumeration value="403 process engineering, technical chemistry" />
+      <xs:enumeration value="40301 chemical and thermal process engineering" />
+      <xs:enumeration value="40302 technical chemistry" />
+      <xs:enumeration value="40303 mechanical process engineering" />
+      <xs:enumeration value="40304 biological process engineering" />
+      <xs:enumeration value="404 heat energy technology, thermal machines, fluid mechanics" />
+      <xs:enumeration value="40401 energy process engineering" />
+      <xs:enumeration value="40402 technical thermodynamics" />
+      <xs:enumeration value="40403 fluid mechanics" />
+      <xs:enumeration value="40404 hydraulic and turbo engines and piston engines" />
+      <xs:enumeration value="43 materials science and engineering" />
+      <xs:enumeration value="405 materials engineering" />
+      <xs:enumeration value="40501 metallurgical and thermal processes, thermomechanical treatment of materials" />
+      <xs:enumeration value="40502 sintered metallic and ceramic materials" />
+      <xs:enumeration value="40503 composite materials" />
+      <xs:enumeration value="40504 mechanical behaviour of construction materials" />
+      <xs:enumeration value="40505 coating and surface technology" />
+      <xs:enumeration value="406 materials science" />
+      <xs:enumeration value="40601 thermodynamics and kinetics of materials" />
+      <xs:enumeration value="40602 synthesis and properties of functional materials" />
+      <xs:enumeration value="40603 microstructural mechanical properties of materials" />
+      <xs:enumeration value="40604 structuring and functionalisation" />
+      <xs:enumeration value="40605 biomaterials" />
+      <xs:enumeration value="44 computer science, electrical and system engineering" />
+      <xs:enumeration value="407 systems engineering" />
+      <xs:enumeration value="40701 automation, control systems, robotics, mechatronics" />
+      <xs:enumeration value="40702 measurement systems" />
+      <xs:enumeration value="40703 microsystems" />
+      <xs:enumeration value="40704 traffic and transport systems, logistics" />
+      <xs:enumeration value="40705 human factors, ergonomics, human-machine systems" />
+      <xs:enumeration value="408 electrical engineering" />
+      <xs:enumeration value="40801 electronic semiconductors, components, circuits, systems" />
+      <xs:enumeration value="40802 communication, high-frequency and network technology, theoretical electrical engineering" />
+      <xs:enumeration value="40803 electrical energy generation, distribution, application" />
+      <xs:enumeration value="409 computer science" />
+      <xs:enumeration value="40901 theoretical computer science" />
+      <xs:enumeration value="40902 software technology" />
+      <xs:enumeration value="40903 operating, communication and information systems" />
+      <xs:enumeration value="40904 artificial intelligence, image and language processing" />
+      <xs:enumeration value="40905 computer architecture and embedded systems" />
+      <xs:enumeration value="45 construction engineering and architecture" />
+      <xs:enumeration value="410 construction engineering and architecture" />
+      <xs:enumeration value="41001 architecture, building and construction history, sustainable building technology, building design" />
+      <xs:enumeration value="41002 urbanism, spatial planning, transportation and infrastructure planning, landscape planning" />
+      <xs:enumeration value="41003 construction material sciences, chemistry, building physics" />
+      <xs:enumeration value="41004 structural engineering, building informatics, construction operation" />
+      <xs:enumeration value="41005 applied mechanics, statics and dynamics" />
+      <xs:enumeration value="41006 geotechnics, hydraulic engineering" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="contenttype_text">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="standard office documents" />
+      <xs:enumeration value="networkbased data" />
+      <xs:enumeration value="databases" />
+      <xs:enumeration value="images" />
+      <xs:enumeration value="structured graphics" />
+      <xs:enumeration value="audiovisual data" />
+      <xs:enumeration value="scientific and statistical data formats" />
+      <xs:enumeration value="raw data" />
+      <xs:enumeration value="plain text" />
+      <xs:enumeration value="structured text" />
+      <xs:enumeration value="archived data" />
+      <xs:enumeration value="software applications" />
+      <xs:enumeration value="source code" />
+      <xs:enumeration value="configuration data" />
+      <xs:enumeration value="other" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="languages">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="deu">
+        <xs:annotation>
+          <xs:documentation>german</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="eng">
+        <xs:annotation>
+          <xs:documentation>english</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fra">
+        <xs:annotation>
+          <xs:documentation>french</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="aar">
+        <xs:annotation>
+          <xs:documentation>afar</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="abk">
+        <xs:annotation>
+          <xs:documentation>abkhaz</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="afr">
+        <xs:annotation>
+          <xs:documentation>afrikaans</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="aka">
+        <xs:annotation>
+          <xs:documentation>akan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="amh">
+        <xs:annotation>
+          <xs:documentation>amharic</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ara">
+        <xs:annotation>
+          <xs:documentation>arabic</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="arg">
+        <xs:annotation>
+          <xs:documentation>aragonese</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="asm">
+        <xs:annotation>
+          <xs:documentation>assamese</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ava">
+        <xs:annotation>
+          <xs:documentation>avaric</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ave">
+        <xs:annotation>
+          <xs:documentation>avestan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="aym">
+        <xs:annotation>
+          <xs:documentation>aymara</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="aze">
+        <xs:annotation>
+          <xs:documentation>azerbaijani</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bak">
+        <xs:annotation>
+          <xs:documentation>bashkir</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bam">
+        <xs:annotation>
+          <xs:documentation>bambara</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bel">
+        <xs:annotation>
+          <xs:documentation>belarusian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ben">
+        <xs:annotation>
+          <xs:documentation>bengali</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bis">
+        <xs:annotation>
+          <xs:documentation>bislama</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bod">
+        <xs:annotation>
+          <xs:documentation>tibetan standard, tibetan, central</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bos">
+        <xs:annotation>
+          <xs:documentation>bosnian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bre">
+        <xs:annotation>
+          <xs:documentation>breton</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bul">
+        <xs:annotation>
+          <xs:documentation>bulgarian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cat">
+        <xs:annotation>
+          <xs:documentation>catalan; valencian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ces">
+        <xs:annotation>
+          <xs:documentation>czech</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cha">
+        <xs:annotation>
+          <xs:documentation>chamorro</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="che">
+        <xs:annotation>
+          <xs:documentation>chechen</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="chu">
+        <xs:annotation>
+          <xs:documentation>old church slavonic, church slavic, church slavonic, old bulgarian, old slavonic</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="chv">
+        <xs:annotation>
+          <xs:documentation>chuvash</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cor">
+        <xs:annotation>
+          <xs:documentation>cornish</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cos">
+        <xs:annotation>
+          <xs:documentation>corsican</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cre">
+        <xs:annotation>
+          <xs:documentation>cree</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cym">
+        <xs:annotation>
+          <xs:documentation>welsh</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="dan">
+        <xs:annotation>
+          <xs:documentation>danish</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="div">
+        <xs:annotation>
+          <xs:documentation>divehi; dhivehi; maldivian;</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="dzo">
+        <xs:annotation>
+          <xs:documentation>dzongkha</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ell">
+        <xs:annotation>
+          <xs:documentation>greek, modern</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="epo">
+        <xs:annotation>
+          <xs:documentation>esperanto</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="est">
+        <xs:annotation>
+          <xs:documentation>estonian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="eus">
+        <xs:annotation>
+          <xs:documentation>basque</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ewe">
+        <xs:annotation>
+          <xs:documentation>ewe</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fao">
+        <xs:annotation>
+          <xs:documentation>faroese</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fas">
+        <xs:annotation>
+          <xs:documentation>persian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fij">
+        <xs:annotation>
+          <xs:documentation>fijian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fin">
+        <xs:annotation>
+          <xs:documentation>finnish</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fry">
+        <xs:annotation>
+          <xs:documentation>western frisian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ful">
+        <xs:annotation>
+          <xs:documentation>fula; fulah; pulaar; pular</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="gla">
+        <xs:annotation>
+          <xs:documentation>scottish gaelic; gaelic</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="gle">
+        <xs:annotation>
+          <xs:documentation>irish</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="glg">
+        <xs:annotation>
+          <xs:documentation>galician</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="glv">
+        <xs:annotation>
+          <xs:documentation>manx</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="grn">
+        <xs:annotation>
+          <xs:documentation>guarani</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="guj">
+        <xs:annotation>
+          <xs:documentation>gujarati</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="hat">
+        <xs:annotation>
+          <xs:documentation>haitian; haitian creole</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="hau">
+        <xs:annotation>
+          <xs:documentation>hausa</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="heb">
+        <xs:annotation>
+          <xs:documentation>hebrew (modern)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="her">
+        <xs:annotation>
+          <xs:documentation>herero</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="hin">
+        <xs:annotation>
+          <xs:documentation>hindi</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="hmo">
+        <xs:annotation>
+          <xs:documentation>hiri motu</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="hrv">
+        <xs:annotation>
+          <xs:documentation>croatian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="hun">
+        <xs:annotation>
+          <xs:documentation>hungarian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="hye">
+        <xs:annotation>
+          <xs:documentation>armenian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ibo">
+        <xs:annotation>
+          <xs:documentation>igbo</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ido">
+        <xs:annotation>
+          <xs:documentation>ido</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="iii">
+        <xs:annotation>
+          <xs:documentation>nuosu</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="iku">
+        <xs:annotation>
+          <xs:documentation>inuktitut</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ile">
+        <xs:annotation>
+          <xs:documentation>interlingue</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ina">
+        <xs:annotation>
+          <xs:documentation>interlingua</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ind">
+        <xs:annotation>
+          <xs:documentation>indonesian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ipk">
+        <xs:annotation>
+          <xs:documentation>inupiaq</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="isl">
+        <xs:annotation>
+          <xs:documentation>icelandic</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ita">
+        <xs:annotation>
+          <xs:documentation>italian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="jav">
+        <xs:annotation>
+          <xs:documentation>javanese</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="jpn">
+        <xs:annotation>
+          <xs:documentation>japanese</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kal">
+        <xs:annotation>
+          <xs:documentation>kalaallisut, greenlandic</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kan">
+        <xs:annotation>
+          <xs:documentation>kannada</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kas">
+        <xs:annotation>
+          <xs:documentation>kashmiri</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kat">
+        <xs:annotation>
+          <xs:documentation>georgian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kau">
+        <xs:annotation>
+          <xs:documentation>kanuri</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kaz">
+        <xs:annotation>
+          <xs:documentation>kazakh</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="khm">
+        <xs:annotation>
+          <xs:documentation>khmer</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kik">
+        <xs:annotation>
+          <xs:documentation>kikuyu, gikuyu</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kin">
+        <xs:annotation>
+          <xs:documentation>kinyarwanda</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kir">
+        <xs:annotation>
+          <xs:documentation>kyrgyz</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kom">
+        <xs:annotation>
+          <xs:documentation>komi</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kon">
+        <xs:annotation>
+          <xs:documentation>kongo</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kor">
+        <xs:annotation>
+          <xs:documentation>korean</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kua">
+        <xs:annotation>
+          <xs:documentation>kwanyama, kuanyama</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kur">
+        <xs:annotation>
+          <xs:documentation>kurdish</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lao">
+        <xs:annotation>
+          <xs:documentation>lao</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lat">
+        <xs:annotation>
+          <xs:documentation>latin</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lav">
+        <xs:annotation>
+          <xs:documentation>latvian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lim">
+        <xs:annotation>
+          <xs:documentation>limburgish, limburgan, limburger</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lin">
+        <xs:annotation>
+          <xs:documentation>lingala</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lit">
+        <xs:annotation>
+          <xs:documentation>lithuanian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ltz">
+        <xs:annotation>
+          <xs:documentation>luxembourgish, letzeburgesch</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lub">
+        <xs:annotation>
+          <xs:documentation>luba-katanga</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lug">
+        <xs:annotation>
+          <xs:documentation>ganda</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mah">
+        <xs:annotation>
+          <xs:documentation>marshallese</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mal">
+        <xs:annotation>
+          <xs:documentation>malayalam</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mar">
+        <xs:annotation>
+          <xs:documentation>marathi</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mkd">
+        <xs:annotation>
+          <xs:documentation>macedonian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mlg">
+        <xs:annotation>
+          <xs:documentation>malagasy</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mlt">
+        <xs:annotation>
+          <xs:documentation>maltese</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mon">
+        <xs:annotation>
+          <xs:documentation>mongolian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mri">
+        <xs:annotation>
+          <xs:documentation>maori</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="msa">
+        <xs:annotation>
+          <xs:documentation>malay</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mya">
+        <xs:annotation>
+          <xs:documentation>burmese</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nau">
+        <xs:annotation>
+          <xs:documentation>nauru</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nav">
+        <xs:annotation>
+          <xs:documentation>navajo, navaho</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nbl">
+        <xs:annotation>
+          <xs:documentation>south ndebele</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nde">
+        <xs:annotation>
+          <xs:documentation>north ndebele</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ndo">
+        <xs:annotation>
+          <xs:documentation>ndonga</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nep">
+        <xs:annotation>
+          <xs:documentation>nepali</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nld">
+        <xs:annotation>
+          <xs:documentation>dutch</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nno">
+        <xs:annotation>
+          <xs:documentation>norwegian nynorsk</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nob">
+        <xs:annotation>
+          <xs:documentation>norwegian bokmal</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nor">
+        <xs:annotation>
+          <xs:documentation>norwegian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nya">
+        <xs:annotation>
+          <xs:documentation>chichewa; chewa; nyanja</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="oci">
+        <xs:annotation>
+          <xs:documentation>occitan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="oji">
+        <xs:annotation>
+          <xs:documentation>ojibwe, ojibwa</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ori">
+        <xs:annotation>
+          <xs:documentation>oriya</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="orm">
+        <xs:annotation>
+          <xs:documentation>oromo</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="oss">
+        <xs:annotation>
+          <xs:documentation>ossetian, ossetic</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="pan">
+        <xs:annotation>
+          <xs:documentation>panjabi, punjabi</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="pli">
+        <xs:annotation>
+          <xs:documentation>pali</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="pol">
+        <xs:annotation>
+          <xs:documentation>polish</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="por">
+        <xs:annotation>
+          <xs:documentation>portuguese</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="pus">
+        <xs:annotation>
+          <xs:documentation>pashto, pushto</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="que">
+        <xs:annotation>
+          <xs:documentation>quechua</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="roh">
+        <xs:annotation>
+          <xs:documentation>romansh</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ron">
+        <xs:annotation>
+          <xs:documentation>romanian, moldavian(romanian from republic of moldova)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="run">
+        <xs:annotation>
+          <xs:documentation>kirundi</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="rus">
+        <xs:annotation>
+          <xs:documentation>russian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sag">
+        <xs:annotation>
+          <xs:documentation>sango</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="san">
+        <xs:annotation>
+          <xs:documentation>sanskrit (samskrta)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sin">
+        <xs:annotation>
+          <xs:documentation>sinhala, sinhalese</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="slk">
+        <xs:annotation>
+          <xs:documentation>slovak</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="slv">
+        <xs:annotation>
+          <xs:documentation>slovene</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sme">
+        <xs:annotation>
+          <xs:documentation>northern sami</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="smo">
+        <xs:annotation>
+          <xs:documentation>samoan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sna">
+        <xs:annotation>
+          <xs:documentation>shona</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="snd">
+        <xs:annotation>
+          <xs:documentation>sindhi</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="som">
+        <xs:annotation>
+          <xs:documentation>somali</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sot">
+        <xs:annotation>
+          <xs:documentation>southern sotho</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="spa">
+        <xs:annotation>
+          <xs:documentation>spanish; castilian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sqi">
+        <xs:annotation>
+          <xs:documentation>albanian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="srd">
+        <xs:annotation>
+          <xs:documentation>sardinian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="srp">
+        <xs:annotation>
+          <xs:documentation>serbian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ssw">
+        <xs:annotation>
+          <xs:documentation>swati</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sun">
+        <xs:annotation>
+          <xs:documentation>sundanese</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="swa">
+        <xs:annotation>
+          <xs:documentation>swahili</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="swe">
+        <xs:annotation>
+          <xs:documentation>swedish</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tah">
+        <xs:annotation>
+          <xs:documentation>tahitian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tam">
+        <xs:annotation>
+          <xs:documentation>tamil</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tat">
+        <xs:annotation>
+          <xs:documentation>tatar</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tel">
+        <xs:annotation>
+          <xs:documentation>telugu</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tgk">
+        <xs:annotation>
+          <xs:documentation>tajik</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tgl">
+        <xs:annotation>
+          <xs:documentation>tagalog</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tha">
+        <xs:annotation>
+          <xs:documentation>thai</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tir">
+        <xs:annotation>
+          <xs:documentation>tigrinya</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ton">
+        <xs:annotation>
+          <xs:documentation>tonga (tonga islands)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tsn">
+        <xs:annotation>
+          <xs:documentation>tswana</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tso">
+        <xs:annotation>
+          <xs:documentation>tsonga</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tuk">
+        <xs:annotation>
+          <xs:documentation>turkmen</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tur">
+        <xs:annotation>
+          <xs:documentation>turkish</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="twi">
+        <xs:annotation>
+          <xs:documentation>twi</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="uig">
+        <xs:annotation>
+          <xs:documentation>uighur, uyghur</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ukr">
+        <xs:annotation>
+          <xs:documentation>ukrainian</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urd">
+        <xs:annotation>
+          <xs:documentation>urdu</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="uzb">
+        <xs:annotation>
+          <xs:documentation>uzbek</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ven">
+        <xs:annotation>
+          <xs:documentation>venda</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="vie">
+        <xs:annotation>
+          <xs:documentation>vietnamese</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="vol">
+        <xs:annotation>
+          <xs:documentation>volapuk</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="wln">
+        <xs:annotation>
+          <xs:documentation>walloon</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="wol">
+        <xs:annotation>
+          <xs:documentation>wolof</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="xho">
+        <xs:annotation>
+          <xs:documentation>xhosa</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="yid">
+        <xs:annotation>
+          <xs:documentation>yiddish</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="yor">
+        <xs:annotation>
+          <xs:documentation>yoruba</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="zha">
+        <xs:annotation>
+          <xs:documentation>zhuang, chuang</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="zho">
+        <xs:annotation>
+          <xs:documentation>chinese</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="zul">
+        <xs:annotation>
+          <xs:documentation>zulu</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="countries">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="abw">
+        <xs:annotation>
+          <xs:documentation>aruba</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="afg">
+        <xs:annotation>
+          <xs:documentation>afghanistan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ago">
+        <xs:annotation>
+          <xs:documentation>angola</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="aia">
+        <xs:annotation>
+          <xs:documentation>anguilla</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ala">
+        <xs:annotation>
+          <xs:documentation>aland islands</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="alb">
+        <xs:annotation>
+          <xs:documentation>albania</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="and">
+        <xs:annotation>
+          <xs:documentation>andorra</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="are">
+        <xs:annotation>
+          <xs:documentation>united arab emirates</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="arg">
+        <xs:annotation>
+          <xs:documentation>argentina</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="arm">
+        <xs:annotation>
+          <xs:documentation>armenia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="asm">
+        <xs:annotation>
+          <xs:documentation>american samoa</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ata">
+        <xs:annotation>
+          <xs:documentation>antarctica</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="atf">
+        <xs:annotation>
+          <xs:documentation>french southern territories</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="atg">
+        <xs:annotation>
+          <xs:documentation>antigua and barbuda</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="aus">
+        <xs:annotation>
+          <xs:documentation>australia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="aut">
+        <xs:annotation>
+          <xs:documentation>austria</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="aze">
+        <xs:annotation>
+          <xs:documentation>azerbaijan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bdi">
+        <xs:annotation>
+          <xs:documentation>burundi</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bel">
+        <xs:annotation>
+          <xs:documentation>belgium</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ben">
+        <xs:annotation>
+          <xs:documentation>benin</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bes">
+        <xs:annotation>
+          <xs:documentation>bonaire, sint eustatius and saba</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bfa">
+        <xs:annotation>
+          <xs:documentation>burkina faso</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bgd">
+        <xs:annotation>
+          <xs:documentation>bangladesh</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bgr">
+        <xs:annotation>
+          <xs:documentation>bulgaria</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bhr">
+        <xs:annotation>
+          <xs:documentation>bahrain</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bhs">
+        <xs:annotation>
+          <xs:documentation>bahamas</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bih">
+        <xs:annotation>
+          <xs:documentation>bosnia and herzegovina</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="blm">
+        <xs:annotation>
+          <xs:documentation>saint barthelemy</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="blr">
+        <xs:annotation>
+          <xs:documentation>belarus</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="blz">
+        <xs:annotation>
+          <xs:documentation>belize</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bmu">
+        <xs:annotation>
+          <xs:documentation>bermuda</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bol">
+        <xs:annotation>
+          <xs:documentation>bolivia, plurinational state of</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bra">
+        <xs:annotation>
+          <xs:documentation>brazil</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="brb">
+        <xs:annotation>
+          <xs:documentation>barbados</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="brn">
+        <xs:annotation>
+          <xs:documentation>brunei darussalam</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="btn">
+        <xs:annotation>
+          <xs:documentation>bhutan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bvt">
+        <xs:annotation>
+          <xs:documentation>bouvet island</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bwa">
+        <xs:annotation>
+          <xs:documentation>botswana</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="caf">
+        <xs:annotation>
+          <xs:documentation>central african republic</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="can">
+        <xs:annotation>
+          <xs:documentation>canada</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cck">
+        <xs:annotation>
+          <xs:documentation>cocos (keeling) islands</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="che">
+        <xs:annotation>
+          <xs:documentation>switzerland</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="chl">
+        <xs:annotation>
+          <xs:documentation>chile</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="chn">
+        <xs:annotation>
+          <xs:documentation>china</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="civ">
+        <xs:annotation>
+          <xs:documentation>cote d'ivoire</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cmr">
+        <xs:annotation>
+          <xs:documentation>cameroon</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cod">
+        <xs:annotation>
+          <xs:documentation>congo, the democratic republic of the</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cog">
+        <xs:annotation>
+          <xs:documentation>congo</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cok">
+        <xs:annotation>
+          <xs:documentation>cook islands</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="col">
+        <xs:annotation>
+          <xs:documentation>colombia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="com">
+        <xs:annotation>
+          <xs:documentation>comoros</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cpv">
+        <xs:annotation>
+          <xs:documentation>cape verde</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cri">
+        <xs:annotation>
+          <xs:documentation>costa rica</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cub">
+        <xs:annotation>
+          <xs:documentation>cuba</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cuw">
+        <xs:annotation>
+          <xs:documentation>curacao</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cxr">
+        <xs:annotation>
+          <xs:documentation>christmas island</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cym">
+        <xs:annotation>
+          <xs:documentation>cayman islands</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cyp">
+        <xs:annotation>
+          <xs:documentation>cyprus</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cze">
+        <xs:annotation>
+          <xs:documentation>czech republic</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="deu">
+        <xs:annotation>
+          <xs:documentation>germany</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="dji">
+        <xs:annotation>
+          <xs:documentation>djibouti</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="dma">
+        <xs:annotation>
+          <xs:documentation>dominica</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="dnk">
+        <xs:annotation>
+          <xs:documentation>denmark</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="dom">
+        <xs:annotation>
+          <xs:documentation>dominican republic</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="dza">
+        <xs:annotation>
+          <xs:documentation>algeria</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ecu">
+        <xs:annotation>
+          <xs:documentation>ecuador</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="egy">
+        <xs:annotation>
+          <xs:documentation>egypt</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="eri">
+        <xs:annotation>
+          <xs:documentation>eritrea</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="esh">
+        <xs:annotation>
+          <xs:documentation>western sahara</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="esp">
+        <xs:annotation>
+          <xs:documentation>spain</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="est">
+        <xs:annotation>
+          <xs:documentation>estonia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="eth">
+        <xs:annotation>
+          <xs:documentation>ethiopia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fin">
+        <xs:annotation>
+          <xs:documentation>finland</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fji">
+        <xs:annotation>
+          <xs:documentation>fiji</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="flk">
+        <xs:annotation>
+          <xs:documentation>falkland islands (malvinas)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fra">
+        <xs:annotation>
+          <xs:documentation>france</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fro">
+        <xs:annotation>
+          <xs:documentation>faroe islands</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fsm">
+        <xs:annotation>
+          <xs:documentation>micronesia, federated states of</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="gab">
+        <xs:annotation>
+          <xs:documentation>gabon</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="gbr">
+        <xs:annotation>
+          <xs:documentation>united kingdom</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="geo">
+        <xs:annotation>
+          <xs:documentation>georgia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ggy">
+        <xs:annotation>
+          <xs:documentation>guernsey</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="gha">
+        <xs:annotation>
+          <xs:documentation>ghana</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="gib">
+        <xs:annotation>
+          <xs:documentation>gibraltar</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="gin">
+        <xs:annotation>
+          <xs:documentation>guinea</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="glp">
+        <xs:annotation>
+          <xs:documentation>guadeloupe</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="gmb">
+        <xs:annotation>
+          <xs:documentation>gambia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="gnb">
+        <xs:annotation>
+          <xs:documentation>guinea-bissau</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="gnq">
+        <xs:annotation>
+          <xs:documentation>equatorial guinea</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="grc">
+        <xs:annotation>
+          <xs:documentation>greece</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="grd">
+        <xs:annotation>
+          <xs:documentation>grenada</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="grl">
+        <xs:annotation>
+          <xs:documentation>greenland</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="gtm">
+        <xs:annotation>
+          <xs:documentation>guatemala</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="guf">
+        <xs:annotation>
+          <xs:documentation>french guiana</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="gum">
+        <xs:annotation>
+          <xs:documentation>guam</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="guy">
+        <xs:annotation>
+          <xs:documentation>guyana</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="hkg">
+        <xs:annotation>
+          <xs:documentation>hong kong</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="hmd">
+        <xs:annotation>
+          <xs:documentation>heard island and mcdonald islands</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="hnd">
+        <xs:annotation>
+          <xs:documentation>honduras</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="hrv">
+        <xs:annotation>
+          <xs:documentation>croatia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="hti">
+        <xs:annotation>
+          <xs:documentation>haiti</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="hun">
+        <xs:annotation>
+          <xs:documentation>hungary</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="idn">
+        <xs:annotation>
+          <xs:documentation>indonesia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="imn">
+        <xs:annotation>
+          <xs:documentation>isle of man</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ind">
+        <xs:annotation>
+          <xs:documentation>india</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="iot">
+        <xs:annotation>
+          <xs:documentation>british indian ocean territory</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="irl">
+        <xs:annotation>
+          <xs:documentation>ireland</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="irn">
+        <xs:annotation>
+          <xs:documentation>iran, islamic republic of</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="irq">
+        <xs:annotation>
+          <xs:documentation>iraq</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="isl">
+        <xs:annotation>
+          <xs:documentation>iceland</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="isr">
+        <xs:annotation>
+          <xs:documentation>israel</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ita">
+        <xs:annotation>
+          <xs:documentation>italy</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="jam">
+        <xs:annotation>
+          <xs:documentation>jamaica</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="jey">
+        <xs:annotation>
+          <xs:documentation>jersey</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="jor">
+        <xs:annotation>
+          <xs:documentation>jordan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="jpn">
+        <xs:annotation>
+          <xs:documentation>japan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kaz">
+        <xs:annotation>
+          <xs:documentation>kazakhstan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ken">
+        <xs:annotation>
+          <xs:documentation>kenya</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kgz">
+        <xs:annotation>
+          <xs:documentation>kyrgyzstan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="khm">
+        <xs:annotation>
+          <xs:documentation>cambodia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kir">
+        <xs:annotation>
+          <xs:documentation>kiribati</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kna">
+        <xs:annotation>
+          <xs:documentation>saint kitts and nevis</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kor">
+        <xs:annotation>
+          <xs:documentation>korea, republic of</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="kwt">
+        <xs:annotation>
+          <xs:documentation>kuwait</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lao">
+        <xs:annotation>
+          <xs:documentation>lao people's democratic republic</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lbn">
+        <xs:annotation>
+          <xs:documentation>lebanon</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lbr">
+        <xs:annotation>
+          <xs:documentation>liberia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lby">
+        <xs:annotation>
+          <xs:documentation>libya</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lca">
+        <xs:annotation>
+          <xs:documentation>saint lucia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lie">
+        <xs:annotation>
+          <xs:documentation>liechtenstein</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lka">
+        <xs:annotation>
+          <xs:documentation>sri lanka</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lso">
+        <xs:annotation>
+          <xs:documentation>lesotho</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ltu">
+        <xs:annotation>
+          <xs:documentation>lithuania</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lux">
+        <xs:annotation>
+          <xs:documentation>luxembourg</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lva">
+        <xs:annotation>
+          <xs:documentation>latvia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mac">
+        <xs:annotation>
+          <xs:documentation>macao</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="maf">
+        <xs:annotation>
+          <xs:documentation>saint martin (french part)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mar">
+        <xs:annotation>
+          <xs:documentation>morocco</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mco">
+        <xs:annotation>
+          <xs:documentation>monaco</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mda">
+        <xs:annotation>
+          <xs:documentation>moldova, republic of</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mdg">
+        <xs:annotation>
+          <xs:documentation>madagascar</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mdv">
+        <xs:annotation>
+          <xs:documentation>maldives</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mex">
+        <xs:annotation>
+          <xs:documentation>mexico</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mhl">
+        <xs:annotation>
+          <xs:documentation>marshall islands</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mkd">
+        <xs:annotation>
+          <xs:documentation>macedonia, the former yugoslav republic of</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mli">
+        <xs:annotation>
+          <xs:documentation>mali</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mlt">
+        <xs:annotation>
+          <xs:documentation>malta</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mmr">
+        <xs:annotation>
+          <xs:documentation>myanmar</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mne">
+        <xs:annotation>
+          <xs:documentation>montenegro</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mng">
+        <xs:annotation>
+          <xs:documentation>mongolia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mnp">
+        <xs:annotation>
+          <xs:documentation>northern mariana islands</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="moz">
+        <xs:annotation>
+          <xs:documentation>mozambique</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mrt">
+        <xs:annotation>
+          <xs:documentation>mauritania</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="msr">
+        <xs:annotation>
+          <xs:documentation>montserrat</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mtq">
+        <xs:annotation>
+          <xs:documentation>martinique</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mus">
+        <xs:annotation>
+          <xs:documentation>mauritius</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mwi">
+        <xs:annotation>
+          <xs:documentation>malawi</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mys">
+        <xs:annotation>
+          <xs:documentation>malaysia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="myt">
+        <xs:annotation>
+          <xs:documentation>mayotte</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nam">
+        <xs:annotation>
+          <xs:documentation>namibia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ncl">
+        <xs:annotation>
+          <xs:documentation>new caledonia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ner">
+        <xs:annotation>
+          <xs:documentation>niger</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nfk">
+        <xs:annotation>
+          <xs:documentation>norfolk island</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nga">
+        <xs:annotation>
+          <xs:documentation>nigeria</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nic">
+        <xs:annotation>
+          <xs:documentation>nicaragua</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="niu">
+        <xs:annotation>
+          <xs:documentation>niue</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nld">
+        <xs:annotation>
+          <xs:documentation>netherlands</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nor">
+        <xs:annotation>
+          <xs:documentation>norway</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="npl">
+        <xs:annotation>
+          <xs:documentation>nepal</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nru">
+        <xs:annotation>
+          <xs:documentation>nauru</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="nzl">
+        <xs:annotation>
+          <xs:documentation>new zealand</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="omn">
+        <xs:annotation>
+          <xs:documentation>oman</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="pak">
+        <xs:annotation>
+          <xs:documentation>pakistan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="pan">
+        <xs:annotation>
+          <xs:documentation>panama</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="pcn">
+        <xs:annotation>
+          <xs:documentation>pitcairn</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="per">
+        <xs:annotation>
+          <xs:documentation>peru</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="phl">
+        <xs:annotation>
+          <xs:documentation>philippines</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="plw">
+        <xs:annotation>
+          <xs:documentation>palau</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="png">
+        <xs:annotation>
+          <xs:documentation>papua new guinea</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="pol">
+        <xs:annotation>
+          <xs:documentation>poland</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="pri">
+        <xs:annotation>
+          <xs:documentation>puerto rico</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="prk">
+        <xs:annotation>
+          <xs:documentation>korea, democratic people's republic of</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="prt">
+        <xs:annotation>
+          <xs:documentation>portugal</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="pry">
+        <xs:annotation>
+          <xs:documentation>paraguay</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="pse">
+        <xs:annotation>
+          <xs:documentation>palestinian territory, occupied</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="pyf">
+        <xs:annotation>
+          <xs:documentation>french polynesia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="qat">
+        <xs:annotation>
+          <xs:documentation>qatar</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="reu">
+        <xs:annotation>
+          <xs:documentation>reunion</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="rou">
+        <xs:annotation>
+          <xs:documentation>romania</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="rus">
+        <xs:annotation>
+          <xs:documentation>russian federation</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="rwa">
+        <xs:annotation>
+          <xs:documentation>rwanda</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sau">
+        <xs:annotation>
+          <xs:documentation>saudi arabia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sdn">
+        <xs:annotation>
+          <xs:documentation>sudan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sen">
+        <xs:annotation>
+          <xs:documentation>senegal</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sgp">
+        <xs:annotation>
+          <xs:documentation>singapore</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sgs">
+        <xs:annotation>
+          <xs:documentation>south georgia and the south sandwich islands</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="shn">
+        <xs:annotation>
+          <xs:documentation>saint helena, ascension and tristan da cunha</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sjm">
+        <xs:annotation>
+          <xs:documentation>svalbard and jan mayen</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="slb">
+        <xs:annotation>
+          <xs:documentation>solomon islands</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sle">
+        <xs:annotation>
+          <xs:documentation>sierra leone</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="slv">
+        <xs:annotation>
+          <xs:documentation>el salvador</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="smr">
+        <xs:annotation>
+          <xs:documentation>san marino</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="som">
+        <xs:annotation>
+          <xs:documentation>somalia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="spm">
+        <xs:annotation>
+          <xs:documentation>saint pierre and miquelon</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="srb">
+        <xs:annotation>
+          <xs:documentation>serbia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ssd">
+        <xs:annotation>
+          <xs:documentation>south sudan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="stp">
+        <xs:annotation>
+          <xs:documentation>sao tome and principe</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sur">
+        <xs:annotation>
+          <xs:documentation>suriname</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="svk">
+        <xs:annotation>
+          <xs:documentation>slovakia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="svn">
+        <xs:annotation>
+          <xs:documentation>slovenia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="swe">
+        <xs:annotation>
+          <xs:documentation>sweden</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="swz">
+        <xs:annotation>
+          <xs:documentation>swaziland</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sxm">
+        <xs:annotation>
+          <xs:documentation>sint maarten (dutch part)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="syc">
+        <xs:annotation>
+          <xs:documentation>seychelles</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="syr">
+        <xs:annotation>
+          <xs:documentation>syrian arab republic</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tca">
+        <xs:annotation>
+          <xs:documentation>turks and caicos islands</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tcd">
+        <xs:annotation>
+          <xs:documentation>chad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tgo">
+        <xs:annotation>
+          <xs:documentation>togo</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tha">
+        <xs:annotation>
+          <xs:documentation>thailand</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tjk">
+        <xs:annotation>
+          <xs:documentation>tajikistan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tkl">
+        <xs:annotation>
+          <xs:documentation>tokelau</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tkm">
+        <xs:annotation>
+          <xs:documentation>turkmenistan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tls">
+        <xs:annotation>
+          <xs:documentation>timor-leste</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ton">
+        <xs:annotation>
+          <xs:documentation>tonga</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tto">
+        <xs:annotation>
+          <xs:documentation>trinidad and tobago</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tun">
+        <xs:annotation>
+          <xs:documentation>tunisia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tur">
+        <xs:annotation>
+          <xs:documentation>turkey</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tuv">
+        <xs:annotation>
+          <xs:documentation>tuvalu</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="twn">
+        <xs:annotation>
+          <xs:documentation>taiwan, province of china</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="tza">
+        <xs:annotation>
+          <xs:documentation>tanzania, united republic of</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="uga">
+        <xs:annotation>
+          <xs:documentation>uganda</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ukr">
+        <xs:annotation>
+          <xs:documentation>ukraine</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="umi">
+        <xs:annotation>
+          <xs:documentation>united states minor outlying islands</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ury">
+        <xs:annotation>
+          <xs:documentation>uruguay</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="usa">
+        <xs:annotation>
+          <xs:documentation>united states</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="uzb">
+        <xs:annotation>
+          <xs:documentation>uzbekistan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="vat">
+        <xs:annotation>
+          <xs:documentation>holy see (vatican city state)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="vct">
+        <xs:annotation>
+          <xs:documentation>saint vincent and the grenadines</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ven">
+        <xs:annotation>
+          <xs:documentation>venezuela, bolivarian republic of</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="vgb">
+        <xs:annotation>
+          <xs:documentation>virgin islands, british</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="vir">
+        <xs:annotation>
+          <xs:documentation>virgin islands, u.s.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="vnm">
+        <xs:annotation>
+          <xs:documentation>viet nam</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="vut">
+        <xs:annotation>
+          <xs:documentation>vanuatu</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="wlf">
+        <xs:annotation>
+          <xs:documentation>wallis and futuna</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="wsm">
+        <xs:annotation>
+          <xs:documentation>samoa</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="yem">
+        <xs:annotation>
+          <xs:documentation>yemen</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="zaf">
+        <xs:annotation>
+          <xs:documentation>south africa</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="zmb">
+        <xs:annotation>
+          <xs:documentation>zambia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="zwe">
+        <xs:annotation>
+          <xs:documentation>zimbabwe</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="eec">
+        <xs:annotation>
+          <xs:documentation>european union</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="aaa">
+        <xs:annotation>
+          <xs:documentation>international</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dataaccesstypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="open" />
+      <xs:enumeration value="embargoed" />
+      <xs:enumeration value="restricted" />
+      <xs:enumeration value="closed" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="accesstypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="open" />
+      <xs:enumeration value="restricted" />
+      <xs:enumeration value="closed" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="accessrestrictions">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="feerequired" />
+      <xs:enumeration value="registration" />
+      <xs:enumeration value="other" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dataaccessrestrictions">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="feerequired" />
+      <xs:enumeration value="institutional membership" />
+      <xs:enumeration value="registration" />
+      <xs:enumeration value="other" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="datauploadrestrictions">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="feerequired" />
+      <xs:enumeration value="institutional membership" />
+      <xs:enumeration value="registration" />
+      <xs:enumeration value="other" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="repositorytypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="disciplinary" />
+      <xs:enumeration value="institutional" />
+      <xs:enumeration value="other" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="providertypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="dataprovider" />
+      <xs:enumeration value="serviceprovider" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="responsibilitytypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="funding" />
+      <xs:enumeration value="general" />
+      <xs:enumeration value="sponsoring" />
+      <xs:enumeration value="technical" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="institutiontypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="commercial" />
+      <xs:enumeration value="non-profit" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="databaselicensenames">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="apache license 2.0" />
+      <xs:enumeration value="bsd" />
+      <xs:enumeration value="cc" />
+      <xs:enumeration value="cc0" />
+      <xs:enumeration value="copyrights" />
+      <xs:enumeration value="odc" />
+      <xs:enumeration value="public domain" />
+      <xs:enumeration value="other" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="datalicensenames">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="apache license 2.0" />
+      <xs:enumeration value="bsd" />
+      <xs:enumeration value="cc" />
+      <xs:enumeration value="cc0" />
+      <xs:enumeration value="copyrights" />
+      <xs:enumeration value="odc" />
+      <xs:enumeration value="ogl" />
+      <xs:enumeration value="oglc" />
+      <xs:enumeration value="public domain" />
+      <xs:enumeration value="rl" />
+      <xs:enumeration value="other" />
+      <xs:enumeration value="none" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="softwarenames">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ckan" />
+      <xs:enumeration value="dataverse" />
+      <xs:enumeration value="digitalcommons" />
+      <xs:enumeration value="dlibra" />
+      <xs:enumeration value="dspace" />
+      <xs:enumeration value="eprints" />
+      <xs:enumeration value="escidoc" />
+      <xs:enumeration value="fedora" />
+      <xs:enumeration value="mysql" />
+      <xs:enumeration value="nesstar" />
+      <xs:enumeration value="opus" />
+      <xs:enumeration value="other" />
+      <xs:enumeration value="unknown" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="apitypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ftp" />
+      <xs:enumeration value="netcdf" />
+      <xs:enumeration value="oai-pmh" />
+      <xs:enumeration value="opendap" />
+      <xs:enumeration value="rest" />
+      <xs:enumeration value="soap" />
+      <xs:enumeration value="sparql" />
+      <xs:enumeration value="sword" />
+      <xs:enumeration value="other" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="pidsystems">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ark" />
+      <xs:enumeration value="doi" />
+      <xs:enumeration value="hdl" />
+      <xs:enumeration value="purl" />
+      <xs:enumeration value="urn" />
+      <xs:enumeration value="other" />
+      <xs:enumeration value="none" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="aidsystems">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="authorclaim" />
+      <xs:enumeration value="isni" />
+      <xs:enumeration value="orcid" />
+      <xs:enumeration value="researcherid" />
+      <xs:enumeration value="other" />
+      <xs:enumeration value="none" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="certificates">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="clarin certificate b" />
+      <xs:enumeration value="din 31644" />
+      <xs:enumeration value="dini certificate" />
+      <xs:enumeration value="drambora" />
+      <xs:enumeration value="dsa" />
+      <xs:enumeration value="iso 16363" />
+      <xs:enumeration value="iso 16919" />
+      <xs:enumeration value="ratswd" />
+      <xs:enumeration value="trac" />
+      <xs:enumeration value="trusted digital repository" />
+      <xs:enumeration value="wds" />
+      <xs:enumeration value="other" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="metadatastandarddccnames">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="abcd - access to biological collection data">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/abcd-access-biological-collection-data</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="agmes - agricultural metadata element set">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/agmes-agricultural-metadata-element-set</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="avm - astronomy visualization metadata">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/avm-astronomy-visualization-metadata</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cf (climate and forecast) metadata conventions">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/cf-climate-and-forecast-metadata-conventions</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cif - crystallographic information framework">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/cif-crystallographic-information-framework</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cim - common information model">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/cim-common-information-model</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="csmd-cclrc core scientific metadata model">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/csmd-cclrc-core-scientific-metadata-model</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="darwin core">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/darwin-core</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="datacite metadata schema">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/datacite-metadata-schema</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="dcat - data catalog vocabulary">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/dcat-data-catalog-vocabulary</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ddi - data documentation initiative">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/ddi-data-documentation-initiative</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="dif - directory interchange format">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/dif-directory-interchange-format</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="dublin core">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/dublin-core</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="eml - ecological metadata language">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/eml-ecological-metadata-language</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fgdc/csdgm - federal geographic data committee content standard for digital geospatial metadata">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/fgdccsdgm-federal-geographic-data-committee-content-standard-digital-ge</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fits - flexible image transport system">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/fits-flexible-image-transport-system</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="genome metadata">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/genome-metadata</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="international virtual observatory alliance technical specifications">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/international-virtual-observatory-alliance-technical-specifications</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="isa-tab">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/isa-tab</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="iso 19115">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/iso-19115</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="mibbi - minimum information for biological and biomedical investigations">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/mibbi-minimum-information-biological-and-biomedical-investigations</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="midas-heritage">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/midas-heritage</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="oai-ore - open archives initiative object reuse and exchange">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/oai-ore-open-archives-initiative-object-reuse-and-exchange</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="observ-om">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/observ-om</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="observations and measurements">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/observations-and-measurements</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ome-xml - open microscopy environment xml">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/ome-xml-open-microscopy-environment-xml</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="protocol data element definitions">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/protocol-data-element-definitions</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="prov">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/prov</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="qudex - qualitative data exchange format">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/qudex-qualitative-data-exchange-format</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="rdf data cube vocabulary">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/rdf-data-cube-vocabulary</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="repository-developed metadata schemas">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/repository-developed-metadata-schemas</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sdmx - statistical data and metadata exchange">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/sdmx-statistical-data-and-metadata-exchange</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="spase data model">
+        <xs:annotation>
+          <xs:documentation>http://www.dcc.ac.uk/resources/metadata-standards/spase-data-model</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="other">
+        <xs:annotation>
+          <xs:documentation>other</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="metadatastandarddccurls">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/abcd-access-biological-collection-data">
+        <xs:annotation>
+          <xs:documentation>abcd - access to biological collection data</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/agmes-agricultural-metadata-element-set">
+        <xs:annotation>
+          <xs:documentation>agmes - agricultural metadata element set</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/avm-astronomy-visualization-metadata">
+        <xs:annotation>
+          <xs:documentation>avm - astronomy visualization metadata</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/cf-climate-and-forecast-metadata-conventions">
+        <xs:annotation>
+          <xs:documentation>cf (climate and forecast) metadata conventions</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/cif-crystallographic-information-framework">
+        <xs:annotation>
+          <xs:documentation>cif - crystallographic information framework</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/cim-common-information-model">
+        <xs:annotation>
+          <xs:documentation>cim - common information model</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/csmd-cclrc-core-scientific-metadata-model">
+        <xs:annotation>
+          <xs:documentation>csmd-cclrc core scientific metadata model</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/darwin-core">
+        <xs:annotation>
+          <xs:documentation>darwin core</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/datacite-metadata-schema">
+        <xs:annotation>
+          <xs:documentation>datacite metadata schema</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/dcat-data-catalog-vocabulary">
+        <xs:annotation>
+          <xs:documentation>dcat - data catalog vocabulary</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/ddi-data-documentation-initiative">
+        <xs:annotation>
+          <xs:documentation>ddi - data documentation initiative</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/dif-directory-interchange-format">
+        <xs:annotation>
+          <xs:documentation>dif - directory interchange format</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/dublin-core">
+        <xs:annotation>
+          <xs:documentation>dublin core</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/eml-ecological-metadata-language">
+        <xs:annotation>
+          <xs:documentation>eml - ecological metadata language</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/fgdccsdgm-federal-geographic-data-committee-content-standard-digital-ge">
+        <xs:annotation>
+          <xs:documentation>fgdc/csdgm - federal geographic data committee content standard for digital geospatial metadata</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/fits-flexible-image-transport-system">
+        <xs:annotation>
+          <xs:documentation>fits - flexible image transport system</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/genome-metadata">
+        <xs:annotation>
+          <xs:documentation>genome metadata</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/international-virtual-observatory-alliance-technical-specifications">
+        <xs:annotation>
+          <xs:documentation>international virtual observatory alliance technical specifications</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/isa-tab">
+        <xs:annotation>
+          <xs:documentation>isa-tab</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/iso-19115">
+        <xs:annotation>
+          <xs:documentation>iso 19115</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/mibbi-minimum-information-biological-and-biomedical-investigations">
+        <xs:annotation>
+          <xs:documentation>mibbi - minimum information for biological and biomedical investigations</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/midas-heritage">
+        <xs:annotation>
+          <xs:documentation>midas-heritage</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/oai-ore-open-archives-initiative-object-reuse-and-exchange">
+        <xs:annotation>
+          <xs:documentation>oai-ore - open archives initiative object reuse and exchange</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/observ-om">
+        <xs:annotation>
+          <xs:documentation>observ-om</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/observations-and-measurements">
+        <xs:annotation>
+          <xs:documentation>observations and measurements</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/ome-xml-open-microscopy-environment-xml">
+        <xs:annotation>
+          <xs:documentation>ome-xml - open microscopy environment xml</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/protocol-data-element-definitions">
+        <xs:annotation>
+          <xs:documentation>protocol data element definitions</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/prov">
+        <xs:annotation>
+          <xs:documentation>prov</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/qudex-qualitative-data-exchange-format">
+        <xs:annotation>
+          <xs:documentation>qudex - qualitative data exchange format</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/rdf-data-cube-vocabulary">
+        <xs:annotation>
+          <xs:documentation>rdf data cube vocabulary</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/repository-developed-metadata-schemas">
+        <xs:annotation>
+          <xs:documentation>repository-developed metadata schemas</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/sdmx-statistical-data-and-metadata-exchange">
+        <xs:annotation>
+          <xs:documentation>sdmx - statistical data and metadata exchange</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="http://www.dcc.ac.uk/resources/metadata-standards/spase-data-model">
+        <xs:annotation>
+          <xs:documentation>spase data model</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="other">
+        <xs:annotation>
+          <xs:documentation>other</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="syndicationtypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="atom" />
+      <xs:enumeration value="rss" />
+      <xs:enumeration value="other" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="yesno">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="yes" />
+      <xs:enumeration value="no" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="yesnoun">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="yes" />
+      <xs:enumeration value="no" />
+      <xs:enumeration value="unknown" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="stringl1000">
+	<xs:restriction base="xs:string">
+	  <xs:maxLength value="1000"/>
+	</xs:restriction>
+  </xs:simpleType>
+  <xs:element name="re3data" msdata:prefix="r3d">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="repository" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="re3data.orgidentifier" msdata:prefix="r3d" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>a globally unique and persistent identifier that refers to the research data repository entry in re3data.dorg. the id is assigned by re3data.org.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="repositoryname" msdata:prefix="r3d" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>the full name of the research data repository.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="language" msdata:prefix="r3d" type="languages" form="unqualified" use="required">
+                        <xs:annotation>
+                          <xs:documentation>language of the research data repository name.</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="additionalname" msdata:prefix="r3d" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>the alternative name or acronym for the research data repository.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="language" msdata:prefix="r3d" type="languages" form="unqualified" use="required">
+                        <xs:annotation>
+                          <xs:documentation>language of the research data repository additional name.</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="repositoryurl" msdata:prefix="r3d" type="xs:anyURI" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>the url, which gives reference to the research data repository.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="repositoryidentifier" msdata:prefix="r3d" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>a globally unique identifier (identifier in form of a link) that refers to the research data repository (e.g. doi, urn, viaf, gnd).</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="description" msdata:prefix="r3d" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>a textual description containing additional information about the data repository (primary language is english).</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="stringl1000">
+                      <xs:attribute name="language" msdata:prefix="r3d" type="languages" form="unqualified" use="required">
+                        <xs:annotation>
+                          <xs:documentation>language of the research data repository description.</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="repositorycontact" msdata:prefix="r3d" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>email address of the contact or an url of an online contact form of the repository.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="type" msdata:prefix="r3d" type="repositorytypes" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>the type of the research data repository.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="size" msdata:prefix="r3d" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>the number of items contained in the research data repository.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="updated" msdata:prefix="r3d" type="dateFormat" use="required" form="unqualified">
+                        <xs:annotation>
+                          <xs:documentation>the date of the last update of the research data repository size.</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="startdate" msdata:prefix="r3d" type="dateFormat" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>releasing date of the research data repository.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="enddate" msdata:prefix="r3d" type="dateFormat" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>date when the research data repository went offline or stopped ingesting new research data (still making the research data available).</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="repositorylanguage" msdata:prefix="r3d" type="languages" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>the user interface language of the research data repository.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="subject" msdata:prefix="r3d" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>the subject(s) of the research data repository.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="subject_text">
+                      <xs:attribute name="subjectScheme" form="unqualified" use="required">
+                        <xs:annotation>
+                          <xs:documentation>the subject scheme according to which the subject (see id 13 subject) of the research data repository described.</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:enumeration value="DFG" />
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:attribute>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="missionstatementurl" msdata:prefix="r3d" type="xs:anyURI" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>the url of a mission statement describing the designated community of the research data repository.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="contenttype" msdata:prefix="r3d" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>all types of resources available in the research data repository.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="contenttype_text">
+                      <xs:attribute name="contenttypescheme" form="unqualified" use="required">
+                        <xs:annotation>
+                          <xs:documentation>the name and/or url of the subject scheme or classification code (e.g.parse).</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:enumeration value="parse" />
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:attribute>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="providertype" msdata:prefix="r3d" type="providertypes" minOccurs="1" maxOccurs="2">
+                <xs:annotation>
+                  <xs:documentation>the type of provider.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="keyword" msdata:prefix="r3d" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>english keyword(s) describing the subject focus of the research data repository.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="institution" msdata:prefix="r3d" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>all institutions being responsible for funding, creating and/or running the research data repository (wrapper element).</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="institutionname" msdata:prefix="r3d" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>name of the responsible institution.</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute name="language" msdata:prefix="r3d" type="languages" form="unqualified" use="required">
+                              <xs:annotation>
+                                <xs:documentation>language of the institution name.</xs:documentation>
+                              </xs:annotation>
+                            </xs:attribute>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="institutionadditionalname" msdata:prefix="r3d" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>the alternative name or acronym for the responsible institution.</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute name="language" msdata:prefix="r3d" type="languages" form="unqualified" use="required">
+                              <xs:annotation>
+                                <xs:documentation>language of the institution additional name.</xs:documentation>
+                              </xs:annotation>
+                            </xs:attribute>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="institutioncountry" msdata:prefix="r3d" type="countries" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>location of the responsible institution.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="responsibilitytype" msdata:prefix="r3d" type="responsibilitytypes" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>type of responsibility for each responsible institution.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="institutiontype" msdata:prefix="r3d" type="institutiontypes" minOccurs="0" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>type of responsible institution.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="institutionurl" msdata:prefix="r3d" type="xs:anyURI" minOccurs="0" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>url of the responsible institution.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="institutionidentifier" msdata:prefix="r3d" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>a globally unique identifier that refers to the institution (e.g. isni, viaf, gnd).</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="responsibilitystartdate" msdata:prefix="r3d" type="dateFormat" minOccurs="0" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>start date of period of responsibility.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="responsibilityenddate" msdata:prefix="r3d" type="dateFormat" minOccurs="0" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>end date of period of responsibility.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="institutioncontact" msdata:prefix="r3d" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>email address of the contact or an url of an online contact form of the institution.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="policy" msdata:prefix="r3d" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>any kind of policy (e.g. data policy, etc.) provided by the research data repository to clarify legal aspects (wrapper element).</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="policyname" msdata:prefix="r3d" type="xs:string" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>name of the policy.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="policyurl" msdata:prefix="r3d" type="xs:anyURI" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>url of the policy.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="databaseaccess" msdata:prefix="r3d" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>(wrapper element)</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="databaseaccesstype" msdata:prefix="r3d" type="accesstypes" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>type of access to the research data repository.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="databaseaccessrestriction" msdata:prefix="r3d" type="accessrestrictions" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>all existing access restrictions to the research data repository. (required if restricted is chosen).</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="databaselicense" msdata:prefix="r3d" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>database license of the research data repository (wrapper element).</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="databaselicensename" msdata:prefix="r3d" type="databaselicensenames" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>name of database license.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="databaselicenseurl" msdata:prefix="r3d" type="xs:anyURI" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>database license url.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="dataaccess" msdata:prefix="r3d" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>(wrapper element)</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="dataaccesstype" msdata:prefix="r3d" type="dataaccesstypes" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>type of access to data.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="dataaccessrestriction" msdata:prefix="r3d" type="dataaccessrestrictions" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>all existing access restrictions to the research data. (required if restricted is chosen).</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="datalicense" msdata:prefix="r3d" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>license of the data, existing in the research data repository. (wrapper element)</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="datalicensename" msdata:prefix="r3d" type="datalicensenames" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>name of the data license.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="datalicenseurl" msdata:prefix="r3d" type="xs:anyURI" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>data license url.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="dataupload" msdata:prefix="r3d" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>(wrapper element)</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="datauploadtype" msdata:prefix="r3d" type="accesstypes" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>type of data upload.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="datauploadrestriction" msdata:prefix="r3d" type="datauploadrestrictions" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>all existing restrictions to the data upload. (required if restricted is chosen).</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="datauploadlicense" msdata:prefix="r3d" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>the license for data upload (wrapper element).</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="datauploadlicensename" msdata:prefix="r3d" type="xs:string" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>name of the license for data upload.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="datauploadlicenseurl" msdata:prefix="r3d" type="xs:anyURI" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>data upload license url.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="software" msdata:prefix="r3d" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>the software that is used to run the research data repository (wrapper element).</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="softwarename" msdata:prefix="r3d" type="softwarenames" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>name of the research data repository software.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="versioning" msdata:prefix="r3d" type="yesno" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>the research data repository supports versioning of research data.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="api" msdata:prefix="r3d" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>api url.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:anyURI">
+                      <xs:attribute name="apitype" msdata:prefix="r3d" type="apitypes" form="unqualified" use="required">
+                        <xs:annotation>
+                          <xs:documentation>type of api.</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="pidsystem" msdata:prefix="r3d" type="pidsystems" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>the persistent identifier system that is used by the research data repository.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="citationguidelineurl" msdata:prefix="r3d" type="xs:anyURI" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>the url of the research data repository providing information on how to cite its research data. the datacite citation format is recommended (http://www.datacite.org/whycitedata).</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="aidsystem" msdata:prefix="r3d" type="aidsystems" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>the author identifier system that is used by the research data repository.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="enhancedpublication" msdata:prefix="r3d" type="yesnoun" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>the research data repository offers the interlinking between publications and data.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="qualitymanagement" msdata:prefix="r3d" type="yesnoun" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>any form of quality management concerning the data or metadata of the research data repository.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="certificate" msdata:prefix="r3d" type="certificates" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>the certificate, seal or standard the research data repository complies with.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="metadatastandard" msdata:prefix="r3d" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>(wrapper element)</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="metadatastandardname" msdata:prefix="r3d" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>metadata standards the research data repository complies with.</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="metadatastandarddccnames">
+                            <xs:attribute name="metadatastandardscheme" form="unqualified" use="required">
+                              <xs:annotation>
+                                <xs:documentation>the scheme of the metadata standards.</xs:documentation>
+                              </xs:annotation>
+                              <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                  <xs:enumeration value="dcc" />
+                                </xs:restriction>
+                              </xs:simpleType>
+                            </xs:attribute>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="metadatastandardurl" msdata:prefix="r3d" type="metadatastandarddccurls" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>the url of the metadata standard.</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="syndication" msdata:prefix="r3d" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>url of the alerting service(s) provided by the research data repository.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:anyURI">
+                      <xs:attribute name="syndicationtype" msdata:prefix="r3d" type="syndicationtypes" form="unqualified" use="required">
+                        <xs:annotation>
+                          <xs:documentation>type of alerting service.</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="remarks" msdata:prefix="r3d" type="xs:string" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>additional remarks that are visible to all users.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="entrydate" msdata:prefix="r3d" type="dateFormat" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>the date the research data repository was indexed in re3data.org.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="lastupdate" msdata:prefix="r3d" type="dateFormat" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>the date the metadata of the research data repository was updated.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
