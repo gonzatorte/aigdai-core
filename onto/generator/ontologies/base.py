@@ -5,6 +5,7 @@ from .foaf import initiate as foaf_initiate, onto as foaf_ns
 
 onto = get_ontology("http://test.org/base.owl")
 
+# instances_by_class = {}
 
 def initiate():
     foaf_initiate()
@@ -62,15 +63,32 @@ def initiate():
             locstr("idioma", lang="es"),
         ]
 
-        # ToDo: Separarlo a un archivo aparte
-        # ToDo: Definirlo como una entidad
-        class pais(Datatype):
-            equivalent_to = [OneOf(list(map(lambda xx: xx[0], cts.countries)))]
-        # 	owl:onDatatype  xsd:string ;
-        # 	owl:withRestrictions (  [ xsd:pattern "[a-b]{3}" ] )
+        class locacion(Thing):
+            pass
+        locacion.nombre_usual = [
+            locstr("locación", lang="es"),
+            locstr("location", lang="en"),
+        ]
+
+        class pais(locacion):
+            pass
         pais.nombre_usual = [
             locstr("país", lang="es"),
             locstr("country", lang="en"),
+        ]
+
+        class bloque_comercial(locacion):
+            pass
+        bloque_comercial.nombre_usual = [
+            locstr("bloque comercial", lang="es"),
+            locstr("trade bloc", lang="en"),
+        ]
+
+        class planeta(locacion):
+            pass
+        planeta.nombre_usual = [
+            locstr("planeta", lang="es"),
+            locstr("planet", lang="en"),
         ]
 
         class disciplina(Thing):
@@ -104,6 +122,30 @@ def initiate():
         class es_disciplina_afin(disciplina >> disciplina):
             pass
 
+        class alfa_3_de_pais(DataProperty, FunctionalProperty):
+            domain = [pais]
+            range = [str]
+
+        class nombre_de_pais(DataProperty, FunctionalProperty):
+            domain = [pais]
+            range = [str]
+
+        class nombre_de_bloque(DataProperty, FunctionalProperty):
+            domain = [bloque_comercial]
+            range = [str]
+
+        class sigla_de_bloque(DataProperty, FunctionalProperty):
+            domain = [bloque_comercial]
+            range = [str]
+
+        class nombre_de_bloque(DataProperty, FunctionalProperty):
+            domain = [pais]
+            range = [str]
+
+        class includido_en(ObjectProperty, TransitiveProperty):
+            domain = [locacion]
+            range = [locacion]
+
         class formato_de_archivo(Thing):
             pass
         formato_de_archivo.nombre_usual = [
@@ -120,7 +162,7 @@ def initiate():
         #  De hecho aparecen los código de país AAA y EUR que comprenden varios países
         class se_ubica_en(DataProperty, FunctionalProperty):
             domain = [organizacion]
-            range = [pais]
+            range = [locacion]
 
         class tiene_nombre(DataProperty, FunctionalProperty):
             domain = [organizacion]
@@ -134,8 +176,18 @@ def initiate():
             # ToDo: reactivar
             # range = [foaf_ns.name]
 
-        class organizacion_es_identificada_por(organizacion >> tipo_de_identificador_de_organizacion):
+        class identificador_de_organizacion(Thing):
             pass
+        identificador_de_organizacion.nombre_usual = [
+            locstr("identificador de organizacion", lang="es"),
+            locstr("organization identifier", lang="en"),
+        ]
+        class identificador_de_organizacion_tiene_tipo(ObjectProperty, FunctionalProperty):
+            domain = [identificador_de_organizacion]
+            range = [tipo_de_identificador_de_organizacion]
+        class identificador_de_organizacion_identifica_organizacion(ObjectProperty, FunctionalProperty):
+            domain = [identificador_de_organizacion]
+            range = [organizacion]
 
         class id_de_organizacion(DataProperty, FunctionalProperty):
             domain = [organizacion_es_identificada_por]
@@ -150,12 +202,14 @@ def initiate():
             'tabla',
         ]))
         AllDifferent(formato_de_archivo_instances)
+        # instances_by_class[formato_de_archivo] = {x.name: x for x in formato_de_archivo_instances}
         tipo_de_datos_instances = list(map(tipo_de_dato, [
             'articulo',
             'cuaderno_de_laboratorio',
             'entrevista',
         ]))
         AllDifferent(tipo_de_datos_instances)
+        # instances_by_class[tipo_de_dato] = {x.name: x for x in tipo_de_datos_instances}
 
         class url(Datatype):
             domain = [Thing]
@@ -185,17 +239,45 @@ def initiate():
         #
         # declare_datatype(Hex, "http://www.w3.org/2001/XMLSchema#hexBinary", parser, unparser)
 
-        def tree_walk(forest, parent):
+        # instances_by_class[disciplina] = {}
+        def tree_walk_disciplina(forest, parent):
             for tr in forest:
                 ds = disciplina(tr[0])
+                # instances_by_class[disciplina][ds.name] = ds
                 ds.nombre_de_disciplina = tr[1]
                 if parent is not None:
                     ds.es_sub_disciplina_de.append(parent)
                 if len(tr) >= 3:
                     children = tr[2]
-                    tree_walk(children, ds)
+                    tree_walk_disciplina(children, ds)
 
-        tree_walk(cts.dfg_subjects, None)
+        tree_walk_disciplina(cts.dfg_subjects, None)
+
+        # instances_by_class[locacion] = {}
+        cys = []
+        planeta_tierra = planeta('tierra')
+        for country_or_block in cts.countries:
+            if len(country_or_block) >= 3:
+                bl = bloque_comercial(country_or_block[0])
+                # instances_by_class[locacion][bl.name] = bl
+                bl.sigla_de_bloque = country_or_block[0]
+                bl.nombre_de_bloque = country_or_block[1]
+                bl.includido_en.append(planeta_tierra)
+                for country in country_or_block[2]:
+                    cy = pais(country[0])
+                    # instances_by_class[locacion][cy.name] = cy
+                    cy.alfa_3_de_pais = country[0]
+                    cy.nombre_de_pais = country[1]
+                    cy.includido_en.append(bl)
+                    cys.append(cy)
+            else:
+                cy = pais(country_or_block[0])
+                # instances_by_class[locacion][cy.name] = cy
+                cy.alfa_3_de_pais = country_or_block[0]
+                cy.nombre_de_pais = country_or_block[1]
+                cy.includido_en.append(planeta_tierra)
+                cys.append(cy)
+        AllDifferent(cys)
 
     # ToDo: relacion skos:ConceptScheme y skos:Concept son creo para modelar tesauros y clasificaciones
     #  Se le dice que una instancia es un concepto y el conceptSchema es el criterio de clasificación

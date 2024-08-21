@@ -1,5 +1,4 @@
 import httpx
-import asyncio
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 # from sqlalchemy import create_engine
 # from sqlalchemy.orm import Session
@@ -7,7 +6,7 @@ from sqlalchemy import select
 
 from relational_schema import Repositorio
 from lib import run_in_parallel
-from lib.no_relational_database import get_database_client, get_database_client_async
+from lib.no_relational_database import get_database_client
 from re3data.extractor import raw_extract, list_repositories
 from re3data.xsd_transform import refine_repository_info, load_schema, TransformError
 
@@ -22,8 +21,6 @@ async def get_sessions():
 
 
 BLACKLIST = [
-    # unico con 2 instituciones o mas
-    'r3d100000002',
     # mal formateados de alguna manera. Errores del estilo:
     #   Unexpected child with tag 'dataLicense' at position XX. Tag 'dataAccess' expected.
     #   Unexpected child with tag 'keyword' at position XX. Tag 'providerType' expected.

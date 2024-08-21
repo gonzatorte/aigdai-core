@@ -6,6 +6,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: aigdai-user
       MONGO_INITDB_ROOT_PASSWORD: aigdai-password
+    volumes:
+      - './mongo-data:/data/db'
     ports:
       - 27017:27017
 
@@ -17,6 +19,8 @@ services:
       POSTGRES_DB: 'ontopdb'
       POSTGRES_USER: 'ontopuser'
       POSTGRES_PASSWORD: 'ontoppass'
+    volumes:
+      - './postgres-data:/var/lib/postgresql'
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ontopuser -d ontopdb"]
       interval: 10s

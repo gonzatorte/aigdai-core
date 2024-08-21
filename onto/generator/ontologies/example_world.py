@@ -51,7 +51,7 @@ def initiate():
 
         unr = base_onto.organizacion('unr')
         # print('universidad_de_rosario', unr.get_properties(), base_onto.se_ubica_en.domain)
-        unr.se_ubica_en = 'ARG'
+        unr.se_ubica_en = base_onto.pais('ARG')
         unr_identificacion_dada_por_ror = unr.organizacion_es_identificada_por.append(tipo_de_id_ror)
         unr_identificacion_dada_por_ror.id_de_organizacion = '02tphfq59'
 
