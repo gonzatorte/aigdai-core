@@ -14,10 +14,10 @@ def initiate():
     repo_initiate()
     full_initiate()
     with onto:
-        tipo_de_id_ror = base_onto.tipo_de_identificador_de_organizacion('ROR')
+        tipo_de_id_ror = base_onto.tipo_de_id_de_organizacion('ROR')
         # GRID está deprecado ¿incluirlo por completitud?
-        # tipo_de_identificador_de_organizacion('GRID')
-        base_onto.tipo_de_identificador_de_organizacion('ISNI')
+        # tipo_de_id_de_organizacion('GRID')
+        base_onto.tipo_de_id_de_organizacion('ISNI')
 
         repo_onto.repositorio('the_world_bank_open_data')
         repo_onto.repositorio('worldwide_protein_data_bank')
@@ -47,24 +47,29 @@ def initiate():
         some_dataset = dataset_onto.cdd('doi:10.57715/UNR/PEFY4Q')
 
         decreto_478_2013 = repo_onto.agregador('Decreto_478_2013')
-        ley_104 = repo_onto.agregador('Ley #104')
+        ley_104 = repo_onto.agregador('Ley104')
 
         unr = base_onto.organizacion('unr')
         # print('universidad_de_rosario', unr.get_properties(), base_onto.se_ubica_en.domain)
         unr.se_ubica_en = base_onto.pais('ARG')
-        unr_identificacion_dada_por_ror = unr.organizacion_es_identificada_por.append(tipo_de_id_ror)
-        unr_identificacion_dada_por_ror.id_de_organizacion = '02tphfq59'
+        unr_identificacion_dada_por_ror = base_onto.id_de_organizacion('02tphfq59')
+        unr_identificacion_dada_por_ror.id_de_organizacion_tiene_tipo = tipo_de_id_ror
+        unr_identificacion_dada_por_ror.id_de_organizacion_tiene_literal = '02tphfq59'
+        unr_identificacion_dada_por_ror.id_de_organizacion_tiene_organizacion = unr
 
         unr.tipo_de_organizacion = 'no-comercial'
 
         rda_unr.utiliza_motor = dataverse
         rda_unr.es_cosechado_por.append(lareferencia)
-        relacion_rda_unr_con_unr = rda_unr.relacionado_con_organizacion.append(unr)
-        relacion_rda_unr_con_unr.tiene_tipo_de_relacion_con_organizacion = "administrativa"
-        rda_unr.relacionado_con_organizacion.append(unr)
+        relacion_unr_unrrda = repo_onto.relacion_repositorio_y_organizacion('unr_mantiene_urn_rda')
+        relacion_unr_unrrda.relacion_repositorio_y_organizacion_tiene_organizacion = unr
+        relacion_unr_unrrda.relacion_repositorio_y_organizacion_tiene_repositorio = rda_unr
+        relacion_unr_unrrda.tiene_tipo_de_relacion_con_organizacion = "administrativa"
         rda_unr.usa_lenguaje.append('spa')
-        rda_unr_catalogado_por_re3data = rda_unr.es_catalogado_por.append(re3data)
-        rda_unr_catalogado_por_re3data.id_de_repositorio('r3d100013960')
+        r3d100013960 = repo_onto.id_de_catalogacion_de_repositorio('r3d100013960')
+        r3d100013960.id_de_catalogacion_de_repositorio_tiene_catalogo = re3data
+        r3d100013960.id_de_catalogacion_de_repositorio_tiene_repositorio = rda_unr
+        r3d100013960.id_de_catalogacion_de_repositorio_tiene_literal = 'r3d100013960'
 
 
 if __name__ == '__main__':

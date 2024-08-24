@@ -54,99 +54,106 @@ async def query_cursors(chunk_size: int, sleep: float, from_cursor: str=None):
                 yield end_cursor
                 await asyncio.sleep(sleep)
 
-def get_query_str(attrs: list[str]):
-    repository_stats = [
-        'downloadCount',
-        'viewCount',
-    ]
-    repository_summary = '''
-      personToWorkTypesMultilevel {
-        count
-        id
-        title
-      }
-      authors {
-        count
-        id
-        title
-      }
-      affiliations {
-        count
-        id
-        title
-      }
-      creatorsAndContributors {
-        count
-        id
-        title
-      }
-      registrationAgencies {
-        count
-        id
-        title
-      }
-      openLicenseResourceTypes {
-        count
-        id
-        title
-      }
-      fieldsOfScience {
-        count
-        id
-        title
-      }
-      fieldsOfScienceCombined {
-        count
-        id
-        title
-      }
-      fieldsOfScienceRepository {
-        count
-        id
-        title
-      }
-      funders {
-        count
-        id
-        title
-      }
-      languages {
-        count
-        id
-        title
-      }
-      licenses {
-        count
-        id
-        title
-      }
-      published {
-        count
-        id
-        title
-      }
-    '''
+REPOSITORY_EXTRA_FACETS = [
+    'personToWorkTypesMultilevel',
+    'authors',
+    'affiliations',
+    'creatorsAndContributors',
+    'registrationAgencies',
+    'openLicenseResourceTypes',
+    'fieldsOfScience',
+    'fieldsOfScienceCombined',
+    'fieldsOfScienceRepository',
+    'funders',
+    'languages',
+    'licenses',
+    'published',
+]
 
-    # '''
-    # identifiers {
-    #   identifierType
-    #   identifier
-    # }
-    # '''
+REPOSITORY_ATTRS = [
+    'clientId',
+    're3dataUrl',
+    're3dataDoi',
+    'type',
+    'repositoryType',
+    'alternateName',
+    'pidSystem',
+    'certificate',
+    'downloadCount',
+    'viewCount',
+]
+
+REPOSITORY_EXTRA_ATTRS = [
+    'providerType',
+    ('subject', '''
+    {
+      termCode
+      description
+      inDefinedTermSet
+      name
+    }
+    '''),
+    ('dataAccess', '''
+    {
+      restriction {
+        text
+      }
+      type
+    }
+    '''),
+    'citationCount',
+    ('dataUpload', '''
+    {
+      restriction {
+        text
+      }
+      type
+    }
+    '''),
+    'keyword',
+    'language',
+]
+
+DATASET_EXTRA_ATTRS = [
+    'viewCount',
+    ('rights', '''
+    {
+      rights
+      rightsIdentifier
+      rightsUri
+      rightsIdentifierScheme
+      schemeUri
+    }
+    '''),
+    ('titles', '''
+    {
+      lang
+      title
+      titleType
+    }
+    '''),
+    ('identifiers', '''
+    identifiers {
+      identifierType
+      identifier
+    }
+    '''),
+]
+
+def get_query_str(attrs: list[str], update_flow: bool=False):
+    repository_extra_facets = ['''
+      %s {
+        count
+        id
+        title
+      }
+    ''' % (aa, ) for aa in REPOSITORY_EXTRA_FACETS]
     query_repository = '''
         %s
-        %s
         datasets {
-          totalCount
           %s
         }
-        dataManagementPlans {
-          totalCount
-          nodes {
-            doi
-          }
-        }
-    ''' % ('\n'.join(attrs), '\n'.join(repository_stats), repository_summary)
+    ''' % ('\n'.join(attrs), '\n'.join(repository_extra_facets))
     return '''
     query Foo($first: Int!, $cursor: String) {
       repositories(first: $first, after: $cursor) {
@@ -163,10 +170,10 @@ def get_query_str(attrs: list[str]):
 class CannotGetName(Exception):
     pass
 
-async def query_repositories(http_client: httpx.AsyncClient, attrs: list[str], first: int=None, cursor: str=None):
+async def query_repositories(http_client: httpx.AsyncClient, attrs: list[str], first: int=None, cursor: str=None, update_flow: bool=False):
     print("fetching", cursor)
     repository_metadata_response = await http_client.post(GRAPHQL_ENDPOINT, json={
-        "query": get_query_str(attrs),
+        "query": get_query_str(attrs, update_flow),
         "variables": {'first': first, 'cursor': cursor},
     }, timeout=90)
     json_data = repository_metadata_response.json()
@@ -178,25 +185,16 @@ async def query_repositories(http_client: httpx.AsyncClient, attrs: list[str], f
     data = json_data['data']['repositories']
     return {dd['node']['uid']: dd['node'] for dd in data['edges'] if dd['node'] is not None}
 
-async def query_repositories_w_retry(http_client: httpx.AsyncClient, first: int=None, cursor: str=None):
-    attrs = [
-        'name',
-        'clientId',
-        're3dataUrl',
-        're3dataDoi',
-        'type',
-        'repositoryType',
-        'alternateName',
-        'pidSystem',
-        'certificate',
-    ]
+async def query_repositories_w_retry(http_client: httpx.AsyncClient, first: int=None, cursor: str=None, update_flow: bool=False):
+    attrs = REPOSITORY_ATTRS[:]
+    attrs.append('name')
     try:
-        return await query_repositories(http_client, attrs, first, cursor)
+        return await query_repositories(http_client, attrs, first, cursor, update_flow)
     except CannotGetName:
         attrs.remove('name')
-        return await query_repositories(http_client, attrs, first, cursor)
+        return await query_repositories(http_client, attrs, first, cursor, update_flow)
 
-async def walk_page(chunk_size: int, chunk_count: int, sleep: float, from_cursor: str=None):
+async def walk_page(chunk_size: int, chunk_count: int, sleep: float, from_cursor: str=None, update_flow: bool=False):
     cnt = 0
     async def cursor_generator():
         yield from_cursor
@@ -204,7 +202,7 @@ async def walk_page(chunk_size: int, chunk_count: int, sleep: float, from_cursor
             yield xx
     async with httpx.AsyncClient() as httpClient:
         async def query_page(cursor: str):
-            return await query_repositories_w_retry(httpClient, chunk_size, cursor)
+            return await query_repositories_w_retry(httpClient, chunk_size, cursor, update_flow)
         async for x in run_in_block(query_page, AsyncPeepIterator(cursor_generator()), chunk_size, sleep, lambda x: print('info from repos', x), lambda x, y: print('error from', y, x) or True):
             for xx in x:
                 cnt += 1
@@ -212,7 +210,7 @@ async def walk_page(chunk_size: int, chunk_count: int, sleep: float, from_cursor
             if cnt >= chunk_count:
                 break
 
-async def walk_all(from_cursor: str=None):
+async def walk_all(from_cursor: str=None, update_flow: bool=False):
     asyncio.current_task().name = "fetch_all"
     def exception_handler(_loop, context):
         exception = context['exception']
@@ -225,27 +223,41 @@ async def walk_all(from_cursor: str=None):
     last_time = timer()
     database = get_database_client_async()
     datacite_collection = database['datacite']
-    async for datacite_graphql_repos_chunk in walk_page(3, 400, 2, from_cursor):
-        no_doi_chunk = [x for x in datacite_graphql_repos_chunk.items() if x[1]['re3dataDoi'] is None]
-        async def store_in_mongo(uid: str, datacite_graphql_repo):
-            asyncio.current_task().name = "store_in_mongo_%s" % (uid,)
-            datacite_collection.update_one({'uid': uid}, {'$set': {
-                'doi_metadata': None,
-                'datacite_graphql_data': datacite_graphql_repo,
-            }}, upsert=True)
-        db_update_status_elems = await asyncio.gather(
-            *[
-                store_in_mongo(uid, datacite_graphql_repo) for (uid, datacite_graphql_repo) in no_doi_chunk
-            ],
-            return_exceptions=True,
-        )
-        print('db_update_status_elems', db_update_status_elems)
-        doi_chunk = [(x[1]['re3dataDoi'], x[1]) for x in datacite_graphql_repos_chunk.items() if x[1]['re3dataDoi'] is not None]
-        async for (doi_metadata, (doi, datacite_graphql_repo)) in fetch_multiple_doi(doi_chunk, 4, 2):
-            await datacite_collection.update_one({'uid': datacite_graphql_repo['uid']}, {'$set': {
-                'doi_metadata': doi_metadata if doi_metadata is not None else 'error',
-                'datacite_graphql_data': datacite_graphql_repo,
-            }}, upsert=True)
+    async for datacite_graphql_repos_chunk in walk_page(3, 400, 2, from_cursor, update_flow):
+        if update_flow:
+            chunk = datacite_graphql_repos_chunk.items()
+            async def store_in_mongo(uid: str, datacite_graphql_repo):
+                asyncio.current_task().name = "store_in_mongo_%s" % (uid,)
+                datacite_collection.update_one({'uid': uid}, {'$set': {
+                    'doi_metadata': None,
+                    'datacite_graphql_data': datacite_graphql_repo,
+                }}, upsert=True)
+            await asyncio.gather(
+                *[
+                    store_in_mongo(uid, datacite_graphql_repo) for (uid, datacite_graphql_repo) in chunk
+                ],
+                return_exceptions=True,
+            )
+        else:
+            no_doi_chunk = [x for x in datacite_graphql_repos_chunk.items() if x[1]['re3dataDoi'] is None]
+            async def store_in_mongo(uid: str, datacite_graphql_repo):
+                asyncio.current_task().name = "store_in_mongo_%s" % (uid,)
+                datacite_collection.update_one({'uid': uid}, {'$set': {
+                    'doi_metadata': None,
+                    'datacite_graphql_data': datacite_graphql_repo,
+                }}, upsert=True)
+            await asyncio.gather(
+                *[
+                    store_in_mongo(uid, datacite_graphql_repo) for (uid, datacite_graphql_repo) in no_doi_chunk
+                ],
+                return_exceptions=True,
+            )
+            doi_chunk = [(x[1]['re3dataDoi'], x[1]) for x in datacite_graphql_repos_chunk.items() if x[1]['re3dataDoi'] is not None]
+            async for (doi_metadata, (doi, datacite_graphql_repo)) in fetch_multiple_doi(doi_chunk, 4, 2):
+                await datacite_collection.update_one({'uid': datacite_graphql_repo['uid']}, {'$set': {
+                    'doi_metadata': doi_metadata if doi_metadata is not None else 'error',
+                    'datacite_graphql_data': datacite_graphql_repo,
+                }}, upsert=True)
         this_time = timer()
         print("iteration took", this_time - last_time)
         last_time = this_time

@@ -44,14 +44,14 @@ def initiate():
         class caracteristica_de_productor_de_datos(caracteristica_de_cdd):
             pass
 
-        class esquema_de_identificador_de_autor(caracteristica_de_productor_de_datos):
+        class esquema_de_id_de_autor(caracteristica_de_productor_de_datos):
             pass
 
-        esquema_de_identificador_de_autor.nombre_usual = [
+        esquema_de_id_de_autor.nombre_usual = [
             locstr("esquema de identificador de autores", lang="es"),
             locstr("author identification schema", lang="en"),
         ]
-        esquema_de_identificador_de_autor.sinonimo = [
+        esquema_de_id_de_autor.sinonimo = [
             locstr("aids", lang="en"),
         ]
 
@@ -62,9 +62,9 @@ def initiate():
             locstr("admits subject", lang="en"),
         ]
 
-        class esquema_de_identificador_persistente(caracteristica_de_cdd):
+        class esquema_de_id_persistente(caracteristica_de_cdd):
             pass
-        esquema_de_identificador_persistente.nombre_usual = [
+        esquema_de_id_persistente.nombre_usual = [
             locstr("esquema de identificador persistente", lang="es"),
             locstr("persistent identifier schema", lang="en"),
         ]
@@ -102,22 +102,22 @@ def initiate():
             pass
 
         # AllDisjoint([
-        #     esquema_de_identificador_de_autor,
+        #     esquema_de_id_de_autor,
         #     admite_disciplina,
-        #     esquema_de_identificador_persistente,
+        #     esquema_de_id_persistente,
         #     utiliza_formato_de_archivo,
         #     esquema_de_metadatos,
         #     licencia,
         #     utiliza_tipo_de_dato,
         # ])
 
-        esquema_de_identificador_de_autores_instances = list(map(lambda x: esquema_de_identificador_de_autor(x), [
+        esquema_de_id_de_autores_instances = list(map(lambda x: esquema_de_id_de_autor(x), [
             'authorclaim',
             'isni',
             'orcid',
             'researcherid',
         ]))
-        AllDifferent(esquema_de_identificador_de_autores_instances)
+        AllDifferent(esquema_de_id_de_autores_instances)
         licencia_instances = list(map(lambda x: licencia(x), [
             'cc_by',
             'cc0',
@@ -125,13 +125,13 @@ def initiate():
             'mit',
         ]))
         AllDifferent(licencia_instances)
-        [doi, _, handle, *_] = esquema_de_identificador_persistente_instances = list(map(lambda x: esquema_de_identificador_persistente(x), [
+        [doi, _, handle, *_] = esquema_de_id_persistente_instances = list(map(lambda x: esquema_de_id_persistente(x), [
             'doi',
             'ark',
             'handle',
             'purl',
         ]))
-        AllDifferent(esquema_de_identificador_persistente_instances)
+        AllDifferent(esquema_de_id_persistente_instances)
         esquema_de_metadatos_instances = list(map(lambda x: esquema_de_metadatos(x), [
             'dc',
             'ddi',
@@ -145,27 +145,39 @@ def initiate():
         class resultado_relacionado(resultado_de_investigacion >> resultado_de_investigacion):
             pass
 
-        class cdd_es_identificado_por(resultado_de_investigacion >> esquema_de_identificador_persistente):
+        class id_de_resultado_de_investigacion(Thing):
             pass
 
-        class id_de_cdd(DataProperty, FunctionalProperty):
-            domain = [cdd_es_identificado_por]
+        class id_de_resultado_de_investigacion_tiene_resultado_de_investigacion(ObjectProperty, FunctionalProperty):
+            domain = [id_de_resultado_de_investigacion]
+            range = [resultado_de_investigacion]
+
+        class id_de_resultado_de_investigacion_tiene_esquema_de_id_persistente(ObjectProperty, FunctionalProperty):
+            domain = [id_de_resultado_de_investigacion]
+            range = [esquema_de_id_persistente]
+
+        class id_de_resultado_de_investigacion_tiene_literal(DataProperty, FunctionalProperty):
+            domain = [id_de_resultado_de_investigacion]
             range = [str]
 
-        class autor_es_identificado_por(autor >> esquema_de_identificador_de_autor):
+        class id_de_autor(Thing):
             pass
 
-        class id_de_autor(DataProperty, FunctionalProperty):
-            domain = [autor_es_identificado_por]
-            range = [str]
+        class id_de_autor_tiene_esquema_de_id_de_autor(ObjectProperty, FunctionalProperty):
+            domain = [id_de_autor]
+            range = [esquema_de_id_de_autor]
 
-        class extiende_a_esquema_de_identificador_persistente(esquema_de_identificador_persistente >> esquema_de_identificador_persistente):
+        class id_de_autor_tiene_autor(DataProperty, FunctionalProperty):
+            domain = [id_de_autor]
+            range = [autor]
+
+        class extiende_a_esquema_de_id_persistente(esquema_de_id_persistente >> esquema_de_id_persistente):
             pass
 
         class extiende_a_esquema_de_metadatos(esquema_de_metadatos >> esquema_de_metadatos):
             pass
 
-        doi.extiende_a_esquema_de_identificador_persistente.append(handle)
+        doi.extiende_a_esquema_de_id_persistente.append(handle)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,5 @@
 from .extractor import load_from_file
 import pandas
-
 import matplotlib.pyplot as plt
 import seaborn
 

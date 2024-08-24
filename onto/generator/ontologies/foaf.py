@@ -30,13 +30,24 @@ def initiate():
             def __init__(self, value):
                 self.value = value
 
-        def parser(s):
+        def name_parser(s):
             return name(s)
 
-        def unparser(x):
+        def name_unparser(x):
             return x.value
 
-        declare_datatype(name, "http://test.org/fake-foaf.owl#name", parser, unparser)
+        declare_datatype(name, "http://test.org/fake-foaf.owl#name", name_parser, name_unparser)
+
+        def url_parser(s):
+            return name(s)
+
+        def url_unparser(x):
+            return x.value
+
+        class url(Datatype):
+            domain = [Thing]
+            range = [str]
+        declare_datatype(url, "http://test.org/fake-foaf.owl#url", url_parser, url_unparser)
 
 
 if __name__ == '__main__':

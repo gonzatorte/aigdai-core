@@ -20,7 +20,7 @@ aa = [
 dd = [
     'aids_soportado',
     'disciplina_soportada',
-    'esquema_de_identificador_persistente_soportado',
+    'esquema_de_id_persistente_soportado',
     'formato_de_archivo_soportado',
     'formato_de_metadatos_soportado',
     'licencia_soportada',

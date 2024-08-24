@@ -135,8 +135,16 @@ def initiate():
         class es_cosechado_por(repositorio >> agregador):
             pass
 
-        class relacionado_con_organizacion(repositorio >> base_onto.organizacion):
+        class relacion_repositorio_y_organizacion(ow.Thing):
             pass
+
+        class relacion_repositorio_y_organizacion_tiene_organizacion(ow.ObjectProperty, ow.FunctionalProperty):
+            domain = [relacion_repositorio_y_organizacion]
+            range = [base_onto.organizacion]
+
+        class relacion_repositorio_y_organizacion_tiene_repositorio(ow.ObjectProperty, ow.FunctionalProperty):
+            domain = [relacion_repositorio_y_organizacion]
+            range = [repositorio]
 
         # ToDo: quizas es mejor modelar que la relacion es comercial cuando la organizacion con la que se relaciona es un financiador
         # ToDo: quizas es mejor modelar esto como un concepto y es mejor para traducirlo
@@ -144,11 +152,11 @@ def initiate():
             equivalent_to = [ow.OneOf(["financiamiento", "técnica", "administrativa"])]
 
         class tiene_tipo_de_relacion_con_organizacion(ow.DataProperty, ow.FunctionalProperty):
-            domain = [relacionado_con_organizacion]
+            domain = [relacion_repositorio_y_organizacion]
             range = [tipo_de_relacion_con_organizacion]
 
         class tiene_periodo_de_relacion_con_organizacion(ow.DataProperty, ow.FunctionalProperty):
-            domain = [relacionado_con_organizacion]
+            domain = [relacion_repositorio_y_organizacion]
             # ToDo: Buscar un datatype nuevo que permita declarar cosas como intervalo entre fechas (y fechas con extremos indeterminados)
             #  tb permitir expresar "desde una fecha pero no se sabe hasta cuándo" como algo distinto de "desde una fecha hasta el infinito"
             range = [str]
@@ -164,23 +172,30 @@ def initiate():
 
         # ToDo: Quizas hacerlo un FunctionalProperty y que la politica sea un conjunto de condiciones
         class usa_politica(ow.ObjectProperty):
-            domain = [relacionado_con_organizacion]
+            domain = [relacion_repositorio_y_organizacion]
             range = [politica]
 
         # ToDo: En realidad, un repositorio puede soportar más de 1 lenguaje... así que no es FunctionalProperty
         #  aunque el manejo de colecciones puede generar problemas para restringir la unicidad en esas colecciones (aunque no sé si importa)
-        class usa_lenguaje(ow.DataProperty, ow.FunctionalProperty):
+        class usa_lenguaje(ow.DataProperty):
             domain = [repositorio]
             range = [base_onto.lenguaje]
         # class usa_lenguaje(repositorio >> base_onto.lenguaje):
         #     pass
 
-        class es_catalogado_por(repositorio >> catalogo_de_repositorio):
+        class id_de_catalogacion_de_repositorio(ow.Thing):
             pass
 
-        # ToDo: No se está diciendo el identificador en que sistema... tomamos re3data como el estándar?
-        class id_de_repositorio(ow.DataProperty, ow.FunctionalProperty):
-            domain = [es_catalogado_por]
+        class id_de_catalogacion_de_repositorio_tiene_catalogo(ow.ObjectProperty, ow.FunctionalProperty):
+            domain = [id_de_catalogacion_de_repositorio]
+            range = [catalogo_de_repositorio]
+
+        class id_de_catalogacion_de_repositorio_tiene_repositorio(ow.ObjectProperty, ow.FunctionalProperty):
+            domain = [id_de_catalogacion_de_repositorio]
+            range = [repositorio]
+
+        class id_de_catalogacion_de_repositorio_tiene_literal(ow.DataProperty, ow.FunctionalProperty):
+            domain = [id_de_catalogacion_de_repositorio]
             range = [str]
 
 

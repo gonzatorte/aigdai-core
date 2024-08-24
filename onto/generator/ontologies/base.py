@@ -1,4 +1,5 @@
 from owlready2 import *
+import owlready2 as owww
 from . import cts
 # from . import util
 from .foaf import initiate as foaf_initiate, onto as foaf_ns
@@ -6,6 +7,14 @@ from .foaf import initiate as foaf_initiate, onto as foaf_ns
 onto = get_ontology("http://test.org/base.owl")
 
 # instances_by_class = {}
+
+class HasKeyProperty:
+    pass
+
+# class HasKeyProperty(owww.Property):
+#   namespace = owww.owl
+#   @classmethod
+#   def is_functional_for(Prop, o): return True
 
 def initiate():
     foaf_initiate()
@@ -23,6 +32,12 @@ def initiate():
     # sdmx_attribute_ns = util.fetch_ontology('sdmx_attribute', "http://purl.org/linked-data/sdmx/2009/attribute#").load()
 
     with onto:
+        # ToDo: Usar el de foaf mejor
+        url = str
+
+        class escala(Datatype):
+            equivalent_to = [OneOf(["bueno", "regular", "malo"])]
+
         # ToDo: Creo que en realidad is same as rdfs:label , o usar http://purl.org/vocab/vann
         class nombre_usual(AnnotationProperty):
             pass
@@ -46,7 +61,7 @@ def initiate():
             locstr("institución", lang="es"),
         ]
 
-        class tipo_de_identificador_de_organizacion(Thing):
+        class tipo_de_id_de_organizacion(Thing):
             pass
 
         # class lenguaje(Thing):
@@ -107,7 +122,8 @@ def initiate():
             domain = [organizacion]
             range = [tipo_de_organizacion]
 
-        class has_key_organizacion(HasKey, FunctionalProperty):
+        # class has_key_organizacion(HasKeyProperty, FunctionalProperty):
+        class has_key_organizacion(DataProperty, FunctionalProperty):
             domain = [organizacion]
             range = [url]
 
@@ -160,7 +176,7 @@ def initiate():
         # ToDo: En realidad no me queda claro si es funcional, pues hay organizaciones multinacionales...
         #  Quizás en ese caso, cada organización tendrá su branch en cada país...
         #  De hecho aparecen los código de país AAA y EUR que comprenden varios países
-        class se_ubica_en(DataProperty, FunctionalProperty):
+        class se_ubica_en(ObjectProperty, FunctionalProperty):
             domain = [organizacion]
             range = [locacion]
 
@@ -176,21 +192,28 @@ def initiate():
             # ToDo: reactivar
             # range = [foaf_ns.name]
 
-        class identificador_de_organizacion(Thing):
+        # class organizacion_es_identificada_por(organizacion >> tipo_de_id_de_organizacion):
+        #     pass
+        #
+        # class id_de_organizacion(DataProperty, FunctionalProperty):
+        #     domain = [organizacion_es_identificada_por]
+        #     range = [str]
+
+        class id_de_organizacion(Thing):
             pass
-        identificador_de_organizacion.nombre_usual = [
+        id_de_organizacion.nombre_usual = [
             locstr("identificador de organizacion", lang="es"),
             locstr("organization identifier", lang="en"),
         ]
-        class identificador_de_organizacion_tiene_tipo(ObjectProperty, FunctionalProperty):
-            domain = [identificador_de_organizacion]
-            range = [tipo_de_identificador_de_organizacion]
-        class identificador_de_organizacion_identifica_organizacion(ObjectProperty, FunctionalProperty):
-            domain = [identificador_de_organizacion]
+        class id_de_organizacion_tiene_tipo(ObjectProperty, FunctionalProperty):
+            domain = [id_de_organizacion]
+            range = [tipo_de_id_de_organizacion]
+        # class id_de_organizacion_tiene_organizacion(HasKeyProperty, ObjectProperty, FunctionalProperty):
+        class id_de_organizacion_tiene_organizacion(ObjectProperty, FunctionalProperty):
+            domain = [id_de_organizacion]
             range = [organizacion]
-
-        class id_de_organizacion(DataProperty, FunctionalProperty):
-            domain = [organizacion_es_identificada_por]
+        class id_de_organizacion_tiene_literal(DataProperty, FunctionalProperty):
+            domain = [id_de_organizacion]
             range = [str]
 
         class formato_codifica_tipo_de_archivo(formato_de_archivo >> tipo_de_dato):
@@ -210,13 +233,6 @@ def initiate():
         ]))
         AllDifferent(tipo_de_datos_instances)
         # instances_by_class[tipo_de_dato] = {x.name: x for x in tipo_de_datos_instances}
-
-        class url(Datatype):
-            domain = [Thing]
-            range = [str]
-
-        class escala(Datatype):
-            equivalent_to = [OneOf(["bueno", "regular", "malo"])]
 
         # class escala_mayor_que(ObjectProperty, TransitiveProperty):
         #     domain = [escala]

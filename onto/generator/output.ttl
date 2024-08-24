@@ -1067,11 +1067,10 @@ ns1:41006 a ns1:disciplina,
     ns1:es_sub_disciplina_de ns1:410 ;
     ns1:nombre_de_disciplina "Geotechnics, Hydraulic Engineering"^^xsd:string .
 
-ns1:ISNI a ns1:tipo_de_identificador_de_organizacion,
-        owl:NamedIndividual .
-
-ns1:ROR a ns1:tipo_de_identificador_de_organizacion,
-        owl:NamedIndividual .
+ns1:alfa_3_de_pais a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:pais ;
+    rdfs:range xsd:string .
 
 ns1:description a owl:AnnotationProperty .
 
@@ -1092,9 +1091,35 @@ ns1:formato_codifica_tipo_de_archivo a owl:ObjectProperty ;
     rdfs:domain ns1:formato_de_archivo ;
     rdfs:range ns1:tipo_de_dato .
 
-ns1:id_de_organizacion a owl:DatatypeProperty,
+ns1:has_key_organizacion a owl:DatatypeProperty,
         owl:FunctionalProperty ;
-    rdfs:domain ns1:organizacion_es_identificada_por ;
+    rdfs:domain ns1:organizacion ;
+    rdfs:range xsd:string .
+
+ns1:identificador_de_organizacion_identifica_organizacion a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:identificador_de_organizacion ;
+    rdfs:range ns1:organizacion .
+
+ns1:identificador_de_organizacion_tiene_literal a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:identificador_de_organizacion ;
+    rdfs:range xsd:string .
+
+ns1:identificador_de_organizacion_tiene_tipo a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:identificador_de_organizacion ;
+    rdfs:range ns1:tipo_de_identificador_de_organizacion .
+
+ns1:includido_en a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:domain ns1:locacion ;
+    rdfs:range ns1:locacion .
+
+ns1:nombre_de_bloque a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:bloque_comercial,
+        ns1:pais ;
     rdfs:range xsd:string .
 
 ns1:nombre_de_disciplina a owl:DatatypeProperty,
@@ -1102,12 +1127,22 @@ ns1:nombre_de_disciplina a owl:DatatypeProperty,
     rdfs:domain ns1:disciplina ;
     rdfs:range xsd:string .
 
+ns1:nombre_de_pais a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:pais ;
+    rdfs:range xsd:string .
+
 ns1:nombre_usual a owl:AnnotationProperty .
 
 ns1:se_ubica_en a owl:DatatypeProperty,
         owl:FunctionalProperty ;
     rdfs:domain ns1:organizacion ;
-    rdfs:range ns1:pais .
+    rdfs:range ns1:locacion .
+
+ns1:sigla_de_bloque a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:bloque_comercial ;
+    rdfs:range xsd:string .
 
 ns1:sinonimo a owl:AnnotationProperty .
 
@@ -1181,7 +1216,22 @@ ns2:utiliza_tipo_de_dato a owl:Class ;
 
 <http://test.org/example_world.owl> a owl:Ontology .
 
+<http://test.org/example_world.owl#02tphfq59> a ns1:identificador_de_organizacion,
+        owl:NamedIndividual ;
+    ns1:identificador_de_organizacion_identifica_organizacion <http://test.org/example_world.owl#unr> ;
+    ns1:identificador_de_organizacion_tiene_literal "02tphfq59"^^xsd:string ;
+    ns1:identificador_de_organizacion_tiene_tipo <http://test.org/example_world.owl#ROR> .
+
 <http://test.org/example_world.owl#4tu_researchdata> a ns3:repositorio,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#Decreto_478_2013> a ns3:agregador,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#ISNI> a ns1:tipo_de_identificador_de_organizacion,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#Ley104> a ns3:agregador,
         owl:NamedIndividual .
 
 <http://test.org/example_world.owl#ckan> a ns3:motor_de_repositorio,
@@ -1208,17 +1258,20 @@ ns2:utiliza_tipo_de_dato a owl:Class ;
 <http://test.org/example_world.owl#otro> a ns3:motor_de_repositorio,
         owl:NamedIndividual .
 
-<http://test.org/example_world.owl#rda_unr> a ns3:repositorio,
+<http://test.org/example_world.owl#r3d100013960> a ns3:id_de_catalogacion_de_repositorio,
         owl:NamedIndividual ;
-    ns3:es_cosechado_por <http://test.org/example_world.owl#lareferencia> ;
-    ns3:relacionado_con_organizacion <http://test.org/example_world.owl#unr> ;
-    ns3:utiliza_motor <http://test.org/example_world.owl#dataverse> .
-
-<http://test.org/example_world.owl#re3data> a ns3:catalogo_de_repositorio,
-        owl:NamedIndividual .
+    ns3:id_de_catalogacion_de_repositorio_tiene_catalogo <http://test.org/example_world.owl#re3data> ;
+    ns3:id_de_catalogacion_de_repositorio_tiene_literal "r3d100013960"^^xsd:string ;
+    ns3:id_de_catalogacion_de_repositorio_tiene_repositorio <http://test.org/example_world.owl#rda_unr> .
 
 <http://test.org/example_world.owl#the_world_bank_open_data> a ns3:repositorio,
         owl:NamedIndividual .
+
+<http://test.org/example_world.owl#unr_mantiene_urn_rda> a ns3:relacion_repositorio_y_organizacion,
+        owl:NamedIndividual ;
+    ns3:relacion_repositorio_y_organizacion_tiene_organizacion <http://test.org/example_world.owl#unr> ;
+    ns3:relacion_repositorio_y_organizacion_tiene_repositorio <http://test.org/example_world.owl#rda_unr> ;
+    ns3:tiene_tipo_de_relacion_con_organizacion "administrativa"^^xsd:string .
 
 <http://test.org/example_world.owl#worldwide_protein_data_bank> a ns3:repositorio,
         owl:NamedIndividual .
@@ -1227,6 +1280,8 @@ ns2:utiliza_tipo_de_dato a owl:Class ;
 
 <http://test.org/fake-foaf.owl#Document> a owl:Class ;
     rdfs:subClassOf owl:Thing .
+
+<http://test.org/fake-foaf.owl#url> a rdfs:Datatype .
 
 <http://test.org/full.owl> a owl:Ontology .
 
@@ -1239,32 +1294,51 @@ ns3:es_cosechado_por a owl:ObjectProperty ;
     rdfs:domain ns3:repositorio ;
     rdfs:range ns3:agregador .
 
-ns3:id_de_repositorio a owl:DatatypeProperty,
+ns3:id_de_catalogacion_de_repositorio_tiene_catalogo a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain ns3:id_de_catalogacion_de_repositorio ;
+    rdfs:range ns3:catalogo_de_repositorio .
+
+ns3:id_de_catalogacion_de_repositorio_tiene_literal a owl:DatatypeProperty,
         owl:FunctionalProperty ;
-    rdfs:domain ns3:es_catalogado_por ;
+    rdfs:domain ns3:id_de_catalogacion_de_repositorio ;
     rdfs:range xsd:string .
+
+ns3:id_de_catalogacion_de_repositorio_tiene_repositorio a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain ns3:id_de_catalogacion_de_repositorio ;
+    rdfs:range ns3:repositorio .
+
+ns3:relacion_repositorio_y_organizacion_tiene_organizacion a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain ns3:relacion_repositorio_y_organizacion ;
+    rdfs:range ns1:organizacion .
+
+ns3:relacion_repositorio_y_organizacion_tiene_repositorio a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain ns3:relacion_repositorio_y_organizacion ;
+    rdfs:range ns3:repositorio .
 
 ns3:tiene_nombre_politica a rdfs:Datatype .
 
 ns3:tiene_periodo_de_relacion_con_organizacion a owl:DatatypeProperty,
         owl:FunctionalProperty ;
-    rdfs:domain ns3:relacionado_con_organizacion ;
+    rdfs:domain ns3:relacion_repositorio_y_organizacion ;
     rdfs:range xsd:string .
 
 ns3:tiene_tipo_de_relacion_con_organizacion a owl:DatatypeProperty,
         owl:FunctionalProperty ;
-    rdfs:domain ns3:relacionado_con_organizacion ;
+    rdfs:domain ns3:relacion_repositorio_y_organizacion ;
     rdfs:range ns3:tipo_de_relacion_con_organizacion .
 
 ns3:tiene_url_politica a rdfs:Datatype .
 
-ns3:usa_lenguaje a owl:DatatypeProperty,
-        owl:FunctionalProperty ;
+ns3:usa_lenguaje a owl:DatatypeProperty ;
     rdfs:domain ns3:repositorio ;
     rdfs:range ns1:lenguaje .
 
 ns3:usa_politica a owl:ObjectProperty ;
-    rdfs:domain ns3:relacionado_con_organizacion ;
+    rdfs:domain ns3:relacion_repositorio_y_organizacion ;
     rdfs:range ns3:politica .
 
 ns3:utiliza_motor a owl:FunctionalProperty,
@@ -1341,13 +1415,10 @@ ns1:lenguaje a rdfs:Datatype ;
     owl:equivalentClass [ a rdfs:Datatype ;
             owl:oneOf ( "deu"^^xsd:string "eng"^^xsd:string "fra"^^xsd:string "aar"^^xsd:string "abk"^^xsd:string "afr"^^xsd:string "aka"^^xsd:string "amh"^^xsd:string "ara"^^xsd:string "arg"^^xsd:string "asm"^^xsd:string "ava"^^xsd:string "ave"^^xsd:string "aym"^^xsd:string "aze"^^xsd:string "bak"^^xsd:string "bam"^^xsd:string "bel"^^xsd:string "ben"^^xsd:string "bis"^^xsd:string "bod"^^xsd:string "bos"^^xsd:string "bre"^^xsd:string "bul"^^xsd:string "cat"^^xsd:string "ces"^^xsd:string "cha"^^xsd:string "che"^^xsd:string "chu"^^xsd:string "chv"^^xsd:string "cor"^^xsd:string "cos"^^xsd:string "cre"^^xsd:string "cym"^^xsd:string "dan"^^xsd:string "div"^^xsd:string "dzo"^^xsd:string "ell"^^xsd:string "epo"^^xsd:string "est"^^xsd:string "eus"^^xsd:string "ewe"^^xsd:string "fao"^^xsd:string "fas"^^xsd:string "fij"^^xsd:string "fin"^^xsd:string "fry"^^xsd:string "ful"^^xsd:string "gla"^^xsd:string "gle"^^xsd:string "glg"^^xsd:string "glv"^^xsd:string "grn"^^xsd:string "guj"^^xsd:string "hat"^^xsd:string "hau"^^xsd:string "heb"^^xsd:string "her"^^xsd:string "hin"^^xsd:string "hmo"^^xsd:string "hrv"^^xsd:string "hun"^^xsd:string "hye"^^xsd:string "ibo"^^xsd:string "ido"^^xsd:string "iii"^^xsd:string "iku"^^xsd:string "ile"^^xsd:string "ina"^^xsd:string "ind"^^xsd:string "ipk"^^xsd:string "isl"^^xsd:string "ita"^^xsd:string "jav"^^xsd:string "jpn"^^xsd:string "kal"^^xsd:string "kan"^^xsd:string "kas"^^xsd:string "kat"^^xsd:string "kau"^^xsd:string "kaz"^^xsd:string "khm"^^xsd:string "kik"^^xsd:string "kin"^^xsd:string "kir"^^xsd:string "kom"^^xsd:string "kon"^^xsd:string "kor"^^xsd:string "kua"^^xsd:string "kur"^^xsd:string "lao"^^xsd:string "lat"^^xsd:string "lav"^^xsd:string "lim"^^xsd:string "lin"^^xsd:string "lit"^^xsd:string "ltz"^^xsd:string "lub"^^xsd:string "lug"^^xsd:string "mah"^^xsd:string "mal"^^xsd:string "mar"^^xsd:string "mkd"^^xsd:string "mlg"^^xsd:string "mlt"^^xsd:string "mon"^^xsd:string "mri"^^xsd:string "msa"^^xsd:string "mya"^^xsd:string "nau"^^xsd:string "nav"^^xsd:string "nbl"^^xsd:string "nde"^^xsd:string "ndo"^^xsd:string "nep"^^xsd:string "nld"^^xsd:string "nno"^^xsd:string "nob"^^xsd:string "nor"^^xsd:string "nya"^^xsd:string "oci"^^xsd:string "oji"^^xsd:string "ori"^^xsd:string "orm"^^xsd:string "oss"^^xsd:string "pan"^^xsd:string "pli"^^xsd:string "pol"^^xsd:string "por"^^xsd:string "pus"^^xsd:string "que"^^xsd:string "roh"^^xsd:string "ron"^^xsd:string "run"^^xsd:string "rus"^^xsd:string "sag"^^xsd:string "san"^^xsd:string "sin"^^xsd:string "slk"^^xsd:string "slv"^^xsd:string "sme"^^xsd:string "smo"^^xsd:string "sna"^^xsd:string "snd"^^xsd:string "som"^^xsd:string "sot"^^xsd:string "spa"^^xsd:string "sqi"^^xsd:string "srd"^^xsd:string "srp"^^xsd:string "ssw"^^xsd:string "sun"^^xsd:string "swa"^^xsd:string "swe"^^xsd:string "tah"^^xsd:string "tam"^^xsd:string "tat"^^xsd:string "tel"^^xsd:string "tgk"^^xsd:string "tgl"^^xsd:string "tha"^^xsd:string "tir"^^xsd:string "ton"^^xsd:string "tsn"^^xsd:string "tso"^^xsd:string "tuk"^^xsd:string "tur"^^xsd:string "twi"^^xsd:string "uig"^^xsd:string "ukr"^^xsd:string "urd"^^xsd:string "uzb"^^xsd:string "ven"^^xsd:string "vie"^^xsd:string "vol"^^xsd:string "wln"^^xsd:string "wol"^^xsd:string "xho"^^xsd:string "yid"^^xsd:string "yor"^^xsd:string "zha"^^xsd:string "zho"^^xsd:string "zul"^^xsd:string ) ] .
 
-ns1:organizacion_es_identificada_por a owl:ObjectProperty ;
-    rdfs:domain ns1:organizacion ;
-    rdfs:range ns1:tipo_de_identificador_de_organizacion .
-
-ns1:pais a rdfs:Datatype ;
-    owl:equivalentClass [ a rdfs:Datatype ;
-            owl:oneOf ( "ABW"^^xsd:string "AFG"^^xsd:string "AGO"^^xsd:string "AIA"^^xsd:string "ALA"^^xsd:string "ALB"^^xsd:string "AND"^^xsd:string "ARE"^^xsd:string "ARG"^^xsd:string "ARM"^^xsd:string "ASM"^^xsd:string "ATA"^^xsd:string "ATF"^^xsd:string "ATG"^^xsd:string "AUS"^^xsd:string "AUT"^^xsd:string "AZE"^^xsd:string "BDI"^^xsd:string "BEL"^^xsd:string "BEN"^^xsd:string "BES"^^xsd:string "BFA"^^xsd:string "BGD"^^xsd:string "BGR"^^xsd:string "BHR"^^xsd:string "BHS"^^xsd:string "BIH"^^xsd:string "BLM"^^xsd:string "BLR"^^xsd:string "BLZ"^^xsd:string "BMU"^^xsd:string "BOL"^^xsd:string "BRA"^^xsd:string "BRB"^^xsd:string "BRN"^^xsd:string "BTN"^^xsd:string "BVT"^^xsd:string "BWA"^^xsd:string "CAF"^^xsd:string "CAN"^^xsd:string "CCK"^^xsd:string "CHE"^^xsd:string "CHL"^^xsd:string "CHN"^^xsd:string "CIV"^^xsd:string "CMR"^^xsd:string "COD"^^xsd:string "COG"^^xsd:string "COK"^^xsd:string "COL"^^xsd:string "COM"^^xsd:string "CPV"^^xsd:string "CRI"^^xsd:string "CUB"^^xsd:string "CUW"^^xsd:string "CXR"^^xsd:string "CYM"^^xsd:string "CYP"^^xsd:string "CZE"^^xsd:string "DEU"^^xsd:string "DJI"^^xsd:string "DMA"^^xsd:string "DNK"^^xsd:string "DOM"^^xsd:string "DZA"^^xsd:string "ECU"^^xsd:string "EGY"^^xsd:string "ERI"^^xsd:string "ESH"^^xsd:string "ESP"^^xsd:string "EST"^^xsd:string "ETH"^^xsd:string "FIN"^^xsd:string "FJI"^^xsd:string "FLK"^^xsd:string "FRA"^^xsd:string "FRO"^^xsd:string "FSM"^^xsd:string "GAB"^^xsd:string "GBR"^^xsd:string "GEO"^^xsd:string "GGY"^^xsd:string "GHA"^^xsd:string "GIB"^^xsd:string "GIN"^^xsd:string "GLP"^^xsd:string "GMB"^^xsd:string "GNB"^^xsd:string "GNQ"^^xsd:string "GRC"^^xsd:string "GRD"^^xsd:string "GRL"^^xsd:string "GTM"^^xsd:string "GUF"^^xsd:string "GUM"^^xsd:string "GUY"^^xsd:string "HKG"^^xsd:string "HMD"^^xsd:string "HND"^^xsd:string "HRV"^^xsd:string "HTI"^^xsd:string "HUN"^^xsd:string "IDN"^^xsd:string "IMN"^^xsd:string "IND"^^xsd:string "IOT"^^xsd:string "IRL"^^xsd:string "IRN"^^xsd:string "IRQ"^^xsd:string "ISL"^^xsd:string "ISR"^^xsd:string "ITA"^^xsd:string "JAM"^^xsd:string "JEY"^^xsd:string "JOR"^^xsd:string "JPN"^^xsd:string "KAZ"^^xsd:string "KEN"^^xsd:string "KGZ"^^xsd:string "KHM"^^xsd:string "KIR"^^xsd:string "KNA"^^xsd:string "KOR"^^xsd:string "KWT"^^xsd:string "LAO"^^xsd:string "LBN"^^xsd:string "LBR"^^xsd:string "LBY"^^xsd:string "LCA"^^xsd:string "LIE"^^xsd:string "LKA"^^xsd:string "LSO"^^xsd:string "LTU"^^xsd:string "LUX"^^xsd:string "LVA"^^xsd:string "MAC"^^xsd:string "MAF"^^xsd:string "MAR"^^xsd:string "MCO"^^xsd:string "MDA"^^xsd:string "MDG"^^xsd:string "MDV"^^xsd:string "MEX"^^xsd:string "MHL"^^xsd:string "MKD"^^xsd:string "MLI"^^xsd:string "MLT"^^xsd:string "MMR"^^xsd:string "MNE"^^xsd:string "MNG"^^xsd:string "MNP"^^xsd:string "MOZ"^^xsd:string "MRT"^^xsd:string "MSR"^^xsd:string "MTQ"^^xsd:string "MUS"^^xsd:string "MWI"^^xsd:string "MYS"^^xsd:string "MYT"^^xsd:string "NAM"^^xsd:string "NCL"^^xsd:string "NER"^^xsd:string "NFK"^^xsd:string "NGA"^^xsd:string "NIC"^^xsd:string "NIU"^^xsd:string "NLD"^^xsd:string "NOR"^^xsd:string "NPL"^^xsd:string "NRU"^^xsd:string "NZL"^^xsd:string "OMN"^^xsd:string "PAK"^^xsd:string "PAN"^^xsd:string "PCN"^^xsd:string "PER"^^xsd:string "PHL"^^xsd:string "PLW"^^xsd:string "PNG"^^xsd:string "POL"^^xsd:string "PRI"^^xsd:string "PRK"^^xsd:string "PRT"^^xsd:string "PRY"^^xsd:string "PSE"^^xsd:string "PYF"^^xsd:string "QAT"^^xsd:string "REU"^^xsd:string "ROU"^^xsd:string "RUS"^^xsd:string "RWA"^^xsd:string "SAU"^^xsd:string "SDN"^^xsd:string "SEN"^^xsd:string "SGP"^^xsd:string "SGS"^^xsd:string "SHN"^^xsd:string "SJM"^^xsd:string "SLB"^^xsd:string "SLE"^^xsd:string "SLV"^^xsd:string "SMR"^^xsd:string "SOM"^^xsd:string "SPM"^^xsd:string "SRB"^^xsd:string "SSD"^^xsd:string "STP"^^xsd:string "SUR"^^xsd:string "SVK"^^xsd:string "SVN"^^xsd:string "SWE"^^xsd:string "SWZ"^^xsd:string "SXM"^^xsd:string "SYC"^^xsd:string "SYR"^^xsd:string "TCA"^^xsd:string "TCD"^^xsd:string "TGO"^^xsd:string "THA"^^xsd:string "TJK"^^xsd:string "TKL"^^xsd:string "TKM"^^xsd:string "TLS"^^xsd:string "TON"^^xsd:string "TTO"^^xsd:string "TUN"^^xsd:string "TUR"^^xsd:string "TUV"^^xsd:string "TWN"^^xsd:string "TZA"^^xsd:string "UGA"^^xsd:string "UKR"^^xsd:string "UMI"^^xsd:string "URY"^^xsd:string "USA"^^xsd:string "UZB"^^xsd:string "VAT"^^xsd:string "VCT"^^xsd:string "VEN"^^xsd:string "VGB"^^xsd:string "VIR"^^xsd:string "VNM"^^xsd:string "VUT"^^xsd:string "WLF"^^xsd:string "WSM"^^xsd:string "YEM"^^xsd:string "ZAF"^^xsd:string "ZMB"^^xsd:string "ZWE"^^xsd:string "EEC"^^xsd:string "AAA"^^xsd:string ) ] .
+ns1:planeta a owl:Class ;
+    ns1:nombre_usual "planet"@en,
+        "planeta"@es ;
+    rdfs:subClassOf ns1:locacion .
 
 ns1:tipo_de_organizacion a rdfs:Datatype ;
     owl:equivalentClass [ a rdfs:Datatype ;
@@ -1419,13 +1490,16 @@ ns2:researcherid a ns2:esquema_de_identificador_de_autor,
 ns2:schemaorg a ns2:esquema_de_metadatos,
         owl:NamedIndividual .
 
+<http://test.org/example_world.owl#ROR> a ns1:tipo_de_identificador_de_organizacion,
+        owl:NamedIndividual .
+
 <http://test.org/example_world.owl#dataverse> a ns3:motor_de_repositorio,
         owl:NamedIndividual .
 
 <http://test.org/example_world.owl#lareferencia> a ns3:agregador,
         owl:NamedIndividual .
 
-<http://test.org/example_world.owl#unr> a ns1:organizacion,
+<http://test.org/example_world.owl#re3data> a ns3:catalogo_de_repositorio,
         owl:NamedIndividual .
 
 <http://test.org/fake-foaf.owl#Organization> a owl:Class ;
@@ -1443,10 +1517,6 @@ ns3:control_de_acceso a owl:Class ;
     ns1:nombre_usual "access control"@en,
         "control de acceso"@es ;
     rdfs:subClassOf ns3:funcionalidad .
-
-ns3:es_catalogado_por a owl:ObjectProperty ;
-    rdfs:domain ns3:repositorio ;
-    rdfs:range ns3:catalogo_de_repositorio .
 
 ns3:exportacion_de_citas a owl:Class ;
     ns1:nombre_usual "cite export"@en,
@@ -1566,6 +1636,15 @@ ns2:cdd a owl:Class ;
 ns2:handle a ns2:esquema_de_identificador_persistente,
         owl:NamedIndividual .
 
+<http://test.org/example_world.owl#rda_unr> a ns3:repositorio,
+        owl:NamedIndividual ;
+    ns3:es_cosechado_por <http://test.org/example_world.owl#lareferencia> ;
+    ns3:usa_lenguaje "spa"^^xsd:string ;
+    ns3:utiliza_motor <http://test.org/example_world.owl#dataverse> .
+
+<http://test.org/example_world.owl#unr> a ns1:organizacion,
+        owl:NamedIndividual .
+
 ns1:103 a ns1:disciplina,
         owl:NamedIndividual ;
     ns1:es_sub_disciplina_de ns1:11 ;
@@ -1605,21 +1684,16 @@ ns1:44 a ns1:disciplina,
     ns1:es_sub_disciplina_de ns1:4 ;
     ns1:nombre_de_disciplina "Computer Science, Electrical and System Engineering"^^xsd:string .
 
+ns1:bloque_comercial a owl:Class ;
+    ns1:nombre_usual "trade bloc"@en,
+        "bloque comercial"@es ;
+    rdfs:subClassOf ns1:locacion .
+
 ns1:tipo_de_identificador_de_organizacion a owl:Class ;
     rdfs:subClassOf owl:Thing .
 
 ns2:tamanio a owl:Class ;
     rdfs:subClassOf ns2:caracteristica_de_cdd .
-
-ns3:agregador a owl:Class ;
-    ns1:nombre_usual "aggregator"@en,
-        "agregador"@es ;
-    ns1:sinonimo "buscador"@es ;
-    rdfs:subClassOf owl:Thing .
-
-ns3:relacionado_con_organizacion a owl:ObjectProperty ;
-    rdfs:domain ns3:repositorio ;
-    rdfs:range ns1:organizacion .
 
 ns1:102 a ns1:disciplina,
         owl:NamedIndividual ;
@@ -1670,6 +1744,1500 @@ ns1:406 a ns1:disciplina,
     ns1:es_sub_disciplina_de ns1:43 ;
     ns1:nombre_de_disciplina "Materials Science"^^xsd:string .
 
+ns1:ABW a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ABW"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Aruba"^^xsd:string .
+
+ns1:AFG a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "AFG"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Afghanistan"^^xsd:string .
+
+ns1:AGO a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "AGO"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Angola"^^xsd:string .
+
+ns1:AIA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "AIA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Anguilla"^^xsd:string .
+
+ns1:ALA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ALA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Aland Islands"^^xsd:string .
+
+ns1:ALB a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ALB"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Albania"^^xsd:string .
+
+ns1:AND a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "AND"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Andorra"^^xsd:string .
+
+ns1:ARE a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ARE"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "United Arab Emirates"^^xsd:string .
+
+ns1:ARG a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ARG"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Argentina"^^xsd:string .
+
+ns1:ARM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ARM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Armenia"^^xsd:string .
+
+ns1:ASM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ASM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "American Samoa"^^xsd:string .
+
+ns1:ATA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ATA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Antarctica"^^xsd:string .
+
+ns1:ATF a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ATF"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "French Southern Territories"^^xsd:string .
+
+ns1:ATG a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ATG"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Antigua and Barbuda"^^xsd:string .
+
+ns1:AUS a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "AUS"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Australia"^^xsd:string .
+
+ns1:AUT a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "AUT"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Austria"^^xsd:string .
+
+ns1:AZE a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "AZE"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Azerbaijan"^^xsd:string .
+
+ns1:BDI a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BDI"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Burundi"^^xsd:string .
+
+ns1:BEL a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BEL"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Belgium"^^xsd:string .
+
+ns1:BEN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BEN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Benin"^^xsd:string .
+
+ns1:BES a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BES"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Bonaire, Sint Eustatius and Saba"^^xsd:string .
+
+ns1:BFA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BFA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Burkina Faso"^^xsd:string .
+
+ns1:BGD a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BGD"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Bangladesh"^^xsd:string .
+
+ns1:BGR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BGR"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Bulgaria"^^xsd:string .
+
+ns1:BHR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BHR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Bahrain"^^xsd:string .
+
+ns1:BHS a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BHS"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Bahamas"^^xsd:string .
+
+ns1:BIH a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BIH"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Bosnia and Herzegovina"^^xsd:string .
+
+ns1:BLM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BLM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Saint Barthelemy"^^xsd:string .
+
+ns1:BLR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BLR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Belarus"^^xsd:string .
+
+ns1:BLZ a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BLZ"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Belize"^^xsd:string .
+
+ns1:BMU a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BMU"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Bermuda"^^xsd:string .
+
+ns1:BOL a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BOL"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Bolivia, Plurinational State of"^^xsd:string .
+
+ns1:BRA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BRA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Brazil"^^xsd:string .
+
+ns1:BRB a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BRB"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Barbados"^^xsd:string .
+
+ns1:BRN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BRN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Brunei Darussalam"^^xsd:string .
+
+ns1:BTN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BTN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Bhutan"^^xsd:string .
+
+ns1:BVT a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BVT"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Bouvet Island"^^xsd:string .
+
+ns1:BWA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "BWA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Botswana"^^xsd:string .
+
+ns1:CAF a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CAF"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Central African Republic"^^xsd:string .
+
+ns1:CAN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CAN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Canada"^^xsd:string .
+
+ns1:CCK a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CCK"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Cocos (Keeling) Islands"^^xsd:string .
+
+ns1:CHE a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CHE"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Switzerland"^^xsd:string .
+
+ns1:CHL a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CHL"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Chile"^^xsd:string .
+
+ns1:CHN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CHN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "China"^^xsd:string .
+
+ns1:CIV a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CIV"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Cote d'Ivoire"^^xsd:string .
+
+ns1:CMR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CMR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Cameroon"^^xsd:string .
+
+ns1:COD a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "COD"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Congo, the Democratic Republic of the"^^xsd:string .
+
+ns1:COG a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "COG"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Congo"^^xsd:string .
+
+ns1:COK a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "COK"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Cook Islands"^^xsd:string .
+
+ns1:COL a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "COL"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Colombia"^^xsd:string .
+
+ns1:COM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "COM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Comoros"^^xsd:string .
+
+ns1:CPV a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CPV"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Cabo Verde"^^xsd:string .
+
+ns1:CRI a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CRI"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Costa Rica"^^xsd:string .
+
+ns1:CUB a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CUB"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Cuba"^^xsd:string .
+
+ns1:CUW a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CUW"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Curacao"^^xsd:string .
+
+ns1:CXR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CXR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Christmas Island"^^xsd:string .
+
+ns1:CYM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CYM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Cayman Islands"^^xsd:string .
+
+ns1:CYP a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CYP"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Cyprus"^^xsd:string .
+
+ns1:CZE a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "CZE"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Czechia"^^xsd:string .
+
+ns1:DEU a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "DEU"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Germany"^^xsd:string .
+
+ns1:DJI a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "DJI"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Djibouti"^^xsd:string .
+
+ns1:DMA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "DMA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Dominica"^^xsd:string .
+
+ns1:DNK a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "DNK"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Denmark"^^xsd:string .
+
+ns1:DOM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "DOM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Dominican Republic"^^xsd:string .
+
+ns1:DZA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "DZA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Algeria"^^xsd:string .
+
+ns1:ECU a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ECU"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Ecuador"^^xsd:string .
+
+ns1:EGY a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "EGY"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Egypt"^^xsd:string .
+
+ns1:ERI a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ERI"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Eritrea"^^xsd:string .
+
+ns1:ESH a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ESH"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Western Sahara"^^xsd:string .
+
+ns1:ESP a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ESP"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Spain"^^xsd:string .
+
+ns1:EST a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "EST"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Estonia"^^xsd:string .
+
+ns1:ETH a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ETH"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Ethiopia"^^xsd:string .
+
+ns1:FIN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "FIN"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Finland"^^xsd:string .
+
+ns1:FJI a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "FJI"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Fiji"^^xsd:string .
+
+ns1:FLK a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "FLK"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Falkland Islands (Malvinas)"^^xsd:string .
+
+ns1:FRA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "FRA"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "France"^^xsd:string .
+
+ns1:FRO a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "FRO"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Faroe Islands"^^xsd:string .
+
+ns1:FSM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "FSM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Micronesia, Federated States of"^^xsd:string .
+
+ns1:GAB a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GAB"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Gabon"^^xsd:string .
+
+ns1:GBR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GBR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "United Kingdom"^^xsd:string .
+
+ns1:GEO a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GEO"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Georgia"^^xsd:string .
+
+ns1:GGY a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GGY"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Guernsey"^^xsd:string .
+
+ns1:GHA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GHA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Ghana"^^xsd:string .
+
+ns1:GIB a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GIB"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Gibraltar"^^xsd:string .
+
+ns1:GIN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GIN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Guinea"^^xsd:string .
+
+ns1:GLP a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GLP"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Guadeloupe"^^xsd:string .
+
+ns1:GMB a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GMB"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Gambia"^^xsd:string .
+
+ns1:GNB a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GNB"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Guinea-Bissau"^^xsd:string .
+
+ns1:GNQ a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GNQ"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Equatorial Guinea"^^xsd:string .
+
+ns1:GRC a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GRC"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Greece"^^xsd:string .
+
+ns1:GRD a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GRD"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Grenada"^^xsd:string .
+
+ns1:GRL a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GRL"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Greenland"^^xsd:string .
+
+ns1:GTM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GTM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Guatemala"^^xsd:string .
+
+ns1:GUF a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GUF"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "French Guiana"^^xsd:string .
+
+ns1:GUM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GUM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Guam"^^xsd:string .
+
+ns1:GUY a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "GUY"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Guyana"^^xsd:string .
+
+ns1:HKG a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "HKG"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Hong Kong"^^xsd:string .
+
+ns1:HMD a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "HMD"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Heard Island and McDonald Islands"^^xsd:string .
+
+ns1:HND a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "HND"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Honduras"^^xsd:string .
+
+ns1:HRV a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "HRV"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Croatia"^^xsd:string .
+
+ns1:HTI a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "HTI"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Haiti"^^xsd:string .
+
+ns1:HUN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "HUN"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Hungary"^^xsd:string .
+
+ns1:IDN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "IDN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Indonesia"^^xsd:string .
+
+ns1:IMN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "IMN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Isle of Man"^^xsd:string .
+
+ns1:IND a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "IND"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "India"^^xsd:string .
+
+ns1:IOT a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "IOT"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "British Indian Ocean Territory"^^xsd:string .
+
+ns1:IRL a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "IRL"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Ireland"^^xsd:string .
+
+ns1:IRN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "IRN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Iran, Islamic Republic of"^^xsd:string .
+
+ns1:IRQ a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "IRQ"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Iraq"^^xsd:string .
+
+ns1:ISL a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ISL"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Iceland"^^xsd:string .
+
+ns1:ISR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ISR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Israel"^^xsd:string .
+
+ns1:ITA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ITA"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Italy"^^xsd:string .
+
+ns1:JAM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "JAM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Jamaica"^^xsd:string .
+
+ns1:JEY a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "JEY"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Jersey"^^xsd:string .
+
+ns1:JOR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "JOR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Jordan"^^xsd:string .
+
+ns1:JPN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "JPN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Japan"^^xsd:string .
+
+ns1:KAZ a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "KAZ"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Kazakhstan"^^xsd:string .
+
+ns1:KEN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "KEN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Kenya"^^xsd:string .
+
+ns1:KGZ a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "KGZ"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Kyrgyzstan"^^xsd:string .
+
+ns1:KHM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "KHM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Cambodia"^^xsd:string .
+
+ns1:KIR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "KIR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Kiribati"^^xsd:string .
+
+ns1:KNA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "KNA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Saint Kitts and Nevis"^^xsd:string .
+
+ns1:KOR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "KOR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Korea, Republic of"^^xsd:string .
+
+ns1:KWT a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "KWT"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Kuwait"^^xsd:string .
+
+ns1:LAO a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "LAO"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Lao People's Democratic Republic"^^xsd:string .
+
+ns1:LBN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "LBN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Lebanon"^^xsd:string .
+
+ns1:LBR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "LBR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Liberia"^^xsd:string .
+
+ns1:LBY a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "LBY"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Libya"^^xsd:string .
+
+ns1:LCA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "LCA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Saint Lucia"^^xsd:string .
+
+ns1:LIE a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "LIE"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Liechtenstein"^^xsd:string .
+
+ns1:LKA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "LKA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Sri Lanka"^^xsd:string .
+
+ns1:LSO a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "LSO"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Lesotho"^^xsd:string .
+
+ns1:LTU a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "LTU"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Lithuania"^^xsd:string .
+
+ns1:LUX a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "LUX"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Luxembourg"^^xsd:string .
+
+ns1:LVA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "LVA"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Latvia"^^xsd:string .
+
+ns1:MAC a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MAC"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Macao"^^xsd:string .
+
+ns1:MAF a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MAF"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Saint Martin (French part)"^^xsd:string .
+
+ns1:MAR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MAR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Morocco"^^xsd:string .
+
+ns1:MCO a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MCO"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Monaco"^^xsd:string .
+
+ns1:MDA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MDA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Moldova, Republic of"^^xsd:string .
+
+ns1:MDG a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MDG"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Madagascar"^^xsd:string .
+
+ns1:MDV a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MDV"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Maldives"^^xsd:string .
+
+ns1:MEX a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MEX"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Mexico"^^xsd:string .
+
+ns1:MHL a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MHL"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Marshall Islands"^^xsd:string .
+
+ns1:MKD a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MKD"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "North Macedonia"^^xsd:string .
+
+ns1:MLI a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MLI"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Mali"^^xsd:string .
+
+ns1:MLT a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MLT"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Malta"^^xsd:string .
+
+ns1:MMR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MMR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Myanmar"^^xsd:string .
+
+ns1:MNE a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MNE"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Montenegro"^^xsd:string .
+
+ns1:MNG a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MNG"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Mongolia"^^xsd:string .
+
+ns1:MNP a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MNP"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Northern Mariana Islands"^^xsd:string .
+
+ns1:MOZ a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MOZ"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Mozambique"^^xsd:string .
+
+ns1:MRT a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MRT"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Mauritania"^^xsd:string .
+
+ns1:MSR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MSR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Montserrat"^^xsd:string .
+
+ns1:MTQ a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MTQ"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Martinique"^^xsd:string .
+
+ns1:MUS a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MUS"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Mauritius"^^xsd:string .
+
+ns1:MWI a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MWI"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Malawi"^^xsd:string .
+
+ns1:MYS a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MYS"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Malaysia"^^xsd:string .
+
+ns1:MYT a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "MYT"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Mayotte"^^xsd:string .
+
+ns1:NAM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "NAM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Namibia"^^xsd:string .
+
+ns1:NCL a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "NCL"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "New Caledonia"^^xsd:string .
+
+ns1:NER a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "NER"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Niger"^^xsd:string .
+
+ns1:NFK a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "NFK"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Norfolk Island"^^xsd:string .
+
+ns1:NGA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "NGA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Nigeria"^^xsd:string .
+
+ns1:NIC a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "NIC"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Nicaragua"^^xsd:string .
+
+ns1:NIU a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "NIU"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Niue"^^xsd:string .
+
+ns1:NLD a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "NLD"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Netherlands"^^xsd:string .
+
+ns1:NOR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "NOR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Norway"^^xsd:string .
+
+ns1:NPL a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "NPL"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Nepal"^^xsd:string .
+
+ns1:NRU a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "NRU"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Nauru"^^xsd:string .
+
+ns1:NZL a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "NZL"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "New Zealand"^^xsd:string .
+
+ns1:OMN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "OMN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Oman"^^xsd:string .
+
+ns1:PAK a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "PAK"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Pakistan"^^xsd:string .
+
+ns1:PAN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "PAN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Panama"^^xsd:string .
+
+ns1:PCN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "PCN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Pitcairn"^^xsd:string .
+
+ns1:PER a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "PER"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Peru"^^xsd:string .
+
+ns1:PHL a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "PHL"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Philippines"^^xsd:string .
+
+ns1:PLW a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "PLW"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Palau"^^xsd:string .
+
+ns1:PNG a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "PNG"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Papua New Guinea"^^xsd:string .
+
+ns1:POL a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "POL"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Poland"^^xsd:string .
+
+ns1:PRI a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "PRI"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Puerto Rico"^^xsd:string .
+
+ns1:PRK a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "PRK"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Korea, Democratic People's Republic of"^^xsd:string .
+
+ns1:PRT a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "PRT"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Portugal"^^xsd:string .
+
+ns1:PRY a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "PRY"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Paraguay"^^xsd:string .
+
+ns1:PSE a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "PSE"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Palestinian Territory, Occupied"^^xsd:string .
+
+ns1:PYF a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "PYF"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "French Polynesia"^^xsd:string .
+
+ns1:QAT a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "QAT"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Qatar"^^xsd:string .
+
+ns1:REU a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "REU"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Reunion"^^xsd:string .
+
+ns1:ROU a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ROU"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Romania"^^xsd:string .
+
+ns1:RUS a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "RUS"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Russian Federation"^^xsd:string .
+
+ns1:RWA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "RWA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Rwanda"^^xsd:string .
+
+ns1:SAU a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SAU"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Saudi Arabia"^^xsd:string .
+
+ns1:SDN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SDN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Sudan"^^xsd:string .
+
+ns1:SEN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SEN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Senegal"^^xsd:string .
+
+ns1:SGP a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SGP"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Singapore"^^xsd:string .
+
+ns1:SGS a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SGS"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "South Georgia and the South Sandwich Islands"^^xsd:string .
+
+ns1:SHN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SHN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Saint Helena, Ascension and Tristan da Cunha"^^xsd:string .
+
+ns1:SJM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SJM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Svalbard and Jan Mayen"^^xsd:string .
+
+ns1:SLB a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SLB"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Solomon Islands"^^xsd:string .
+
+ns1:SLE a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SLE"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Sierra Leone"^^xsd:string .
+
+ns1:SLV a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SLV"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "El Salvador"^^xsd:string .
+
+ns1:SMR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SMR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "San Marino"^^xsd:string .
+
+ns1:SOM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SOM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Somalia"^^xsd:string .
+
+ns1:SPM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SPM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Saint Pierre and Miquelon"^^xsd:string .
+
+ns1:SRB a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SRB"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Serbia"^^xsd:string .
+
+ns1:SSD a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SSD"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "South Sudan"^^xsd:string .
+
+ns1:STP a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "STP"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Sao Tome and Principe"^^xsd:string .
+
+ns1:SUR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SUR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Suriname"^^xsd:string .
+
+ns1:SVK a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SVK"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Slovakia"^^xsd:string .
+
+ns1:SVN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SVN"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Slovenia"^^xsd:string .
+
+ns1:SWE a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SWE"^^xsd:string ;
+    ns1:includido_en ns1:EU ;
+    ns1:nombre_de_pais "Sweden"^^xsd:string .
+
+ns1:SWZ a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SWZ"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Eswatini"^^xsd:string .
+
+ns1:SXM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SXM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Sint Maarten (Dutch part)"^^xsd:string .
+
+ns1:SYC a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SYC"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Seychelles"^^xsd:string .
+
+ns1:SYR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "SYR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Syrian Arab Republic"^^xsd:string .
+
+ns1:TCA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "TCA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Turks and Caicos Islands"^^xsd:string .
+
+ns1:TCD a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "TCD"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Chad"^^xsd:string .
+
+ns1:TGO a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "TGO"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Togo"^^xsd:string .
+
+ns1:THA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "THA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Thailand"^^xsd:string .
+
+ns1:TJK a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "TJK"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Tajikistan"^^xsd:string .
+
+ns1:TKL a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "TKL"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Tokelau"^^xsd:string .
+
+ns1:TKM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "TKM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Turkmenistan"^^xsd:string .
+
+ns1:TLS a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "TLS"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Timor-Leste"^^xsd:string .
+
+ns1:TON a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "TON"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Tonga"^^xsd:string .
+
+ns1:TTO a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "TTO"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Trinidad and Tobago"^^xsd:string .
+
+ns1:TUN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "TUN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Tunisia"^^xsd:string .
+
+ns1:TUR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "TUR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Turkey"^^xsd:string .
+
+ns1:TUV a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "TUV"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Tuvalu"^^xsd:string .
+
+ns1:TWN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "TWN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Taiwan"^^xsd:string .
+
+ns1:TZA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "TZA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Tanzania, United Republic of"^^xsd:string .
+
+ns1:UGA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "UGA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Uganda"^^xsd:string .
+
+ns1:UKR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "UKR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Ukraine"^^xsd:string .
+
+ns1:UMI a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "UMI"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "United States Minor Outlying Islands"^^xsd:string .
+
+ns1:URY a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "URY"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Uruguay"^^xsd:string .
+
+ns1:USA a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "USA"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "United States of America"^^xsd:string .
+
+ns1:UZB a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "UZB"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Uzbekistan"^^xsd:string .
+
+ns1:VAT a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "VAT"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Holy See (Vatican City State)"^^xsd:string .
+
+ns1:VCT a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "VCT"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Saint Vincent and the Grenadines"^^xsd:string .
+
+ns1:VEN a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "VEN"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Venezuela, Bolivarian Republic of"^^xsd:string .
+
+ns1:VGB a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "VGB"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Virgin Islands, British"^^xsd:string .
+
+ns1:VIR a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "VIR"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Virgin Islands, U.S."^^xsd:string .
+
+ns1:VNM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "VNM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Viet Nam"^^xsd:string .
+
+ns1:VUT a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "VUT"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Vanuatu"^^xsd:string .
+
+ns1:WLF a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "WLF"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Wallis and Futuna"^^xsd:string .
+
+ns1:WSM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "WSM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Samoa"^^xsd:string .
+
+ns1:YEM a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "YEM"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Yemen"^^xsd:string .
+
+ns1:ZAF a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ZAF"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "South Africa"^^xsd:string .
+
+ns1:ZMB a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ZMB"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Zambia"^^xsd:string .
+
+ns1:ZWE a ns1:pais,
+        owl:NamedIndividual ;
+    ns1:alfa_3_de_pais "ZWE"^^xsd:string ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_pais "Zimbabwe"^^xsd:string .
+
 ns1:articulo a ns1:tipo_de_dato,
         owl:NamedIndividual .
 
@@ -1682,6 +3250,11 @@ ns1:entrevista a ns1:tipo_de_dato,
 ns1:formato_de_archivo a owl:Class ;
     ns1:nombre_usual "file format"@en,
         "formato de archivo"@es ;
+    rdfs:subClassOf owl:Thing .
+
+ns1:identificador_de_organizacion a owl:Class ;
+    ns1:nombre_usual "organization identifier"@en,
+        "identificador de organizacion"@es ;
     rdfs:subClassOf owl:Thing .
 
 ns1:imagen a ns1:formato_de_archivo,
@@ -1703,6 +3276,9 @@ ns3:catalogo_de_repositorio a owl:Class ;
     ns1:nombre_usual "repository_catalog"@en,
         "catalogo de repositorios"@es ;
     ns1:sinonimo "proveedor de servicio"@en ;
+    rdfs:subClassOf owl:Thing .
+
+ns3:id_de_catalogacion_de_repositorio a owl:Class ;
     rdfs:subClassOf owl:Thing .
 
 ns1:101 a ns1:disciplina,
@@ -1753,6 +3329,12 @@ ns2:esquema_de_identificador_de_autor a owl:Class ;
 ns2:resultado_de_investigacion a owl:Class ;
     rdfs:subClassOf owl:Thing .
 
+ns3:agregador a owl:Class ;
+    ns1:nombre_usual "aggregator"@en,
+        "agregador"@es ;
+    ns1:sinonimo "buscador"@es ;
+    rdfs:subClassOf owl:Thing .
+
 ns3:motor_de_repositorio a owl:Class ;
     rdfs:subClassOf owl:Thing .
 
@@ -1791,6 +3373,14 @@ ns1:410 a ns1:disciplina,
     ns1:es_sub_disciplina_de ns1:45 ;
     ns1:nombre_de_disciplina "Construction Engineering and Architecture"^^xsd:string .
 
+ns1:locacion a owl:Class ;
+    ns1:nombre_usual "location"@en,
+        "locación"@es ;
+    rdfs:subClassOf owl:Thing .
+
+ns3:relacion_repositorio_y_organizacion a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
 ns1:201 a ns1:disciplina,
         owl:NamedIndividual ;
     ns1:es_sub_disciplina_de ns1:21 ;
@@ -1805,12 +3395,6 @@ ns1:34 a ns1:disciplina,
         owl:NamedIndividual ;
     ns1:es_sub_disciplina_de ns1:3 ;
     ns1:nombre_de_disciplina "Chemistry"^^xsd:string .
-
-ns1:organizacion a owl:Class ;
-    ns1:nombre_usual "organization"@en,
-        "organización"@es ;
-    ns1:sinonimo "institución"@es ;
-    rdfs:subClassOf <http://test.org/fake-foaf.owl#Organization> .
 
 ns2:esquema_de_identificador_persistente a owl:Class ;
     ns1:nombre_usual "persistent identifier schema"@en,
@@ -1831,6 +3415,12 @@ ns1:409 a ns1:disciplina,
         owl:NamedIndividual ;
     ns1:es_sub_disciplina_de ns1:44 ;
     ns1:nombre_de_disciplina "Computer Science"^^xsd:string .
+
+ns1:organizacion a owl:Class ;
+    ns1:nombre_usual "organization"@en,
+        "organización"@es ;
+    ns1:sinonimo "institución"@es ;
+    rdfs:subClassOf <http://test.org/fake-foaf.owl#Organization> .
 
 ns2:caracteristica_de_cdd a owl:Class ;
     rdfs:subClassOf owl:Thing .
@@ -1857,10 +3447,25 @@ ns1:206 a ns1:disciplina,
     ns1:es_sub_disciplina_de ns1:22 ;
     ns1:nombre_de_disciplina "Neurosciences"^^xsd:string .
 
+ns1:EU a ns1:bloque_comercial,
+        ns1:pais,
+        owl:NamedIndividual ;
+    ns1:includido_en ns1:tierra ;
+    ns1:nombre_de_bloque "European Union"^^xsd:string ;
+    ns1:sigla_de_bloque "EU"^^xsd:string .
+
 ns1:205 a ns1:disciplina,
         owl:NamedIndividual ;
     ns1:es_sub_disciplina_de ns1:22 ;
     ns1:nombre_de_disciplina "Medicine"^^xsd:string .
+
+ns1:tierra a ns1:planeta,
+        owl:NamedIndividual .
+
+ns1:pais a owl:Class ;
+    ns1:nombre_usual "country"@en,
+        "país"@es ;
+    rdfs:subClassOf ns1:locacion .
 
 ns1:disciplina a owl:Class ;
     ns1:nombre_usual "subject"@en,
@@ -1874,10 +3479,25 @@ ns1:disciplina a owl:Class ;
     owl:distinctMembers ( ns1:articulo ns1:cuaderno_de_laboratorio ns1:entrevista ) .
 
 [] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:BEL ns1:BGR ns1:CZE ns1:AUT ns1:HRV ns1:CYP ns1:DNK ns1:EST ns1:FIN ns1:PRT ns1:NLD ns1:LTU ns1:LUX ns1:DEU ns1:ESP ns1:FRA ns1:GRC ns1:HUN ns1:IRL ns1:SWE ns1:SVK ns1:SVN ns1:ITA ns1:ROU ns1:LVA ns1:MLT ns1:POL ns1:ABW ns1:AFG ns1:AGO ns1:AIA ns1:ALA ns1:ALB ns1:AND ns1:ARE ns1:ARG ns1:ARM ns1:ASM ns1:ATA ns1:ATF ns1:ATG ns1:AUS ns1:AZE ns1:BDI ns1:BEN ns1:BES ns1:BFA ns1:BGD ns1:BHR ns1:BHS ns1:BIH ns1:BLM ns1:BLR ns1:BLZ ns1:BMU ns1:BOL ns1:BRA ns1:BRB ns1:BRN ns1:BTN ns1:BVT ns1:BWA ns1:CAF ns1:CAN ns1:CCK ns1:CHE ns1:CHL ns1:CHN ns1:CIV ns1:CMR ns1:COD ns1:COG ns1:COK ns1:COL ns1:COM ns1:CPV ns1:CRI ns1:CUB ns1:CUW ns1:CXR ns1:CYM ns1:DJI ns1:DMA ns1:DOM ns1:DZA ns1:ECU ns1:EGY ns1:ERI ns1:ESH ns1:ETH ns1:FJI ns1:FLK ns1:FRO ns1:FSM ns1:GAB ns1:GBR ns1:GEO ns1:GGY ns1:GHA ns1:GIB ns1:GIN ns1:GLP ns1:GMB ns1:GNB ns1:GNQ ns1:GRD ns1:GRL ns1:GTM ns1:GUF ns1:GUM ns1:GUY ns1:HKG ns1:HMD ns1:HND ns1:HTI ns1:IDN ns1:IMN ns1:IND ns1:IOT ns1:IRN ns1:IRQ ns1:ISL ns1:ISR ns1:JAM ns1:JEY ns1:JOR ns1:JPN ns1:KAZ ns1:KEN ns1:KGZ ns1:KHM ns1:KIR ns1:KNA ns1:KOR ns1:KWT ns1:LAO ns1:LBN ns1:LBR ns1:LBY ns1:LCA ns1:LIE ns1:LKA ns1:LSO ns1:MAC ns1:MAF ns1:MAR ns1:MCO ns1:MDA ns1:MDG ns1:MDV ns1:MEX ns1:MHL ns1:MKD ns1:MLI ns1:MMR ns1:MNE ns1:MNG ns1:MNP ns1:MOZ ns1:MRT ns1:MSR ns1:MTQ ns1:MUS ns1:MWI ns1:MYS ns1:MYT ns1:NAM ns1:NCL ns1:NER ns1:NFK ns1:NGA ns1:NIC ns1:NIU ns1:NOR ns1:NPL ns1:NRU ns1:NZL ns1:OMN ns1:PAK ns1:PAN ns1:PCN ns1:PER ns1:PHL ns1:PLW ns1:PNG ns1:PRI ns1:PRK ns1:PRY ns1:PSE ns1:PYF ns1:QAT ns1:REU ns1:RUS ns1:RWA ns1:SAU ns1:SDN ns1:SEN ns1:SGP ns1:SGS ns1:SHN ns1:SJM ns1:SLB ns1:SLE ns1:SLV ns1:SMR ns1:SOM ns1:SPM ns1:SRB ns1:SSD ns1:STP ns1:SUR ns1:SWZ ns1:SXM ns1:SYC ns1:SYR ns1:TCA ns1:TCD ns1:TGO ns1:THA ns1:TJK ns1:TKL ns1:TKM ns1:TLS ns1:TON ns1:TTO ns1:TUN ns1:TUR ns1:TUV ns1:TWN ns1:TZA ns1:UGA ns1:UKR ns1:UMI ns1:URY ns1:USA ns1:UZB ns1:VAT ns1:VCT ns1:VEN ns1:VGB ns1:VIR ns1:VNM ns1:VUT ns1:WLF ns1:WSM ns1:YEM ns1:ZAF ns1:ZMB ns1:ZWE ) .
+
+[] a owl:AllDifferent ;
     owl:distinctMembers ( ns1:imagen ns1:texto ns1:tabla ) .
 
 [] a owl:AllDifferent ;
     owl:distinctMembers ( ns1:articulo ns1:cuaderno_de_laboratorio ns1:entrevista ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:BEL ns1:BGR ns1:CZE ns1:AUT ns1:HRV ns1:CYP ns1:DNK ns1:EST ns1:FIN ns1:PRT ns1:NLD ns1:LTU ns1:LUX ns1:DEU ns1:ESP ns1:FRA ns1:GRC ns1:HUN ns1:IRL ns1:SWE ns1:SVK ns1:SVN ns1:ITA ns1:ROU ns1:LVA ns1:MLT ns1:POL ns1:ABW ns1:AFG ns1:AGO ns1:AIA ns1:ALA ns1:ALB ns1:AND ns1:ARE ns1:ARG ns1:ARM ns1:ASM ns1:ATA ns1:ATF ns1:ATG ns1:AUS ns1:AZE ns1:BDI ns1:BEN ns1:BES ns1:BFA ns1:BGD ns1:BHR ns1:BHS ns1:BIH ns1:BLM ns1:BLR ns1:BLZ ns1:BMU ns1:BOL ns1:BRA ns1:BRB ns1:BRN ns1:BTN ns1:BVT ns1:BWA ns1:CAF ns1:CAN ns1:CCK ns1:CHE ns1:CHL ns1:CHN ns1:CIV ns1:CMR ns1:COD ns1:COG ns1:COK ns1:COL ns1:COM ns1:CPV ns1:CRI ns1:CUB ns1:CUW ns1:CXR ns1:CYM ns1:DJI ns1:DMA ns1:DOM ns1:DZA ns1:ECU ns1:EGY ns1:ERI ns1:ESH ns1:ETH ns1:FJI ns1:FLK ns1:FRO ns1:FSM ns1:GAB ns1:GBR ns1:GEO ns1:GGY ns1:GHA ns1:GIB ns1:GIN ns1:GLP ns1:GMB ns1:GNB ns1:GNQ ns1:GRD ns1:GRL ns1:GTM ns1:GUF ns1:GUM ns1:GUY ns1:HKG ns1:HMD ns1:HND ns1:HTI ns1:IDN ns1:IMN ns1:IND ns1:IOT ns1:IRN ns1:IRQ ns1:ISL ns1:ISR ns1:JAM ns1:JEY ns1:JOR ns1:JPN ns1:KAZ ns1:KEN ns1:KGZ ns1:KHM ns1:KIR ns1:KNA ns1:KOR ns1:KWT ns1:LAO ns1:LBN ns1:LBR ns1:LBY ns1:LCA ns1:LIE ns1:LKA ns1:LSO ns1:MAC ns1:MAF ns1:MAR ns1:MCO ns1:MDA ns1:MDG ns1:MDV ns1:MEX ns1:MHL ns1:MKD ns1:MLI ns1:MMR ns1:MNE ns1:MNG ns1:MNP ns1:MOZ ns1:MRT ns1:MSR ns1:MTQ ns1:MUS ns1:MWI ns1:MYS ns1:MYT ns1:NAM ns1:NCL ns1:NER ns1:NFK ns1:NGA ns1:NIC ns1:NIU ns1:NOR ns1:NPL ns1:NRU ns1:NZL ns1:OMN ns1:PAK ns1:PAN ns1:PCN ns1:PER ns1:PHL ns1:PLW ns1:PNG ns1:PRI ns1:PRK ns1:PRY ns1:PSE ns1:PYF ns1:QAT ns1:REU ns1:RUS ns1:RWA ns1:SAU ns1:SDN ns1:SEN ns1:SGP ns1:SGS ns1:SHN ns1:SJM ns1:SLB ns1:SLE ns1:SLV ns1:SMR ns1:SOM ns1:SPM ns1:SRB ns1:SSD ns1:STP ns1:SUR ns1:SWZ ns1:SXM ns1:SYC ns1:SYR ns1:TCA ns1:TCD ns1:TGO ns1:THA ns1:TJK ns1:TKL ns1:TKM ns1:TLS ns1:TON ns1:TTO ns1:TUN ns1:TUR ns1:TUV ns1:TWN ns1:TZA ns1:UGA ns1:UKR ns1:UMI ns1:URY ns1:USA ns1:UZB ns1:VAT ns1:VCT ns1:VEN ns1:VGB ns1:VIR ns1:VNM ns1:VUT ns1:WLF ns1:WSM ns1:YEM ns1:ZAF ns1:ZMB ns1:ZWE ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:imagen ns1:texto ns1:tabla ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:articulo ns1:cuaderno_de_laboratorio ns1:entrevista ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:BEL ns1:BGR ns1:CZE ns1:AUT ns1:HRV ns1:CYP ns1:DNK ns1:EST ns1:FIN ns1:PRT ns1:NLD ns1:LTU ns1:LUX ns1:DEU ns1:ESP ns1:FRA ns1:GRC ns1:HUN ns1:IRL ns1:SWE ns1:SVK ns1:SVN ns1:ITA ns1:ROU ns1:LVA ns1:MLT ns1:POL ns1:ABW ns1:AFG ns1:AGO ns1:AIA ns1:ALA ns1:ALB ns1:AND ns1:ARE ns1:ARG ns1:ARM ns1:ASM ns1:ATA ns1:ATF ns1:ATG ns1:AUS ns1:AZE ns1:BDI ns1:BEN ns1:BES ns1:BFA ns1:BGD ns1:BHR ns1:BHS ns1:BIH ns1:BLM ns1:BLR ns1:BLZ ns1:BMU ns1:BOL ns1:BRA ns1:BRB ns1:BRN ns1:BTN ns1:BVT ns1:BWA ns1:CAF ns1:CAN ns1:CCK ns1:CHE ns1:CHL ns1:CHN ns1:CIV ns1:CMR ns1:COD ns1:COG ns1:COK ns1:COL ns1:COM ns1:CPV ns1:CRI ns1:CUB ns1:CUW ns1:CXR ns1:CYM ns1:DJI ns1:DMA ns1:DOM ns1:DZA ns1:ECU ns1:EGY ns1:ERI ns1:ESH ns1:ETH ns1:FJI ns1:FLK ns1:FRO ns1:FSM ns1:GAB ns1:GBR ns1:GEO ns1:GGY ns1:GHA ns1:GIB ns1:GIN ns1:GLP ns1:GMB ns1:GNB ns1:GNQ ns1:GRD ns1:GRL ns1:GTM ns1:GUF ns1:GUM ns1:GUY ns1:HKG ns1:HMD ns1:HND ns1:HTI ns1:IDN ns1:IMN ns1:IND ns1:IOT ns1:IRN ns1:IRQ ns1:ISL ns1:ISR ns1:JAM ns1:JEY ns1:JOR ns1:JPN ns1:KAZ ns1:KEN ns1:KGZ ns1:KHM ns1:KIR ns1:KNA ns1:KOR ns1:KWT ns1:LAO ns1:LBN ns1:LBR ns1:LBY ns1:LCA ns1:LIE ns1:LKA ns1:LSO ns1:MAC ns1:MAF ns1:MAR ns1:MCO ns1:MDA ns1:MDG ns1:MDV ns1:MEX ns1:MHL ns1:MKD ns1:MLI ns1:MMR ns1:MNE ns1:MNG ns1:MNP ns1:MOZ ns1:MRT ns1:MSR ns1:MTQ ns1:MUS ns1:MWI ns1:MYS ns1:MYT ns1:NAM ns1:NCL ns1:NER ns1:NFK ns1:NGA ns1:NIC ns1:NIU ns1:NOR ns1:NPL ns1:NRU ns1:NZL ns1:OMN ns1:PAK ns1:PAN ns1:PCN ns1:PER ns1:PHL ns1:PLW ns1:PNG ns1:PRI ns1:PRK ns1:PRY ns1:PSE ns1:PYF ns1:QAT ns1:REU ns1:RUS ns1:RWA ns1:SAU ns1:SDN ns1:SEN ns1:SGP ns1:SGS ns1:SHN ns1:SJM ns1:SLB ns1:SLE ns1:SLV ns1:SMR ns1:SOM ns1:SPM ns1:SRB ns1:SSD ns1:STP ns1:SUR ns1:SWZ ns1:SXM ns1:SYC ns1:SYR ns1:TCA ns1:TCD ns1:TGO ns1:THA ns1:TJK ns1:TKL ns1:TKM ns1:TLS ns1:TON ns1:TTO ns1:TUN ns1:TUR ns1:TUV ns1:TWN ns1:TZA ns1:UGA ns1:UKR ns1:UMI ns1:URY ns1:USA ns1:UZB ns1:VAT ns1:VCT ns1:VEN ns1:VGB ns1:VIR ns1:VNM ns1:VUT ns1:WLF ns1:WSM ns1:YEM ns1:ZAF ns1:ZMB ns1:ZWE ) .
 
 [] a owl:AllDifferent ;
     owl:distinctMembers ( ns2:authorclaim ns2:isni ns2:orcid ns2:researcherid ) .
@@ -1897,13 +3517,10 @@ ns1:disciplina a owl:Class ;
 [] a owl:AllDifferent ;
     owl:distinctMembers ( ns1:articulo ns1:cuaderno_de_laboratorio ns1:entrevista ) .
 
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:BEL ns1:BGR ns1:CZE ns1:AUT ns1:HRV ns1:CYP ns1:DNK ns1:EST ns1:FIN ns1:PRT ns1:NLD ns1:LTU ns1:LUX ns1:DEU ns1:ESP ns1:FRA ns1:GRC ns1:HUN ns1:IRL ns1:SWE ns1:SVK ns1:SVN ns1:ITA ns1:ROU ns1:LVA ns1:MLT ns1:POL ns1:ABW ns1:AFG ns1:AGO ns1:AIA ns1:ALA ns1:ALB ns1:AND ns1:ARE ns1:ARG ns1:ARM ns1:ASM ns1:ATA ns1:ATF ns1:ATG ns1:AUS ns1:AZE ns1:BDI ns1:BEN ns1:BES ns1:BFA ns1:BGD ns1:BHR ns1:BHS ns1:BIH ns1:BLM ns1:BLR ns1:BLZ ns1:BMU ns1:BOL ns1:BRA ns1:BRB ns1:BRN ns1:BTN ns1:BVT ns1:BWA ns1:CAF ns1:CAN ns1:CCK ns1:CHE ns1:CHL ns1:CHN ns1:CIV ns1:CMR ns1:COD ns1:COG ns1:COK ns1:COL ns1:COM ns1:CPV ns1:CRI ns1:CUB ns1:CUW ns1:CXR ns1:CYM ns1:DJI ns1:DMA ns1:DOM ns1:DZA ns1:ECU ns1:EGY ns1:ERI ns1:ESH ns1:ETH ns1:FJI ns1:FLK ns1:FRO ns1:FSM ns1:GAB ns1:GBR ns1:GEO ns1:GGY ns1:GHA ns1:GIB ns1:GIN ns1:GLP ns1:GMB ns1:GNB ns1:GNQ ns1:GRD ns1:GRL ns1:GTM ns1:GUF ns1:GUM ns1:GUY ns1:HKG ns1:HMD ns1:HND ns1:HTI ns1:IDN ns1:IMN ns1:IND ns1:IOT ns1:IRN ns1:IRQ ns1:ISL ns1:ISR ns1:JAM ns1:JEY ns1:JOR ns1:JPN ns1:KAZ ns1:KEN ns1:KGZ ns1:KHM ns1:KIR ns1:KNA ns1:KOR ns1:KWT ns1:LAO ns1:LBN ns1:LBR ns1:LBY ns1:LCA ns1:LIE ns1:LKA ns1:LSO ns1:MAC ns1:MAF ns1:MAR ns1:MCO ns1:MDA ns1:MDG ns1:MDV ns1:MEX ns1:MHL ns1:MKD ns1:MLI ns1:MMR ns1:MNE ns1:MNG ns1:MNP ns1:MOZ ns1:MRT ns1:MSR ns1:MTQ ns1:MUS ns1:MWI ns1:MYS ns1:MYT ns1:NAM ns1:NCL ns1:NER ns1:NFK ns1:NGA ns1:NIC ns1:NIU ns1:NOR ns1:NPL ns1:NRU ns1:NZL ns1:OMN ns1:PAK ns1:PAN ns1:PCN ns1:PER ns1:PHL ns1:PLW ns1:PNG ns1:PRI ns1:PRK ns1:PRY ns1:PSE ns1:PYF ns1:QAT ns1:REU ns1:RUS ns1:RWA ns1:SAU ns1:SDN ns1:SEN ns1:SGP ns1:SGS ns1:SHN ns1:SJM ns1:SLB ns1:SLE ns1:SLV ns1:SMR ns1:SOM ns1:SPM ns1:SRB ns1:SSD ns1:STP ns1:SUR ns1:SWZ ns1:SXM ns1:SYC ns1:SYR ns1:TCA ns1:TCD ns1:TGO ns1:THA ns1:TJK ns1:TKL ns1:TKM ns1:TLS ns1:TON ns1:TTO ns1:TUN ns1:TUR ns1:TUV ns1:TWN ns1:TZA ns1:UGA ns1:UKR ns1:UMI ns1:URY ns1:USA ns1:UZB ns1:VAT ns1:VCT ns1:VEN ns1:VGB ns1:VIR ns1:VNM ns1:VUT ns1:WLF ns1:WSM ns1:YEM ns1:ZAF ns1:ZMB ns1:ZWE ) .
+
 [] a owl:AllDisjointClasses ;
     owl:members ( ns3:exportacion_de_citas ns3:api_para_cosecha ns3:control_de_acceso ns3:integracion_con_red_social ns3:interfaz_multilenguaje ns3:periodo_de_embargo ns3:servicio_de_curaduria ) .
-
-[] a owl:AllDifferent ;
-    owl:distinctMembers ( ns1:imagen ns1:texto ns1:tabla ) .
-
-[] a owl:AllDifferent ;
-    owl:distinctMembers ( ns1:articulo ns1:cuaderno_de_laboratorio ns1:entrevista ) .
 
 
