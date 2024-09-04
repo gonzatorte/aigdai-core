@@ -1096,20 +1096,20 @@ ns1:has_key_organizacion a owl:DatatypeProperty,
     rdfs:domain ns1:organizacion ;
     rdfs:range xsd:string .
 
-ns1:identificador_de_organizacion_identifica_organizacion a owl:FunctionalProperty,
-        owl:ObjectProperty ;
-    rdfs:domain ns1:identificador_de_organizacion ;
-    rdfs:range ns1:organizacion .
-
-ns1:identificador_de_organizacion_tiene_literal a owl:DatatypeProperty,
+ns1:id_de_organizacion_tiene_literal a owl:DatatypeProperty,
         owl:FunctionalProperty ;
-    rdfs:domain ns1:identificador_de_organizacion ;
+    rdfs:domain ns1:id_de_organizacion ;
     rdfs:range xsd:string .
 
-ns1:identificador_de_organizacion_tiene_tipo a owl:FunctionalProperty,
+ns1:id_de_organizacion_tiene_organizacion a owl:FunctionalProperty,
         owl:ObjectProperty ;
-    rdfs:domain ns1:identificador_de_organizacion ;
-    rdfs:range ns1:tipo_de_identificador_de_organizacion .
+    rdfs:domain ns1:id_de_organizacion ;
+    rdfs:range ns1:organizacion .
+
+ns1:id_de_organizacion_tiene_tipo a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:id_de_organizacion ;
+    rdfs:range ns1:tipo_de_id_de_organizacion .
 
 ns1:includido_en a owl:ObjectProperty,
         owl:TransitiveProperty ;
@@ -1134,8 +1134,8 @@ ns1:nombre_de_pais a owl:DatatypeProperty,
 
 ns1:nombre_usual a owl:AnnotationProperty .
 
-ns1:se_ubica_en a owl:DatatypeProperty,
-        owl:FunctionalProperty ;
+ns1:se_ubica_en a owl:FunctionalProperty,
+        owl:ObjectProperty ;
     rdfs:domain ns1:organizacion ;
     rdfs:range ns1:locacion .
 
@@ -1181,23 +1181,38 @@ ns2:es_producido_por_productor_de_datos a owl:ObjectProperty ;
     rdfs:domain ns2:cdd ;
     rdfs:range ns2:productor_de_datos .
 
-ns2:extiende_a_esquema_de_identificador_persistente a owl:ObjectProperty ;
-    rdfs:domain ns2:esquema_de_identificador_persistente ;
-    rdfs:range ns2:esquema_de_identificador_persistente .
+ns2:extiende_a_esquema_de_id_persistente a owl:ObjectProperty ;
+    rdfs:domain ns2:esquema_de_id_persistente ;
+    rdfs:range ns2:esquema_de_id_persistente .
 
 ns2:extiende_a_esquema_de_metadatos a owl:ObjectProperty ;
     rdfs:domain ns2:esquema_de_metadatos ;
     rdfs:range ns2:esquema_de_metadatos .
 
-ns2:id_de_autor a owl:DatatypeProperty,
+ns2:id_de_autor_tiene_autor a owl:DatatypeProperty,
         owl:FunctionalProperty ;
-    rdfs:domain ns2:autor_es_identificado_por ;
+    rdfs:domain ns2:id_de_autor ;
+    rdfs:range ns2:autor .
+
+ns2:id_de_autor_tiene_esquema_de_id_de_autor a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain ns2:id_de_autor ;
+    rdfs:range ns2:esquema_de_id_de_autor .
+
+ns2:id_de_resultado_de_investigacion_tiene_esquema_de_id_persistente a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain ns2:id_de_resultado_de_investigacion ;
+    rdfs:range ns2:esquema_de_id_persistente .
+
+ns2:id_de_resultado_de_investigacion_tiene_literal a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns2:id_de_resultado_de_investigacion ;
     rdfs:range xsd:string .
 
-ns2:id_de_cdd a owl:DatatypeProperty,
-        owl:FunctionalProperty ;
-    rdfs:domain ns2:cdd_es_identificado_por ;
-    rdfs:range xsd:string .
+ns2:id_de_resultado_de_investigacion_tiene_resultado_de_investigacion a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain ns2:id_de_resultado_de_investigacion ;
+    rdfs:range ns2:resultado_de_investigacion .
 
 ns2:resultado_relacionado a owl:ObjectProperty ;
     rdfs:domain ns2:resultado_de_investigacion ;
@@ -1216,11 +1231,11 @@ ns2:utiliza_tipo_de_dato a owl:Class ;
 
 <http://test.org/example_world.owl> a owl:Ontology .
 
-<http://test.org/example_world.owl#02tphfq59> a ns1:identificador_de_organizacion,
+<http://test.org/example_world.owl#02tphfq59> a ns1:id_de_organizacion,
         owl:NamedIndividual ;
-    ns1:identificador_de_organizacion_identifica_organizacion <http://test.org/example_world.owl#unr> ;
-    ns1:identificador_de_organizacion_tiene_literal "02tphfq59"^^xsd:string ;
-    ns1:identificador_de_organizacion_tiene_tipo <http://test.org/example_world.owl#ROR> .
+    ns1:id_de_organizacion_tiene_literal "02tphfq59"^^xsd:string ;
+    ns1:id_de_organizacion_tiene_organizacion <http://test.org/example_world.owl#unr> ;
+    ns1:id_de_organizacion_tiene_tipo <http://test.org/example_world.owl#ROR> .
 
 <http://test.org/example_world.owl#4tu_researchdata> a ns3:repositorio,
         owl:NamedIndividual .
@@ -1228,7 +1243,7 @@ ns2:utiliza_tipo_de_dato a owl:Class ;
 <http://test.org/example_world.owl#Decreto_478_2013> a ns3:agregador,
         owl:NamedIndividual .
 
-<http://test.org/example_world.owl#ISNI> a ns1:tipo_de_identificador_de_organizacion,
+<http://test.org/example_world.owl#ISNI> a ns1:tipo_de_id_de_organizacion,
         owl:NamedIndividual .
 
 <http://test.org/example_world.owl#Ley104> a ns3:agregador,
@@ -1424,15 +1439,11 @@ ns1:tipo_de_organizacion a rdfs:Datatype ;
     owl:equivalentClass [ a rdfs:Datatype ;
             owl:oneOf ( "comercial"^^xsd:string "no-comercial"^^xsd:string ) ] .
 
-ns2:ark a ns2:esquema_de_identificador_persistente,
+ns2:ark a ns2:esquema_de_id_persistente,
         owl:NamedIndividual .
 
-ns2:authorclaim a ns2:esquema_de_identificador_de_autor,
+ns2:authorclaim a ns2:esquema_de_id_de_autor,
         owl:NamedIndividual .
-
-ns2:autor_es_identificado_por a owl:ObjectProperty ;
-    rdfs:domain ns2:autor ;
-    rdfs:range ns2:esquema_de_identificador_de_autor .
 
 ns2:caracteristica_de_productor_de_datos a owl:Class ;
     rdfs:subClassOf ns2:caracteristica_de_cdd .
@@ -1443,19 +1454,15 @@ ns2:cc0 a ns2:licencia,
 ns2:cc_by a ns2:licencia,
         owl:NamedIndividual .
 
-ns2:cdd_es_identificado_por a owl:ObjectProperty ;
-    rdfs:domain ns2:resultado_de_investigacion ;
-    rdfs:range ns2:esquema_de_identificador_persistente .
-
 ns2:dc a ns2:esquema_de_metadatos,
         owl:NamedIndividual .
 
 ns2:ddi a ns2:esquema_de_metadatos,
         owl:NamedIndividual .
 
-ns2:doi a ns2:esquema_de_identificador_persistente,
+ns2:doi a ns2:esquema_de_id_persistente,
         owl:NamedIndividual ;
-    ns2:extiende_a_esquema_de_identificador_persistente ns2:handle .
+    ns2:extiende_a_esquema_de_id_persistente ns2:handle .
 
 ns2:doi-crossref a ns2:esquema_de_metadatos,
         owl:NamedIndividual .
@@ -1466,7 +1473,7 @@ ns2:doi-datacite a ns2:esquema_de_metadatos,
 ns2:gpl a ns2:licencia,
         owl:NamedIndividual .
 
-ns2:isni a ns2:esquema_de_identificador_de_autor,
+ns2:isni a ns2:esquema_de_id_de_autor,
         owl:NamedIndividual .
 
 ns2:mit a ns2:licencia,
@@ -1475,22 +1482,25 @@ ns2:mit a ns2:licencia,
 ns2:oai_pmh a ns2:esquema_de_metadatos,
         owl:NamedIndividual .
 
-ns2:orcid a ns2:esquema_de_identificador_de_autor,
+ns2:orcid a ns2:esquema_de_id_de_autor,
         owl:NamedIndividual .
 
 ns2:productor_de_datos a owl:Class ;
     rdfs:subClassOf ns2:autor .
 
-ns2:purl a ns2:esquema_de_identificador_persistente,
+ns2:purl a ns2:esquema_de_id_persistente,
         owl:NamedIndividual .
 
-ns2:researcherid a ns2:esquema_de_identificador_de_autor,
+ns2:researcherid a ns2:esquema_de_id_de_autor,
         owl:NamedIndividual .
 
 ns2:schemaorg a ns2:esquema_de_metadatos,
         owl:NamedIndividual .
 
-<http://test.org/example_world.owl#ROR> a ns1:tipo_de_identificador_de_organizacion,
+<http://test.org/example_world.owl#ARG> a ns1:pais,
+        owl:NamedIndividual .
+
+<http://test.org/example_world.owl#ROR> a ns1:tipo_de_id_de_organizacion,
         owl:NamedIndividual .
 
 <http://test.org/example_world.owl#dataverse> a ns3:motor_de_repositorio,
@@ -1633,8 +1643,11 @@ ns2:cdd a owl:Class ;
     ns1:sinonimo "conjunto de datos"@es ;
     rdfs:subClassOf ns2:resultado_de_investigacion .
 
-ns2:handle a ns2:esquema_de_identificador_persistente,
+ns2:handle a ns2:esquema_de_id_persistente,
         owl:NamedIndividual .
+
+ns2:id_de_autor a owl:Class ;
+    rdfs:subClassOf owl:Thing .
 
 <http://test.org/example_world.owl#rda_unr> a ns3:repositorio,
         owl:NamedIndividual ;
@@ -1643,7 +1656,8 @@ ns2:handle a ns2:esquema_de_identificador_persistente,
     ns3:utiliza_motor <http://test.org/example_world.owl#dataverse> .
 
 <http://test.org/example_world.owl#unr> a ns1:organizacion,
-        owl:NamedIndividual .
+        owl:NamedIndividual ;
+    ns1:se_ubica_en <http://test.org/example_world.owl#ARG> .
 
 ns1:103 a ns1:disciplina,
         owl:NamedIndividual ;
@@ -1689,7 +1703,10 @@ ns1:bloque_comercial a owl:Class ;
         "bloque comercial"@es ;
     rdfs:subClassOf ns1:locacion .
 
-ns1:tipo_de_identificador_de_organizacion a owl:Class ;
+ns1:tipo_de_id_de_organizacion a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+ns2:id_de_resultado_de_investigacion a owl:Class ;
     rdfs:subClassOf owl:Thing .
 
 ns2:tamanio a owl:Class ;
@@ -3252,7 +3269,7 @@ ns1:formato_de_archivo a owl:Class ;
         "formato de archivo"@es ;
     rdfs:subClassOf owl:Thing .
 
-ns1:identificador_de_organizacion a owl:Class ;
+ns1:id_de_organizacion a owl:Class ;
     ns1:nombre_usual "organization identifier"@en,
         "identificador de organizacion"@es ;
     rdfs:subClassOf owl:Thing .
@@ -3320,7 +3337,7 @@ ns1:4 a ns1:disciplina,
         owl:NamedIndividual ;
     ns1:nombre_de_disciplina "Engineering Sciences"^^xsd:string .
 
-ns2:esquema_de_identificador_de_autor a owl:Class ;
+ns2:esquema_de_id_de_autor a owl:Class ;
     ns1:nombre_usual "author identification schema"@en,
         "esquema de identificador de autores"@es ;
     ns1:sinonimo "aids"@en ;
@@ -3396,7 +3413,7 @@ ns1:34 a ns1:disciplina,
     ns1:es_sub_disciplina_de ns1:3 ;
     ns1:nombre_de_disciplina "Chemistry"^^xsd:string .
 
-ns2:esquema_de_identificador_persistente a owl:Class ;
+ns2:esquema_de_id_persistente a owl:Class ;
     ns1:nombre_usual "persistent identifier schema"@en,
         "esquema de identificador persistente"@es ;
     rdfs:subClassOf ns2:caracteristica_de_cdd .
