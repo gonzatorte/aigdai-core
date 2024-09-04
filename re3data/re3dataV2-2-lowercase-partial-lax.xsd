@@ -3105,7 +3105,7 @@
                   <xs:documentation>Email address of the contact or an URL of an online contact form of the repository.</xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element name="type" msdata:Prefix="r3d" type="repositoryTypes" minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="type" msdata:Prefix="r3d" type="repositoryTypes" minOccurs="1" maxOccurs="unbounded">
                 <xs:annotation>
                   <xs:documentation>The type of the research data repository.</xs:documentation>
                 </xs:annotation>
@@ -3136,12 +3136,12 @@
                   <xs:documentation>Date when the research data repository went offline or stopped ingesting new research data (still making the research data available).</xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element name="repositoryLanguage" msdata:Prefix="r3d" type="languages" minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="repositoryLanguage" msdata:Prefix="r3d" type="languages" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
                   <xs:documentation>The user interface language of the research data repository.</xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element name="subject" msdata:Prefix="r3d" minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="subject" msdata:Prefix="r3d" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
                   <xs:documentation>The subject(s) of the research data repository.</xs:documentation>
                 </xs:annotation>
@@ -3188,7 +3188,7 @@
                   </xs:simpleContent>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="providerType" msdata:Prefix="r3d" type="providerTypes" minOccurs="1" maxOccurs="2">
+              <xs:element name="providerType" msdata:Prefix="r3d" type="providerTypes" minOccurs="0" maxOccurs="2">
                 <xs:annotation>
                   <xs:documentation>The type of provider.</xs:documentation>
                 </xs:annotation>
@@ -3198,7 +3198,7 @@
                   <xs:documentation>English keyword(s) describing the subject focus of the research data repository.</xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element name="institution" msdata:Prefix="r3d" minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="institution" msdata:Prefix="r3d" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
                   <xs:documentation>All institutions being responsible for funding, creating and/or running the research data repository (wrapper element).</xs:documentation>
                 </xs:annotation>
@@ -3336,7 +3336,7 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="dataAccess" msdata:Prefix="r3d" minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="dataAccess" msdata:Prefix="r3d" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
                   <xs:documentation>(wrapper element)</xs:documentation>
                 </xs:annotation>
@@ -3533,12 +3533,12 @@
                   <xs:documentation>Additional remarks that are visible to all users.</xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element name="entryDate" msdata:Prefix="r3d" type="dateFormat" minOccurs="1" maxOccurs="1">
+              <xs:element name="entryDate" msdata:Prefix="r3d" type="dateFormat" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
                   <xs:documentation>The date the research data repository was indexed in re3data.org.</xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element name="lastUpdate" msdata:Prefix="r3d" type="dateFormat" minOccurs="1" maxOccurs="1">
+              <xs:element name="lastUpdate" msdata:Prefix="r3d" type="dateFormat" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
                   <xs:documentation>The date the metadata of the research data repository was updated.</xs:documentation>
                 </xs:annotation>

@@ -1,10 +1,11 @@
+import asyncio
 import httpx
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 # from sqlalchemy import create_engine
 # from sqlalchemy.orm import Session
 from sqlalchemy import select
 
-from relational_schema import Repositorio
+from relational_schema import Repositorio, Organizacion, Disciplina, Certificacion
 from lib import run_in_parallel
 from lib.no_relational_database import get_database_client
 from re3data.extractor import raw_extract, list_repositories
@@ -20,13 +21,13 @@ async def get_sessions():
     # await engine.dispose()
 
 
+# mal formateados de alguna manera (posiblemente por tags repetidos o atributos requeridos faltantes). Errores del estilo:
+#   Unexpected child with tag 'dataLicense' at position XX. Tag 'dataAccess' expected.
+#   Unexpected child with tag 'keyword' at position XX. Tag 'providerType' expected.
+#   Unexpected child with tag 'size' at position XX. Tag 'type' expected.
+#   Unexpected child with tag 'subject' at position XX. Tag 'repositoryLanguage' expected.
+#   Unexpected child with tag 'missionStatementURL' at position XX. Tag 'subject' expected.
 BLACKLIST = [
-    # mal formateados de alguna manera. Errores del estilo:
-    #   Unexpected child with tag 'dataLicense' at position XX. Tag 'dataAccess' expected.
-    #   Unexpected child with tag 'keyword' at position XX. Tag 'providerType' expected.
-    #   Unexpected child with tag 'size' at position XX. Tag 'type' expected.
-    #   Unexpected child with tag 'subject' at position XX. Tag 'repositoryLanguage' expected.
-    #   Unexpected child with tag 'missionStatementURL' at position XX. Tag 'subject' expected.
     'r3d100011532',
     'r3d100012053',
     'r3d100012228',
@@ -65,22 +66,32 @@ BLACKLIST = [
     'r3d100014239',
     'r3d100014257',
     'r3d100014264',
+    'r3d100012335',
+    'r3d100014357',
+    'r3d100014382',
+    'r3d100014401',
 ]
 
 
-def refine_on_memory():
-    schema = load_schema()
+def refine_on_memory(white_list: [str], allow_whitelist: bool):
     database = get_database_client()
     raw_drepo_collection = database['raw_drepo']
+    # instances = raw_drepo_collection.find({"idd": "r3d100012350"})
     instances = raw_drepo_collection.find({})
+    return refine_iterator(instances, white_list, allow_whitelist)
+
+
+def refine_iterator(iterator, white_list: [str], allow_whitelist: bool):
+    schema = load_schema()
     refined = []
-    for x in instances:
-        try:
-            rr = refine_repository_info(schema, x['bin'])
-        except TransformError as err:
-            print(x['idd'], err)
-        else:
-            refined.append(rr)
+    for x in iterator:
+        if x['idd'] in BLACKLIST:
+            continue
+        if allow_whitelist:
+            if x['idd'] not in white_list:
+                continue
+        rrr = refine_repository_info(schema, x['bin'])
+        refined.append(rrr)
     return refined
 
 
@@ -90,9 +101,11 @@ async def refine_and_insert_on_relational_db():
     database = get_database_client()
     # drepo_collection = database['drepo']
     raw_drepo_collection = database['raw_drepo']
-    instances = raw_drepo_collection.find({})
-    instances_count = raw_drepo_collection.count_documents({})
-    instance_ids = raw_drepo_collection.find({}, {'idd': True})
+    skip_count = 1000
+    limit_count = 2000
+    instances = raw_drepo_collection.find({}).sort({'idd': -1}).skip(skip_count).limit(limit_count)
+    # instances_count = raw_drepo_collection.count_documents({})
+    instance_ids = raw_drepo_collection.find({}, {'idd': True}).sort({'idd': -1}).skip(skip_count).limit(limit_count)
     instance_ids = [x['idd'] for x in instance_ids]
 
     async with async_session() as session2:
@@ -101,44 +114,71 @@ async def refine_and_insert_on_relational_db():
         already_loaded_repos = [x[0] for x in already_loaded_repos]
         not_repeated_ids = [x for x in instance_ids if x not in already_loaded_repos]
 
-    schema = load_schema()
-
-    def process_factory(whitelist_ids):
-        async def process(repository_info):
-            if repository_info['idd'] in BLACKLIST:
-                return
-            if repository_info['idd'] not in whitelist_ids:
-                return
-            rr = refine_repository_info(schema, repository_info['bin'])
-
-            async with async_session() as session:
-                async with session.begin():
-                    statement = select(Repositorio).where(Repositorio.id == rr['id'])
+    async def process(repository_info):
+        async with async_session() as session:
+            async with session.begin():
+                institutions = repository_info['institutions']
+                d_institutions = []
+                for institution in institutions:
+                    statement = select(Organizacion).where(Organizacion.id == institution['id'])
                     result = await session.scalar(statement)
                     if result is None:
-                        r_instance = Repositorio(
-                            id=rr['id'],
-                            nombre=rr['repositoryName'],
-                            descripcion=rr['description'],
-                            sitio_web=rr['repositoryURL'],
-                            organizacion_id=None,
-                            motor_id=None,
+                        r_instance = Organizacion(
+                            id=institution['id'],
+                            nombre=institution['institutionName'],
                         )
                         session.add(r_instance)
-                        return r_instance
-                    else:
-                        return result
-        return process
+                        result = r_instance
+                    d_institutions.append(result)
 
-    async for _ in run_in_parallel(process_factory(not_repeated_ids), instances, 10, 1, lambda x: print("raw fetched %s out of %s" % (x, instances_count)), print):
+                statement = select(Repositorio).where(Repositorio.id == repository_info['id'])
+                result = await session.scalar(statement)
+                if result is None:
+                    r_instance = Repositorio(
+                        id=repository_info['id'],
+                        nombre=repository_info['repositoryName'],
+                        descripcion=repository_info['description'],
+                        sitio_web=repository_info['repositoryURL'],
+                        api_type=repository_info['apiType'],
+                        organizaciones=d_institutions,
+                        motor_id=None,
+                    )
+                    session.add(r_instance)
+                    return r_instance
+                else:
+                    return result
+
+    repository_infos = refine_iterator(instances, not_repeated_ids, True)
+    print(len(repository_infos))
+    async for _ in run_in_parallel(process, iter(repository_infos), 1, 0.1):
         pass
 
+DISCIPLINAS = []
+CERTIFICACIONES = []
+PAISES = []
+LENGUAJES = []
+PID_ESQUEMA = []
 
-async def download_and_insert_on_relational_db():
+async def seed():
     async_session = await get_sessions()
+    async with async_session() as session:
+        async with session.begin():
+            session.add_all([
+                Disciplina(
+                    id=x['id'],
+                    nombre=x['name'],
+                ) for x in DISCIPLINAS
+            ])
+            session.add_all([
+                Certificacion(
+                    id=x['id'],
+                    nombre=x['name'],
+                ) for x in CERTIFICACIONES
+            ])
 
-    repo_ids = list_repositories()
 
+async def sync_records_on_relational_db(repo_ids: [str]):
+    async_session = await get_sessions()
     schema = load_schema()
     async with httpx.AsyncClient() as client:
         counter = 0
@@ -153,16 +193,16 @@ async def download_and_insert_on_relational_db():
                 print("raw fetched %s out of %s. Errors: %s" % (counter, len(repo_ids), error_counter))
 
             try:
-                rr = refine_repository_info(schema, repository_info)
+                repo_record = refine_repository_info(schema, repository_info)
 
                 async with async_session() as session:
                     async with session.begin():
                         session.add_all([
                             Repositorio(
-                                id=rr['id'],
-                                nombre=rr['repositoryName'],
-                                descripcion=rr['description'],
-                                sitio_web=rr['repositoryURL'],
+                                id=repo_record['id'],
+                                nombre=repo_record['repositoryName'],
+                                descripcion=repo_record['description'],
+                                sitio_web=repo_record['repositoryURL'],
                                 organizacion_id=None,
                                 motor_id=None,
                             )
@@ -173,7 +213,5 @@ async def download_and_insert_on_relational_db():
     print("errors %s" % (error_counter,))
 
 if __name__ == '__main__':
-    rr = refine_on_memory()
-    print(rr)
-    # asyncio.run(refine_and_insert_on_relational_db())
-    # asyncio.run(download_and_insert_on_relational_db())
+    # refine_on_memory([], False)
+    asyncio.run(refine_and_insert_on_relational_db())
