@@ -25,17 +25,7 @@ def initiate():
         repo_onto.repositorio('dryad')
         rda_unr = repo_onto.repositorio('rda_unr')
 
-        [ckan, dataverse, dspace, otro_motor] = map(lambda x: repo_onto.motor_de_repositorio(x), [
-            'ckan',
-            'dataverse',
-            'dspace',
-            # ToDo: Siempre se tiene que agregar la categoria "otro", no así para "desconocido"
-            #  ojo que el motor otro no cumple ser identico a otro motor que sea "otro". Como modelamos eso?
-            #   diciendo que el motor otro no puede tener ninguna feature asociada para que no se pueda inferir nada del
-            #    mismo o que puedan compartir erroneamente inferencias?
-            #   funciona de algún modo como el NULL en bases de datos
-            'otro',
-        ])
+        dataverse = repo_onto.motor_de_repositorio('dataverse')
 
         lareferencia = repo_onto.agregador('lareferencia')
         google_datasetsearch = repo_onto.agregador('google_datasetsearch')

@@ -47,7 +47,7 @@ def initiate():
         class Type(Thing):
             domain = [Organization]
             range = [activation_status]
-        types = list(map(lambda x: Type, [
+        org_types = list(map(lambda x: Type(x), [
             'Education',
             'Healthcare',
             'Company',
@@ -58,7 +58,7 @@ def initiate():
             'Funder',
             'Other',
         ]))
-        AllDifferent(types)
+        AllDifferent(org_types)
 
         class has_type(ObjectProperty, FunctionalProperty):
             domain = [Organization]

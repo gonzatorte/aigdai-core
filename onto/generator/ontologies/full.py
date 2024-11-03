@@ -1,6 +1,7 @@
 from .base import onto as base_onto, initiate as base_initiate
-from .dataset import onto as dataset_onto
-from .repo import onto as repo_onto
+from .dataset import onto as dataset_onto, initiate as dataset_initiate
+from .repo import onto as repo_onto, initiate as repo_initiate
+from .full import onto as full_onto, initiate as full_initiate
 
 from owlready2 import *
 
@@ -9,6 +10,8 @@ onto = get_ontology("http://test.org/full.owl")
 
 def initiate():
     base_initiate()
+    dataset_initiate()
+    repo_initiate()
     with onto:
         pass
         # # ToDo: Functional

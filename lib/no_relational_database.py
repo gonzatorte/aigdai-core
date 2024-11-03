@@ -1,6 +1,5 @@
 from pymongo import MongoClient
 import motor.motor_asyncio
-client = motor.motor_asyncio.AsyncIOMotorClient()
 
 
 MONGO_URL = "mongodb://aigdai-user:aigdai-password@localhost:27017/aigdai?authSource=admin"
@@ -28,5 +27,5 @@ def get_database_client():
 
 
 def get_database_client_async():
-    client2 = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URL)
-    return client2['aigdai']
+    client_async = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URL)
+    return client_async['aigdai']

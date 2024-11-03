@@ -1,6 +1,5 @@
 from owlready2 import *
-import owlready2 as owww
-from . import cts
+from onto import cts
 # from . import util
 from .foaf import initiate as foaf_initiate, onto as foaf_ns
 
@@ -112,7 +111,6 @@ def initiate():
             locstr("disciplina", lang="es"),
             locstr("subject", lang="en"),
         ]
-
         # ToDo: El término "tipo" es muy vago para lo que se quiere representar. Más bien sería esComercial: boolean
         # ToDo: quizas es mejor modelar esto como un concepto y es mejor para traducirlo
         class tipo_de_organizacion(Datatype):
@@ -128,6 +126,11 @@ def initiate():
             range = [url]
 
         class nombre_de_disciplina(DataProperty, FunctionalProperty):
+            domain = [disciplina]
+            range = [str]
+
+        # ToDo: El nombre es unico dado un esquema_de_disciplina
+        class esquema_de_disciplina(DataProperty, FunctionalProperty):
             domain = [disciplina]
             range = [str]
 
@@ -261,6 +264,7 @@ def initiate():
                 ds = disciplina(tr[0])
                 # instances_by_class[disciplina][ds.name] = ds
                 ds.nombre_de_disciplina = tr[1]
+                ds.esquema_de_disciplina = 'dfg'
                 if parent is not None:
                     ds.es_sub_disciplina_de.append(parent)
                 if len(tr) >= 3:

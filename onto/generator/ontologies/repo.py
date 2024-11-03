@@ -7,7 +7,7 @@ onto = ow.get_ontology("http://test.org/repo.owl")
 
 def initiate():
     base_initiate()
-    with onto:
+    with (onto):
         class politica(ow.Thing):
             pass
         politica.nombre_usual = [
@@ -28,6 +28,18 @@ def initiate():
 
         class motor_de_repositorio(ow.Thing):
             pass
+        motores_de_repositorio = [motor_de_repositorio(x) for x in [
+            'ckan',
+            'dataverse',
+            'dspace',
+            # ToDo: Siempre se tiene que agregar la categoria "otro", no así para "desconocido"
+            #  ojo que el motor otro no cumple ser identico a otro motor que sea "otro". Como modelamos eso?
+            #   diciendo que el motor otro no puede tener ninguna feature asociada para que no se pueda inferir nada del
+            #    mismo o que puedan compartir erroneamente inferencias?
+            #   funciona de algún modo como el NULL en bases de datos
+            # 'otro',
+        ]]
+        ow.AllDifferent(motores_de_repositorio)
 
         class agregador(ow.Thing):
             pass
@@ -69,6 +81,15 @@ def initiate():
             ow.locstr("exportación de citas", lang="es"),
             ow.locstr("cite export", lang="en"),
         ]
+        estilos_de_exportacion_de_citas = [exportacion_de_citas(x) for x in [
+            'apa',
+            'ieee',
+            'harvard',
+            'mla',
+            'vancouver',
+            'chicago',
+        ]]
+        ow.AllDifferent(estilos_de_exportacion_de_citas)
 
         class api_para_cosecha(funcionalidad):
             pass
@@ -76,13 +97,17 @@ def initiate():
             ow.locstr("api para cosecha", lang="es"),
             ow.locstr("harvesting api", lang="en"),
         ]
-
-        class control_de_acceso(funcionalidad):
-            pass
-        control_de_acceso.nombre_usual = [
-            ow.locstr("control de acceso", lang="es"),
-            ow.locstr("access control", lang="en"),
-        ]
+        protocolos_de_api_para_cosecha = [api_para_cosecha(x) for x in [
+            'ftp',
+            'netcdf',
+            'oai-pmh',
+            'opendap',
+            'rest',
+            'soap',
+            'sparql',
+            'sword',
+        ]]
+        ow.AllDifferent(protocolos_de_api_para_cosecha)
 
         class integracion_con_red_social(funcionalidad):
             pass
@@ -90,16 +115,38 @@ def initiate():
             ow.locstr("integración con red social", lang="es"),
             ow.locstr("social media integration", lang="en"),
         ]
+        integraciones_con_red_sociales = [integracion_con_red_social(x) for x in [
+            'twitter',
+            'facebook',
+            'linkedin',
+            'researchgate',
+            'academiaedu',
+        ]]
+        ow.AllDifferent(integraciones_con_red_sociales)
 
-        class interfaz_multilenguaje(funcionalidad):
+        class soporte_para_lenguaje_de_interfaz(funcionalidad):
             pass
-        interfaz_multilenguaje.nombre_usual = [
-            ow.locstr("interfaz multilenguaje", lang="es"),
-            ow.locstr("multilanguage interface", lang="en"),
+        soporte_para_lenguaje_de_interfaz.nombre_usual = [
+            ow.locstr("lenguaje de interfaz", lang="es"),
+            ow.locstr("gui language", lang="en"),
+        ]
+        # ToDo: Modelar que no puede aparecer dos veces el mismo lenguaje relacionado? Que de algun modo el lenguaje identifica a la relacion?
+        class soporte_para_lenguaje_de_interfaz_tiene_lenguaje(ow.DataProperty, ow.FunctionalProperty):
+            domain = [soporte_para_lenguaje_de_interfaz]
+            range = [base_onto.lenguaje]
+
+        # class control_de_acceso(funcionalidad):
+        #     pass
+        control_de_acceso = funcionalidad('control_de_acceso')
+
+        control_de_acceso.nombre_usual = [
+            ow.locstr("control de acceso", lang="es"),
+            ow.locstr("access control", lang="en"),
         ]
 
         class periodo_de_embargo(funcionalidad):
             pass
+
         periodo_de_embargo.nombre_usual = [
             ow.locstr("período de embargo", lang="es"),
             ow.locstr("embargo period", lang="en"),
@@ -117,7 +164,7 @@ def initiate():
             api_para_cosecha,
             control_de_acceso,
             integracion_con_red_social,
-            interfaz_multilenguaje,
+            soporte_para_lenguaje_de_interfaz,
             periodo_de_embargo,
             servicio_de_curaduria,
         ])
