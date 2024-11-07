@@ -3,15 +3,12 @@ from .dataset import onto as dataset_onto, initiate as dataset_initiate
 from .repo import onto as repo_onto, initiate as repo_initiate
 from .full import onto as full_onto, initiate as full_initiate
 
-from owlready2 import *
+import owlready2 as ow
 
-onto = get_ontology("http://test.org/example_world.owl")
+onto = ow.get_ontology("http://test.org/example_world.owl")
 
 
 def initiate():
-    base_initiate()
-    dataset_initiate()
-    repo_initiate()
     full_initiate()
     with onto:
         tipo_de_id_ror = base_onto.tipo_de_id_de_organizacion('ROR')
@@ -64,8 +61,7 @@ def initiate():
 
 if __name__ == '__main__':
     initiate()
-    import owlready2
-    owlready2.JAVA_EXE = "/usr/bin/java"
-    owlready2.sync_reasoner()
-    if len(list(owlready2.default_world.inconsistent_classes())) != 0:
+    ow.JAVA_EXE = "/usr/bin/java"
+    ow.sync_reasoner()
+    if len(list(ow.default_world.inconsistent_classes())) != 0:
         raise Exception('Inconsistent ontology')

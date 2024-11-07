@@ -1,9 +1,9 @@
-from owlready2 import *
+import owlready2 as ow
 from onto import cts
 # from . import util
 from .foaf import initiate as foaf_initiate, onto as foaf_ns
 
-onto = get_ontology("http://test.org/base.owl")
+onto = ow.get_ontology("http://test.org/base.owl")
 
 # instances_by_class = {}
 
@@ -17,7 +17,7 @@ class HasKeyProperty:
 
 def initiate():
     foaf_initiate()
-    # dc_ns = get_ontology("http://purl.org/dc/elements/1.1/").load()
+    # dc_ns = ow.get_ontology("http://purl.org/dc/elements/1.1/").load()
     # dcat_ns = util.fetch_ontology('dcat', 'http://www.w3.org/ns/dcat#').load()
     # dct_ns = util.fetch_ontology('dct', "http://purl.org/dc/terms/").load()
     # dctype_ns = util.fetch_ontology('dctype', "http://purl.org/dc/dcmitype/").load()
@@ -34,162 +34,162 @@ def initiate():
         # ToDo: Usar el de foaf mejor
         url = str
 
-        class escala(Datatype):
-            equivalent_to = [OneOf(["bueno", "regular", "malo"])]
+        class escala(ow.Datatype):
+            equivalent_to = [ow.OneOf(["bueno", "regular", "malo"])]
 
         # ToDo: Creo que en realidad is same as rdfs:label , o usar http://purl.org/vocab/vann
-        class nombre_usual(AnnotationProperty):
+        class nombre_usual(ow.AnnotationProperty):
             pass
 
-        class sinonimo(AnnotationProperty):
+        class sinonimo(ow.AnnotationProperty):
             pass
 
         # ToDo: Agregar en la ontología la descripción de que significa cada campo (o al menos los más confusos)
         #  o usar un doc (html) externo y rdfs:isDefinedBy ?
-        class description(AnnotationProperty):
+        class description(ow.AnnotationProperty):
             pass
 
         # ToDo: extender aqui la ontologia de ROR
         class organizacion(foaf_ns.Organization):
             pass
         organizacion.nombre_usual = [
-            locstr("organización", lang="es"),
-            locstr("organization", lang="en"),
+            ow.locstr("organización", lang="es"),
+            ow.locstr("organization", lang="en"),
         ]
         organizacion.sinonimo = [
-            locstr("institución", lang="es"),
+            ow.locstr("institución", lang="es"),
         ]
 
-        class tipo_de_id_de_organizacion(Thing):
+        class tipo_de_id_de_organizacion(ow.Thing):
             pass
 
-        # class lenguaje(Thing):
+        # class lenguaje(ow.Thing):
         #     pass
-        class lenguaje(Datatype):
-            equivalent_to = [OneOf(list(map(lambda xx: xx[0], cts.languages)))]
-            # 	owl:onDatatype  xsd:string ;
+        class lenguaje(ow.Datatype):
+            equivalent_to = [ow.OneOf(list(map(lambda xx: xx[0], cts.languages)))]
+            # 	owl:onow.Datatype  xsd:string ;
             # 	owl:withRestrictions (  [ xsd:pattern "[a-b]{3}" ] )
         lenguaje.nombre_usual = [
-            locstr("lenguaje", lang="es"),
-            locstr("language", lang="en"),
+            ow.locstr("lenguaje", lang="es"),
+            ow.locstr("language", lang="en"),
         ]
         lenguaje.sinonimo = [
-            locstr("idioma", lang="es"),
+            ow.locstr("idioma", lang="es"),
         ]
 
-        class locacion(Thing):
+        class locacion(ow.Thing):
             pass
         locacion.nombre_usual = [
-            locstr("locación", lang="es"),
-            locstr("location", lang="en"),
+            ow.locstr("locación", lang="es"),
+            ow.locstr("location", lang="en"),
         ]
 
         class pais(locacion):
             pass
         pais.nombre_usual = [
-            locstr("país", lang="es"),
-            locstr("country", lang="en"),
+            ow.locstr("país", lang="es"),
+            ow.locstr("country", lang="en"),
         ]
 
         class bloque_comercial(locacion):
             pass
         bloque_comercial.nombre_usual = [
-            locstr("bloque comercial", lang="es"),
-            locstr("trade bloc", lang="en"),
+            ow.locstr("bloque comercial", lang="es"),
+            ow.locstr("trade bloc", lang="en"),
         ]
 
         class planeta(locacion):
             pass
         planeta.nombre_usual = [
-            locstr("planeta", lang="es"),
-            locstr("planet", lang="en"),
+            ow.locstr("planeta", lang="es"),
+            ow.locstr("planet", lang="en"),
         ]
 
-        class disciplina(Thing):
+        class disciplina(ow.Thing):
             pass
         disciplina.nombre_usual = [
-            locstr("disciplina", lang="es"),
-            locstr("subject", lang="en"),
+            ow.locstr("disciplina", lang="es"),
+            ow.locstr("subject", lang="en"),
         ]
         # ToDo: El término "tipo" es muy vago para lo que se quiere representar. Más bien sería esComercial: boolean
         # ToDo: quizas es mejor modelar esto como un concepto y es mejor para traducirlo
-        class tipo_de_organizacion(Datatype):
-            equivalent_to = [OneOf(["comercial", "no-comercial"])]
+        class tipo_de_organizacion(ow.Datatype):
+            equivalent_to = [ow.OneOf(["comercial", "no-comercial"])]
 
-        class tiene_tipo_de_organizacion(DataProperty, FunctionalProperty):
+        class tiene_tipo_de_organizacion(ow.DataProperty, ow.FunctionalProperty):
             domain = [organizacion]
             range = [tipo_de_organizacion]
 
-        # class has_key_organizacion(HasKeyProperty, FunctionalProperty):
-        class has_key_organizacion(DataProperty, FunctionalProperty):
+        # class has_key_organizacion(HasKeyProperty, ow.FunctionalProperty):
+        class has_key_organizacion(ow.DataProperty, ow.FunctionalProperty):
             domain = [organizacion]
             range = [url]
 
-        class nombre_de_disciplina(DataProperty, FunctionalProperty):
+        class nombre_de_disciplina(ow.DataProperty, ow.FunctionalProperty):
             domain = [disciplina]
             range = [str]
 
         # ToDo: El nombre es unico dado un esquema_de_disciplina
-        class esquema_de_disciplina(DataProperty, FunctionalProperty):
+        class esquema_de_disciplina(ow.DataProperty, ow.FunctionalProperty):
             domain = [disciplina]
             range = [str]
 
-        class es_sub_disciplina_de(ObjectProperty, TransitiveProperty):
+        class es_sub_disciplina_de(ow.ObjectProperty, ow.TransitiveProperty):
             domain = [disciplina]
             range = [disciplina]
 
         class es_disciplina_afin(disciplina >> disciplina):
             pass
 
-        class alfa_3_de_pais(DataProperty, FunctionalProperty):
+        class alfa_3_de_pais(ow.DataProperty, ow.FunctionalProperty):
             domain = [pais]
             range = [str]
 
-        class nombre_de_pais(DataProperty, FunctionalProperty):
+        class nombre_de_pais(ow.DataProperty, ow.FunctionalProperty):
             domain = [pais]
             range = [str]
 
-        class nombre_de_bloque(DataProperty, FunctionalProperty):
+        class nombre_de_bloque(ow.DataProperty, ow.FunctionalProperty):
             domain = [bloque_comercial]
             range = [str]
 
-        class sigla_de_bloque(DataProperty, FunctionalProperty):
+        class sigla_de_bloque(ow.DataProperty, ow.FunctionalProperty):
             domain = [bloque_comercial]
             range = [str]
 
-        class nombre_de_bloque(DataProperty, FunctionalProperty):
+        class nombre_de_bloque(ow.DataProperty, ow.FunctionalProperty):
             domain = [pais]
             range = [str]
 
-        class includido_en(ObjectProperty, TransitiveProperty):
+        class includido_en(ow.ObjectProperty, ow.TransitiveProperty):
             domain = [locacion]
             range = [locacion]
 
-        class formato_de_archivo(Thing):
+        class formato_de_archivo(ow.Thing):
             pass
         formato_de_archivo.nombre_usual = [
-            locstr("formato de archivo", lang="es"),
-            locstr("file format", lang="en"),
+            ow.locstr("formato de archivo", lang="es"),
+            ow.locstr("file format", lang="en"),
         ]
 
         # ToDo: el nombre de "artefacto de investigación" es más acertado quizás
-        class tipo_de_dato(Thing):
+        class tipo_de_dato(ow.Thing):
             pass
 
         # ToDo: En realidad no me queda claro si es funcional, pues hay organizaciones multinacionales...
         #  Quizás en ese caso, cada organización tendrá su branch en cada país...
         #  De hecho aparecen los código de país AAA y EUR que comprenden varios países
-        class se_ubica_en(ObjectProperty, FunctionalProperty):
+        class se_ubica_en(ow.ObjectProperty, ow.FunctionalProperty):
             domain = [organizacion]
             range = [locacion]
 
-        class tiene_nombre(DataProperty, FunctionalProperty):
+        class tiene_nombre(ow.DataProperty, ow.FunctionalProperty):
             domain = [organizacion]
             range = [str]
             # ToDo: reactivar
             # range = [foaf_ns.ontology.name]
 
-        class tiene_nombre_alternativo(DataProperty):
+        class tiene_nombre_alternativo(ow.DataProperty):
             domain = [organizacion]
             range = [str]
             # ToDo: reactivar
@@ -198,24 +198,24 @@ def initiate():
         # class organizacion_es_identificada_por(organizacion >> tipo_de_id_de_organizacion):
         #     pass
         #
-        # class id_de_organizacion(DataProperty, FunctionalProperty):
+        # class id_de_organizacion(ow.DataProperty, ow.FunctionalProperty):
         #     domain = [organizacion_es_identificada_por]
         #     range = [str]
 
-        class id_de_organizacion(Thing):
+        class id_de_organizacion(ow.Thing):
             pass
         id_de_organizacion.nombre_usual = [
-            locstr("identificador de organizacion", lang="es"),
-            locstr("organization identifier", lang="en"),
+            ow.locstr("identificador de organizacion", lang="es"),
+            ow.locstr("organization identifier", lang="en"),
         ]
-        class id_de_organizacion_tiene_tipo(ObjectProperty, FunctionalProperty):
+        class id_de_organizacion_tiene_tipo(ow.ObjectProperty, ow.FunctionalProperty):
             domain = [id_de_organizacion]
             range = [tipo_de_id_de_organizacion]
-        # class id_de_organizacion_tiene_organizacion(HasKeyProperty, ObjectProperty, FunctionalProperty):
-        class id_de_organizacion_tiene_organizacion(ObjectProperty, FunctionalProperty):
+        # class id_de_organizacion_tiene_organizacion(HasKeyProperty, ow.ObjectProperty, ow.FunctionalProperty):
+        class id_de_organizacion_tiene_organizacion(ow.ObjectProperty, ow.FunctionalProperty):
             domain = [id_de_organizacion]
             range = [organizacion]
-        class id_de_organizacion_tiene_literal(DataProperty, FunctionalProperty):
+        class id_de_organizacion_tiene_literal(ow.DataProperty, ow.FunctionalProperty):
             domain = [id_de_organizacion]
             range = [str]
 
@@ -227,17 +227,17 @@ def initiate():
             'texto',
             'tabla',
         ]))
-        AllDifferent(formato_de_archivo_instances)
+        ow.AllDifferent(formato_de_archivo_instances)
         # instances_by_class[formato_de_archivo] = {x.name: x for x in formato_de_archivo_instances}
         tipo_de_datos_instances = list(map(tipo_de_dato, [
             'articulo',
             'cuaderno_de_laboratorio',
             'entrevista',
         ]))
-        AllDifferent(tipo_de_datos_instances)
+        ow.AllDifferent(tipo_de_datos_instances)
         # instances_by_class[tipo_de_dato] = {x.name: x for x in tipo_de_datos_instances}
 
-        # class escala_mayor_que(ObjectProperty, TransitiveProperty):
+        # class escala_mayor_que(ow.ObjectProperty, ow.TransitiveProperty):
         #     domain = [escala]
         #     range = [escala]
         #
@@ -271,7 +271,7 @@ def initiate():
                     children = tr[2]
                     tree_walk_disciplina(children, ds)
 
-        tree_walk_disciplina(cts.dfg_subjects, None)
+        # tree_walk_disciplina(cts.dfg_subjects, None)
 
         # instances_by_class[locacion] = {}
         cys = []
@@ -297,7 +297,7 @@ def initiate():
                 cy.nombre_de_pais = country_or_block[1]
                 cy.includido_en.append(planeta_tierra)
                 cys.append(cy)
-        AllDifferent(cys)
+        ow.AllDifferent(cys)
 
     # ToDo: relacion skos:ConceptScheme y skos:Concept son creo para modelar tesauros y clasificaciones
     #  Se le dice que una instancia es un concepto y el conceptSchema es el criterio de clasificación
@@ -347,8 +347,7 @@ def initiate():
 
 if __name__ == '__main__':
     initiate()
-    import owlready2
-    owlready2.JAVA_EXE = "/usr/bin/java"
-    owlready2.sync_reasoner()
-    if len(list(owlready2.default_world.inconsistent_classes())) != 0:
+    ow.JAVA_EXE = "/usr/bin/java"
+    ow.sync_reasoner()
+    if len(list(ow.default_world.inconsistent_classes())) != 0:
         raise Exception('Inconsistent ontology')

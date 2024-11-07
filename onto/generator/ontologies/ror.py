@@ -1,50 +1,50 @@
-from owlready2 import *
+import owlready2 as ow
 
-onto = get_ontology('http://test.org/fake-ror.owl')
+onto = ow.get_ontology('http://test.org/fake-ror.owl')
 
 
 def initiate():
     with onto:
         # ToDo: Extend from foaf:organization
-        class Organization(Thing):
+        class Organization(ow.Thing):
             pass
 
-        class is_parent(ObjectProperty, TransitiveProperty):
+        class is_parent(ow.ObjectProperty, ow.TransitiveProperty):
             domain = [Organization]
             range = [Organization]
 
-        class is_successor(ObjectProperty, TransitiveProperty):
+        class is_successor(ow.ObjectProperty, ow.TransitiveProperty):
             domain = [Organization]
             range = [Organization]
 
-        class is_related(ObjectProperty, SymmetricProperty):
+        class is_related(ow.ObjectProperty, ow.SymmetricProperty):
             domain = [Organization]
             range = [Organization]
 
         # ToDo: Puedo definir disjoint en relaciones?
-        AllDisjoint([is_parent, is_related])
-        AllDisjoint([is_parent, is_successor])
+        ow.AllDisjoint([is_parent, is_related])
+        ow.AllDisjoint([is_parent, is_successor])
 
-        class activation_status(Datatype):
-            equivalent_to = [OneOf(["active", "inactive"])]
+        class activation_status(ow.Datatype):
+            equivalent_to = [ow.OneOf(["active", "inactive"])]
 
-        class is_active(DataProperty, FunctionalProperty):
+        class is_active(ow.DataProperty, ow.FunctionalProperty):
             domain = [Organization]
             range = [activation_status]
 
-        class has_website(DataProperty, FunctionalProperty):
+        class has_website(ow.DataProperty, ow.FunctionalProperty):
             domain = [Organization]
             # ToDo: Use foaf:homepage
             range = [str]
 
-        class has_name(DataProperty):
+        class has_name(ow.DataProperty):
             domain = [Organization]
             # ToDo: Use foaf:name
             # ToDo: Agregar que puede tener typo = acronym, alias
             #  puede también tener un argument lang
             range = [str]
 
-        class Type(Thing):
+        class Type(ow.Thing):
             domain = [Organization]
             range = [activation_status]
         org_types = list(map(lambda x: Type(x), [
@@ -58,9 +58,9 @@ def initiate():
             'Funder',
             'Other',
         ]))
-        AllDifferent(org_types)
+        ow.AllDifferent(org_types)
 
-        class has_type(ObjectProperty, FunctionalProperty):
+        class has_type(ow.ObjectProperty, ow.FunctionalProperty):
             domain = [Organization]
             range = [Type]
 
@@ -84,8 +84,8 @@ def initiate():
 
 if __name__ == '__main__':
     initiate()
-    import owlready2
-    owlready2.JAVA_EXE = "/usr/bin/java"
-    owlready2.sync_reasoner()
-    if len(list(owlready2.default_world.inconsistent_classes())) != 0:
+    import owlready2 as ow
+    ow.JAVA_EXE = "/usr/bin/java"
+    ow.sync_reasoner()
+    if len(list(ow.default_world.inconsistent_classes())) != 0:
         raise Exception('Inconsistent ontology')

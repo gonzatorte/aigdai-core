@@ -5,13 +5,14 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 # from sqlalchemy.orm import Session
 from sqlalchemy import select
 
-from extract_from_repo import BLACKLIST
-from onto.cts import countries, dfg_subjects, languages, coar_content_types
-from schema import Repositorio, Organizacion, Disciplina, Certificacion, Motor
+from re3data.extract_from_repo import BLACKLIST
+import onto.cts as cts
+# from onto.populator.schema import Pais
+from schema import Repositorio, Organizacion, Disciplina, Certificacion, Motor, Api, Pais, BloqueEconomico, Localizacion
 from lib import run_in_parallel
 from lib.no_relational_database import get_database_client
-from re3data.extractor import raw_extract, list_repositories
-from re3data.xsd_transform import refine_repository_info, load_schema, TransformError
+from re3data.extractor import raw_extract
+from re3data.xsd_transform import refine_repository_info, load_schema
 
 
 async def get_sessions():
@@ -58,14 +59,7 @@ async def refine_and_insert_on_relational_db():
     instance_ids = raw_drepo_collection.find({}, {'idd': True}).sort({'idd': -1}).skip(skip_count).limit(limit_count)
     instance_ids = [x['idd'] for x in instance_ids]
 
-    async with async_session() as session_seed:
-        session_seed.add_all([
-            Certificacion(
-                id='',
-                nombre='',
-            )
-        for x in countries])
-
+    await seed()
 
     async with async_session() as session2:
         already_loaded_repos_stm = select(Repositorio.id)
@@ -85,7 +79,8 @@ async def refine_and_insert_on_relational_db():
                         r_instance = Organizacion(
                             id=institution['id'],
                             nombre=institution['institutionName'],
-                        ) # ToDo: Falta la relacion que tiene con el repositorio
+                            localizacion_id=institution['institutionCountry'] if institution['institutionCountry'] != 'EEC' else 'EU',
+                        ) # ToDo: Falta el tipo de relacion que tiene con el repositorio
                         session.add(r_instance)
                         result = r_instance
                     d_institutions.append(result)
@@ -98,9 +93,33 @@ async def refine_and_insert_on_relational_db():
                         software_name = "other_%s" % (repository_info['id'],)
                     r_instance = Motor(
                         id=software_name,
-                    )
+
+                )
                     session.add(r_instance)
                     d_motor = r_instance
+
+                apis = repository_info['apis']
+                d_apis = []
+                for api in apis:
+                    statement = select(Api).where(Api.id == api['url'])
+                    result = await session.scalar(statement)
+                    if result is None:
+                        r_instance = Api(
+                            id=api['url'],
+                            type=api['type'],
+                        )
+                        session.add(r_instance)
+                        result = r_instance
+                    d_apis.append(result)
+
+                subjects = repository_info['subjects']
+                d_subjects = []
+                for subject in subjects:
+                    statement = select(Disciplina).where(Disciplina.id == subject)
+                    result = await session.scalar(statement)
+                    d_subjects.append(result)
+                # statement = select(Disciplina).where(Disciplina.id in subjects)
+                # d_subjects = await session.scalars(statement)
 
                 statement = select(Repositorio).where(Repositorio.id == repository_info['id'])
                 result = await session.scalar(statement)
@@ -110,8 +129,9 @@ async def refine_and_insert_on_relational_db():
                         nombre=repository_info['repositoryName'],
                         descripcion=repository_info['description'],
                         sitio_web=repository_info['repositoryURL'],
-                        api_type=repository_info['apiType'],
                         organizaciones=d_institutions,
+                        disciplinas=d_subjects,
+                        apis=d_apis,
                         motor_id=d_motor,
                     )
                     session.add(r_instance)
@@ -120,13 +140,15 @@ async def refine_and_insert_on_relational_db():
                     return result
 
     repository_infos = refine_iterator(instances, not_repeated_ids, True)
-    print(len(repository_infos))
+    total = len(repository_infos)
+    print("To process %s" % (total, ))
+    counter = 0
     async for _ in run_in_parallel(process, iter(repository_infos), 1, 0.1):
-        pass
+        counter += 1
+        if counter % 10 == 0:
+            print("ready %s out of %s" % (counter, total))
 
-DISCIPLINAS = []
 CERTIFICACIONES = []
-PAISES = []
 LENGUAJES = []
 PID_ESQUEMA = []
 
@@ -134,18 +156,53 @@ async def seed():
     async_session = await get_sessions()
     async with async_session() as session:
         async with session.begin():
-            session.add_all([
-                Disciplina(
-                    id=x['id'],
-                    nombre=x['name'],
-                ) for x in DISCIPLINAS
-            ])
+
+            disciplinas = []
+            def tree_walk_disciplina(forest, parent):
+                for tr in forest:
+                    ds = Disciplina(id=tr[0], nombre=tr[1], super=parent, id_esquema='dfg')
+                    disciplinas.append(ds)
+                    if len(tr) >= 3:
+                        children = tr[2]
+                        tree_walk_disciplina(children, ds)
+            tree_walk_disciplina(cts.dfg_subjects, None)
+            session.add_all(disciplinas)
+
             session.add_all([
                 Certificacion(
                     id=x['id'],
                     nombre=x['name'],
                 ) for x in CERTIFICACIONES
             ])
+
+            # cys = []
+            # planeta_tierra = planeta('tierra')
+            planeta_tierra = Localizacion(id='AAA', name='tierra')
+            session.add(planeta_tierra)
+            for country_or_block in cts.countries:
+                if len(country_or_block) >= 3:
+                    # continue
+                    loc = Localizacion(id=country_or_block[0], name=country_or_block[1])
+                    session.add(loc)
+                    bl = BloqueEconomico(localizacion=loc)
+                    session.add(bl)
+                    # bl.includido_en.append(planeta_tierra)
+                    for country in country_or_block[2]:
+                        loc = Localizacion(id=country[0], name=country[1])
+                        session.add(loc)
+                        cy = Pais(alfa_3=country[0], localizacion=loc, bloque=bl)
+                        session.add(cy)
+                        # cys.append(cy)
+                else:
+                    loc = Localizacion(id=country_or_block[0], name=country_or_block[1])
+                    session.add(loc)
+                    cy = Pais(alfa_3=country_or_block[0], localizacion=loc)
+                    session.add(cy)
+                    # cy.includido_en.append(planeta_tierra)
+                    # cys.append(cy)
+                    # break
+            # ow.AllDifferent(cys)
+            # session.add_all(cys)
 
 
 async def sync_records_on_relational_db(repo_ids: [str]):

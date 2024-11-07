@@ -1,8 +1,8 @@
 from .base import onto as base_onto, initiate as initiate_base
 from .foaf import onto as foaf_onto, initiate as initiate_foaf
-from owlready2 import *
+import owlready2 as ow
 
-onto = get_ontology("http://test.org/dataset.owl")
+onto = ow.get_ontology("http://test.org/dataset.owl")
 
 
 def initiate():
@@ -12,7 +12,7 @@ def initiate():
         # base_onto.__enter__()
         # base_onto.__exit__()
 
-        class resultado_de_investigacion(Thing):
+        class resultado_de_investigacion(ow.Thing):
             pass
 
         class articulo(resultado_de_investigacion):
@@ -22,11 +22,11 @@ def initiate():
             pass
 
         cdd.nombre_usual = [
-            locstr("coleccion de datos", lang="es"),
-            locstr("dataset", lang="en"),
+            ow.locstr("coleccion de datos", lang="es"),
+            ow.locstr("dataset", lang="en"),
         ]
         cdd.sinonimo = [
-            locstr("conjunto de datos", lang="es"),
+            ow.locstr("conjunto de datos", lang="es"),
         ]
 
         class autor(foaf_onto.Person):
@@ -38,7 +38,7 @@ def initiate():
         class es_producido_por_productor_de_datos(cdd >> productor_de_datos):
             pass
 
-        class caracteristica_de_cdd(Thing):
+        class caracteristica_de_cdd(ow.Thing):
             pass
 
         class caracteristica_de_productor_de_datos(caracteristica_de_cdd):
@@ -48,32 +48,32 @@ def initiate():
             pass
 
         esquema_de_id_de_autor.nombre_usual = [
-            locstr("esquema de identificador de autores", lang="es"),
-            locstr("author identification schema", lang="en"),
+            ow.locstr("esquema de identificador de autores", lang="es"),
+            ow.locstr("author identification schema", lang="en"),
         ]
         esquema_de_id_de_autor.sinonimo = [
-            locstr("aids", lang="en"),
+            ow.locstr("aids", lang="en"),
         ]
 
         class admite_disciplina(caracteristica_de_cdd >> base_onto.disciplina):
             pass
         admite_disciplina.nombre_usual = [
-            locstr("admite disciplina", lang="es"),
-            locstr("admits subject", lang="en"),
+            ow.locstr("admite disciplina", lang="es"),
+            ow.locstr("admits subject", lang="en"),
         ]
 
         class esquema_de_id_persistente(caracteristica_de_cdd):
             pass
         esquema_de_id_persistente.nombre_usual = [
-            locstr("esquema de identificador persistente", lang="es"),
-            locstr("persistent identifier schema", lang="en"),
+            ow.locstr("esquema de identificador persistente", lang="es"),
+            ow.locstr("persistent identifier schema", lang="en"),
         ]
 
         class esquema_de_metadatos(caracteristica_de_cdd):
             pass
         esquema_de_metadatos.nombre_usual = [
-            locstr("esquema de metadatos", lang="es"),
-            locstr("metadata schema", lang="en"),
+            ow.locstr("esquema de metadatos", lang="es"),
+            ow.locstr("metadata schema", lang="en"),
         ]
 
         class tamanio(caracteristica_de_cdd):
@@ -94,8 +94,8 @@ def initiate():
         class utiliza_formato_de_archivo(caracteristica_de_cdd):
             pass
         utiliza_formato_de_archivo.nombre_usual = [
-            locstr("utiliza formato de archivo", lang="es"),
-            locstr("use file format", lang="en"),
+            ow.locstr("utiliza formato de archivo", lang="es"),
+            ow.locstr("use file format", lang="en"),
         ]
 
         class utiliza_tipo_de_dato(caracteristica_de_cdd):
@@ -117,21 +117,21 @@ def initiate():
             'orcid',
             'researcherid',
         ]))
-        AllDifferent(esquema_de_id_de_autores_instances)
+        ow.AllDifferent(esquema_de_id_de_autores_instances)
         licencia_instances = list(map(lambda x: licencia(x), [
             'cc_by',
             'cc0',
             'gpl',
             'mit',
         ]))
-        AllDifferent(licencia_instances)
+        ow.AllDifferent(licencia_instances)
         [doi, _, handle, *_] = esquema_de_id_persistente_instances = list(map(lambda x: esquema_de_id_persistente(x), [
             'doi',
             'ark',
             'handle',
             'purl',
         ]))
-        AllDifferent(esquema_de_id_persistente_instances)
+        ow.AllDifferent(esquema_de_id_persistente_instances)
         esquema_de_metadatos_instances = list(map(lambda x: esquema_de_metadatos(x), [
             'dc',
             'ddi',
@@ -140,34 +140,34 @@ def initiate():
             'doi-datacite',
             'doi-crossref',
         ]))
-        AllDifferent(esquema_de_metadatos_instances)
+        ow.AllDifferent(esquema_de_metadatos_instances)
 
         class resultado_relacionado(resultado_de_investigacion >> resultado_de_investigacion):
             pass
 
-        class id_de_resultado_de_investigacion(Thing):
+        class id_de_resultado_de_investigacion(ow.Thing):
             pass
 
-        class id_de_resultado_de_investigacion_tiene_resultado_de_investigacion(ObjectProperty, FunctionalProperty):
+        class id_de_resultado_de_investigacion_tiene_resultado_de_investigacion(ow.ObjectProperty, ow.FunctionalProperty):
             domain = [id_de_resultado_de_investigacion]
             range = [resultado_de_investigacion]
 
-        class id_de_resultado_de_investigacion_tiene_esquema_de_id_persistente(ObjectProperty, FunctionalProperty):
+        class id_de_resultado_de_investigacion_tiene_esquema_de_id_persistente(ow.ObjectProperty, ow.FunctionalProperty):
             domain = [id_de_resultado_de_investigacion]
             range = [esquema_de_id_persistente]
 
-        class id_de_resultado_de_investigacion_tiene_literal(DataProperty, FunctionalProperty):
+        class id_de_resultado_de_investigacion_tiene_literal(ow.DataProperty, ow.FunctionalProperty):
             domain = [id_de_resultado_de_investigacion]
             range = [str]
 
-        class id_de_autor(Thing):
+        class id_de_autor(ow.Thing):
             pass
 
-        class id_de_autor_tiene_esquema_de_id_de_autor(ObjectProperty, FunctionalProperty):
+        class id_de_autor_tiene_esquema_de_id_de_autor(ow.ObjectProperty, ow.FunctionalProperty):
             domain = [id_de_autor]
             range = [esquema_de_id_de_autor]
 
-        class id_de_autor_tiene_autor(DataProperty, FunctionalProperty):
+        class id_de_autor_tiene_autor(ow.ObjectProperty, ow.FunctionalProperty):
             domain = [id_de_autor]
             range = [autor]
 
@@ -182,8 +182,7 @@ def initiate():
 
 if __name__ == '__main__':
     initiate()
-    import owlready2
-    owlready2.JAVA_EXE = "/usr/bin/java"
-    owlready2.sync_reasoner()
-    if len(list(owlready2.default_world.inconsistent_classes())) != 0:
+    ow.JAVA_EXE = "/usr/bin/java"
+    ow.sync_reasoner()
+    if len(list(ow.default_world.inconsistent_classes())) != 0:
         raise Exception('Inconsistent ontology')

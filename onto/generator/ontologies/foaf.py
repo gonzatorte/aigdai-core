@@ -1,4 +1,4 @@
-from owlready2 import *
+import owlready2 as ow
 
 # from . import util
 # foaf_ns = owlready2.get_ontology("http://xmlns.com/foaf/0.1/").load()
@@ -8,18 +8,18 @@ from owlready2 import *
 # foaf_ns = get_ontology("http://test.org/base.owl")
 
 
-onto = get_ontology('http://test.org/fake-foaf.owl')
+onto = ow.get_ontology('http://test.org/fake-foaf.owl')
 
 
 def initiate():
     with onto:
-        class Person(Thing):
+        class Person(ow.Thing):
             pass
 
-        class Organization(Thing):
+        class Organization(ow.Thing):
             pass
 
-        class Document(Thing):
+        class Document(ow.Thing):
             pass
 
         # class name(Datatype):
@@ -36,7 +36,7 @@ def initiate():
         def name_unparser(x):
             return x.value
 
-        declare_datatype(name, "http://test.org/fake-foaf.owl#name", name_parser, name_unparser)
+        ow.declare_datatype(name, "http://test.org/fake-foaf.owl#name", name_parser, name_unparser)
 
         def url_parser(s):
             return name(s)
@@ -44,16 +44,15 @@ def initiate():
         def url_unparser(x):
             return x.value
 
-        class url(Datatype):
-            domain = [Thing]
+        class url(ow.Datatype):
+            domain = [ow.Thing]
             range = [str]
-        declare_datatype(url, "http://test.org/fake-foaf.owl#url", url_parser, url_unparser)
+        ow.declare_datatype(url, "http://test.org/fake-foaf.owl#url", url_parser, url_unparser)
 
 
 if __name__ == '__main__':
     initiate()
-    import owlready2
-    owlready2.JAVA_EXE = "/usr/bin/java"
-    owlready2.sync_reasoner()
-    if len(list(owlready2.default_world.inconsistent_classes())) != 0:
+    ow.JAVA_EXE = "/usr/bin/java"
+    ow.sync_reasoner()
+    if len(list(ow.default_world.inconsistent_classes())) != 0:
         raise Exception('Inconsistent ontology')

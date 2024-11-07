@@ -7,6 +7,7 @@ from xmlschema import XsdElement
 from xmlschema.validators import XsdUnion
 # from xmlschema import XsdType, ElementData
 from copy import copy, deepcopy
+import hashlib
 
 class TransformError(Exception):
     def __init__(self, original_error: [Exception]):
@@ -207,10 +208,11 @@ def refine_repository_info(
 
     def process_institution(xx):
         dd = {tk[4:]: handle_atom(tv) for (tk, tv) in xx.items()}
-        if 'institutionIdentifier' in dd and len(dd['institutionIdentifier']) > 1:
+        if 'institutionIdentifier' in dd and len(dd['institutionIdentifier']) >= 1:
             dd['id'] = dd['institutionIdentifier'][0]
         else:
-            dd['id'] = 'local:%(institutionName)s' % dd
+            local_id = hashlib.md5(dd['institutionName'].encode('utf-8')).hexdigest()
+            dd['id'] = 'local:%s' % (local_id, )
         return dd
 
     def transform_access(x, is_database: bool):

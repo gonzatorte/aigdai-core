@@ -64,6 +64,9 @@ class Disciplina(Base):
     nombre: Mapped[str] = mapped_column(String(200))
     id_esquema: Mapped[str] = mapped_column(String(100))
 
+    super_id: Mapped[Optional[str]] = mapped_column(ForeignKey("disciplina.id"), nullable=True)
+    super: Mapped[Optional["Disciplina"]] = relationship('Disciplina', remote_side=[id], backref='subs')
+
     repositorios: Mapped[List["Repositorio"]] = relationship(back_populates="disciplinas", secondary=repositorio_m2m_disciplina)
 
     def __repr__(self) -> str:
@@ -87,6 +90,7 @@ class VocabularioControlado(Base):
     __tablename__ = "vocabulariocontrolado"
     id: Mapped[str] = mapped_column(primary_key=True)
     nombre: Mapped[str] = mapped_column(String(200))
+    palabras_claves: Mapped[List["PalabraClave"]] = relationship(back_populates="vocab")
 
     def __repr__(self) -> str:
         return f"VocabularioControlado(id={self.id!r}, nombre={self.nombre!r})"
@@ -119,10 +123,10 @@ class Repositorio(Base):
     # id: Mapped[int] = mapped_column(primary_key=True)
     id: Mapped[str] = mapped_column(String(20), primary_key=True)
     nombre: Mapped[str] = mapped_column(String(160))
-    descripcion: Mapped[Optional[str]] = mapped_column(String(3000))
-    sitio_web: Mapped[Optional[str]] = mapped_column(String(160))
+    descripcion: Mapped[Optional[str]] = mapped_column(String(5000))
+    sitio_web: Mapped[Optional[str]] = mapped_column(String(300))
 
-    pidesquema: Mapped[List["PidEsquema"]] = relationship(back_populates="repositorios", secondary=repositorio_m2m_pidesquema)
+    pidesquemas: Mapped[List["PidEsquema"]] = relationship(back_populates="repositorios", secondary=repositorio_m2m_pidesquema)
     organizaciones: Mapped[List["Organizacion"]] = relationship(back_populates="repositorios", secondary=repositorio_m2m_organizacion)
     certificaciones: Mapped[List["Certificacion"]] = relationship(back_populates="repositorios", secondary=repositorio_m2m_certificacion)
     disciplinas: Mapped[List["Disciplina"]] = relationship(back_populates="repositorios", secondary=repositorio_m2m_disciplina)
@@ -141,7 +145,9 @@ class Repositorio(Base):
 class Organizacion(Base):
     __tablename__ = "organizacion"
     id: Mapped[str] = mapped_column(primary_key=True)
-    nombre: Mapped[str] = mapped_column(String(200))
+    nombre: Mapped[str] = mapped_column(String(300))
+    localizacion_id: Mapped[Optional[str]] = mapped_column(ForeignKey("localizacion.id"))
+    localizacion: Mapped[Optional["Localizacion"]] = relationship(back_populates="organizaciones")
 
     repositorios: Mapped[List["Repositorio"]] = relationship(back_populates="organizaciones", secondary=repositorio_m2m_organizacion)
 
@@ -179,3 +185,36 @@ class Api(Base):
 
     def __repr__(self) -> str:
         return f"Api(id={self.id!r}, {self.type!r})"
+
+
+class Localizacion(Base):
+    __tablename__ = "localizacion"
+    id: Mapped[str] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(100))
+    organizaciones: Mapped[List["Organizacion"]] = relationship(back_populates="localizacion")
+
+    def __repr__(self) -> str:
+        return f"Localizacion(id={self.id!r}, {self.name!r})"
+
+
+class BloqueEconomico(Base):
+    __tablename__ = "bloqueeconomico"
+    localizacion_id: Mapped[str] = mapped_column(ForeignKey("localizacion.id"), primary_key=True)
+    # localizacion: Mapped["Localizacion"] = relationship('Localizacion', remote_side=[id])
+    localizacion: Mapped["Localizacion"] = relationship()
+
+    def __repr__(self) -> str:
+        return f"BloqueEconomico(id={self.localizacion_id!r})"
+
+
+class Pais(Base):
+    __tablename__ = "pais"
+    alfa_3: Mapped[str] = mapped_column(ForeignKey("localizacion.id"), primary_key=True)
+    # localizacion: Mapped["Localizacion"] = relationship('Localizacion', remote_side=[id])
+    localizacion: Mapped["Localizacion"] = relationship()
+
+    bloque_id: Mapped[Optional[str]] = mapped_column(ForeignKey("bloqueeconomico.localizacion_id"))
+    bloque: Mapped[Optional["BloqueEconomico"]] = relationship(foreign_keys=[bloque_id])
+
+    def __repr__(self) -> str:
+        return f"Pais(id={self.alfa_3!r})"

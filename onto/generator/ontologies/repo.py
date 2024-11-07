@@ -1,6 +1,5 @@
 from .base import onto as base_onto, initiate as base_initiate
 import owlready2 as ow
-# from owlready2 import *
 
 onto = ow.get_ontology("http://test.org/repo.owl")
 

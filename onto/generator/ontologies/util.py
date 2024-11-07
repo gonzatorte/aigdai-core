@@ -1,4 +1,4 @@
-import owlready2
+import owlready2 as ow
 import os
 
 
@@ -8,7 +8,7 @@ def fetch_ontology(name, url):
     rel_filename = "./ontology_cache/%s.%s" % (name, export_format)
     abs_filename = os.path.join(os.path.abspath(os.path.dirname(__file__)), rel_filename)
     try:
-        onto = owlready2.get_ontology('file://%s' % (abs_filename,)).initiate()
+        onto = ow.get_ontology('file://%s' % (abs_filename,)).initiate()
     except FileNotFoundError:
         # my_world = owlready2.World()
         # my_world.get_ontology(url).load()
@@ -16,7 +16,7 @@ def fetch_ontology(name, url):
         # my_world.close()
         # onto = owlready2.get_ontology('file://%s' % (abs_filename,)).load()
 
-        onto = owlready2.get_ontology(url).initiate()
+        onto = ow.get_ontology(url).initiate()
         # onto.save(file=abs_filename, format="rdfxml")
         onto.save(file=abs_filename, format="rdfxml" if export_format == 'rdf' else 'ntriples')
     return onto
@@ -25,7 +25,7 @@ def fetch_ontology(name, url):
 def save_as_ttl(name, world):
     rel_filename = "./ontology_cache/%s.ttl" % (name, )
     abs_filename = os.path.join(os.path.abspath(os.path.dirname(__file__)), rel_filename)
-    graph = owlready2.default_world.as_rdflib_graph()
+    graph = ow.default_world.as_rdflib_graph()
     file = open(abs_filename, 'w')
     file.write(graph.serialize(format="ttl"))
     file.close()
