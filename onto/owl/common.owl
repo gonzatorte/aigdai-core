@@ -1,0 +1,431 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://instances.org/instance#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://instances.org/instance#">
+    <Prefix name="" IRI="http://instances.org/instance#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Prefix name="drepo" IRI="http://test.org#"/>
+    <Declaration>
+        <NamedIndividual IRI="academiaedu"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="apa"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="ark"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="articulo"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="authorclaim"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="cc0"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="cc_by"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="chicago"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="control_de_acceso"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="cuaderno_de_laboratorio"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="dc"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="ddi"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="doi"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="doi-crossref"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="doi-datacite"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="entrevista"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="facebook"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="ftp"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="gpl"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="handle"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="harvard"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="ieee"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="imagen"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="isni"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="linkedin"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="mit"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="mla"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="netcdf"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="oai-pmh"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="oai_pmh"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="opendap"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="orcid"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="purl"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="researcherid"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="researchgate"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="rest"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="schemaorg"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="soap"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="sparql"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="sword"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="tabla"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="texto"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="tierra"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="twitter"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="vancouver"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="drepo:tipo_de_dato"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="drepo:exportacion_de_citas"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="drepo:motor_de_repositorio"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="drepo:licencia"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="drepo:formato_de_archivo"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="drepo:integracion_con_red_social"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="drepo:esquema_de_id_persistente"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="drepo:funcionalidad"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="drepo:esquema_de_id_de_autor"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="drepo:api_para_cosecha"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="drepo:esquema_de_metadatos"/>
+    </Declaration>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:integracion_con_red_social"/>
+        <NamedIndividual IRI="academiaedu"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:exportacion_de_citas"/>
+        <NamedIndividual IRI="apa"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:esquema_de_id_persistente"/>
+        <NamedIndividual IRI="ark"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:tipo_de_dato"/>
+        <NamedIndividual IRI="articulo"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:esquema_de_id_de_autor"/>
+        <NamedIndividual IRI="authorclaim"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:licencia"/>
+        <NamedIndividual IRI="cc0"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:licencia"/>
+        <NamedIndividual IRI="cc_by"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:exportacion_de_citas"/>
+        <NamedIndividual IRI="chicago"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:funcionalidad"/>
+        <NamedIndividual IRI="control_de_acceso"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:tipo_de_dato"/>
+        <NamedIndividual IRI="cuaderno_de_laboratorio"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:esquema_de_metadatos"/>
+        <NamedIndividual IRI="dc"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:esquema_de_metadatos"/>
+        <NamedIndividual IRI="ddi"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:esquema_de_id_persistente"/>
+        <NamedIndividual IRI="doi"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:esquema_de_metadatos"/>
+        <NamedIndividual IRI="doi-crossref"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:esquema_de_metadatos"/>
+        <NamedIndividual IRI="doi-datacite"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:tipo_de_dato"/>
+        <NamedIndividual IRI="entrevista"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:integracion_con_red_social"/>
+        <NamedIndividual IRI="facebook"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:api_para_cosecha"/>
+        <NamedIndividual IRI="ftp"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:licencia"/>
+        <NamedIndividual IRI="gpl"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:esquema_de_id_persistente"/>
+        <NamedIndividual IRI="handle"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:exportacion_de_citas"/>
+        <NamedIndividual IRI="harvard"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:exportacion_de_citas"/>
+        <NamedIndividual IRI="ieee"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:formato_de_archivo"/>
+        <NamedIndividual IRI="imagen"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:esquema_de_id_de_autor"/>
+        <NamedIndividual IRI="isni"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:integracion_con_red_social"/>
+        <NamedIndividual IRI="linkedin"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:licencia"/>
+        <NamedIndividual IRI="mit"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:exportacion_de_citas"/>
+        <NamedIndividual IRI="mla"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:api_para_cosecha"/>
+        <NamedIndividual IRI="netcdf"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:api_para_cosecha"/>
+        <NamedIndividual IRI="oai-pmh"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:esquema_de_metadatos"/>
+        <NamedIndividual IRI="oai_pmh"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:api_para_cosecha"/>
+        <NamedIndividual IRI="opendap"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:esquema_de_id_de_autor"/>
+        <NamedIndividual IRI="orcid"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:esquema_de_id_persistente"/>
+        <NamedIndividual IRI="purl"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:esquema_de_id_de_autor"/>
+        <NamedIndividual IRI="researcherid"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:integracion_con_red_social"/>
+        <NamedIndividual IRI="researchgate"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:api_para_cosecha"/>
+        <NamedIndividual IRI="rest"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:esquema_de_metadatos"/>
+        <NamedIndividual IRI="schemaorg"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:api_para_cosecha"/>
+        <NamedIndividual IRI="soap"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:api_para_cosecha"/>
+        <NamedIndividual IRI="sparql"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:api_para_cosecha"/>
+        <NamedIndividual IRI="sword"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:formato_de_archivo"/>
+        <NamedIndividual IRI="tabla"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:formato_de_archivo"/>
+        <NamedIndividual IRI="texto"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:integracion_con_red_social"/>
+        <NamedIndividual IRI="twitter"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="drepo:exportacion_de_citas"/>
+        <NamedIndividual IRI="vancouver"/>
+    </ClassAssertion>
+    <DifferentIndividuals>
+        <NamedIndividual IRI="academiaedu"/>
+        <NamedIndividual IRI="facebook"/>
+        <NamedIndividual IRI="linkedin"/>
+        <NamedIndividual IRI="researchgate"/>
+        <NamedIndividual IRI="twitter"/>
+    </DifferentIndividuals>
+    <DifferentIndividuals>
+        <NamedIndividual IRI="apa"/>
+        <NamedIndividual IRI="chicago"/>
+        <NamedIndividual IRI="harvard"/>
+        <NamedIndividual IRI="ieee"/>
+        <NamedIndividual IRI="mla"/>
+        <NamedIndividual IRI="vancouver"/>
+    </DifferentIndividuals>
+    <DifferentIndividuals>
+        <NamedIndividual IRI="ark"/>
+        <NamedIndividual IRI="doi"/>
+        <NamedIndividual IRI="handle"/>
+        <NamedIndividual IRI="purl"/>
+    </DifferentIndividuals>
+    <DifferentIndividuals>
+        <NamedIndividual IRI="articulo"/>
+        <NamedIndividual IRI="cuaderno_de_laboratorio"/>
+        <NamedIndividual IRI="entrevista"/>
+    </DifferentIndividuals>
+    <DifferentIndividuals>
+        <NamedIndividual IRI="authorclaim"/>
+        <NamedIndividual IRI="isni"/>
+        <NamedIndividual IRI="orcid"/>
+        <NamedIndividual IRI="researcherid"/>
+    </DifferentIndividuals>
+    <DifferentIndividuals>
+        <NamedIndividual IRI="cc0"/>
+        <NamedIndividual IRI="cc_by"/>
+        <NamedIndividual IRI="gpl"/>
+        <NamedIndividual IRI="mit"/>
+    </DifferentIndividuals>
+    <DifferentIndividuals>
+        <NamedIndividual IRI="dc"/>
+        <NamedIndividual IRI="ddi"/>
+        <NamedIndividual IRI="doi-crossref"/>
+        <NamedIndividual IRI="doi-datacite"/>
+        <NamedIndividual IRI="oai_pmh"/>
+        <NamedIndividual IRI="schemaorg"/>
+    </DifferentIndividuals>
+    <DifferentIndividuals>
+        <NamedIndividual IRI="ftp"/>
+        <NamedIndividual IRI="netcdf"/>
+        <NamedIndividual IRI="oai-pmh"/>
+        <NamedIndividual IRI="opendap"/>
+        <NamedIndividual IRI="rest"/>
+        <NamedIndividual IRI="soap"/>
+        <NamedIndividual IRI="sparql"/>
+        <NamedIndividual IRI="sword"/>
+    </DifferentIndividuals>
+    <DifferentIndividuals>
+        <NamedIndividual IRI="imagen"/>
+        <NamedIndividual IRI="tabla"/>
+        <NamedIndividual IRI="texto"/>
+    </DifferentIndividuals>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI="drepo:extiende_a_esquema_de_id_persistente"/>
+        <NamedIndividual IRI="doi"/>
+        <NamedIndividual IRI="handle"/>
+    </ObjectPropertyAssertion>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.5.25.2023-02-15T19:15:49Z) https://github.com/owlcs/owlapi -->
+

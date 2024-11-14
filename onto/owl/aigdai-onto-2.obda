@@ -23,9 +23,5 @@ source		SELECT id, super_id  FROM "disciplina" WHERE super_id IS NOT NULL;
 mappingId	repos y disciplinas
 target		:#repositorio/{repositorio_id} :#repositorio_afin_a_disciplina :#disciplina/{disciplina_id} . 
 source		SELECT disciplina_id, repositorio_id FROM repositorio_m2m_disciplina;
-
-mappingId	disciplinas-distinct
-target		:#disciplina/{dd1} a :#disciplina/{dd2} . 
-source		SELECT D1.id AS dd1, D2.id AS dd2 FROM disciplina AS D1 JOIN disciplina AS D2 ON D1.id != D2.id;
 ]]
 

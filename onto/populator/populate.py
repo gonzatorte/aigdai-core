@@ -93,8 +93,7 @@ async def refine_and_insert_on_relational_db():
                         software_name = "other_%s" % (repository_info['id'],)
                     r_instance = Motor(
                         id=software_name,
-
-                )
+                    )
                     session.add(r_instance)
                     d_motor = r_instance
 
@@ -186,7 +185,7 @@ async def seed():
                     session.add(loc)
                     bl = BloqueEconomico(localizacion=loc)
                     session.add(bl)
-                    # bl.includido_en.append(planeta_tierra)
+                    # bl.incluido_en.append(planeta_tierra)
                     for country in country_or_block[2]:
                         loc = Localizacion(id=country[0], name=country[1])
                         session.add(loc)
@@ -198,7 +197,7 @@ async def seed():
                     session.add(loc)
                     cy = Pais(alfa_3=country_or_block[0], localizacion=loc)
                     session.add(cy)
-                    # cy.includido_en.append(planeta_tierra)
+                    # cy.incluido_en.append(planeta_tierra)
                     # cys.append(cy)
                     # break
             # ow.AllDifferent(cys)

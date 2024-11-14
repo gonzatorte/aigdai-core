@@ -161,7 +161,7 @@ def initiate():
             domain = [pais]
             range = [str]
 
-        class includido_en(ow.ObjectProperty, ow.TransitiveProperty):
+        class incluido_en(ow.ObjectProperty, ow.TransitiveProperty):
             domain = [locacion]
             range = [locacion]
 
@@ -282,20 +282,20 @@ def initiate():
                 # instances_by_class[locacion][bl.name] = bl
                 bl.sigla_de_bloque = country_or_block[0]
                 bl.nombre_de_bloque = country_or_block[1]
-                bl.includido_en.append(planeta_tierra)
+                bl.incluido_en.append(planeta_tierra)
                 for country in country_or_block[2]:
                     cy = pais(country[0])
                     # instances_by_class[locacion][cy.name] = cy
                     cy.alfa_3_de_pais = country[0]
                     cy.nombre_de_pais = country[1]
-                    cy.includido_en.append(bl)
+                    cy.incluido_en.append(bl)
                     cys.append(cy)
             else:
                 cy = pais(country_or_block[0])
                 # instances_by_class[locacion][cy.name] = cy
                 cy.alfa_3_de_pais = country_or_block[0]
                 cy.nombre_de_pais = country_or_block[1]
-                cy.includido_en.append(planeta_tierra)
+                cy.incluido_en.append(planeta_tierra)
                 cys.append(cy)
         ow.AllDifferent(cys)
 

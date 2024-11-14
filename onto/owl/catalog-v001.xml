@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="User Entered Import Resolution" name="file:./aigdai-onto-2.owx" uri="aigdai-onto-2.owx"/>
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1731545319353" name="http://countries.org#" uri="countries.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1731545319353" name="http://dfgsubjects.org#" uri="dfg-subjects.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1731545319353" name="http://instances.org/instance#" uri="common.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1731545319353" name="http://test.org" uri="instances.xml"/>
+        <uri id="Automatically generated entry, Timestamp=1731545319353" name="duplicate:http://test.org#" uri="languajes.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1731545319353" name="duplicate:http://test.org#" uri="aigdai-onto-2.owx"/>
+    </group>
+</catalog>

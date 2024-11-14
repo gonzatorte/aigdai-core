@@ -1,0 +1,67 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix : <http://test.org> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix obda: <https://w3id.org/obda/vocabulary#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<urn:attrs-repositorio> a rr:TriplesMap;
+  rr:subjectMap [ a rr:TermMap, rr:SubjectMap;
+      rr:template "http://test.org#repositorio/{id}";
+      rr:termType rr:IRI;
+      rr:class <http://test.org#repositorio>
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:termType rr:Literal;
+          rr:column "nombre"
+        ];
+      rr:predicate <http://test.org#tiene_nombre_repositorio>
+    ];
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT id, nombre FROM \"repositorio\";"
+    ] .
+
+<urn:disciplina> a rr:TriplesMap;
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:termType rr:IRI;
+      rr:template "http://test.org#disciplina/{id}";
+      rr:class <http://test.org#disciplina>
+    ];
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT id FROM disciplina;"
+    ] .
+
+<urn:subdisciplinas> a rr:TriplesMap;
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:TermMap, rr:ObjectMap;
+          rr:template "http://test.org#disciplina/{super_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate <http://test.org#es_sub_disciplina_de>
+    ];
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT id, super_id  FROM \"disciplina\" WHERE super_id IS NOT NULL;"
+    ];
+  rr:subjectMap [ a rr:TermMap, rr:SubjectMap;
+      rr:template "http://test.org#disciplina/{id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:repos%20y%20disciplinas> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT disciplina_id, repositorio_id FROM repositorio_m2m_disciplina;"
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:termType rr:IRI;
+      rr:template "http://test.org#repositorio/{repositorio_id}"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:predicate <http://test.org#repositorio_afin_a_disciplina>;
+      rr:objectMap [ a rr:TermMap, rr:ObjectMap;
+          rr:template "http://test.org#disciplina/{disciplina_id}";
+          rr:termType rr:IRI
+        ]
+    ] .

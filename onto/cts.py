@@ -850,3 +850,8 @@ countries = [
     ('ZMB', 'Zambia'),
     ('ZWE', 'Zimbabwe'),
 ]
+
+motor_2_feature = [
+    ('dataverse', ['lenguaje/es', 'lenguaje/en', 'api_cosecha/oaipmh', 'control_de_acceso/si', 'periodo_de_embargo/no']),
+    ('dspace', ['integracion_con_red_social/research_gate', 'foros/si', 'servicio_de_curaduria/si']),
+]
