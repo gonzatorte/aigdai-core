@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://principles.org#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://principles.org#">
+    <Prefix name="" IRI="http://principles.org#"/>
+    <Prefix name="repo" IRI="http://test.org#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Prefix name="fairvoc" IRI="https://w3id.org/fair/principles/terms/"/>
+    <Prefix name="dcterms" IRI="http://purl.org/dc/terms/"/>
+    <Import>http://test.org#</Import>
+    <Import>https://peta-pico.github.io/FAIR-nanopubs/principles/ontology.xml</Import>
+    <Declaration>
+        <Class IRI="grupo_de_criterio"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="criterio_de_calidad"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="relacion_de_extension"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="repo:repositorio"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="regula_funcionalidad"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="regula_funcionalidad"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="regula_funcionalidad"/>
+        <Class abbreviatedIRI="repo:repositorio"/>
+    </ObjectPropertyRange>
+    <Declaration>
+        <ObjectProperty IRI="extiende_desde"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="extiende_desde"/>
+        <Class IRI="relacion_de_extension"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="extiende_desde"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="extiende_desde"/>
+    </FunctionalObjectProperty>
+    <Declaration>
+        <ObjectProperty IRI="extiende_hacia"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="extiende_hacia"/>
+        <Class IRI="relacion_de_extension"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="extiende_hacia"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="extiende_hacia"/>
+    </FunctionalObjectProperty>
+    <Declaration>
+        <ObjectProperty IRI="satisface_criterio"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="nombre_usual"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="grupo_de_criterio"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="criterio_de_calidad"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <DisjointClasses>
+        <Class IRI="grupo_de_criterio"/>
+        <Class IRI="criterio_de_calidad"/>
+        <Class abbreviatedIRI="repo:repositorio"/>
+    </DisjointClasses>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="extiende_de"/>
+    </AsymmetricObjectProperty>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="extiende_de"/>
+    </TransitiveObjectProperty>
+    <IrreflexiveObjectProperty>
+        <ObjectProperty IRI="extiende_de"/>
+    </IrreflexiveObjectProperty>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="extiende_de"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="satisface_criterio"/>
+        <Class abbreviatedIRI="repo:repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="extiende_de"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyRange>
+    <Declaration>
+        <ObjectProperty IRI="criterio_pertenece_a_grupo"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="criterio_tiene_descripcion"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="criterio_tiene_descripcion"/>
+        <Class IRI="criterio_de_calidad"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="criterio_tiene_descripcion"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="criterio_pertenece_a_grupo"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="criterio_pertenece_a_grupo"/>
+        <Class IRI="grupo_de_criterio"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="satisface_criterio"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyRange>
+    <DLSafeRule>
+        <Body>
+            <ClassAtom>
+                <Class abbreviatedIRI="repo:repositorio"/>
+                <Variable IRI="urn:swrl:var#r"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="criterio_de_calidad"/>
+                <Variable IRI="urn:swrl:var#q1"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="criterio_de_calidad"/>
+                <Variable IRI="urn:swrl:var#q2"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="satisface_criterio"/>
+                <Variable IRI="urn:swrl:var#r"/>
+                <Variable IRI="urn:swrl:var#q1"/>
+            </ObjectPropertyAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="extiende_de"/>
+                <Variable IRI="urn:swrl:var#q2"/>
+                <Variable IRI="urn:swrl:var#q1"/>
+            </ObjectPropertyAtom>
+        </Body>
+        <Head>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="satisface_criterio"/>
+                <Variable IRI="urn:swrl:var#r"/>
+                <Variable IRI="urn:swrl:var#q2"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>criterio_de_calidad</IRI>
+        <Literal xml:lang="es">Criterio de calidad</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>criterio_de_calidad</IRI>
+        <Literal xml:lang="en">Quality Criteria</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>extiende_de</IRI>
+        <Literal xml:lang="en">Extends from</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>extiende_de</IRI>
+        <Literal xml:lang="es">Extiende de</Literal>
+    </AnnotationAssertion>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+

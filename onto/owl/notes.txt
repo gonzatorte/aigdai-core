@@ -1,0 +1,22 @@
+
+ToDo:
+    - Me falta algo que lo relacione con las caracteristicas del repositorio...
+    - Las certificaciones es medio facil pq son un criterio de calidad
+    - Tener algunas relaciones con funcionalidades que no sean "computables" pero que al menos queden referenciadas para su consideración manual
+
+ToDo: Agregar cosas como el nombre del criterio y la url del mismo
+   <Declaration>
+       <DataProperty IRI="explicacion_de_principio"/>
+   </Declaration>
+   <DataPropertyDomain>
+       <DataProperty IRI="explicacion_de_principio"/>
+       <Class IRI="principio"/>
+   </DataPropertyDomain>
+   <DataPropertyRange>
+       <DataProperty IRI="explicacion_de_principio"/>
+       <Datatype abbreviatedIRI="xsd:string"/>
+   </DataPropertyRange>
+
+ToDo: No se si es necesario el subclass of Thing o si ya se infiere por declararse como en otros axiomas
+
+ToDo: extiende_de transitiva y reflexiba y antisimetrica (orden amplio) u orden estricto?

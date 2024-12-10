@@ -852,6 +852,297 @@ countries = [
 ]
 
 motor_2_feature = [
-    ('dataverse', ['lenguaje/es', 'lenguaje/en', 'api_cosecha/oaipmh', 'control_de_acceso/si', 'periodo_de_embargo/no']),
-    ('dspace', ['integracion_con_red_social/research_gate', 'foros/si', 'servicio_de_curaduria/si']),
+    (
+        'dataverse',
+        [
+            'lenguaje/es',
+            'lenguaje/en',
+            'api_cosecha/oaipmh',
+            'control_de_acceso/si',
+            'periodo_de_embargo/no',
+
+            # From https://dataverse.org/software-features
+            ('Support for FAIR Data Principles', 'Findable, Accessible, Interoperable, Reusable.'),
+            ('Data citation for datasets and files', 'EndNote XML, RIS, or BibTeX format at the dataset or file level.'),
+            ('OAI-PMH (Harvesting)', 'Gather and expose metadata from and to other systems using standardized metadata formats: Dublin Core, Data Document Initiative (DDI), OpenAIRE, etc.'),
+            ('APIs for interoperability and custom integrations', 'Search API, Data Deposit (SWORD) API, Data Access API, Metrics API, Migration API, etc.'),
+            ('API client libraries', 'Interact with Dataverse APIs from Python, R, Javascript, Java, and Ruby'),
+            ('DataCite integration', 'DOIs are reserved, and when datasets are published, their metadata is published to DataCite.'),
+            ('Login via Shibboleth', 'Single Sign On (SSO) using your institution\'s credentials.'),
+            ('Login via ORCID, Google, GitHub, or Microsoft', 'Log in using popular OAuth2 providers.'),
+            ('Login via OpenID Connect (OIDC)', 'Log in using your institution\'s identity provider or a third party.'),
+            ('Internationalization', 'The Dataverse software has been translated into multiple languages.'),
+            ('Versioning', 'History of changes to datasets and files are preserved.'),
+            ('Restricted files', 'Control who can download files and choose whether or not to enable a "Request Access" button.'),
+            ('Embargo', 'Make content inaccessible until an embargo end date.'),
+            ('Custom licenses', 'CC0 by default but add as many standard licenses as you like or create your own.'),
+            ('Custom terms of use', 'Custom terms of use can be used in place of a license or disabled by an administrator.'),
+            ('Publishing workflow support', 'Datasets start as drafts and can be submitted for review before publication.'),
+            ('File hierarchy', 'Users are able to control dataset file hierarchy and directory structure.'),
+            ('File previews', 'A preview is available for text, tabular, image, audio, video, and geospatial files.'),
+            ('Preview and analysis of tabular files', 'Data Explorer allows for searching, charting and cross tabulation analysis'),
+            ('Usage statistics and metrics', 'Download counters, support for Make Data Count.'),
+            ('Guestbook', 'Optionally collect data about who is downloading the files from your datasets.'),
+            ('Fixity checks for files', 'MD5, SHA-1, SHA-256, SHA-512, UNF.'),
+            ('File download in R and TSV format', 'Proprietary tabular formats are converted into RData and TSV.'),
+            ('Faceted search', 'Facets are data driven and customizable per collection.'),
+            ('Customization of collections', 'Each personal or organizational collection can be customized and branded.'),
+            ('Private URL', 'Create a URL for reviewers to view an unpublished (and optionally anonymized) dataset.'),
+            ('Widgets', 'Embed listings of data in external websites.'),
+            ('Notifications', 'In app and email notifications for access requests, requests for review, etc.'),
+            ('Schema.org JSON-LD', 'Used by Google Dataset Search and other services for discoverability.'),
+            ('External tools', 'Enable additional features not built in to the Dataverse software.'),
+            ('External vocabulary', 'Let users pick from external vocabularies (provided via API/SKOSMOS) when filling in metadata.'),
+            ('Dropbox integration', 'Upload files stored on Dropbox.'),
+            ('GitHub integration', 'A GitHub Action is available to upload files from GitHub to a dataset.'),
+            ('Integration with Jupyter notebooks', 'Datasets can be opened in Binder to run code in Jupyter notebooks, RStudio, and other computation environments.'),
+            ('User management', 'Dashboard for common user-related tasks.'),
+            ('Curation status labels', 'Let curators mark datasets with a status label customized to your needs.'),
+            ('Branding', 'Your installation can be branded with a custom homepage, header, footer, CSS, etc.'),
+            ('Backend storage on S3 or Swift', 'Choose between filesystem or object storage, configurable per collection and per dataset.'),
+            ('Direct upload and download for S3', 'After a permission check, files can pass freely and directly between a client computer and S3.'),
+            ('Export data in BagIt format', 'For preservation, bags can be sent to the local filesystem, Duraclound, and Google Cloud.'),
+            ('Post-publication automation (workflows)', 'Allow publication of a dataset to kick off external processes and integrations.'),
+            ('Pull header metadata from Astronomy (FITS) files', 'Dataset metadata prepopulated from FITS file metadata.'),
+            ('Provenance', 'Upload standard W3C provenance files or enter free text instead.'),
+            ('Auxiliary files for data files', 'Each data file can have any number of auxiliary files for documentation or other purposes (experimental).'),
+        ],
+    ),
+    ('dspace', [
+        'integracion_con_red_social/research_gate',
+        'foros/si',
+        'servicio_de_curaduria/si',
+# Free open source software
+# Completely customizable to fit user needs
+# Manage and preserve all format of digital content (PDF, Word, JPEG, MPEG, TIFF files)
+# Apache SOLR based search for metadata and full text contents
+# UTF-8 Support
+# Interface available in 22 languages[12]
+# Granular group based access control, allowing setting permissions down to the level of individual files
+# Optimized for Google Scholar indexing
+# Integration with BASE, CORE, OpenAIRE, Unpaywall and WorldCat[13]
+    ], 'https://dspace.org/features/'),
+    ('ckan', [], 'https://ckan.org/features'),
+    ('invenio', [], 'https://inveniosoftware.org/products/rdm/', 'https://inveniosoftware.org/products/rdm/roadmap/')
+]
+
+# ToDo: Enlazar con comunidades y organizaciones
+# ToDo: Agregar release year y enlaces a otros idiomas?
+criterios_de_calidad = [
+    ('fair', 'FAIR Principles', 'https://doi.org/10.1038/sdata.2016.18'), # ToDo: Puede ponerse cada uno de los enunciados
+    ('trust', 'TRUST Principles for Digital Repositories', 'https://doi.org/10.1038/s41597-020-0486-7'), # ToDo: Puede ponerse cada uno de los enunciados
+    ('posi', 'The Principles of Open Scholarly Infrastructure', 'https://openscholarlyinfrastructure.org/'),
+    ('coar_v1', 'COAR Next Generation Repositories Technologies v3', 'https://doi.org/10.5281/zenodo.8077381'),
+    ('coar_v2', 'COAR Next Generation Repositories Technologies v2', 'https://doi.org/10.5281/zenodo.7108101'), # coar_v2 extends from coar_v1
+    ('cts_2025', 'Core Trust Seal 2025', 'https://doi.org/10.5281/zenodo.7051012'),
+    ('cts_2022', 'Core Trust Seal 2022', 'https://doi.org/10.5281/zenodo.3638211'),
+    ('nih', 'National Institution of Health', 'https://sharing.nih.gov/data-management-and-sharing-policy/sharing-scientific-data/selecting-a-data-repository#desirable-characteristics-for-all-data-repositories'),
+    ('plos', 'Public Library of Science', 'https://journals.plos.org/plosone/s/recommended-repositories'),
+    ('dcrsdr', 'data citation roadmap for scholarly data repositories', 'https://doi.org/10.1038/s41597-019-0031-8'),
+    ('planS', 'Plan S', 'https://www.coalition-s.org/addendum-to-the-coalition-s-guidance-on-the-implementation-of-plan-s/principles-and-implementation/'),
+    ('wds', 'World Data System', None),
+    ('dsa', 'Data Seal of Approval', None),
+    ('rat-swd', 'German Data Forum certification', 'https://ideas.repec.org/b/rsw/rswout/6-1en.html'),
+    ('dini', 'dini certificate', 'https://dini.de/dienste-projekte/dini-zertifikat/')
+    ('clarin-b', 'CLARIN B-Centre Assessment', 'https://www.clarin.eu/content/clarin-b-centre-assessment'),
+    ('iso_16363', 'Space data and information transfer systems — Audit and certification of trustworthy digital repositories', 'https://public.ccsds.org/Pubs/652x0m1.pdf'),
+    # ToDo: pasar a datos
+    #  ('din_31644', 'German Institute for Standardization - Criteria for trustworthy digital archives', 'https://www.dinmedia.de/en/standard/din-31644/147058907'),
+    #  The nestor seal can be obtained as a standalone solution. In 2010, the three initiatives of DIN, ISO and the Data Seal of Approval agreed to incorporate their approaches into a European certification procedure. Accordingly, the nestor seal leads to the acquisition of "extended certification". However, these approaches were no longer pursued after the initial declaration of intent.
+    #  The extended self-assessment process for digital archives developed and offered by nestor on the basis of the DIN 31644 standard “Criteria for trustworthy digital archives” offers digital archives a harmonised and practical method of checking whether they are trustworthy. If the reviewed assessment yields a positive result they are entitled to publicise this by using the nestor Seal for Trustworthy Digital Archives. A fee of 500 € applies. Further information is available in the Explanatory Notes on the nestor seal below.
+    ('nestor_seal', 'Network of Expertise in long-term Storage and Accessibility of Digital Resources in Germany - Seal for Trustworthy Digital Archives', 'https://www.langzeitarchivierung.de/Webs/nestor/EN/Zertifizierung/nestor_Siegel/siegel.html'), # Es lo mismo que DIN-31644
+    ('trac', 'Trustworthy Repositories Audit & Certification', 'https://www.crl.edu/sites/default/files/d6/attachments/pages/trac_0.pdf'), # tb https://www.crl.edu/archiving-preservation/digital-archives/metrics-assessing-and-certifying/trac . El iso16363 ya la incluye
+    ('efacdr', 'European Framework for Audit and Certification of Digital Repositories')
+]
+
+# Si lo extiende, entonces lo considera
+# target_criterio, criterios a los que extiende, criterios que considera
+criterio_de_calidad_extiende_de = [
+    ('coar_v1', [], ['cts_2022', 'trust', 'fair', 'plan_s', 'nih', 'plos', 'dcrsdr']),
+    ('coar_v2', ['coar_v1'], ['cts_2022', 'trust', 'fair', 'plan_s', 'nih', 'plos', 'dcrsdr']),
+    ('trust', [], ['fair']),
+    ('cts_2025', ['cts_2022'], ['trust', 'fair']),
+    ('cts_2022', ['wds', 'dsa'], ['fair']),
+    ('iso_16363', ['trac', 'nestor_seal'], ['trust', 'fair']),
+    ('nestor_seal', ['cts_2022'], ['fair']),
+    ('efacdr', ['cts_2022'], ['nestor_seal', 'iso_16363', 'trust', 'fair']),
+    ('planS', ['efacdr'], []),
+
+    ('fair_F', ['fair_F1','fair_F2','fair_F3','fair_F4'], []),
+    ('fair_A', ['fair_A1', 'fair_A2'], []),
+    ('fair_A1', ['fair_A1.1', 'fair_A1.2'], []),
+    ('fair_I', ['fair_I1', 'fair_I2', 'fair_I3'], []),
+    ('fair_R', ['fair_R1'], []),
+    ('fair_R1', ['fair_R1.1','fair_R1.2','fair_R1.3'], []),
+]
+
+# ToDo: Enumerados como versionado/no deben tener la semántica de ser inconsistentes con versionado/si. Algo como versionado/no y versionado/si implican bottom?
+
+metricas_plan_s = [
+    ('plans_1', None, 'Use of PIDs for the deposited versions of the publications (with versioning, for example in case of revisions), such as DOI (preferable), URN, or Handle.', 'esencial', ['esquema_de_id_persistente']), # existe un elemento de esquema_de_id_persistente?
+    ('plans_2', None, 'High quality article level metadata in standard interoperable non-proprietary format, under a CC0 public domain dedication. This must include information on the DOI (or other PIDs) both of the original publication and the deposited version, on the version deposited (AAM/VoR), and on the Open Access status and the license of the deposited version. Metadata must include complete and reliable information on funding provided by cOAlition S funders (including as a minimum the name of the funder and the grant number/identifier).', 'esencial', []),
+    ('plans_3', None, 'Machine readable information on the Open Access status and the license embedded in the article, in standard non-proprietary format.', 'esencial', []),
+    ('plans_4', None, 'Continuous availability (uptime at least 99.7%, not taking into account scheduled downtime for maintenance or upgrades).', 'esencial', []),
+    ('plans_5', None, 'Helpdesk: as a minimum an email address (functional mailbox) has to be provided; a response time of no more than one business day must be ensured.', 'esencial', []),
+    ('plans_6', None, 'Manuscript submission system that supports both individual author uploads and bulk uploads of manuscripts (AAM or VoR) by publishers.', 'deseable', []),
+    ('plans_7', None, 'Full text stored in a machine-readable community standard format such as JATS XML.', 'deseable', []),
+    ('plans_8', None, 'Support for PIDs for authors (e.g., ORCID), funders, funding programmes and grants, institutions, and other relevant entities.', 'deseable', []),
+    ('plans_9', None, 'Openly accessible data on citations according to the standards by the Initiative for Open Citations (I4OC).', 'deseable', []),
+    ('plans_10', None, 'Open API to allow others (including machines) to access the content. A compliant API must be free to access without any barrier. A light authentication mechanism such as a token for ‘power users’ – e.g., high-traffic collaborators – is acceptable as long as there is a totally open/anonymous route too.', 'deseable', []),
+    ('plans_11', None, 'OpenAIRE compliance of the metadata.', 'deseable', []),
+    ('plans_12', None, 'Quality assurance processes to link full-text deposits with authoritative bibliographic metadata from third party systems, e.g. PubMed, Crossref, or SCOPUS where feasible.', 'deseable', []),
+]
+
+metricas_posi = [
+    ('posi_1', 'Governance', 'Coverage across the scholarly enterprise – research transcends disciplines, geography, institutions, and stakeholders. Organisations and the infrastructure they run need to reflect this.', 'deseable', []),
+    ('posi_2', 'Governance', 'Stakeholder Governed – a board-governed organisation drawn from the stakeholder community builds confidence that the organisation will take decisions driven by community consensus and a balance of interests.', 'deseable', []),
+    ('posi_3', 'Governance', 'Non-discriminatory participation or membership – we see the best option as an “opt-in” approach with principles of non-discrimination and inclusivity where any stakeholder group may express an interest and should be welcome. Representation in governance must reflect the character of the community or membership.', 'deseable', []),
+    ('posi_4', 'Governance', 'Transparent governance – to achieve trust, the processes and policies for selecting representatives to governance groups should be transparent (within the constraints of privacy laws).', 'deseable', []),
+    ('posi_5', 'Governance', 'Cannot lobby – infrastructure organisations should not lobby for regulatory change to cement their own positions or narrow self-interest. However, an infrastructure organisation’s role is to support its community, and this can include advocating for policy changes.', 'deseable', []),
+    ('posi_6', 'Governance', 'Living will – a powerful way to create trust is to publicly describe a plan addressing the conditions under which an organisation or service would be wound down. It should include how this would happen and how any assets could be archived and preserved when passed to a successor organisation or service. Any such organisation or service must adopt POSI and honour the POSI principles.', 'deseable', []),
+    ('posi_7', 'Governance', 'Formal incentives to fulfil mission & wind-down – infrastructures exist for a specific purpose, and that purpose can be radically simplified or even rendered unnecessary by technological or social change. Organisations and services should regularly review community support and the need for their activities. If it is possible, the organisation or service (and staff) should have direct incentives to deliver on the mission and wind down.', 'deseable', []),
+
+    ('posi_8', 'Sustainability', 'Time-limited funds are used only for time-limited activities – operations are supported by sustainable revenue sources - whereas time-limited funds are used only for time-limited activities. Depending on grants to fund ongoing and/or long-term infrastructure operations fully makes them fragile and distracts from building core infrastructure.', 'deseable', []),
+    ('posi_9', 'Sustainability', 'Goal to generate surplus – organisations (or services) that define sustainability based merely on recovering costs are brittle and stagnant. It is not enough to merely survive; organisations and services have to be able to adapt and change. To weather economic, social and technological volatility, they need financial resources beyond immediate operating costs.', 'deseable', []),
+    ('posi_10', 'Sustainability', 'Goal to create financial reserves – a high priority should be having ring-fenced financial reserves, separate from operating funds, that can support implementing living will plans, including a complete, orderly wind down or transition to a successor organisation, or major unexpected events.', 'deseable', []),
+    ('posi_11', 'Sustainability', 'Mission-consistent revenue generation – revenue sources should be evaluated against the infrastructure’s mission and not run counter to the aims of the organisation or service.', 'deseable', []),
+    ('posi_12', 'Sustainability', 'Revenue based on services, not data – data related to the running of the scholarly infrastructure should be community property. Appropriate revenue sources might include value-added services, consulting, API Service Level Agreements or membership fees.', 'deseable', []),
+
+    ('posi_13', 'Insurance', 'Open source – all software and assets required to run the infrastructure should be available under an open-source licence. This does not include other software that may be involved with running the organisation.', 'deseable', []),
+    ('posi_14', 'Insurance', 'Open data (within constraints of privacy laws) – For an infrastructure to be forked (reproduced), it will be necessary to replicate all relevant data. The CC0 waiver is the best practice in making data openly and legally available. Privacy and data protection laws will limit the extent to which this is possible.', 'deseable', []),
+    ('posi_15', 'Insurance', 'Available data (within constraints of privacy laws) – it is not enough that the data be “open” if there is no practical way to obtain it. Underlying data should be made easily available via periodic open data dumps.', 'deseable', []),
+    ('posi_16', 'Insurance', 'Patent non-assertion – the organisation should commit to a patent non-assertion policy or covenant. The organisation may obtain patents to protect its own operations but not use them to prevent the community from replicating the infrastructure.', 'deseable', []),
+]
+
+metricas_trust = [
+    ('trust_Transparency', 'Transparency', 'To be transparent about specific repository services and data holdings that are verifiable by publicly accessible evidence.', 'deseable', []),
+    ('trust_Responsibility', 'Responsibility', 'To be responsible for ensuring the authenticity and integrity of data holdings and for the reliability and persistence of its service.', 'deseable', []),
+    ('trust_User', 'User Focus', 'To ensure that the data management norms and expectations of target user communities are met.', 'deseable', []),
+    ('trust_Sustainability', 'Sustainability', 'To sustain services and preserve data holdings for the long-term.', 'deseable', []),
+    ('trust_Technology', 'Technology', 'To provide infrastructure and capabilities to support secure, persistent, and reliable services.', 'deseable', []),
+]
+
+metricas_cts_2022 = [
+    ('cts_R0', 'Background Information', 'Context'),
+
+    ('cts_R1', 'Organizational Infrastructure', 'Mission/Scope', 'The repository has an explicit mission to provide access to and preserve data in its domain.'),
+    ('cts_R2', 'Organizational Infrastructure', 'Licenses', 'The repository maintains all applicable licenses covering data access and use and monitors compliance.'),
+    ('cts_R3', 'Organizational Infrastructure', 'Continuity of access', 'The repository has a continuity plan to ensure ongoing access to and preservation of its holdings.'),
+    ('cts_R4', 'Organizational Infrastructure', 'Confidentiality/Ethics', 'The repository ensures, to the extent possible, that data are created, curated, accessed, and used in compliance with disciplinary and ethical norms.'),
+    ('cts_R5', 'Organizational Infrastructure', 'Organizational infrastructure', 'The repository has adequate funding and sufficient numbers of qualified staff managed through a clear system of governance to effectively carry out the mission.'),
+    ('cts_R6', 'Organizational Infrastructure', 'Expert guidance', 'The repository adopts mechanism(s) to secure ongoing expert guidance and feedback (either in-house, or external, including scientific guidance, if relevant)'),
+
+    ('cts_R7', 'Digital Object Management', 'Data integrity and authenticity', 'The repository guarantees the integrity and authenticity of the data.'),
+    ('cts_R8', 'Digital Object Management', 'Appraisal', 'The repository accepts data and metadata based on defined criteria to ensure relevance and understandability for data users.'),
+    ('cts_R9', 'Digital Object Management', 'Documented storage procedures', 'The repository applies documented processes and procedures in managing archival storage of the data.'),
+    ('cts_R10', 'Digital Object Management', 'Preservation plan', 'The repository assumes responsibility for long-term preservation and manages this function in a planned and documented way.'),
+    ('cts_R11', 'Digital Object Management', 'Data quality', 'The repository has appropriate expertise to address technical data and metadata quality and ensures that sufficient information is available for end users to make quality-related evaluations.'),
+    ('cts_R12', 'Digital Object Management', 'Workflows', 'Archiving takes place according to defined workflows from ingest to dissemination.'),
+    ('cts_R13', 'Digital Object Management', 'Data discovery and identification', 'The repository enables users to discover the data and refer to them in a persistent way through proper citation.'),
+    ('cts_R14', 'Digital Object Management', 'Data reuse', 'The repository enables reuse of the data over time, ensuring that appropriate metadata are available to support the understanding and use of the data.'),
+
+    ('cts_R15', 'Technology', 'Technical infrastructure ', 'The repository functions on well-supported operating systems and other core infrastructural software and is using hardware and software technologies appropriate to the services it provides to its Designated Community.'),
+    ('cts_R16', 'Technology', 'Security', 'The technical infrastructure of the repository provides for protection of the facility and its data, products, services, and users.'),
+]
+
+# ToDo: <Prefix name="fairvoc" IRI="https://w3id.org/fair/principles/terms/"/>
+#  Ver https://peta-pico.github.io/FAIR-nanopubs/principles/ontology.xml
+#  Accesible same as fairvoc:Accesible y asi con los demas ppios
+#  Solo hace falta decir que son un criterio de calidad
+# Prefix con https://w3id.org/fair/principles/terms/
+metricas_fair = [
+    'fair_F',
+    'fair_A',
+    'fair_I',
+    'fair_R',
+    'fair_A1',
+    'fair_A1.1',
+    'fair_A1.2',
+    'fair_A2',
+    'fair_F1',
+    'fair_F2',
+    'fair_F3',
+    'fair_F4',
+    'fair_I1',
+    'fair_I2',
+    'fair_I3',
+    'fair_R1',
+    'fair_R1.1',
+    'fair_R1.2',
+    'fair_R1.3',
+]
+
+same_individuals = [
+    ('Accesible', 'fair_A'),
+    # ('Encontrable', 'fair_F'),  # ToDo: Es lo mismo que Descubrimiento? O sea F?
+    ('Interoperable', 'fair_I'),
+    # ('Usable', 'fair_R'),  # ToDo: Es lo mismo que Reusable? O sea R?
+]
+
+# ToDo: Usar dublicCore:hasPart?
+# ToDo: Usar skos/core#definition?
+#  skos/core#definition es una AnnotationProperty. ¿Se pueden las consultar AnnotationProperty y usar para establecer reglas al igual que una Data u Object Property?
+# ###  https://w3id.org/fair/principles/terms/F3
+# <https://w3id.org/fair/principles/terms/F3> rdf:type owl:NamedIndividual ,
+#                                             rdfs:isDefinedBy <https://w3id.org/fair/principles/latest/F3> ;
+#                                             rdfs:label "F3"@en ;
+#                                             <http://www.w3.org/2004/02/skos/core#definition> "metadata clearly and explicitly include the identifier of the data it describes"@en .
+
+# ToDo: Cosas como "Descubrimiento" pueden ser un criterio de calidad en si mismo...
+metricas_coar = [
+    ('coar_D1', 'Descubrimiento', 'El repositorio soporta metadatos de alta calidad', 'esencial', ['esquema_de_metadatos']),
+    ('coar_D2', 'Descubrimiento', 'El repositorio soporta la recolección de metadatos usando el protocolo OAI-PMH', 'esencial', ['oai_pmh']),
+    ('coar_D3', 'Descubrimiento', 'Los metadatos del repositorio están disponibles incluso en los casos en los que el recurso ya no esté disponible', 'esencial', []),
+    ('coar_D4', 'Descubrimiento', 'El repositorio asigna un identificador persistente (PID) que apunta a la página de destino del recurso, incluso en los casos en los que el recurso no esté disponible', 'esencial', ['esquema_de_id_persistente']),
+    ('coar_D5', 'Descubrimiento', 'El repositorio ofrece una herramienta de búsqueda y/o los metadatos están indexados por servicios externos de descubrimiento y/o agregadores.', 'esencial', []),
+    ('coar_D6', 'Descubrimiento', 'El repositorio está incluido en uno o más registros de recursos, ya sea por disciplinas o generales', 'esencial', ['id_de_repositorio_tiene_catalogo']),
+
+    ('coar_D7', 'Descubrimiento', 'El repositorio soporta enlaces entre recursos relacionados como artículos, conjuntos de datos y software (ej. incluyendo Identificadores Persistentes de recursos relacionados localizados en cualquier sitio).', 'deseable'),
+    ('coar_D8', 'Descubrimiento', 'El repositorio soporta encabezamientos tipados HTTP que permiten el descubrimiento automático de registros de metadatos y recursos de contenido asociados con documentos del repositorio. Recomendamos enlaces codificados de Signposting para soportarlo.', 'deseable'),
+    ('coar_D9', 'Descubrimiento', 'El repositorio soporta los identificadores persistentes de autor, financiadores, programas de financiación y subvenciones, instituciones y otras entidades relevantes.', 'deseable'),
+    ('coar_D10', 'Descubrimiento', 'Los metadatos en el repositorio son accesibles a través de Licencias Creative Commons de Dominio Público y pueden descargarse en formatos bibliográficos estándar.', 'deseable'),
+    ('coar_D11', 'Descubrimiento', 'Los metadatos de los repositorios están disponibles tanto para la lectura por humanos, como por máquinas.', 'deseable'),
+    ('coar_D12', 'Descubrimiento', 'En caso de datos de investigación, el repositorio soporta identificadores persistentes de datos a diferentes niveles de granularidad, según corresponda (por ejemplo, si un investigador está utilizando un subconjunto de datos, es necesario poder citar correctamente este subconjunto).', 'deseable'),
+
+    ('coar_A1', 'Acceso', 'El acceso a los datos publicados en el repositorio no supone ningún coste para el usuario.', 'esencial', []),
+    ('coar_A2', 'Acceso', 'El repositorio garantiza el acceso continuo a los recursos durante un período de tiempo establecido públicamente.', 'esencial', []),
+    ('coar_A3', 'Acceso', 'El repositorio soporta el acceso a sus registros y documentación a personas en situación de discapacidad.', 'esencial', []),
+    ('coar_A4', 'Acceso', 'Neutralidad del dispositivo: no se necesita un dispositivo específico para que los usuarios accedan al repositorio.', 'esencial', []),
+
+    ('coar_A5', 'Acceso', 'El repositorio proporciona un mecanismo para poner archivos muy grandes a disposición de los usuarios fuera de la interfaz de usuario normal (en los casos en que el tamaño del archivo complique su manejo para el usuario).', 'deseable', []),
+    ('coar_A6', 'Acceso', 'En los casos en que hay acceso restringido a un recurso, el repositorio facilita una forma indirecta de acceder a este recurso (por ejemplo, contactando al autor).', 'deseable', []),
+
+    ('coar_P1', 'Privacidad de datos sensibles', 'En los casos en los que el repositorio está recabando datos de investigación sensibles, cuenta con mecanismos para que los propietarios de los datos puedan limitar el acceso sólo a usuarios autorizados.', 'esencial', ['control_de_acceso']),
+    ('coar_P2', 'Privacidad de datos sensibles', 'En los casos en los que el repositorio está recabando datos de investigación sensibles, el repositorio proporciona acceso restringido en función de los diferentes niveles de seguridad requeridos por los datos.', 'deseable', ['control_de_acceso']),
+
+    ('coar_R1', 'Reutilización', 'El repositorio incluye información sobre las licencias en el registro de metadatos que estipulan las condiciones de reutilización.', 'esencial', []),
+    ('coar_R2', 'Reutilización', 'El repositorio ofrece identificadores persistentes citables.', 'esencial', ['esquema_de_id_persistente']),
+    ('coar_R3', 'Reutilización', 'El repositorio ofrece una lista de formatos preferidos, no propietarios.', 'esencial', ['formato_de_archivo']),
+    ('coar_R4', 'Reutilización', 'Las páginas de destino incluyen los metadatos del registro, incluida la información necesaria para las citas, tanto en formato legible por máquina como por humanos.', 'esencial', []),
+    ('coar_R5', 'Reutilización', 'El repositorio tiene APIs abiertas que soportan la recolección a texto completo y/o minería de texto y datos.', 'deseable', ['api_para_cosecha']),
+    ('coar_R6', 'Reutilización', 'Los recursos se almacenan en formatos estándar legibles por máquinas.', 'deseable', ['formato_de_archivo']),
+
+    ('coar_I1', 'Integridad y autenticidad', 'El repositorio proporciona documentación o tiene una política que describe las prácticas que evitan el acceso/manipulación no autorizados de los recursos.', 'esencial'),
+    ('coar_I2', 'Integridad y autenticidad', 'El repositorio conserva un registro de todos los cambios de metadatos y recursos del repositorio.', 'esencial'),
+    ('coar_I3', 'Integridad y autenticidad', 'El repositorio admite el control de versiones de los metadatos y recursos tras su depósito.', 'esencial', ['servicio_de_versionado']),
+    ('coar_I4', 'Integridad y autenticidad', 'El repositorio ofrece información acerca del/los proveedor/es de contenido, incluyendo el nombre de la/s persona/s o institución/es responsable/s del recurso.', 'deseable', []),
+
+    ('coar_Q1', 'Garantía de calidad', 'El repositorio realiza tareas básicas de curación de los metadatos (y de los datos, cuando es requerido) ej. breve verificación y adición de metadatos básicos o documentación cuando sea necesario.', 'esencial', ['servicio_de_curaduria', 'esquema_de_metadatos']),
+    ('coar_Q2', 'Garantía de calidad', 'El repositorio proporciona documentación o tiene una política que describe qué procesos de curación se aplican a los recursos y metadatos.', 'esencial', ['esquema_de_metadatos']),
+    ('coar_Q3', 'Garantía de calidad', 'El repositorio permite anotaciones externas, comentarios o revisión de recursos y metadatos.', 'deseable', []),
+
+    ('coar_PS1', 'Preservación', 'El repositorio (u organización que gestiona el repositorio) tiene un plan a largo plazo para gestionar y financiar el repositorio.', 'esencial', ['politica']),
+    ('coar_PS2', 'Preservación', 'El repositorio proporciona documentación o tiene una política que define la duración del tiempo que se administrarán los recursos a largo plazo, así como documentación sobre las prácticas de preservación.', 'esencial', ['politica']),
+    ('coar_PS3', 'Preservación', 'El repositorio tiene un plan de preservación documentado, que incluye prácticas de preservación altamente reconocidas.', 'deseable', ['politica']),
+    ('coar_PS4', 'Preservación', 'El acuerdo entre el depositante y el repositorio prevé todas las acciones necesarias para cumplir con las responsabilidades de preservación, Ej. derechos para copiar, transformar y almacenar los registros.', 'deseable', ['politica', 'licencia']),
+
+    ('coar_S1', 'Sostenibilidad y administración', 'El repositorio indica claramente qué organización es responsable de administrar el repositorio.', 'esencial', []),
+    ('coar_S2', 'Sostenibilidad y administración', 'El repositorio indica claramente la naturaleza de la administración de los servicios (o la organización que gestiona el repositorio).', 'esencial', []),
+
+    ('coar_O1', 'Otros_coar_v1', 'El repositorio tiene un punto de contacto o servicio de asistencia para ayudar a depositantes y usuarios.', 'esencial'),
+    ('coar_O2', 'Otros_coar_v1', 'El repositorio tiene un aviso público que indica que responderá a las consultas dentro de un período de tiempo determinado (que no supera los 14 días).', 'esencial'),
+    ('coar_O3', 'Otros_coar_v1', 'El repositorio proporciona documentación o tiene una política que describe el tipo de contenido que puede aceptar.', 'esencial', ['politica', 'tipo_de_dato']),
+    ('coar_O4', 'Otros_coar_v1', 'El repositorio recopila y comparte información de uso utilizando una metodología estándar (por ejemplo, número de vistas, descargas).', 'esencial', ['metricas']), # ToDo: metricas aun no esta en la onto
+    ('coar_O5', 'Otros_coar_v1', 'El repositorio funciona en sistemas operativos bien soportados y otros softwares de infraestructura central.', 'deseable'),
+    ('coar_O6', 'Otros_coar_v1', 'El sistema de envío / depósito admite las cargas de registros y recursos tanto de autores individuales, como las cargas masivas.', 'deseable', ['auto_archivo']), # ToDo: auto_archivo aun no esta en la onto
 ]

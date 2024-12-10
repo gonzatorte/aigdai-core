@@ -15,13 +15,24 @@ BloqueComercial = URIRef("#bloque_comercial", my_ns)
 Locacion = URIRef("#locacion", my_ns)
 dfg_subject_ns = Namespace('http://dfgsubjects.org#')
 Disciplina = URIRef("#disciplina", dfg_subject_ns)
+es_sub_disciplina_de = URIRef("#es_sub_disciplina_de", dfg_subject_ns)
+esquema_de_disciplina = URIRef("#esquema_de_disciplina", dfg_subject_ns)
+nombre_de_disciplina = URIRef("#nombre_de_disciplina", dfg_subject_ns)
 MotorDeRepositorio = URIRef("#motor_de_repositorio", my_ns)
+Certificacion = URIRef("#certificacion", my_ns)
 utiliza_motor = URIRef('#utiliza_motor', my_ns)
 repositorio_afin_a_disciplina = URIRef('#repositorio_afin_a_disciplina', my_ns)
 tiene_nombre_organizacion = URIRef('#tiene_nombre_organizacion', my_ns)
 se_ubica_en = URIRef('#se_ubica_en', my_ns)
 incluido_en = URIRef('#incluido_en', my_ns)
 tiene_nombre_repositorio = URIRef('#tiene_nombre_repositorio', my_ns)
+
+principles_ns = Namespace('http://principles.org#')
+CriterioDeCalidad = URIRef("#criterio_de_calidad", principles_ns)
+GrupoDeCriterio = URIRef("#grupo_de_criterio", principles_ns)
+criterio_pertenece_a_grupo = URIRef("#criterio_pertenece_a_grupo", principles_ns)
+extiende_de = URIRef("#extiende_de", principles_ns)
+criterio_tiene_descripcion = URIRef("#criterio_tiene_descripcion", principles_ns)
 
 IdDeOrganizacion = URIRef('#id_de_organizacion', my_ns)
 id_de_organizacion_tiene_tipo = URIRef('#id_de_organizacion_tiene_tipo', my_ns)
@@ -90,12 +101,11 @@ def refine_and_insert_on_rdf():
 
             g.add((r_instance, tiene_tipo_de_organizacion, Literal(db_instance['institutionType'])))
 
-            try:
-                [tipo_de_id_de_organizacion_str, _] = re.split('[:;.]', id_org, 1)
-                # [tipo_de_id_de_organizacion_str, _] = re.split('[:;.]|(CrossrefFunderID)', id_org, 1)
-            except ValueError:
+            id_match = re.match('^(?P<type>.+(?=[:;.])|CrossrefFunderID)', id_org)
+            if not id_match:
                 print(id_org, repository_info['id'])
                 continue
+            tipo_de_id_de_organizacion_str = id_match.groupdict().get('type')
             tipo_de_id_de_organizacion = URIRef("#tipo_de_id_de_organizacion/%s" % (tipo_de_id_de_organizacion_str.upper(),), my_ns)
 
             id_de_organizacion = URIRef("#id_de_organizacion/%s" % (id_org,), my_ns)
@@ -103,6 +113,23 @@ def refine_and_insert_on_rdf():
             # ToDo: tipo_de_id_de_organizacion puede ser ROR, RRID, local y que otro?
             g.set((id_de_organizacion, id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion))
             g.set((id_de_organizacion, id_de_organizacion_tiene_literal, Literal(db_instance['id'])))
+
+            # ToDo: Falta el tipo de relacion que tiene con el repositorio
+            #     <DatatypeDefinition>
+            #         <Datatype IRI="tipo_de_organizacion"/>
+            #         <DataOneOf>
+            #             <Literal>comercial</Literal>
+            #             <Literal>no-comercial</Literal>
+            #         </DataOneOf>
+            #     </DatatypeDefinition>
+            #     <DatatypeDefinition>
+            #         <Datatype IRI="tipo_de_relacion_con_organizacion"/>
+            #         <DataOneOf>
+            #             <Literal>administrativa</Literal>
+            #             <Literal>financiamiento</Literal>
+            #             <Literal>técnica</Literal>
+            #         </DataOneOf>
+            #     </DatatypeDefinition>
 
             for responsibilityType in db_instance.get('responsibilityType', []):
                 # ToDo: responsibilityType puede ser general, profit, non-profit, y que otro?
@@ -118,6 +145,7 @@ def refine_and_insert_on_rdf():
         if software_name == 'other':
             software_name = "other_%s" % (repository_info['id'],)
         if software_name is not None:
+            # ToDo: El literal esta mal usado aca
             motor = URIRef("#motor_de_repositorio/%s" % (Literal(software_name), ), my_ns)
             g.set((motor, RDF.type, MotorDeRepositorio))
             g.set((repositorio, utiliza_motor, motor))
@@ -146,57 +174,84 @@ def refine_and_insert_on_rdf():
     g.serialize(destination='../owl/instances.xml', format="xml")
     # print(g.serialize(destination='../owl/instances.xml', format="pretty-xml"))
 
-# CERTIFICACIONES = []
-# LENGUAJES = []
-# PID_ESQUEMA = []
-#
-# async def seed():
-#     disciplinas = []
-#     def tree_walk_disciplina(forest, parent):
-#         for tr in forest:
-#             ds = Disciplina(id=tr[0], nombre=tr[1], super=parent, id_esquema='dfg')
-#             disciplinas.append(ds)
-#             if len(tr) >= 3:
-#                 children = tr[2]
-#                 tree_walk_disciplina(children, ds)
-#     tree_walk_disciplina(cts.dfg_subjects, None)
-#     session.add_all(disciplinas)
-#
-#     session.add_all([
-#         Certificacion(
-#             id=x['id'],
-#             nombre=x['name'],
-#         ) for x in CERTIFICACIONES
-#     ])
-#
-#     # cys = []
-#     # planeta_tierra = planeta('tierra')
-#     planeta_tierra = Localizacion(id='AAA', name='tierra')
-#     session.add(planeta_tierra)
-#     for country_or_block in cts.countries:
-#         if len(country_or_block) >= 3:
-#             # continue
-#             loc = Localizacion(id=country_or_block[0], name=country_or_block[1])
-#             session.add(loc)
-#             bl = BloqueEconomico(localizacion=loc)
-#             session.add(bl)
-#             # bl.incluido_en.append(planeta_tierra)
-#             for country in country_or_block[2]:
-#                 loc = Localizacion(id=country[0], name=country[1])
-#                 session.add(loc)
-#                 cy = Pais(alfa_3=country[0], localizacion=loc, bloque=bl)
-#                 session.add(cy)
-#                 # cys.append(cy)
-#         else:
-#             loc = Localizacion(id=country_or_block[0], name=country_or_block[1])
-#             session.add(loc)
-#             cy = Pais(alfa_3=country_or_block[0], localizacion=loc)
-#             session.add(cy)
-#             # cy.incluido_en.append(planeta_tierra)
-#             # cys.append(cy)
-#             # break
-#     # ow.AllDifferent(cys)
-#     # session.add_all(cys)
+CERTIFICACIONES = []
+LENGUAJES = []
+PID_ESQUEMA = []
+
+async def seed(g: Graph):
+    criterio_de_calidad_coar = URIRef("#criterio_de_calidad/coar", principles_ns)
+    g.set((criterio_de_calidad_coar, RDF.type, CriterioDeCalidad))
+    for (idd, category, description, importance) in cts.metricas_coar:
+        criterio_de_calidad = URIRef("#criterio_de_calidad/%s" % (idd,), principles_ns)
+        g.set((criterio_de_calidad, RDF.type, CriterioDeCalidad))
+        g.set((criterio_de_calidad, criterio_tiene_descripcion, Literal(description)))
+        grupo_de_criterio = URIRef("#grupo_de_criterio/%s" % (category,), principles_ns)
+        g.set((grupo_de_criterio, RDF.type, GrupoDeCriterio))
+        g.set((criterio_de_calidad, extiende_de, criterio_de_calidad_coar))
+
+    for (idd, name, url) in cts.criterios_de_calidad:
+        criterio_de_calidad = URIRef("#criterio_de_calidad/%s" % (idd,), principles_ns)
+        g.set((criterio_de_calidad, RDF.type, CriterioDeCalidad))
+
+    for (target_criterio_id, criterios_extends_to, criterios_considered) in cts.criterio_de_calidad_extiende_de:
+        target_criterio = URIRef("#criterio_de_calidad/%s" % (target_criterio_id,), principles_ns)
+        g.set((target_criterio, RDF.type, CriterioDeCalidad))
+        for criterio_extends_to_id in criterios_extends_to:
+            criterio_extends_to = URIRef("#criterio_de_calidad/%s" % (criterio_extends_to_id,), principles_ns)
+            g.set((criterio_extends_to, RDF.type, CriterioDeCalidad))
+            g.set((target_criterio, extiende_de, criterio_extends_to))
+
+    def tree_walk_disciplina(forest, parent):
+        for tr in forest:
+            disciplina = URIRef("#disciplina/%s" % (tr[0],), dfg_subject_ns)
+            g.set((disciplina, RDF.type, Disciplina))
+            g.set((disciplina, nombre_de_disciplina, Literal(tr[1])))
+            g.set((disciplina, esquema_de_disciplina, Literal('dfg')))
+
+            if parent is not None:
+                parent_g = URIRef("#disciplina/%s" % (parent,), dfg_subject_ns)
+                g.set((disciplina, es_sub_disciplina_de, parent_g))
+            if len(tr) >= 3:
+                children = tr[2]
+                tree_walk_disciplina(children, tr[0])
+    tree_walk_disciplina(cts.dfg_subjects, None)
+    # ToDo: All different the disciplines
+
+    # session.add_all([
+    #     Certificacion(
+    #         id=x['id'],
+    #         nombre=x['name'],
+    #     ) for x in CERTIFICACIONES
+    # ])
+
+    # cys = []
+    # planeta_tierra = planeta('tierra')
+    # planeta_tierra = Locacion(id='AAA', name='tierra')
+    # session.add(planeta_tierra)
+    # for country_or_block in cts.countries:
+    #     if len(country_or_block) >= 3:
+    #         # continue
+    #         loc = Locacion(id=country_or_block[0], name=country_or_block[1])
+    #         session.add(loc)
+    #         bl = BloqueComercial(localizacion=loc)
+    #         session.add(bl)
+    #         # bl.incluido_en.append(planeta_tierra)
+    #         for country in country_or_block[2]:
+    #             loc = Locacion(id=country[0], name=country[1])
+    #             session.add(loc)
+    #             cy = Pais(alfa_3=country[0], localizacion=loc, bloque=bl)
+    #             session.add(cy)
+    #             # cys.append(cy)
+    #     else:
+    #         loc = Locacion(id=country_or_block[0], name=country_or_block[1])
+    #         session.add(loc)
+    #         cy = Pais(alfa_3=country_or_block[0], localizacion=loc)
+    #         session.add(cy)
+    #         # cy.incluido_en.append(planeta_tierra)
+    #         # cys.append(cy)
+    #         # break
+    # # ow.AllDifferent(cys)
+    # # session.add_all(cys)
 
 
 if __name__ == '__main__':
