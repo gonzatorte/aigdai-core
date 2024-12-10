@@ -59,6 +59,15 @@ def refine_iterator(iterator, white_list: [str], allow_whitelist: bool):
 
 
 def refine_and_insert_on_rdf():
+    g = Graph()
+    # g = Graph(store="BerkeleyDB")
+    # g.open("/some/folder/location")
+    # g.close()
+    # g.parse("....")
+    g.bind('', my_ns)
+
+    seed(g)
+
     # database = get_database_async()
     database = get_database_client()
     # drepo_collection = database['drepo']
@@ -69,13 +78,6 @@ def refine_and_insert_on_rdf():
     # instances_count = raw_drepo_collection.count_documents({})
     instance_ids = raw_drepo_collection.find({}, {'idd': True}).sort({'idd': -1}).skip(skip_count).limit(limit_count)
     instance_ids = [x['idd'] for x in instance_ids]
-
-    g = Graph()
-    # g = Graph(store="BerkeleyDB")
-    # g.open("/some/folder/location")
-    # g.close()
-    # g.parse("....")
-    g.bind('', my_ns)
 
     # rdf_ids = {x: URIRef("#repositorio/%s" % (x,), my_ns) for x in instance_ids}
     # not_repeated_ids = [x for x in instance_ids if rdf_ids[x] not in g[rdf_ids[x]]]
@@ -178,10 +180,10 @@ CERTIFICACIONES = []
 LENGUAJES = []
 PID_ESQUEMA = []
 
-async def seed(g: Graph):
+def seed(g: Graph):
     criterio_de_calidad_coar = URIRef("#criterio_de_calidad/coar", principles_ns)
     g.set((criterio_de_calidad_coar, RDF.type, CriterioDeCalidad))
-    for (idd, category, description, importance) in cts.metricas_coar:
+    for (idd, category, description, importance, related_with_criterios) in cts.metricas_coar:
         criterio_de_calidad = URIRef("#criterio_de_calidad/%s" % (idd,), principles_ns)
         g.set((criterio_de_calidad, RDF.type, CriterioDeCalidad))
         g.set((criterio_de_calidad, criterio_tiene_descripcion, Literal(description)))

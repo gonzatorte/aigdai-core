@@ -19,6 +19,7 @@
     <Import>http://countries.org#</Import>
     <Import>http://dfgsubjects.org#</Import>
     <Import>http://instances.org/instance#</Import>
+    <Import>http://principles.org#</Import>
     <Declaration>
         <Class IRI="agregador"/>
     </Declaration>

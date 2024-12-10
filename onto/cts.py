@@ -943,7 +943,7 @@ criterios_de_calidad = [
     ('wds', 'World Data System', None),
     ('dsa', 'Data Seal of Approval', None),
     ('rat-swd', 'German Data Forum certification', 'https://ideas.repec.org/b/rsw/rswout/6-1en.html'),
-    ('dini', 'dini certificate', 'https://dini.de/dienste-projekte/dini-zertifikat/')
+    ('dini', 'dini certificate', 'https://dini.de/dienste-projekte/dini-zertifikat/'),
     ('clarin-b', 'CLARIN B-Centre Assessment', 'https://www.clarin.eu/content/clarin-b-centre-assessment'),
     ('iso_16363', 'Space data and information transfer systems — Audit and certification of trustworthy digital repositories', 'https://public.ccsds.org/Pubs/652x0m1.pdf'),
     # ToDo: pasar a datos
@@ -952,7 +952,7 @@ criterios_de_calidad = [
     #  The extended self-assessment process for digital archives developed and offered by nestor on the basis of the DIN 31644 standard “Criteria for trustworthy digital archives” offers digital archives a harmonised and practical method of checking whether they are trustworthy. If the reviewed assessment yields a positive result they are entitled to publicise this by using the nestor Seal for Trustworthy Digital Archives. A fee of 500 € applies. Further information is available in the Explanatory Notes on the nestor seal below.
     ('nestor_seal', 'Network of Expertise in long-term Storage and Accessibility of Digital Resources in Germany - Seal for Trustworthy Digital Archives', 'https://www.langzeitarchivierung.de/Webs/nestor/EN/Zertifizierung/nestor_Siegel/siegel.html'), # Es lo mismo que DIN-31644
     ('trac', 'Trustworthy Repositories Audit & Certification', 'https://www.crl.edu/sites/default/files/d6/attachments/pages/trac_0.pdf'), # tb https://www.crl.edu/archiving-preservation/digital-archives/metrics-assessing-and-certifying/trac . El iso16363 ya la incluye
-    ('efacdr', 'European Framework for Audit and Certification of Digital Repositories')
+    ('efacdr', 'European Framework for Audit and Certification of Digital Repositories', None), # Es el mismo que otro mencionado mas usualmente
 ]
 
 # Si lo extiende, entonces lo considera
@@ -1091,18 +1091,18 @@ same_individuals = [
 # ToDo: Cosas como "Descubrimiento" pueden ser un criterio de calidad en si mismo...
 metricas_coar = [
     ('coar_D1', 'Descubrimiento', 'El repositorio soporta metadatos de alta calidad', 'esencial', ['esquema_de_metadatos']),
-    ('coar_D2', 'Descubrimiento', 'El repositorio soporta la recolección de metadatos usando el protocolo OAI-PMH', 'esencial', ['oai_pmh']),
+    ('coar_D2', 'Descubrimiento', 'El repositorio soporta la recolección de metadatos usando el protocolo OAI-PMH', 'esencial', ['oai-pmh']),
     ('coar_D3', 'Descubrimiento', 'Los metadatos del repositorio están disponibles incluso en los casos en los que el recurso ya no esté disponible', 'esencial', []),
     ('coar_D4', 'Descubrimiento', 'El repositorio asigna un identificador persistente (PID) que apunta a la página de destino del recurso, incluso en los casos en los que el recurso no esté disponible', 'esencial', ['esquema_de_id_persistente']),
     ('coar_D5', 'Descubrimiento', 'El repositorio ofrece una herramienta de búsqueda y/o los metadatos están indexados por servicios externos de descubrimiento y/o agregadores.', 'esencial', []),
     ('coar_D6', 'Descubrimiento', 'El repositorio está incluido en uno o más registros de recursos, ya sea por disciplinas o generales', 'esencial', ['id_de_repositorio_tiene_catalogo']),
 
-    ('coar_D7', 'Descubrimiento', 'El repositorio soporta enlaces entre recursos relacionados como artículos, conjuntos de datos y software (ej. incluyendo Identificadores Persistentes de recursos relacionados localizados en cualquier sitio).', 'deseable'),
-    ('coar_D8', 'Descubrimiento', 'El repositorio soporta encabezamientos tipados HTTP que permiten el descubrimiento automático de registros de metadatos y recursos de contenido asociados con documentos del repositorio. Recomendamos enlaces codificados de Signposting para soportarlo.', 'deseable'),
-    ('coar_D9', 'Descubrimiento', 'El repositorio soporta los identificadores persistentes de autor, financiadores, programas de financiación y subvenciones, instituciones y otras entidades relevantes.', 'deseable'),
-    ('coar_D10', 'Descubrimiento', 'Los metadatos en el repositorio son accesibles a través de Licencias Creative Commons de Dominio Público y pueden descargarse en formatos bibliográficos estándar.', 'deseable'),
-    ('coar_D11', 'Descubrimiento', 'Los metadatos de los repositorios están disponibles tanto para la lectura por humanos, como por máquinas.', 'deseable'),
-    ('coar_D12', 'Descubrimiento', 'En caso de datos de investigación, el repositorio soporta identificadores persistentes de datos a diferentes niveles de granularidad, según corresponda (por ejemplo, si un investigador está utilizando un subconjunto de datos, es necesario poder citar correctamente este subconjunto).', 'deseable'),
+    ('coar_D7', 'Descubrimiento', 'El repositorio soporta enlaces entre recursos relacionados como artículos, conjuntos de datos y software (ej. incluyendo Identificadores Persistentes de recursos relacionados localizados en cualquier sitio).', 'deseable', []),
+    ('coar_D8', 'Descubrimiento', 'El repositorio soporta encabezamientos tipados HTTP que permiten el descubrimiento automático de registros de metadatos y recursos de contenido asociados con documentos del repositorio. Recomendamos enlaces codificados de Signposting para soportarlo.', 'deseable', []),
+    ('coar_D9', 'Descubrimiento', 'El repositorio soporta los identificadores persistentes de autor, financiadores, programas de financiación y subvenciones, instituciones y otras entidades relevantes.', 'deseable', []),
+    ('coar_D10', 'Descubrimiento', 'Los metadatos en el repositorio son accesibles a través de Licencias Creative Commons de Dominio Público y pueden descargarse en formatos bibliográficos estándar.', 'deseable', []),
+    ('coar_D11', 'Descubrimiento', 'Los metadatos de los repositorios están disponibles tanto para la lectura por humanos, como por máquinas.', 'deseable', []),
+    ('coar_D12', 'Descubrimiento', 'En caso de datos de investigación, el repositorio soporta identificadores persistentes de datos a diferentes niveles de granularidad, según corresponda (por ejemplo, si un investigador está utilizando un subconjunto de datos, es necesario poder citar correctamente este subconjunto).', 'deseable', []),
 
     ('coar_A1', 'Acceso', 'El acceso a los datos publicados en el repositorio no supone ningún coste para el usuario.', 'esencial', []),
     ('coar_A2', 'Acceso', 'El repositorio garantiza el acceso continuo a los recursos durante un período de tiempo establecido públicamente.', 'esencial', []),
@@ -1112,37 +1112,37 @@ metricas_coar = [
     ('coar_A5', 'Acceso', 'El repositorio proporciona un mecanismo para poner archivos muy grandes a disposición de los usuarios fuera de la interfaz de usuario normal (en los casos en que el tamaño del archivo complique su manejo para el usuario).', 'deseable', []),
     ('coar_A6', 'Acceso', 'En los casos en que hay acceso restringido a un recurso, el repositorio facilita una forma indirecta de acceder a este recurso (por ejemplo, contactando al autor).', 'deseable', []),
 
-    ('coar_P1', 'Privacidad de datos sensibles', 'En los casos en los que el repositorio está recabando datos de investigación sensibles, cuenta con mecanismos para que los propietarios de los datos puedan limitar el acceso sólo a usuarios autorizados.', 'esencial', ['control_de_acceso']),
-    ('coar_P2', 'Privacidad de datos sensibles', 'En los casos en los que el repositorio está recabando datos de investigación sensibles, el repositorio proporciona acceso restringido en función de los diferentes niveles de seguridad requeridos por los datos.', 'deseable', ['control_de_acceso']),
+    ('coar_P1', 'Privacidad_de_datos_sensibles', 'En los casos en los que el repositorio está recabando datos de investigación sensibles, cuenta con mecanismos para que los propietarios de los datos puedan limitar el acceso sólo a usuarios autorizados.', 'esencial', ['control_de_acceso']),
+    ('coar_P2', 'Privacidad_de_datos_sensibles', 'En los casos en los que el repositorio está recabando datos de investigación sensibles, el repositorio proporciona acceso restringido en función de los diferentes niveles de seguridad requeridos por los datos.', 'deseable', ['control_de_acceso']),
 
-    ('coar_R1', 'Reutilización', 'El repositorio incluye información sobre las licencias en el registro de metadatos que estipulan las condiciones de reutilización.', 'esencial', []),
-    ('coar_R2', 'Reutilización', 'El repositorio ofrece identificadores persistentes citables.', 'esencial', ['esquema_de_id_persistente']),
-    ('coar_R3', 'Reutilización', 'El repositorio ofrece una lista de formatos preferidos, no propietarios.', 'esencial', ['formato_de_archivo']),
-    ('coar_R4', 'Reutilización', 'Las páginas de destino incluyen los metadatos del registro, incluida la información necesaria para las citas, tanto en formato legible por máquina como por humanos.', 'esencial', []),
-    ('coar_R5', 'Reutilización', 'El repositorio tiene APIs abiertas que soportan la recolección a texto completo y/o minería de texto y datos.', 'deseable', ['api_para_cosecha']),
-    ('coar_R6', 'Reutilización', 'Los recursos se almacenan en formatos estándar legibles por máquinas.', 'deseable', ['formato_de_archivo']),
+    ('coar_R1', 'Reutilizacion', 'El repositorio incluye información sobre las licencias en el registro de metadatos que estipulan las condiciones de reutilización.', 'esencial', []),
+    ('coar_R2', 'Reutilizacion', 'El repositorio ofrece identificadores persistentes citables.', 'esencial', ['esquema_de_id_persistente']),
+    ('coar_R3', 'Reutilizacion', 'El repositorio ofrece una lista de formatos preferidos, no propietarios.', 'esencial', ['formato_de_archivo']),
+    ('coar_R4', 'Reutilizacion', 'Las páginas de destino incluyen los metadatos del registro, incluida la información necesaria para las citas, tanto en formato legible por máquina como por humanos.', 'esencial', []),
+    ('coar_R5', 'Reutilizacion', 'El repositorio tiene APIs abiertas que soportan la recolección a texto completo y/o minería de texto y datos.', 'deseable', ['api_para_cosecha']),
+    ('coar_R6', 'Reutilizacion', 'Los recursos se almacenan en formatos estándar legibles por máquinas.', 'deseable', ['formato_de_archivo']),
 
-    ('coar_I1', 'Integridad y autenticidad', 'El repositorio proporciona documentación o tiene una política que describe las prácticas que evitan el acceso/manipulación no autorizados de los recursos.', 'esencial'),
-    ('coar_I2', 'Integridad y autenticidad', 'El repositorio conserva un registro de todos los cambios de metadatos y recursos del repositorio.', 'esencial'),
-    ('coar_I3', 'Integridad y autenticidad', 'El repositorio admite el control de versiones de los metadatos y recursos tras su depósito.', 'esencial', ['servicio_de_versionado']),
-    ('coar_I4', 'Integridad y autenticidad', 'El repositorio ofrece información acerca del/los proveedor/es de contenido, incluyendo el nombre de la/s persona/s o institución/es responsable/s del recurso.', 'deseable', []),
+    ('coar_I1', 'Integridad_y_autenticidad', 'El repositorio proporciona documentación o tiene una política que describe las prácticas que evitan el acceso/manipulación no autorizados de los recursos.', 'esencial', []),
+    ('coar_I2', 'Integridad_y_autenticidad', 'El repositorio conserva un registro de todos los cambios de metadatos y recursos del repositorio.', 'esencial', []),
+    ('coar_I3', 'Integridad_y_autenticidad', 'El repositorio admite el control de versiones de los metadatos y recursos tras su depósito.', 'esencial', ['servicio_de_versionado']),
+    ('coar_I4', 'Integridad_y_autenticidad', 'El repositorio ofrece información acerca del/los proveedor/es de contenido, incluyendo el nombre de la/s persona/s o institución/es responsable/s del recurso.', 'deseable', []),
 
-    ('coar_Q1', 'Garantía de calidad', 'El repositorio realiza tareas básicas de curación de los metadatos (y de los datos, cuando es requerido) ej. breve verificación y adición de metadatos básicos o documentación cuando sea necesario.', 'esencial', ['servicio_de_curaduria', 'esquema_de_metadatos']),
-    ('coar_Q2', 'Garantía de calidad', 'El repositorio proporciona documentación o tiene una política que describe qué procesos de curación se aplican a los recursos y metadatos.', 'esencial', ['esquema_de_metadatos']),
-    ('coar_Q3', 'Garantía de calidad', 'El repositorio permite anotaciones externas, comentarios o revisión de recursos y metadatos.', 'deseable', []),
+    ('coar_Q1', 'Garantia_de_calidad', 'El repositorio realiza tareas básicas de curación de los metadatos (y de los datos, cuando es requerido) ej. breve verificación y adición de metadatos básicos o documentación cuando sea necesario.', 'esencial', ['servicio_de_curaduria', 'esquema_de_metadatos']),
+    ('coar_Q2', 'Garantia_de_calidad', 'El repositorio proporciona documentación o tiene una política que describe qué procesos de curación se aplican a los recursos y metadatos.', 'esencial', ['esquema_de_metadatos']),
+    ('coar_Q3', 'Garantia_de_calidad', 'El repositorio permite anotaciones externas, comentarios o revisión de recursos y metadatos.', 'deseable', []),
 
-    ('coar_PS1', 'Preservación', 'El repositorio (u organización que gestiona el repositorio) tiene un plan a largo plazo para gestionar y financiar el repositorio.', 'esencial', ['politica']),
-    ('coar_PS2', 'Preservación', 'El repositorio proporciona documentación o tiene una política que define la duración del tiempo que se administrarán los recursos a largo plazo, así como documentación sobre las prácticas de preservación.', 'esencial', ['politica']),
-    ('coar_PS3', 'Preservación', 'El repositorio tiene un plan de preservación documentado, que incluye prácticas de preservación altamente reconocidas.', 'deseable', ['politica']),
-    ('coar_PS4', 'Preservación', 'El acuerdo entre el depositante y el repositorio prevé todas las acciones necesarias para cumplir con las responsabilidades de preservación, Ej. derechos para copiar, transformar y almacenar los registros.', 'deseable', ['politica', 'licencia']),
+    ('coar_PS1', 'Preservacion', 'El repositorio (u organización que gestiona el repositorio) tiene un plan a largo plazo para gestionar y financiar el repositorio.', 'esencial', ['politica']),
+    ('coar_PS2', 'Preservacion', 'El repositorio proporciona documentación o tiene una política que define la duración del tiempo que se administrarán los recursos a largo plazo, así como documentación sobre las prácticas de preservación.', 'esencial', ['politica']),
+    ('coar_PS3', 'Preservacion', 'El repositorio tiene un plan de preservación documentado, que incluye prácticas de preservación altamente reconocidas.', 'deseable', ['politica']),
+    ('coar_PS4', 'Preservacion', 'El acuerdo entre el depositante y el repositorio prevé todas las acciones necesarias para cumplir con las responsabilidades de preservación, Ej. derechos para copiar, transformar y almacenar los registros.', 'deseable', ['politica', 'licencia']),
 
-    ('coar_S1', 'Sostenibilidad y administración', 'El repositorio indica claramente qué organización es responsable de administrar el repositorio.', 'esencial', []),
-    ('coar_S2', 'Sostenibilidad y administración', 'El repositorio indica claramente la naturaleza de la administración de los servicios (o la organización que gestiona el repositorio).', 'esencial', []),
+    ('coar_S1', 'Sostenibilidad_y_administración', 'El repositorio indica claramente qué organización es responsable de administrar el repositorio.', 'esencial', []),
+    ('coar_S2', 'Sostenibilidad_y_administración', 'El repositorio indica claramente la naturaleza de la administración de los servicios (o la organización que gestiona el repositorio).', 'esencial', []),
 
-    ('coar_O1', 'Otros_coar_v1', 'El repositorio tiene un punto de contacto o servicio de asistencia para ayudar a depositantes y usuarios.', 'esencial'),
-    ('coar_O2', 'Otros_coar_v1', 'El repositorio tiene un aviso público que indica que responderá a las consultas dentro de un período de tiempo determinado (que no supera los 14 días).', 'esencial'),
+    ('coar_O1', 'Otros_coar_v1', 'El repositorio tiene un punto de contacto o servicio de asistencia para ayudar a depositantes y usuarios.', 'esencial', []),
+    ('coar_O2', 'Otros_coar_v1', 'El repositorio tiene un aviso público que indica que responderá a las consultas dentro de un período de tiempo determinado (que no supera los 14 días).', 'esencial', []),
     ('coar_O3', 'Otros_coar_v1', 'El repositorio proporciona documentación o tiene una política que describe el tipo de contenido que puede aceptar.', 'esencial', ['politica', 'tipo_de_dato']),
     ('coar_O4', 'Otros_coar_v1', 'El repositorio recopila y comparte información de uso utilizando una metodología estándar (por ejemplo, número de vistas, descargas).', 'esencial', ['metricas']), # ToDo: metricas aun no esta en la onto
-    ('coar_O5', 'Otros_coar_v1', 'El repositorio funciona en sistemas operativos bien soportados y otros softwares de infraestructura central.', 'deseable'),
+    ('coar_O5', 'Otros_coar_v1', 'El repositorio funciona en sistemas operativos bien soportados y otros softwares de infraestructura central.', 'deseable', []),
     ('coar_O6', 'Otros_coar_v1', 'El sistema de envío / depósito admite las cargas de registros y recursos tanto de autores individuales, como las cargas masivas.', 'deseable', ['auto_archivo']), # ToDo: auto_archivo aun no esta en la onto
 ]

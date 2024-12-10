@@ -101,7 +101,7 @@
         <NamedIndividual IRI="oai-pmh"/>
     </Declaration>
     <Declaration>
-        <NamedIndividual IRI="oai_pmh"/>
+        <NamedIndividual IRI="oai-pmh"/>
     </Declaration>
     <Declaration>
         <NamedIndividual IRI="opendap"/>
@@ -299,7 +299,7 @@
     </ClassAssertion>
     <ClassAssertion>
         <Class abbreviatedIRI="drepo:esquema_de_metadatos"/>
-        <NamedIndividual IRI="oai_pmh"/>
+        <NamedIndividual IRI="oai-pmh"/>
     </ClassAssertion>
     <ClassAssertion>
         <Class abbreviatedIRI="drepo:api_para_cosecha"/>
@@ -400,7 +400,7 @@
         <NamedIndividual IRI="ddi"/>
         <NamedIndividual IRI="doi-crossref"/>
         <NamedIndividual IRI="doi-datacite"/>
-        <NamedIndividual IRI="oai_pmh"/>
+        <NamedIndividual IRI="oai-pmh"/>
         <NamedIndividual IRI="schemaorg"/>
     </DifferentIndividuals>
     <DifferentIndividuals>

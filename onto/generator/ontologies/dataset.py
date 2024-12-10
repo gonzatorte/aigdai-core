@@ -135,7 +135,7 @@ def initiate():
         esquema_de_metadatos_instances = list(map(lambda x: esquema_de_metadatos(x), [
             'dc',
             'ddi',
-            'oai_pmh',
+            'oai-pmh',
             'schemaorg',
             'doi-datacite',
             'doi-crossref',
