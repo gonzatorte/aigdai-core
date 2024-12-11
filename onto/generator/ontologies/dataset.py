@@ -1,6 +1,7 @@
 from .base import onto as base_onto, initiate as initiate_base
 from .foaf import onto as foaf_onto, initiate as initiate_foaf
 import owlready2 as ow
+from onto import cts
 
 onto = ow.get_ontology("http://test.org/dataset.owl")
 
@@ -111,35 +112,13 @@ def initiate():
         #     utiliza_tipo_de_dato,
         # ])
 
-        esquema_de_id_de_autores_instances = list(map(lambda x: esquema_de_id_de_autor(x), [
-            'authorclaim',
-            'isni',
-            'orcid',
-            'researcherid',
-        ]))
+        esquema_de_id_de_autores_instances = list(map(lambda x: esquema_de_id_de_autor(x), cts.esquemas_de_id_de_autor))
         ow.AllDifferent(esquema_de_id_de_autores_instances)
-        licencia_instances = list(map(lambda x: licencia(x), [
-            'cc_by',
-            'cc0',
-            'gpl',
-            'mit',
-        ]))
+        licencia_instances = list(map(lambda x: licencia(x), cts.licencias))
         ow.AllDifferent(licencia_instances)
-        [doi, _, handle, *_] = esquema_de_id_persistente_instances = list(map(lambda x: esquema_de_id_persistente(x), [
-            'doi',
-            'ark',
-            'handle',
-            'purl',
-        ]))
+        [doi, _, handle, *_] = esquema_de_id_persistente_instances = list(map(lambda x: esquema_de_id_persistente(x), cts.esquemas_de_id_persistente))
         ow.AllDifferent(esquema_de_id_persistente_instances)
-        esquema_de_metadatos_instances = list(map(lambda x: esquema_de_metadatos(x), [
-            'dc',
-            'ddi',
-            'oai-pmh',
-            'schemaorg',
-            'doi-datacite',
-            'doi-crossref',
-        ]))
+        esquema_de_metadatos_instances = list(map(lambda x: esquema_de_metadatos(x), cts.esquemas_de_metadatos))
         ow.AllDifferent(esquema_de_metadatos_instances)
 
         class resultado_relacionado(resultado_de_investigacion >> resultado_de_investigacion):

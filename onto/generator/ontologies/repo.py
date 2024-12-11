@@ -1,5 +1,6 @@
 from .base import onto as base_onto, initiate as base_initiate
 import owlready2 as ow
+from onto import cts
 
 onto = ow.get_ontology("http://test.org/repo.owl")
 
@@ -27,17 +28,7 @@ def initiate():
 
         class motor_de_repositorio(ow.Thing):
             pass
-        motores_de_repositorio = [motor_de_repositorio(x) for x in [
-            'ckan',
-            'dataverse',
-            'dspace',
-            # ToDo: Siempre se tiene que agregar la categoria "otro", no así para "desconocido"
-            #  ojo que el motor otro no cumple ser identico a otro motor que sea "otro". Como modelamos eso?
-            #   diciendo que el motor otro no puede tener ninguna feature asociada para que no se pueda inferir nada del
-            #    mismo o que puedan compartir erroneamente inferencias?
-            #   funciona de algún modo como el NULL en bases de datos
-            # 'otro',
-        ]]
+        motores_de_repositorio = [motor_de_repositorio(x) for x in cts.motores]
         ow.AllDifferent(motores_de_repositorio)
 
         class agregador(ow.Thing):
@@ -80,14 +71,7 @@ def initiate():
             ow.locstr("exportación de citas", lang="es"),
             ow.locstr("cite export", lang="en"),
         ]
-        estilos_de_exportacion_de_citas = [exportacion_de_citas(x) for x in [
-            'apa',
-            'ieee',
-            'harvard',
-            'mla',
-            'vancouver',
-            'chicago',
-        ]]
+        estilos_de_exportacion_de_citas = [exportacion_de_citas(x) for x in cts.formatos_de_exportacion_de_citas]
         ow.AllDifferent(estilos_de_exportacion_de_citas)
 
         class api_para_cosecha(funcionalidad):
@@ -96,16 +80,7 @@ def initiate():
             ow.locstr("api para cosecha", lang="es"),
             ow.locstr("harvesting api", lang="en"),
         ]
-        protocolos_de_api_para_cosecha = [api_para_cosecha(x) for x in [
-            'ftp',
-            'netcdf',
-            'oai-pmh',
-            'opendap',
-            'rest',
-            'soap',
-            'sparql',
-            'sword',
-        ]]
+        protocolos_de_api_para_cosecha = [api_para_cosecha(x) for x in cts.apis_para_cosecha]
         ow.AllDifferent(protocolos_de_api_para_cosecha)
 
         class integracion_con_red_social(funcionalidad):
@@ -114,13 +89,7 @@ def initiate():
             ow.locstr("integración con red social", lang="es"),
             ow.locstr("social media integration", lang="en"),
         ]
-        integraciones_con_red_sociales = [integracion_con_red_social(x) for x in [
-            'twitter',
-            'facebook',
-            'linkedin',
-            'researchgate',
-            'academiaedu',
-        ]]
+        integraciones_con_red_sociales = [integracion_con_red_social(x) for x in cts.integraciones_con_red_social]
         ow.AllDifferent(integraciones_con_red_sociales)
 
         class soporte_para_lenguaje_de_interfaz(funcionalidad):

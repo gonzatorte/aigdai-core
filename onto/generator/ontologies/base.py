@@ -222,18 +222,10 @@ def initiate():
         class formato_codifica_tipo_de_archivo(formato_de_archivo >> tipo_de_dato):
             pass
 
-        formato_de_archivo_instances = list(map(formato_de_archivo, [
-            'imagen',
-            'texto',
-            'tabla',
-        ]))
+        formato_de_archivo_instances = list(map(formato_de_archivo, cts.formatos_de_archivo))
         ow.AllDifferent(formato_de_archivo_instances)
         # instances_by_class[formato_de_archivo] = {x.name: x for x in formato_de_archivo_instances}
-        tipo_de_datos_instances = list(map(tipo_de_dato, [
-            'articulo',
-            'cuaderno_de_laboratorio',
-            'entrevista',
-        ]))
+        tipo_de_datos_instances = list(map(tipo_de_dato, cts.tipos_de_dato))
         ow.AllDifferent(tipo_de_datos_instances)
         # instances_by_class[tipo_de_dato] = {x.name: x for x in tipo_de_datos_instances}
 

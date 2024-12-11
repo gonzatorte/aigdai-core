@@ -16,9 +16,10 @@
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Prefix name="fairvoc" IRI="https://w3id.org/fair/principles/terms/"/>
     <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/instances.xml</Import>
-    <Import>http://countries.org#</Import>
-    <Import>http://dfgsubjects.org#</Import>
-    <Import>http://instances.org/instance#</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/commons.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/disciplinas.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/criterios.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/locations.xml</Import>
     <Import>http://principles.org#</Import>
     <Declaration>
         <Class IRI="agregador"/>
@@ -163,12 +164,6 @@
     </Declaration>
     <Declaration>
         <Class IRI="utiliza_tipo_de_dato"/>
-    </Declaration>
-    <Declaration>
-        <Class abbreviatedIRI="foaf:Organization"/>
-    </Declaration>
-    <Declaration>
-        <Class abbreviatedIRI="foaf:Person"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="admite_disciplina"/>

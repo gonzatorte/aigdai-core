@@ -851,6 +851,13 @@ countries = [
     ('ZWE', 'Zimbabwe'),
 ]
 
+motores = [
+    'ckan',
+    'dataverse',
+    'dspace',
+    'invenio',
+]
+
 motor_2_feature = [
     (
         'dataverse',
@@ -1145,4 +1152,74 @@ metricas_coar = [
     ('coar_O4', 'Otros_coar_v1', 'El repositorio recopila y comparte información de uso utilizando una metodología estándar (por ejemplo, número de vistas, descargas).', 'esencial', ['metricas']), # ToDo: metricas aun no esta en la onto
     ('coar_O5', 'Otros_coar_v1', 'El repositorio funciona en sistemas operativos bien soportados y otros softwares de infraestructura central.', 'deseable', []),
     ('coar_O6', 'Otros_coar_v1', 'El sistema de envío / depósito admite las cargas de registros y recursos tanto de autores individuales, como las cargas masivas.', 'deseable', ['auto_archivo']), # ToDo: auto_archivo aun no esta en la onto
+]
+
+esquemas_de_id_de_autor = [
+    'authorclaim',
+    'isni',
+    'orcid',
+    'researcherid',
+]
+
+esquemas_de_id_persistente = [
+    'doi',
+    'ark',
+    'handle',
+    'purl',
+]
+
+esquemas_de_metadatos = [
+    'dc',
+    'ddi',
+    'oai-pmh',
+    'schemaorg',
+    'doi-datacite',
+    'doi-crossref',
+]
+
+licencias = [
+    'cc_by',
+    'cc0',
+    'gpl',
+    'mit',
+]
+
+formatos_de_archivo = [
+    'imagen',
+    'texto',
+    'tabla',
+]
+
+tipos_de_dato = [
+    'articulo',
+    'cuaderno_de_laboratorio',
+    'entrevista',
+]
+
+apis_para_cosecha = [
+    'ftp',
+    'netcdf',
+    'oai-pmh',
+    'opendap',
+    'rest',
+    'soap',
+    'sparql',
+    'sword',
+]
+
+integraciones_con_red_social = [
+    'twitter',
+    'facebook',
+    'linkedin',
+    'researchgate',
+    'academiaedu',
+]
+
+formatos_de_exportacion_de_citas = [
+    'apa',
+    'ieee',
+    'harvard',
+    'mla',
+    'vancouver',
+    'chicago',
 ]

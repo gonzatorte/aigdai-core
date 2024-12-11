@@ -7,7 +7,7 @@
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      ontologyIRI="http://principles.org#">
     <Prefix name="" IRI="http://principles.org#"/>
-    <Prefix name="repo" IRI="http://test.org#"/>
+    <Prefix name="drepo" IRI="http://test.org#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
@@ -27,7 +27,7 @@
         <Class IRI="relacion_de_extension"/>
     </Declaration>
     <Declaration>
-        <Class abbreviatedIRI="repo:repositorio"/>
+        <Class abbreviatedIRI="drepo:repositorio"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="regula_funcionalidad"/>
@@ -38,7 +38,7 @@
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
         <ObjectProperty IRI="regula_funcionalidad"/>
-        <Class abbreviatedIRI="repo:repositorio"/>
+        <Class abbreviatedIRI="drepo:repositorio"/>
     </ObjectPropertyRange>
     <Declaration>
         <ObjectProperty IRI="extiende_desde"/>
@@ -85,7 +85,7 @@
     <DisjointClasses>
         <Class IRI="grupo_de_criterio"/>
         <Class IRI="criterio_de_calidad"/>
-        <Class abbreviatedIRI="repo:repositorio"/>
+        <Class abbreviatedIRI="drepo:repositorio"/>
     </DisjointClasses>
     <AsymmetricObjectProperty>
         <ObjectProperty IRI="extiende_de"/>
@@ -102,7 +102,7 @@
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="satisface_criterio"/>
-        <Class abbreviatedIRI="repo:repositorio"/>
+        <Class abbreviatedIRI="drepo:repositorio"/>
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
         <ObjectProperty IRI="extiende_de"/>
@@ -137,7 +137,7 @@
     <DLSafeRule>
         <Body>
             <ClassAtom>
-                <Class abbreviatedIRI="repo:repositorio"/>
+                <Class abbreviatedIRI="drepo:repositorio"/>
                 <Variable IRI="urn:swrl:var#r"/>
             </ClassAtom>
             <ClassAtom>

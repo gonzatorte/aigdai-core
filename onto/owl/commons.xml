@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <rdf:Description rdf:about="http://test.org#exportacion_de_citas/ieee">
+    <rdf:type rdf:resource="http://test.org#exportacion_de_citas"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/harvard"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/mla"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/vancouver"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/chicago"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#integracion_con_red_social/twitter">
+    <rdf:type rdf:resource="http://test.org#integracion_con_red_social"/>
+    <owl:differentFrom rdf:resource="http://test.org#integracion_con_red_social/facebook"/>
+    <owl:differentFrom rdf:resource="http://test.org#integracion_con_red_social/linkedin"/>
+    <owl:differentFrom rdf:resource="http://test.org#integracion_con_red_social/researchgate"/>
+    <owl:differentFrom rdf:resource="http://test.org#integracion_con_red_social/academiaedu"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#esquema_de_id_persistente/ark">
+    <rdf:type rdf:resource="http://test.org#esquema_de_id_persistente"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_id_persistente/handle"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_id_persistente/purl"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#motor_de_repositorio/dspace">
+    <rdf:type rdf:resource="http://test.org#motor_de_repositorio"/>
+    <owl:differentFrom rdf:resource="http://test.org#motor_de_repositorio/invenio"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#formato_de_archivo/imagen">
+    <rdf:type rdf:resource="http://test.org#formato_de_archivo"/>
+    <owl:differentFrom rdf:resource="http://test.org#formato_de_archivo/texto"/>
+    <owl:differentFrom rdf:resource="http://test.org#formato_de_archivo/tabla"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#tipo_de_dato/articulo">
+    <rdf:type rdf:resource="http://test.org#tipo_de_dato"/>
+    <owl:differentFrom rdf:resource="http://test.org#tipo_de_dato/cuaderno_de_laboratorio"/>
+    <owl:differentFrom rdf:resource="http://test.org#tipo_de_dato/entrevista"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#exportacion_de_citas/harvard">
+    <rdf:type rdf:resource="http://test.org#exportacion_de_citas"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/mla"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/vancouver"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/chicago"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#esquema_de_metadatos/dc">
+    <rdf:type rdf:resource="http://test.org#esquema_de_metadatos"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/ddi"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/oai-pmh"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/schemaorg"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/doi-datacite"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/doi-crossref"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#esquema_de_metadatos/ddi">
+    <rdf:type rdf:resource="http://test.org#esquema_de_metadatos"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/oai-pmh"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/schemaorg"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/doi-datacite"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/doi-crossref"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#tipo_de_dato/cuaderno_de_laboratorio">
+    <rdf:type rdf:resource="http://test.org#tipo_de_dato"/>
+    <owl:differentFrom rdf:resource="http://test.org#tipo_de_dato/entrevista"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#integracion_con_red_social/researchgate">
+    <rdf:type rdf:resource="http://test.org#integracion_con_red_social"/>
+    <owl:differentFrom rdf:resource="http://test.org#integracion_con_red_social/academiaedu"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#esquema_de_metadatos/schemaorg">
+    <rdf:type rdf:resource="http://test.org#esquema_de_metadatos"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/doi-datacite"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/doi-crossref"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#integracion_con_red_social/academiaedu">
+    <rdf:type rdf:resource="http://test.org#integracion_con_red_social"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#esquema_de_metadatos/oai-pmh">
+    <rdf:type rdf:resource="http://test.org#esquema_de_metadatos"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/schemaorg"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/doi-datacite"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/doi-crossref"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#esquema_de_id_de_autor/researcherid">
+    <rdf:type rdf:resource="http://test.org#esquema_de_id_de_autor"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#licencia/cc_by">
+    <rdf:type rdf:resource="http://test.org#licencia"/>
+    <owl:differentFrom rdf:resource="http://test.org#licencia/cc0"/>
+    <owl:differentFrom rdf:resource="http://test.org#licencia/gpl"/>
+    <owl:differentFrom rdf:resource="http://test.org#licencia/mit"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#api_para_cosecha/netcdf">
+    <rdf:type rdf:resource="http://test.org#api_para_cosecha"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/oai-pmh"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/opendap"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/rest"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/soap"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/sparql"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/sword"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#api_para_cosecha/rest">
+    <rdf:type rdf:resource="http://test.org#api_para_cosecha"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/soap"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/sparql"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/sword"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#exportacion_de_citas/apa">
+    <rdf:type rdf:resource="http://test.org#exportacion_de_citas"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/ieee"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/harvard"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/mla"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/vancouver"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/chicago"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#exportacion_de_citas/mla">
+    <rdf:type rdf:resource="http://test.org#exportacion_de_citas"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/vancouver"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/chicago"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#api_para_cosecha/ftp">
+    <rdf:type rdf:resource="http://test.org#api_para_cosecha"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/netcdf"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/oai-pmh"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/opendap"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/rest"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/soap"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/sparql"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/sword"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#licencia/gpl">
+    <rdf:type rdf:resource="http://test.org#licencia"/>
+    <owl:differentFrom rdf:resource="http://test.org#licencia/mit"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#api_para_cosecha/opendap">
+    <rdf:type rdf:resource="http://test.org#api_para_cosecha"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/rest"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/soap"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/sparql"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/sword"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#integracion_con_red_social/linkedin">
+    <rdf:type rdf:resource="http://test.org#integracion_con_red_social"/>
+    <owl:differentFrom rdf:resource="http://test.org#integracion_con_red_social/researchgate"/>
+    <owl:differentFrom rdf:resource="http://test.org#integracion_con_red_social/academiaedu"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#api_para_cosecha/oai-pmh">
+    <rdf:type rdf:resource="http://test.org#api_para_cosecha"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/opendap"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/rest"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/soap"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/sparql"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/sword"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#licencia/cc0">
+    <rdf:type rdf:resource="http://test.org#licencia"/>
+    <owl:differentFrom rdf:resource="http://test.org#licencia/gpl"/>
+    <owl:differentFrom rdf:resource="http://test.org#licencia/mit"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#esquema_de_id_de_autor/isni">
+    <rdf:type rdf:resource="http://test.org#esquema_de_id_de_autor"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_id_de_autor/orcid"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_id_de_autor/researcherid"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#esquema_de_metadatos/doi-datacite">
+    <rdf:type rdf:resource="http://test.org#esquema_de_metadatos"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_metadatos/doi-crossref"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#esquema_de_id_persistente/doi">
+    <rdf:type rdf:resource="http://test.org#esquema_de_id_persistente"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_id_persistente/ark"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_id_persistente/handle"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_id_persistente/purl"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#integracion_con_red_social/facebook">
+    <rdf:type rdf:resource="http://test.org#integracion_con_red_social"/>
+    <owl:differentFrom rdf:resource="http://test.org#integracion_con_red_social/linkedin"/>
+    <owl:differentFrom rdf:resource="http://test.org#integracion_con_red_social/researchgate"/>
+    <owl:differentFrom rdf:resource="http://test.org#integracion_con_red_social/academiaedu"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#api_para_cosecha/soap">
+    <rdf:type rdf:resource="http://test.org#api_para_cosecha"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/sparql"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/sword"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#motor_de_repositorio/ckan">
+    <rdf:type rdf:resource="http://test.org#motor_de_repositorio"/>
+    <owl:differentFrom rdf:resource="http://test.org#motor_de_repositorio/dataverse"/>
+    <owl:differentFrom rdf:resource="http://test.org#motor_de_repositorio/dspace"/>
+    <owl:differentFrom rdf:resource="http://test.org#motor_de_repositorio/invenio"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#esquema_de_id_de_autor/authorclaim">
+    <rdf:type rdf:resource="http://test.org#esquema_de_id_de_autor"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_id_de_autor/isni"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_id_de_autor/orcid"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_id_de_autor/researcherid"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#licencia/mit">
+    <rdf:type rdf:resource="http://test.org#licencia"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#formato_de_archivo/tabla">
+    <rdf:type rdf:resource="http://test.org#formato_de_archivo"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#exportacion_de_citas/vancouver">
+    <rdf:type rdf:resource="http://test.org#exportacion_de_citas"/>
+    <owl:differentFrom rdf:resource="http://test.org#exportacion_de_citas/chicago"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#motor_de_repositorio/dataverse">
+    <rdf:type rdf:resource="http://test.org#motor_de_repositorio"/>
+    <owl:differentFrom rdf:resource="http://test.org#motor_de_repositorio/dspace"/>
+    <owl:differentFrom rdf:resource="http://test.org#motor_de_repositorio/invenio"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#tipo_de_dato/entrevista">
+    <rdf:type rdf:resource="http://test.org#tipo_de_dato"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#formato_de_archivo/texto">
+    <rdf:type rdf:resource="http://test.org#formato_de_archivo"/>
+    <owl:differentFrom rdf:resource="http://test.org#formato_de_archivo/tabla"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#api_para_cosecha/sword">
+    <rdf:type rdf:resource="http://test.org#api_para_cosecha"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#motor_de_repositorio/invenio">
+    <rdf:type rdf:resource="http://test.org#motor_de_repositorio"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#esquema_de_id_de_autor/orcid">
+    <rdf:type rdf:resource="http://test.org#esquema_de_id_de_autor"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_id_de_autor/researcherid"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#api_para_cosecha/sparql">
+    <rdf:type rdf:resource="http://test.org#api_para_cosecha"/>
+    <owl:differentFrom rdf:resource="http://test.org#api_para_cosecha/sword"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#esquema_de_id_persistente/handle">
+    <rdf:type rdf:resource="http://test.org#esquema_de_id_persistente"/>
+    <owl:differentFrom rdf:resource="http://test.org#esquema_de_id_persistente/purl"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#esquema_de_id_persistente/purl">
+    <rdf:type rdf:resource="http://test.org#esquema_de_id_persistente"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#esquema_de_metadatos/doi-crossref">
+    <rdf:type rdf:resource="http://test.org#esquema_de_metadatos"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://test.org#exportacion_de_citas/chicago">
+    <rdf:type rdf:resource="http://test.org#exportacion_de_citas"/>
+  </rdf:Description>
+</rdf:RDF>
