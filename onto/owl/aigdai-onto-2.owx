@@ -20,6 +20,7 @@
     <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/disciplinas.xml</Import>
     <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/criterios.xml</Import>
     <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/locations.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/organizations.xml</Import>
     <Import>http://principles.org#</Import>
     <Declaration>
         <Class IRI="agregador"/>
@@ -248,9 +249,6 @@
     </Declaration>
     <Declaration>
         <DataProperty IRI="esquema_de_disciplina"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="has_key_organizacion"/>
     </Declaration>
     <Declaration>
         <DataProperty IRI="id_de_autor_tiene_literal"/>
@@ -814,9 +812,6 @@
         <DataProperty IRI="esquema_de_disciplina"/>
     </FunctionalDataProperty>
     <FunctionalDataProperty>
-        <DataProperty IRI="has_key_organizacion"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
         <DataProperty IRI="id_de_autor_tiene_literal"/>
     </FunctionalDataProperty>
     <FunctionalDataProperty>
@@ -852,6 +847,49 @@
     <FunctionalDataProperty>
         <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
     </FunctionalDataProperty>
+    <Declaration>
+        <DataProperty IRI="es_organizacion_relacionada"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="es_organizacion_antecesora"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="es_organizacion_padre"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="es_organizacion_relacionada"/>
+        <Class IRI="organizacion"/>
+    </DataPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="es_organizacion_relacionada"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyRange>
+    <SymmetricObjectProperty>
+        <ObjectProperty IRI="es_organizacion_relacionada"/>
+    </SymmetricObjectProperty>
+    <DataPropertyDomain>
+        <DataProperty IRI="es_organizacion_padre"/>
+        <Class IRI="organizacion"/>
+    </DataPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="es_organizacion_padre"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyRange>
+    <DataPropertyDomain>
+        <DataProperty IRI="es_organizacion_antecesora"/>
+        <Class IRI="organizacion"/>
+    </DataPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="es_organizacion_antecesora"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyRange>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="es_organizacion_antecesora"/>
+    </TransitiveObjectProperty>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="es_organizacion_padre"/>
+        <ObjectProperty IRI="es_organizacion_antecesora"/>
+    </SubObjectPropertyOf>
     <DataPropertyDomain>
         <DataProperty IRI="alfa_3_de_pais"/>
         <Class IRI="pais"/>
@@ -859,10 +897,6 @@
     <DataPropertyDomain>
         <DataProperty IRI="esquema_de_disciplina"/>
         <Class IRI="disciplina"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="has_key_organizacion"/>
-        <Class IRI="organizacion"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="id_de_autor_tiene_literal"/>
@@ -938,10 +972,6 @@
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="esquema_de_disciplina"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="has_key_organizacion"/>
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
     <DataPropertyRange>
@@ -1428,6 +1458,15 @@
         <DataOneOf>
             <Literal>comercial</Literal>
             <Literal>no-comercial</Literal>
+            <Literal>education</Literal>
+            <Literal>funder</Literal>
+            <Literal>healthcare</Literal>
+            <Literal>company</Literal>
+            <Literal>archive</Literal>
+            <Literal>nonprofit</Literal>
+            <Literal>government</Literal>
+            <Literal>facility</Literal>
+            <Literal>other</Literal>
         </DataOneOf>
     </DatatypeDefinition>
     <DatatypeDefinition>

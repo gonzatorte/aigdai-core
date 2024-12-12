@@ -120,11 +120,6 @@ def initiate():
             domain = [organizacion]
             range = [tipo_de_organizacion]
 
-        # class has_key_organizacion(HasKeyProperty, ow.FunctionalProperty):
-        class has_key_organizacion(ow.DataProperty, ow.FunctionalProperty):
-            domain = [organizacion]
-            range = [url]
-
         class nombre_de_disciplina(ow.DataProperty, ow.FunctionalProperty):
             domain = [disciplina]
             range = [str]

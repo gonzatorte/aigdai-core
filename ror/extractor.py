@@ -1,0 +1,178 @@
+from rdflib.namespace import RDF, OWL
+import onto.generator.rdf as rdf_types
+from rdflib import Graph, Literal, URIRef
+import json
+
+ROR_PREFIX = 'https://ror.org/'
+def normalize_id(idd: str):
+    # https://ror.org/04ttjf776
+    if not idd.startswith(ROR_PREFIX):
+        raise Exception('')
+    return idd[len(ROR_PREFIX):].lower()
+
+def common_parse(registry):
+    idd = normalize_id(registry['id'])
+    established = registry['established']
+    return idd, established
+
+# def v1_parse(registry):
+#     rr = common_parse(registry)
+#     return [*list(rr), names]
+
+def v2_parse(registry):
+    #     {
+    #         "status": "active",
+    #         "types": [
+    #             "education",
+    #             "funder"
+    #         ],
+    #         "admin": {
+    #             "created": {
+    #                 "date": "2018-11-14",
+    #                 "schema_version": "1.0"
+    #             },
+    #             "last_modified": {
+    #                 "date": "2024-05-13",
+    #                 "schema_version": "2.0"
+    #             }
+    #         }
+    #     },
+    idd, established = common_parse(registry)
+    external_ids = sum([[(x['type'], y) for y in x['all']] for x in registry['external_ids']], [])
+    if any(map(lambda x: x[0] not in ['fundref', 'grid', 'isni', 'wikidata'], external_ids)):
+        raise Exception()
+    children = [normalize_id(x['id']) for x in registry['relationships'] if x['type'] == 'child']
+    relateds = [normalize_id(x['id']) for x in registry['relationships'] if x['type'] == 'related']
+    parents = [normalize_id(x['id']) for x in registry['relationships'] if x['type'] == 'parent']
+    predecessors = [normalize_id(x['id']) for x in registry['relationships'] if x['type'] == 'predecessor']
+    successors = [normalize_id(x['id']) for x in registry['relationships'] if x['type'] == 'successor']
+    names = [x['value'] for x in registry['names']]
+    # names = [x['lang'] for x in registry['names']]
+    countries = [x['geonames_details']['country_code'] for x in registry['locations']]
+    domains = registry['domains']
+    types = registry['types']
+    invalid_types = [x for x in types if x not in ['education', 'funder', 'healthcare', 'company', 'archive', 'nonprofit', 'government', 'facility', 'other']]
+    if len(invalid_types) != 0:
+        raise Exception('invalid type')
+    # types = ["%s-%s" % (x, idd) if x == 'other' else x for x in types]
+    is_active = registry['status'] == 'active'
+
+    return (
+        idd,
+        established,
+        names,
+        countries,
+        domains,
+        types,
+        is_active,
+        external_ids,
+        children,
+        relateds,
+        parents,
+        predecessors,
+        successors,
+    )
+
+def extract_and_store():
+    with open('./data/v1.49-2024-07-11-ror-data_schema_v2.json', 'r') as file:
+        registries = json.load(file)
+        g_orgs = Graph()
+        g_orgs.bind('', rdf_types.my_ns)
+        # count_v1 = 0
+
+        tipo_de_id_de_organizacion_ror = URIRef("#tipo_de_id_de_organizacion/ROR", rdf_types.my_ns)
+        g_orgs.set((tipo_de_id_de_organizacion_ror, RDF.type, rdf_types.TipoDeIdDeOrganizacion))
+
+        for (idx, registry) in enumerate(registries[:1000]):
+            if idx % 50 == 0:
+                print('idx', idx, 'out of', len(registries))
+            # if registry['admin']['last_modified']['schema_version'] != '2.0':
+            #     count_v1 += 1
+            #     continue
+            #     # raise Exception('')
+            (
+                idd,
+                established, # ToDo: Integrate
+                names,
+                countries,
+                domains, # ToDo: Integrate
+                types, # ToDo: Integrate
+                is_active, # ToDo: Integrate
+                external_ids,
+                children,
+                relateds,
+                parents,
+                _predecessors,
+                _successors,
+            ) = v2_parse(registry)
+            idd_w_schema = 'ROR:%s' % (idd,)
+            organizacion = URIRef("#organizacion/%s" % (idd_w_schema,), rdf_types.my_ns)
+            g_orgs.set((organizacion, RDF.type, rdf_types.Organizacion))
+            id_de_organizacion = URIRef("#id_de_organizacion/%s" % (idd_w_schema,), rdf_types.my_ns)
+            g_orgs.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
+            g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion_ror))
+            g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(idd)))
+            g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, organizacion))
+            for name in names:
+                g_orgs.add((organizacion, rdf_types.tiene_nombre_organizacion, Literal(name)))
+            for (typee, external_id) in external_ids:
+                external_id = external_id.replace(' ', '')
+                tipo_de_id_de_organizacion = URIRef("#tipo_de_id_de_organizacion/%s" % (typee.upper(),), rdf_types.my_ns)
+                g_orgs.set((tipo_de_id_de_organizacion, RDF.type, rdf_types.TipoDeIdDeOrganizacion))
+
+                external_idd = "%s:%s" % (typee.upper(), external_id)
+                id_de_organizacion = URIRef("#id_de_organizacion/%s" % (external_idd, ), rdf_types.my_ns)
+                g_orgs.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(external_id)))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, organizacion))
+
+            for location in countries:
+                location = URIRef("#pais/%s" % (location,), rdf_types.my_ns)
+                g_orgs.set((location, RDF.type, rdf_types.Pais))
+                g_orgs.add((organizacion, rdf_types.se_ubica_en, location))
+
+            for typee in types:
+                g_orgs.add((organizacion, rdf_types.tiene_tipo_de_organizacion, Literal(typee)))
+
+            for other_org_id_raw in children:
+                other_org_id = "ROR:%s" % (other_org_id_raw,)
+                other_org = URIRef("#organizacion/%s" % (other_org_id,), rdf_types.my_ns)
+                g_orgs.set((other_org, RDF.type, rdf_types.Organizacion))
+                g_orgs.set((organizacion, rdf_types.es_organizacion_padre, other_org))
+
+                id_de_organizacion = URIRef("#id_de_organizacion/%s" % (other_org_id,), rdf_types.my_ns)
+                g_orgs.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion_ror))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(other_org_id_raw)))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, other_org))
+
+            for other_org_id_raw in parents:
+                other_org_id = "ROR:%s" % (other_org_id_raw,)
+                other_org = URIRef("#organizacion/%s" % (other_org_id,), rdf_types.my_ns)
+                g_orgs.set((other_org, RDF.type, rdf_types.Organizacion))
+                g_orgs.set((other_org, rdf_types.es_organizacion_padre, organizacion))
+
+                id_de_organizacion = URIRef("#id_de_organizacion/%s" % (other_org_id,), rdf_types.my_ns)
+                g_orgs.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion_ror))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(other_org_id_raw)))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, other_org))
+
+            for other_org_id_raw in relateds:
+                other_org_id = "ROR:%s" % (other_org_id_raw,)
+                other_org = URIRef("#organizacion/%s" % (other_org_id,), rdf_types.my_ns)
+                g_orgs.set((other_org, RDF.type, rdf_types.Organizacion))
+                g_orgs.set((organizacion, rdf_types.es_organizacion_relacionada, other_org))
+
+                id_de_organizacion = URIRef("#id_de_organizacion/%s" % (other_org_id,), rdf_types.my_ns)
+                g_orgs.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion_ror))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(other_org_id_raw)))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, other_org))
+
+    # print('count_v1', count_v1, 'out of', len(registries))
+    g_orgs.serialize(destination='../onto/owl/organizations.xml', format="xml")
+
+if __name__ == "__main__":
+    extract_and_store()

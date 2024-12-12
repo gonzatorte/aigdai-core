@@ -74,13 +74,6 @@ def initiate():
     # Funder: An organization that funds research.
     # Other: Use this category for any organization that does not fit the categories above.
 
-    # Field name	Definition	Type	Required	Value required
-    # admin	Container for administrative information about the record	Object	TRUE	TRUE     --> created: "date" : "2018-11-14", "last_modified" "date" : "2024-02-21",
-    # domains	The domains registered to a particular institution	Array	TRUE	FALSE
-    # established	Year the organization was established (CE)	Number	TRUE	FALSE
-    # links	The organization's website and Wikipedia page	Array	TRUE	FALSE
-    # locations	The location of the organization	Array	TRUE	TRUE
-
 
 if __name__ == '__main__':
     initiate()

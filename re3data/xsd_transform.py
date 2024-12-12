@@ -213,7 +213,7 @@ def refine_repository_info(
             dd['id'] = dd['institutionIdentifier'][0]
         else:
             local_id = hashlib.md5(dd['institutionName'].encode('utf-8')).hexdigest()
-            dd['id'] = 'local:%s' % (local_id, )
+            dd['id'] = 'LOCAL:%s' % (local_id, )
         return dd
 
     def transform_access(x, is_database: bool):
