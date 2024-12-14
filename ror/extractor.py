@@ -55,7 +55,7 @@ def v2_parse(registry):
     if len(invalid_types) != 0:
         raise Exception('invalid type')
     # types = ["%s-%s" % (x, idd) if x == 'other' else x for x in types]
-    is_active = registry['status'] == 'active'
+    status = registry['status']
 
     return (
         idd,
@@ -64,7 +64,7 @@ def v2_parse(registry):
         countries,
         domains,
         types,
-        is_active,
+        status,
         external_ids,
         children,
         relateds,
@@ -96,8 +96,8 @@ def extract_and_store():
                 names,
                 countries,
                 domains, # ToDo: Integrate
-                types, # ToDo: Integrate
-                is_active, # ToDo: Integrate
+                types,
+                status,
                 external_ids,
                 children,
                 relateds,
@@ -105,6 +105,9 @@ def extract_and_store():
                 _predecessors,
                 _successors,
             ) = v2_parse(registry)
+            if status == 'withdrawn':
+                continue
+            is_active = status == 'active'
             idd_w_schema = 'ROR:%s' % (idd,)
             organizacion = URIRef("#organizacion/%s" % (idd_w_schema,), rdf_types.my_ns)
             g_orgs.set((organizacion, RDF.type, rdf_types.Organizacion))
@@ -113,11 +116,16 @@ def extract_and_store():
             g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion_ror))
             g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(idd)))
             g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, organizacion))
+
+            g_orgs.set((organizacion, rdf_types.organizacion_esta_activa, Literal(is_active)))
+            g_orgs.set((organizacion, rdf_types.organizacion_fundada_en_anio, Literal(established)))
+
             for name in names:
                 g_orgs.add((organizacion, rdf_types.tiene_nombre_organizacion, Literal(name)))
             for (typee, external_id) in external_ids:
                 external_id = external_id.replace(' ', '')
                 tipo_de_id_de_organizacion = URIRef("#tipo_de_id_de_organizacion/%s" % (typee.upper(),), rdf_types.my_ns)
+                # ToDo: Tendria que hacer que todos los tipo_de_id_de_organizacion descritos aqui sean diferentes entre si??
                 g_orgs.set((tipo_de_id_de_organizacion, RDF.type, rdf_types.TipoDeIdDeOrganizacion))
 
                 external_idd = "%s:%s" % (typee.upper(), external_id)
@@ -135,6 +143,11 @@ def extract_and_store():
             for typee in types:
                 g_orgs.add((organizacion, rdf_types.tiene_tipo_de_organizacion, Literal(typee)))
 
+            #
+            #  Relationships to inactive records
+            #  Records with status active cannot contain relationships to records with status inactive or withdrawn, except for relationships with type Predecessor.
+            #  Records with status inactive or withdrawn may have relationships to records with status active for the sake of preserving the record data at the time the record status was changed to inactive or withdrawn. These are not considering current relationships and do not require corresponding relationships in related records.
+            #
             for other_org_id_raw in children:
                 other_org_id = "ROR:%s" % (other_org_id_raw,)
                 other_org = URIRef("#organizacion/%s" % (other_org_id,), rdf_types.my_ns)
@@ -170,6 +183,8 @@ def extract_and_store():
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion_ror))
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(other_org_id_raw)))
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, other_org))
+
+    # ToDo: Tendria que declarar que todas estas organizaciones son distintas entre si por ser verificadas por un mismo proveedor de datos?
 
     # print('count_v1', count_v1, 'out of', len(registries))
     g_orgs.serialize(destination='../onto/owl/organizations.xml', format="xml")

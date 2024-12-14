@@ -975,12 +975,30 @@ criterio_de_calidad_extiende_de = [
     ('efacdr', ['cts_2022'], ['nestor_seal', 'iso_16363', 'trust', 'fair']),
     ('planS', ['efacdr'], []),
 
-    ('fair_F', ['fair_F1','fair_F2','fair_F3','fair_F4'], []),
-    ('fair_A', ['fair_A1', 'fair_A2'], []),
-    ('fair_A1', ['fair_A1.1', 'fair_A1.2'], []),
-    ('fair_I', ['fair_I1', 'fair_I2', 'fair_I3'], []),
-    ('fair_R', ['fair_R1'], []),
-    ('fair_R1', ['fair_R1.1','fair_R1.2','fair_R1.3'], []),
+    ('fair_F', ['fair'], []),
+    ('fair_A', ['fair'], []),
+    ('fair_I', ['fair'], []),
+    ('fair_R', ['fair'], []),
+
+    ('fair_F1', ['fair_F'], []),
+    ('fair_F2', ['fair_F'], []),
+    ('fair_F3', ['fair_F'], []),
+    ('fair_F4', ['fair_F'], []),
+
+    ('fair_A', ['fair_A1'], []),
+    ('fair_A', ['fair_A2'], []),
+
+    ('fair_A1.1', ['fair_A1'], []),
+    ('fair_A1.2', ['fair_A1'], []),
+
+    ('fair_I1', ['fair_I'], []),
+    ('fair_I2', ['fair_I'], []),
+    ('fair_I3', ['fair_I'], []),
+
+    ('fair_R1', ['fair_R'], []),
+    ('fair_R1.1', ['fair_R1'], []),
+    ('fair_R1.2', ['fair_R1'], []),
+    ('fair_R1.3', ['fair_R1'], []),
 ]
 
 # ToDo: Enumerados como versionado/no deben tener la semántica de ser inconsistentes con versionado/si. Algo como versionado/no y versionado/si implican bottom?
@@ -1190,6 +1208,109 @@ formatos_de_archivo = [
     'tabla',
 ]
 
+formatos_de_archivo_abierto = [
+# Imaging
+	('APNG', 'It allows for animated PNG files that work similarly to animated GIF files.'),
+	('AVIF', 'An image format using AV1 compression.'),
+	('FLIF', 'Free Lossless Image Format.'),
+	('GBR', 'a 2D binary vector image file format, the de facto standard in the printed circuit board (PCB) industry'),
+	('GIF', 'CompuServe\'s Graphics Interchange Format (openly published specification, but patent-encumbered by a third party; became free when patents expired in 2004)'),
+	('JPEG', 'a lossy image format widely used to display photographic images, standardized by ISO/IEC'),
+	('JPEG2000', 'an image format standardized by ISO/IEC'),
+	('JPEGXL', 'an image format designed to outperform and replace existing formats. Especially legacy JPEG. Supports both lossy and lossless compression.'),
+	('MNG', 'moving pictures, based on PNG'),
+	('OpenEXR', 'a high dynamic range imaging image file format, released as an open standard along with a set of software tools created by Industrial Light and Magic (ILM).'),
+	('OpenRaster', 'a format for raster graphics editors that saves layers'),
+	('PNG', 'a raster image format standardized by ISO/IEC'),
+	('QOI', 'a simple, fast and lossless open source image file format https://qoiformat.org/'),
+	('SVG', 'a vector image format standardized by W3C'),
+	('WebP', 'image format developed by Google'),
+	('XPM', 'image file format used by the X Window System'),
+# Audio
+	('ALAC', 'lossless audio codec, previously a proprietary format of Apple Inc.'),
+	('FLAC', 'lossless audio codec'),
+	('DAISY_Digital_Talking_Book', 'a talking book format'),
+	('Musepack', 'an audio codec'),
+	('MP3', 'lossy audio codec, previously patented'),
+	('Ogg', 'container for Vorbis, FLAC, Speex and Opus (audio formats) & Theora (a video format), each of which is an open format'),
+	('Opus', 'a lossy audio compression format developed by the IETF. Suitable for VoIP, videoconferencing (just audio), music transmission over the Internet and streaming applications (just audio).'),
+	('Speex', 'speech codec'),
+	('Vorbis', 'a lossy audio compression format.'),
+	('WavPack', '"Hybrid" (lossless/lossy) audio codec'),
+# Video
+	('AV1', ''),
+	('Dirac', 'a video compression format supporting both lossless and lossy compression'),
+	('Matroska', 'container for all type of multimedia formats (audio, video, images, subtitles)'),
+	('WebM', 'a video/audio container format'),
+	('Theora', 'a lossy video compression format.'),
+# Various
+	('OBJ', 'A 3D model/scene format developed by Wavefront Technologies.'),
+	('DAE', 'A 3D model/scene format standardized by Khronos.'),
+	('glTF', 'A 3D model/scene format standardized by Khronos.'),
+	('CMML', 'timed metadata and subtitles'),
+	('SMIL', 'a media playlisting format and multimedia integration language'),
+	('VRML-X3D', 'realtime 3D data formats standardized by ISO/IEC'),
+	('XSPF', 'a playlist format for multimedia'),
+# Text
+	('Plain_text', 'encoded in numerous non-proprietary encodings, such as ASCII'),
+	('CSV', 'comma-separated values, commonly used for spreadsheets or simple databases'),
+	('HTML', 'HyperText Markup Language (HTML) is the main markup language for creating web pages and other information that can be displayed in a web browser.'),
+	('Unicode_Transformation_Formats', 'text encodings with support for all common languages and scripts'),
+	('UTF-8', 'byte oriented and ASCII compatible'),
+	('UTF-16', '16-bit oriented'),
+	('Markdown', 'Lightweight markup language that converts to HTML'),
+	('DVI', 'device independent (TeX)'),
+	('DocBook', 'XML-based standard to publish books'),
+	('Darwin_Information_Typing_Architecture', 'adaptable XML-based format for technical documentation, maintained by the OASIS consortium'),
+	('ePub', 'e-book standard by the International Digital Publishing Forum (IDPF)'),
+	('FictionBook', 'XML-based e-book format, which originated and gained popularity in Russia'),
+	('LaTeX', 'document markup language'),
+	('Office_Open_XML', 'a formatted text format (ISO/IEC 29500:2008)'),
+	('OpenDocument', 'a formatted text format (ISO/IEC 26300:2006)'),
+	('OpenXPS', 'open standard for a page description language and a fixed-document format'),
+	('PostScript', 'a page description language and programming language, started as a proprietary standard but is now a public specification.'),
+	('XHTML', 'XHTML (Extensible HyperText Markup Language) is a family of XML markup languages that mirror or extend versions of the widely used Hypertext Markup Language (HTML), the language in which web pages are written.'),
+	('ZIM', 'a file format that stores wiki content for offline usage.'),
+# Archiving and compression
+	('7z', 'for archiving and/or compression'),
+	('B1', 'for archiving and/or compression'),
+	('bzip2', 'for compression'),
+	('gzip', 'for compression'),
+	('lzip', 'for compression'),
+	('MAFF', 'for web page archiving, based on ZIP'),
+	('PAQ', 'for compression'),
+	('SQX', 'for archiving and/or compression'),
+	('tar', 'for archiving'),
+	('xz', 'for compression'),
+	('ZIP', 'for archiving and/or compression; the base format is in the public domain, but newer versions have some patented features'),
+# Other
+	('CSS', 'style sheet format usually used with (X)HTML, standardized by W3C'),
+	('DjVu', 'file format for scanned images or documents'),
+	('EAS3', 'binary file format for floating point data'),
+	('ELF', 'Executable and Linkable Format'),
+	('FreeOTFE', 'container for encrypted data'),
+	('GPX', 'GPs eXchange format for describing waypoints, tracks and routes'),
+	('HDF', 'multi-platform data format for storing multidimensional arrays, among other data structures'),
+	('HTML-XHTML', 'markup language for web pages (ISO/IEC 15445:2000)'),
+	('iCalendar', 'calendar data format'),
+	('IFC', 'data model describing building and construction industry data'),
+	('JSON', 'object notation, subset of YAML and correct ECMAScript statement'),
+	('LTFS', 'Linear Tape File System'),
+	('LUKS', 'disk-encryption specification originally intended for Linux'),
+	('NetCDF', 'data format for multidimensional arrays'),
+	('NZB', 'for multipart binary files on Usenet'),
+	('RDF', 'graph based data model standardized by W3C, includes 7 standard serializations, N-Triples, N-Quads, Turtle, TriG, RDF/XML, JSON-LD and RDFa'),
+	('RSS', 'syndication'),
+	('SDXF', 'the Structured Data eXchange Format'),
+	('SFV', 'checksum format'),
+	('Thing_Description', 'file format for W3C Web of Things data models'),
+	('TrueCrypt', 'discontinued container for encrypted data'),
+	('WOFF', 'font file format used in webpages'),
+	('XCF', 'GIMP project file'),
+	('XML', 'a general-purpose markup language, standardized by W3C'),
+	('YAML', 'human readable data serialization format'),
+]
+
 tipos_de_dato = [
     'articulo',
     'cuaderno_de_laboratorio',
@@ -1222,4 +1343,28 @@ formatos_de_exportacion_de_citas = [
     'mla',
     'vancouver',
     'chicago',
+]
+
+enum_versionado = [
+    'si',
+    # 'si - gratis', # ToDo: Ver como hacer para que estas instancias sean "sub-intancias" de si. Tendria que poner una relacion entre enum_servicio_de_curaduria y enum_servicio_de_curaduria que sea irreflexiba, antismetrica y transitiva, y una regla que diga, si tengo la relacion con 'gratis', y A es predecesor_de 'gratis', entonces tengo la relación con A.
+    # 'si - pago',
+    'no',
+]
+
+# ToDo: MaxCardinality = 1
+# ToDo: Relacion total
+# ToDo: Esto seria una DataProperty o un objet property?
+# ToDo: Sería una functional property + el enumerado "no se"
+# ToDo: SI y NO son individuos diferentes si es una DataProperty
+enum_servicio_de_curaduria = [
+    'si',
+    # 'si - gratis', # ToDo: Ver como hacer para que estas instancias sean "sub-intancias" de si. Tendria que poner una relacion entre enum_servicio_de_curaduria y enum_servicio_de_curaduria que sea irreflexiba, antismetrica y transitiva, y una regla que diga, si tengo la relacion con 'gratis', y A es predecesor_de 'gratis', entonces tengo la relación con A.
+    # 'si - pago',
+    'no',
+]
+
+enum_servicio_de_curaduria = [
+    'si',
+    'no',
 ]

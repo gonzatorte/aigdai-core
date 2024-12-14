@@ -51,21 +51,14 @@ def initiate():
             ow.locstr("proveedor de servicio", lang="en"),
         ]
 
-        class funcionalidad(ow.Thing):
+        class funcionalidad_de_repositorio(ow.Thing):
             pass
-        funcionalidad.nombre_usual = [
-            ow.locstr("funcionalidad", lang="es"),
-            ow.locstr("feature", lang="en"),
+        funcionalidad_de_repositorio.nombre_usual = [
+            ow.locstr("funcionalidad de repositorio", lang="es"),
+            ow.locstr("repository feature", lang="en"),
         ]
 
-        class funcionalidad_para_cdd(funcionalidad):
-            pass
-        funcionalidad_para_cdd.nombre_usual = [
-            ow.locstr("funcionalidad para colecciones", lang="es"),
-            ow.locstr("collection feature", lang="en"),
-        ]
-
-        class exportacion_de_citas(funcionalidad):
+        class exportacion_de_citas(funcionalidad_de_repositorio):
             pass
         exportacion_de_citas.nombre_usual = [
             ow.locstr("exportación de citas", lang="es"),
@@ -74,7 +67,7 @@ def initiate():
         estilos_de_exportacion_de_citas = [exportacion_de_citas(x) for x in cts.formatos_de_exportacion_de_citas]
         ow.AllDifferent(estilos_de_exportacion_de_citas)
 
-        class api_para_cosecha(funcionalidad):
+        class api_para_cosecha(funcionalidad_de_repositorio):
             pass
         api_para_cosecha.nombre_usual = [
             ow.locstr("api para cosecha", lang="es"),
@@ -83,7 +76,7 @@ def initiate():
         protocolos_de_api_para_cosecha = [api_para_cosecha(x) for x in cts.apis_para_cosecha]
         ow.AllDifferent(protocolos_de_api_para_cosecha)
 
-        class integracion_con_red_social(funcionalidad):
+        class integracion_con_red_social(funcionalidad_de_repositorio):
             pass
         integracion_con_red_social.nombre_usual = [
             ow.locstr("integración con red social", lang="es"),
@@ -92,7 +85,7 @@ def initiate():
         integraciones_con_red_sociales = [integracion_con_red_social(x) for x in cts.integraciones_con_red_social]
         ow.AllDifferent(integraciones_con_red_sociales)
 
-        class soporte_para_lenguaje_de_interfaz(funcionalidad):
+        class soporte_para_lenguaje_de_interfaz(funcionalidad_de_repositorio):
             pass
         soporte_para_lenguaje_de_interfaz.nombre_usual = [
             ow.locstr("lenguaje de interfaz", lang="es"),
@@ -103,16 +96,16 @@ def initiate():
             domain = [soporte_para_lenguaje_de_interfaz]
             range = [base_onto.lenguaje]
 
-        # class control_de_acceso(funcionalidad):
+        # class control_de_acceso(funcionalidad_de_repositorio):
         #     pass
-        control_de_acceso = funcionalidad('control_de_acceso')
+        control_de_acceso = funcionalidad_de_repositorio('control_de_acceso')
 
         control_de_acceso.nombre_usual = [
             ow.locstr("control de acceso", lang="es"),
             ow.locstr("access control", lang="en"),
         ]
 
-        class periodo_de_embargo(funcionalidad):
+        class periodo_de_embargo(funcionalidad_de_repositorio):
             pass
 
         periodo_de_embargo.nombre_usual = [
@@ -120,7 +113,7 @@ def initiate():
             ow.locstr("embargo period", lang="en"),
         ]
 
-        class servicio_de_curaduria(funcionalidad):
+        class servicio_de_curaduria(funcionalidad_de_repositorio):
             pass
         servicio_de_curaduria.nombre_usual = [
             ow.locstr("servicio de curaduría", lang="es"),
@@ -137,7 +130,7 @@ def initiate():
             servicio_de_curaduria,
         ])
 
-        class soporte_para_caracteristica_de_cdd(funcionalidad_para_cdd):
+        class soporte_para_caracteristica_de_cdd(funcionalidad_de_repositorio):
             pass
 
         class caracteristica_de_productor_de_datos(soporte_para_caracteristica_de_cdd):

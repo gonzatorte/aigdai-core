@@ -24,6 +24,8 @@ nombre_de_pais = URIRef('#nombre_de_pais', my_ns)
 nombre_de_bloque = URIRef('#nombre_de_bloque', my_ns)
 es_organizacion_padre = URIRef('#es_organizacion_padre', my_ns) # ToDo: Make this relation Asymmetric e Irreflexiba?. Tb es_organizacion_antecesora?
 es_organizacion_relacionada = URIRef('#es_organizacion_relacionada', my_ns)
+organizacion_esta_activa = URIRef('#organizacion_esta_activa', my_ns)
+organizacion_fundada_en_anio = URIRef('#organizacion_fundada_en_anio', my_ns)
 
 tiene_nombre_repositorio = URIRef('#tiene_nombre_repositorio', my_ns)
 
@@ -31,7 +33,8 @@ principles_ns = Namespace('http://principles.org#')
 CriterioDeCalidad = URIRef("#criterio_de_calidad", principles_ns)
 GrupoDeCriterio = URIRef("#grupo_de_criterio", principles_ns)
 criterio_pertenece_a_grupo = URIRef("#criterio_pertenece_a_grupo", principles_ns)
-extiende_de = URIRef("#extiende_de", principles_ns)
+extiende_de_criterio = URIRef("#extiende_de_criterio", principles_ns)
+considera_criterio = URIRef("#considera_criterio", principles_ns)
 criterio_tiene_descripcion = URIRef("#criterio_tiene_descripcion", principles_ns)
 
 IdDeOrganizacion = URIRef('#id_de_organizacion', my_ns)

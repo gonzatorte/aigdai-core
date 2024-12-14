@@ -64,6 +64,7 @@ def initiate():
             domain = [Organization]
             range = [Type]
 
+    # ToDo: Agregar esta info como una anotacion
     # Education: A university or similar institution involved in providing education and educating/employing researchers
     # Healthcare: A medical care facility such as hospital or medical clinic. Excludes medical colleges/universities, which should be categorized as “Education”.
     # Company: A private for-profit corporate entity involved in conducting or sponsoring research.

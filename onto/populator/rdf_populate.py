@@ -127,6 +127,8 @@ def refine_and_insert_on_rdf():
         if software_name is not None:
             motor = URIRef("#motor_de_repositorio/%s" % (software_name, ), rdf_types.my_ns)
             g_repos.set((motor, RDF.type, rdf_types.MotorDeRepositorio))
+            # ToDo: Tendria que decir que todos los motores recabados por re3data con nombres diferentes son diferentes efectivamente?
+            #  justo con other_algo no pasa eso. other_1 es diferente a ckan, a dataverse, etc... pero no es diferente a other_2...
             g_repos.set((repositorio, rdf_types.utiliza_motor, motor))
 
         # for api in repository_info['apis']:
@@ -167,7 +169,6 @@ def seed_commons():
         ('esquema_de_id_persistente', cts.esquemas_de_id_persistente),
         ('esquema_de_metadatos', cts.esquemas_de_metadatos),
         ('licencia', cts.licencias),
-        ('formato_de_archivo', cts.formatos_de_archivo),
         ('tipo_de_dato', cts.tipos_de_dato),
         ('api_para_cosecha', cts.apis_para_cosecha),
         ('integracion_con_red_social', cts.integraciones_con_red_social),
@@ -180,12 +181,27 @@ def seed_commons():
             items_g.append(item)
             g.set((item, RDF.type, my_type))
         owl_all_different(g, items_g)
+
+    formatos = []
+    formato_de_archivo = URIRef('#formato_de_archivo', rdf_types.my_ns)
+    formato_de_archivo_abierto = URIRef('#formato_de_archivo_abierto', rdf_types.my_ns)
+    for formato in cts.formatos_de_archivo:
+        item = URIRef("#formato_de_archivo/%s" % (formato,), rdf_types.my_ns)
+        formatos.append(item)
+        g.set((item, RDF.type, formato_de_archivo))
+    for (formato, _) in cts.formatos_de_archivo_abierto:
+        item = URIRef("#formato_de_archivo/%s" % (formato.lower(),), rdf_types.my_ns)
+        formatos.append(item)
+        g.set((item, RDF.type, formato_de_archivo_abierto))
+    owl_all_different(g, formatos)
+
     return (g,)
 
 def seed_criterios():
     g = Graph()
     g.bind('', rdf_types.principles_ns)
 
+    # ToDo: Tengo que declarar al menos todas las certificaciones (no "other") de re3data y datacite como criterios de calidad
     # session.add_all([
     #     Certificacion(
     #         id=x['id'],
@@ -201,7 +217,7 @@ def seed_criterios():
         g.set((criterio_de_calidad, rdf_types.criterio_tiene_descripcion, Literal(description)))
         grupo_de_criterio = URIRef("#grupo_de_criterio/%s" % (category,), rdf_types.principles_ns)
         g.set((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
-        g.set((criterio_de_calidad, rdf_types.extiende_de, criterio_de_calidad_coar))
+        g.set((criterio_de_calidad, rdf_types.extiende_de_criterio, criterio_de_calidad_coar))
 
     for (idd, name, url) in cts.criterios_de_calidad:
         criterio_de_calidad = URIRef("#criterio_de_calidad/%s" % (idd,), rdf_types.principles_ns)
@@ -213,7 +229,11 @@ def seed_criterios():
         for criterio_extends_to_id in criterios_extends_to:
             criterio_extends_to = URIRef("#criterio_de_calidad/%s" % (criterio_extends_to_id,), rdf_types.principles_ns)
             g.set((criterio_extends_to, RDF.type, rdf_types.CriterioDeCalidad))
-            g.set((target_criterio, rdf_types.extiende_de, criterio_extends_to))
+            g.set((target_criterio, rdf_types.extiende_de_criterio, criterio_extends_to))
+
+        for criterio_considered_id in criterios_considered:
+            criterio_considered = URIRef("#criterio_de_calidad/%s" % (criterio_considered_id,), rdf_types.principles_ns)
+            g.set((target_criterio, rdf_types.considera_criterio, criterio_considered))
     return (g,)
 
 def seed_disciplinas():

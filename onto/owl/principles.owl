@@ -17,6 +17,7 @@
     <Prefix name="dcterms" IRI="http://purl.org/dc/terms/"/>
     <Import>http://test.org#</Import>
     <Import>https://peta-pico.github.io/FAIR-nanopubs/principles/ontology.xml</Import>
+    <Import>file:./criterios.xml</Import>
     <Declaration>
         <Class IRI="grupo_de_criterio"/>
     </Declaration>
@@ -24,7 +25,13 @@
         <Class IRI="criterio_de_calidad"/>
     </Declaration>
     <Declaration>
-        <Class IRI="relacion_de_extension"/>
+        <ObjectProperty IRI="es_organizacion_relacionada"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="extiende_de_criterio"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="considera_criterio"/>
     </Declaration>
     <Declaration>
         <Class abbreviatedIRI="drepo:repositorio"/>
@@ -40,34 +47,6 @@
         <ObjectProperty IRI="regula_funcionalidad"/>
         <Class abbreviatedIRI="drepo:repositorio"/>
     </ObjectPropertyRange>
-    <Declaration>
-        <ObjectProperty IRI="extiende_desde"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="extiende_desde"/>
-        <Class IRI="relacion_de_extension"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="extiende_desde"/>
-        <Class IRI="criterio_de_calidad"/>
-    </ObjectPropertyRange>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="extiende_desde"/>
-    </FunctionalObjectProperty>
-    <Declaration>
-        <ObjectProperty IRI="extiende_hacia"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="extiende_hacia"/>
-        <Class IRI="relacion_de_extension"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="extiende_hacia"/>
-        <Class IRI="criterio_de_calidad"/>
-    </ObjectPropertyRange>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="extiende_hacia"/>
-    </FunctionalObjectProperty>
     <Declaration>
         <ObjectProperty IRI="satisface_criterio"/>
     </Declaration>
@@ -87,27 +66,10 @@
         <Class IRI="criterio_de_calidad"/>
         <Class abbreviatedIRI="drepo:repositorio"/>
     </DisjointClasses>
-    <AsymmetricObjectProperty>
-        <ObjectProperty IRI="extiende_de"/>
-    </AsymmetricObjectProperty>
-    <TransitiveObjectProperty>
-        <ObjectProperty IRI="extiende_de"/>
-    </TransitiveObjectProperty>
-    <IrreflexiveObjectProperty>
-        <ObjectProperty IRI="extiende_de"/>
-    </IrreflexiveObjectProperty>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="extiende_de"/>
-        <Class IRI="criterio_de_calidad"/>
-    </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="satisface_criterio"/>
         <Class abbreviatedIRI="drepo:repositorio"/>
     </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="extiende_de"/>
-        <Class IRI="criterio_de_calidad"/>
-    </ObjectPropertyRange>
     <Declaration>
         <ObjectProperty IRI="criterio_pertenece_a_grupo"/>
     </Declaration>
@@ -134,6 +96,16 @@
         <ObjectProperty IRI="satisface_criterio"/>
         <Class IRI="criterio_de_calidad"/>
     </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>criterio_de_calidad</IRI>
+        <Literal xml:lang="es">Criterio de calidad</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>criterio_de_calidad</IRI>
+        <Literal xml:lang="en">Quality Criteria</Literal>
+    </AnnotationAssertion>
     <DLSafeRule>
         <Body>
             <ClassAtom>
@@ -154,7 +126,7 @@
                 <Variable IRI="urn:swrl:var#q1"/>
             </ObjectPropertyAtom>
             <ObjectPropertyAtom>
-                <ObjectProperty IRI="extiende_de"/>
+                <ObjectProperty IRI="extiende_de_criterio"/>
                 <Variable IRI="urn:swrl:var#q2"/>
                 <Variable IRI="urn:swrl:var#q1"/>
             </ObjectPropertyAtom>
@@ -169,24 +141,53 @@
     </DLSafeRule>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>criterio_de_calidad</IRI>
-        <Literal xml:lang="es">Criterio de calidad</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>criterio_de_calidad</IRI>
-        <Literal xml:lang="en">Quality Criteria</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>extiende_de</IRI>
+        <IRI>extiende_de_criterio</IRI>
         <Literal xml:lang="en">Extends from</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>extiende_de</IRI>
+        <IRI>extiende_de_criterio</IRI>
         <Literal xml:lang="es">Extiende de</Literal>
     </AnnotationAssertion>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="extiende_de_criterio"/>
+    </AsymmetricObjectProperty>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="extiende_de_criterio"/>
+    </TransitiveObjectProperty>
+    <IrreflexiveObjectProperty>
+        <ObjectProperty IRI="extiende_de_criterio"/>
+    </IrreflexiveObjectProperty>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="extiende_de_criterio"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="extiende_de_criterio"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>considera_criterio</IRI>
+        <Literal xml:lang="en">Considers criteria</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>considera_criterio</IRI>
+        <Literal xml:lang="es">Considera criterio</Literal>
+    </AnnotationAssertion>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="considera_criterio"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="considera_criterio"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyRange>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="extiende_de_criterio"/>
+        <ObjectProperty IRI="considera_criterio"/>
+    </SubObjectPropertyOf>
 </Ontology>
 
 

@@ -20,3 +20,39 @@ ToDo: Agregar cosas como el nombre del criterio y la url del mismo
 ToDo: No se si es necesario el subclass of Thing o si ya se infiere por declararse como en otros axiomas
 
 ToDo: extiende_de transitiva y reflexiba y antisimetrica (orden amplio) u orden estricto?
+
+ToDo: Para todas las relaciones reificadas, tengo que ponerle hasKey si quiero reificar. Tambien tengo que ponerle functional a ambas relaciones del id o ya se asume por ser HasKey?
+
+ToDo: Ver si usar extiende_de o reificar (relacion_de_extension + extiende_desde + extiende_hacia) para poder colgar de el nivel de extension, o si es extension negativa o positiva
+    El mayor problema con esto es que no se como hacerla transitiva, asimetrica e irreflexiba. Tengo que ponerle hasKey si quiero reificar
+    <Declaration>
+        <Class IRI="relacion_de_extension"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="extiende_desde"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="extiende_desde"/>
+        <Class IRI="relacion_de_extension"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="extiende_desde"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="extiende_desde"/>
+    </FunctionalObjectProperty>
+    <Declaration>
+        <ObjectProperty IRI="extiende_hacia"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="extiende_hacia"/>
+        <Class IRI="relacion_de_extension"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="extiende_hacia"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="extiende_hacia"/>
+    </FunctionalObjectProperty>
