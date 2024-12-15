@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <Ontology xmlns="http://www.w3.org/2002/07/owl#"
-     xml:base="http://test.org#"
+     xml:base="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     ontologyIRI="http://test.org#">
-    <Prefix name="" IRI="http://test.org#"/>
+     ontologyIRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owl#">
+    <Prefix name="" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owl#"/>
+    <Prefix name="lang" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/languajes.owl#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
@@ -156,15 +157,6 @@
     </Declaration>
     <Declaration>
         <Class IRI="tipo_de_id_de_organizacion"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="utiliza_formato_de_archivo"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="utiliza_tipo_de_dato"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="admite_disciplina"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="es_cosechado_por"/>
@@ -335,9 +327,6 @@
         <Datatype IRI="escala"/>
     </Declaration>
     <Declaration>
-        <Datatype IRI="lenguaje"/>
-    </Declaration>
-    <Declaration>
         <Datatype IRI="tiene_nombre_politica"/>
     </Declaration>
     <Declaration>
@@ -355,6 +344,22 @@
     <SubClassOf>
         <Class IRI="formato_de_archivo_abierto"/>
         <Class IRI="formato_de_archivo"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="formato_de_archivo"/>
+        <Class IRI="soporte_para_caracteristica_de_cdd"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="tipo_de_dato"/>
+        <Class IRI="soporte_para_caracteristica_de_cdd"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="esquema_de_metadatos"/>
+        <Class IRI="soporte_para_caracteristica_de_cdd"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="esquema_de_id_persistente"/>
+        <Class IRI="soporte_para_caracteristica_de_cdd"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="agregador"/>
@@ -409,20 +414,8 @@
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="esquema_de_id_persistente"/>
-        <Class IRI="caracteristica_de_cdd"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="esquema_de_metadatos"/>
-        <Class IRI="caracteristica_de_cdd"/>
-    </SubClassOf>
-    <SubClassOf>
         <Class IRI="exportacion_de_citas"/>
         <Class IRI="funcionalidad_de_repositorio"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="formato_de_archivo"/>
-        <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="funcionalidad_de_repositorio"/>
@@ -450,7 +443,7 @@
     </SubClassOf>
     <SubClassOf>
         <Class IRI="licencia"/>
-        <Class IRI="caracteristica_de_cdd"/>
+        <Class IRI="soporte_para_caracteristica_de_cdd"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="locacion"/>
@@ -513,6 +506,10 @@
         <Class IRI="funcionalidad_de_repositorio"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="soporte_para_caracteristica_de_cdd"/>
+        <Class IRI="caracteristica_de_cdd"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="soporte_para_lenguaje_de_interfaz"/>
         <Class IRI="funcionalidad_de_repositorio"/>
     </SubClassOf>
@@ -525,20 +522,8 @@
         <Class IRI="tamanio"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="tipo_de_dato"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <SubClassOf>
         <Class IRI="tipo_de_id_de_organizacion"/>
         <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="utiliza_formato_de_archivo"/>
-        <Class IRI="caracteristica_de_cdd"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="utiliza_tipo_de_dato"/>
-        <Class IRI="caracteristica_de_cdd"/>
     </SubClassOf>
     <DisjointClasses>
         <Class IRI="api_para_cosecha"/>
@@ -596,10 +581,6 @@
     <TransitiveObjectProperty>
         <ObjectProperty IRI="incluido_en"/>
     </TransitiveObjectProperty>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="admite_disciplina"/>
-        <Class IRI="caracteristica_de_cdd"/>
-    </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="es_cosechado_por"/>
         <Class IRI="repositorio"/>
@@ -696,10 +677,6 @@
         <ObjectProperty IRI="utiliza_motor"/>
         <Class IRI="repositorio"/>
     </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="admite_disciplina"/>
-        <Class IRI="disciplina"/>
-    </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty IRI="es_cosechado_por"/>
         <Class IRI="agregador"/>
@@ -1013,7 +990,7 @@
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="soporte_para_lenguaje_de_interfaz_tiene_lenguaje"/>
-        <Datatype IRI="lenguaje"/>
+        <Datatype abbreviatedIRI="lang:lenguaje"/>
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="tiene_nombre_certificacion"/>
@@ -1049,7 +1026,7 @@
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="usa_lenguaje"/>
-        <Datatype IRI="lenguaje"/>
+        <Datatype abbreviatedIRI="lang:lenguaje"/>
     </DataPropertyRange>
     <HasKey>
         <Class IRI="id_de_autor"/>
@@ -1107,16 +1084,6 @@
             </ObjectPropertyAtom>
         </Head>
     </DLSafeRule>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>admite_disciplina</IRI>
-        <Literal xml:lang="es">admite disciplina</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>admite_disciplina</IRI>
-        <Literal xml:lang="en">admits subject</Literal>
-    </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>agregador</IRI>
@@ -1437,16 +1404,6 @@
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>soporte_para_lenguaje_de_interfaz</IRI>
         <Literal xml:lang="es">lenguaje de interfaz</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>utiliza_formato_de_archivo</IRI>
-        <Literal xml:lang="en">use file format</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>utiliza_formato_de_archivo</IRI>
-        <Literal xml:lang="es">utiliza formato de archivo</Literal>
     </AnnotationAssertion>
     <DatatypeDefinition>
         <Datatype IRI="escala"/>

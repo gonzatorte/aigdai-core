@@ -56,13 +56,6 @@ def initiate():
             ow.locstr("aids", lang="en"),
         ]
 
-        class admite_disciplina(caracteristica_de_cdd >> base_onto.disciplina):
-            pass
-        admite_disciplina.nombre_usual = [
-            ow.locstr("admite disciplina", lang="es"),
-            ow.locstr("admits subject", lang="en"),
-        ]
-
         class esquema_de_id_persistente(caracteristica_de_cdd):
             pass
         esquema_de_id_persistente.nombre_usual = [
@@ -92,24 +85,11 @@ def initiate():
         class licencia(caracteristica_de_cdd):
             pass
 
-        class utiliza_formato_de_archivo(caracteristica_de_cdd):
-            pass
-        utiliza_formato_de_archivo.nombre_usual = [
-            ow.locstr("utiliza formato de archivo", lang="es"),
-            ow.locstr("use file format", lang="en"),
-        ]
-
-        class utiliza_tipo_de_dato(caracteristica_de_cdd):
-            pass
-
         # AllDisjoint([
         #     esquema_de_id_de_autor,
-        #     admite_disciplina,
         #     esquema_de_id_persistente,
-        #     utiliza_formato_de_archivo,
         #     esquema_de_metadatos,
         #     licencia,
-        #     utiliza_tipo_de_dato,
         # ])
 
         esquema_de_id_de_autores_instances = list(map(lambda x: esquema_de_id_de_autor(x), cts.esquemas_de_id_de_autor))

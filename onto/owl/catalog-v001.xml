@@ -6,12 +6,11 @@
     <uri id="User Entered Import Resolution" name="file:./disciplinas.xml" uri="disciplinas.xml"/>
     <uri id="User Entered Import Resolution" name="file:./commons.xml" uri="commons.xml"/>
     <uri id="User Entered Import Resolution" name="file:./instances.xml" uri="instances.xml"/>
-    <uri id="User Entered Import Resolution" name="http://test.org#" uri="aigdai-onto-2.owx"/>
-    <uri id="User Entered Import Resolution" name="file:./aigdai-onto-2.owx" uri="aigdai-onto-2.owx"/>
+    <uri id="User Entered Import Resolution" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owl#" uri="aigdai.owl"/>
+    <uri id="User Entered Import Resolution" name="file:./aigdai.owl" uri="aigdai.owl"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1734133429746" name="http://principles.org#" uri="principles.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1734133429746" name="duplicate:http://test.org#" uri="principles_wip.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1734133429746" name="duplicate:http://test.org#" uri="languajes.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1734133429746" name="duplicate:http://test.org#" uri="aigdai-onto-2.owx"/>
+        <uri id="Automatically generated entry, Timestamp=1734137869107" name="http://principles.org#" uri="principles.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1734137869107" name="duplicate:https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/languajes.owl#" uri="languajes.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1734137869107" name="duplicate:https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owl#" uri="aigdai.owl"/>
     </group>
 </catalog>

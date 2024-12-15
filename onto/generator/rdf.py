@@ -1,6 +1,6 @@
 from rdflib import URIRef, Namespace
 
-my_ns = Namespace('http://test.org#')
+my_ns = Namespace('https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owl#')
 Organizacion = URIRef("#organizacion", my_ns)
 Repositorio = URIRef("#repositorio", my_ns)
 TipoDeIdDeOrganizacion = URIRef("#tipo_de_id_de_organizacion", my_ns)

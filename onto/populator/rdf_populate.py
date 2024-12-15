@@ -209,19 +209,9 @@ def seed_criterios():
     #     ) for x in CERTIFICACIONES
     # ])
 
-    criterio_de_calidad_coar = URIRef("#criterio_de_calidad/coar", rdf_types.principles_ns)
-    g.set((criterio_de_calidad_coar, RDF.type, rdf_types.CriterioDeCalidad))
-    for (idd, category, description, importance, related_with_criterios) in cts.metricas_coar:
-        criterio_de_calidad = URIRef("#criterio_de_calidad/%s" % (idd,), rdf_types.principles_ns)
-        g.set((criterio_de_calidad, RDF.type, rdf_types.CriterioDeCalidad))
-        g.set((criterio_de_calidad, rdf_types.criterio_tiene_descripcion, Literal(description)))
-        grupo_de_criterio = URIRef("#grupo_de_criterio/%s" % (category,), rdf_types.principles_ns)
-        g.set((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
-        g.set((criterio_de_calidad, rdf_types.extiende_de_criterio, criterio_de_calidad_coar))
-
-    for (idd, name, url) in cts.criterios_de_calidad:
-        criterio_de_calidad = URIRef("#criterio_de_calidad/%s" % (idd,), rdf_types.principles_ns)
-        g.set((criterio_de_calidad, RDF.type, rdf_types.CriterioDeCalidad))
+    for (target_id, name, url) in cts.criterios_de_calidad:
+        target = URIRef("#criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+        g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
 
     for (target_criterio_id, criterios_extends_to, criterios_considered) in cts.criterio_de_calidad_extiende_de:
         target_criterio = URIRef("#criterio_de_calidad/%s" % (target_criterio_id,), rdf_types.principles_ns)
@@ -233,7 +223,92 @@ def seed_criterios():
 
         for criterio_considered_id in criterios_considered:
             criterio_considered = URIRef("#criterio_de_calidad/%s" % (criterio_considered_id,), rdf_types.principles_ns)
+            g.set((criterio_considered, RDF.type, rdf_types.CriterioDeCalidad))
             g.set((target_criterio, rdf_types.considera_criterio, criterio_considered))
+
+    # ToDo: same_individuals
+
+    trust = URIRef("#criterio_de_calidad/trust", rdf_types.principles_ns)
+    # ToDo: Map related_with_funcionalidad
+    for (target_id, category, description, related_with_funcionalidad) in cts.metricas_trust:
+        target = URIRef("#criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+        g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
+        g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
+        g.set((target, rdf_types.extiende_de_criterio, trust))
+
+        grupo_de_criterio = URIRef("#grupo_de_criterio/%s" % (category,), rdf_types.principles_ns)
+        g.set((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
+        # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
+
+    plan_s = URIRef("#criterio_de_calidad/plan_s", rdf_types.principles_ns)
+    # ToDo: Map importance to model
+    for (target_id, _, description, importance, related_with_funcionalidad) in cts.metricas_plan_s:
+        target = URIRef("#criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+        g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
+        g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
+        g.set((target, rdf_types.extiende_de_criterio, plan_s))
+
+    cts_2022 = URIRef("#criterio_de_calidad/cts_2022", rdf_types.principles_ns)
+    for (target_id, category, name, description) in cts.metricas_cts_2022:
+        target = URIRef("#criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+        g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
+        g.set((target, rdf_types.criterio_tiene_descripcion, Literal("%s - %s" % (name, description))))
+        g.set((target, rdf_types.extiende_de_criterio, cts_2022))
+
+        grupo_de_criterio = URIRef("#grupo_de_criterio/%s" % (category,), rdf_types.principles_ns)
+        g.set((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
+        # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
+
+    criterio_de_calidad_coar = URIRef("#criterio_de_calidad/coar_v1", rdf_types.principles_ns)
+    # ToDo: Map importance to model
+    for (target_id, category, description, importance, related_with_criterios) in cts.metricas_coar:
+        target = URIRef("#criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+        g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
+        g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
+        g.set((target, rdf_types.extiende_de_criterio, criterio_de_calidad_coar))
+
+        grupo_de_criterio = URIRef("#grupo_de_criterio/%s" % (category,), rdf_types.principles_ns)
+        g.set((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
+        # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
+
+    fair = URIRef("#criterio_de_calidad/fair", rdf_types.principles_ns)
+    # for (target_id, _) in cts.metricas_fair:
+    #     # ToDo: Tengo que relacionar con (same as) con https://w3id.org/fair/principles/terms/ de https://peta-pico.github.io/FAIR-nanopubs/principles/ontology.xml
+    #     pass
+    for (target_id, _) in cts.fair_maturity_models:
+        target = URIRef("#criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+        g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
+        g.set((target, rdf_types.extiende_de_criterio, fair))
+    rda_fair_maturity_model = URIRef("#criterio_de_calidad/rda_fair_maturity_model", rdf_types.principles_ns)
+    fsf_fair_maturity_model = URIRef("#criterio_de_calidad/fsf_fair_maturity_model", rdf_types.principles_ns)
+    # ToDo: Hacer el DSM
+    # dsm_fair_maturity_model = URIRef("#criterio_de_calidad/dsm_fair_maturity_model", rdf_types.principles_ns)
+    for (parent_maturity_model, statements) in [
+        (rda_fair_maturity_model, cts.rda_fair_maturity_model_statements),
+        (fsf_fair_maturity_model, cts.fsf_fair_maturity_model_statements),
+    ]:
+        # ToDo: Map metadata_or_data?
+        for (parent_id, target_id, metadata_or_data, description, importance) in statements:
+            target = URIRef("#criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+            g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
+            parent = URIRef("#criterio_de_calidad/%s" % (parent_id,), rdf_types.principles_ns)
+            g.set((parent, RDF.type, rdf_types.CriterioDeCalidad))
+            g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
+            g.set((target, rdf_types.extiende_de_criterio, parent))
+            g.set((target, rdf_types.extiende_de_criterio, parent_maturity_model))
+
+    posi = URIRef("#criterio_de_calidad/posi", rdf_types.principles_ns)
+    for (target_id, category, description, importance, parents) in cts.metricas_posi:
+        target = URIRef("#criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+        g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
+
+        # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
+        grupo_de_criterio = URIRef("#grupo_de_criterio/%s" % (category,), rdf_types.principles_ns)
+        g.set((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
+
+        g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
+        g.set((target, rdf_types.extiende_de_criterio, posi))
+
     return (g,)
 
 def seed_disciplinas():
