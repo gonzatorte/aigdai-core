@@ -7,7 +7,7 @@
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      ontologyIRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/principles.owl#">
     <Prefix name="" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/principles.owl#"/>
-    <Prefix name="drepo" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owl#"/>
+    <Prefix name="drepo" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
@@ -15,7 +15,7 @@
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Prefix name="fairvoc" IRI="https://w3id.org/fair/principles/terms/"/>
     <Prefix name="dcterms" IRI="http://purl.org/dc/terms/"/>
-    <Import>https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owl#</Import>
+    <Import>https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#</Import>
     <Import>file:./criterios.xml</Import>
     <Declaration>
         <Class IRI="grupo_de_criterio"/>
