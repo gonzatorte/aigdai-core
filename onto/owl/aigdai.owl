@@ -16,13 +16,13 @@
     <Prefix name="obda" IRI="https://w3id.org/obda/vocabulary#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Prefix name="fairvoc" IRI="https://w3id.org/fair/principles/terms/"/>
-    <Prefix name="principle" IRI="http://principles.org#"/>
+    <Prefix name="principle" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/principles.org#"/>
     <Import>file:./instances.xml</Import>
     <Import>file:./commons.xml</Import>
     <Import>file:./disciplinas.xml</Import>
     <Import>file:./locations.xml</Import>
     <Import>file:./organizations.xml</Import>
-    <Import>http://principles.org#</Import>
+    <Import>https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/principles.org#</Import>
     <Declaration>
         <Class IRI="agregador"/>
     </Declaration>
