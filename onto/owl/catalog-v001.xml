@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1734228510902" name="duplicate:https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owl#" uri="principles_wip.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1734228510902" name="duplicate:https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owl#" uri="aigdai.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1734228510902" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/languajes.owl#" uri="languajes.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1734228510902" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/principles.owl#" uri="principles.owl"/>
+    </group>
+</catalog>

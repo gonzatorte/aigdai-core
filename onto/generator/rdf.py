@@ -29,7 +29,7 @@ organizacion_fundada_en_anio = URIRef('#organizacion_fundada_en_anio', my_ns)
 
 tiene_nombre_repositorio = URIRef('#tiene_nombre_repositorio', my_ns)
 
-principles_ns = Namespace('http://principles.org#')
+principles_ns = Namespace('https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/principles.owl#')
 CriterioDeCalidad = URIRef("#criterio_de_calidad", principles_ns)
 GrupoDeCriterio = URIRef("#grupo_de_criterio", principles_ns)
 criterio_pertenece_a_grupo = URIRef("#criterio_pertenece_a_grupo", principles_ns)

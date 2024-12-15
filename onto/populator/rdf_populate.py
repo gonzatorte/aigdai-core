@@ -288,7 +288,14 @@ def seed_criterios():
         (fsf_fair_maturity_model, cts.fsf_fair_maturity_model_statements),
     ]:
         # ToDo: Map metadata_or_data?
-        for (parent_id, target_id, metadata_or_data, description, importance) in statements:
+        for statement in statements:
+            if len(statement) == 5:
+                (parent_id, target_id, metadata_or_data, description, importance) = statement
+            elif len(statement) == 6:
+                (parent_id, target_id, metadata_or_data, name, description, importance) = statement
+                description = "%s - %s" % (name, description)
+            else:
+                raise Exception()
             target = URIRef("#criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
             g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
             parent = URIRef("#criterio_de_calidad/%s" % (parent_id,), rdf_types.principles_ns)

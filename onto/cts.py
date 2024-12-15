@@ -1160,7 +1160,7 @@ metricas_posi = [
 metricas_trust = [
     ('trust_Transparency', 'Transparency', 'To be transparent about specific repository services and data holdings that are verifiable by publicly accessible evidence.', []),
     ('trust_Responsibility', 'Responsibility', 'To be responsible for ensuring the authenticity and integrity of data holdings and for the reliability and persistence of its service.', []),
-    ('trust_User', 'User Focus', 'To ensure that the data management norms and expectations of target user communities are met.', []),
+    ('trust_User', 'User_Focus', 'To ensure that the data management norms and expectations of target user communities are met.', []),
     ('trust_Sustainability', 'Sustainability', 'To sustain services and preserve data holdings for the long-term.', []),
     ('trust_Technology', 'Technology', 'To provide infrastructure and capabilities to support secure, persistent, and reliable services.', []),
 ]
