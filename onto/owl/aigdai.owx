@@ -7,21 +7,21 @@
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      ontologyIRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#">
     <Prefix name="" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#"/>
-    <Prefix name="lang" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/languajes.owl#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
     <Prefix name="foaf" IRI="http://xmlns.com/foaf/0.1/"/>
+    <Prefix name="lang" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/languajes.owl#"/>
     <Prefix name="obda" IRI="https://w3id.org/obda/vocabulary#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Prefix name="fairvoc" IRI="https://w3id.org/fair/principles/terms/"/>
     <Prefix name="principle" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/principles.owl#"/>
-    <Import>file:./instances.xml</Import>
-    <Import>file:./commons.xml</Import>
-    <Import>file:./disciplinas.xml</Import>
-    <Import>file:./locations.xml</Import>
-    <Import>file:./organizations.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/commons.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/disciplinas.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/instances.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/locations.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/organizations.xml</Import>
     <Import>https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/principles.owl#</Import>
     <Declaration>
         <Class IRI="agregador"/>
@@ -168,6 +168,15 @@
         <ObjectProperty IRI="es_disciplina_afin"/>
     </Declaration>
     <Declaration>
+        <ObjectProperty IRI="es_organizacion_antecesora"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="es_organizacion_padre"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="es_organizacion_relacionada"/>
+    </Declaration>
+    <Declaration>
         <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
     </Declaration>
     <Declaration>
@@ -261,6 +270,12 @@
         <DataProperty IRI="nombre_de_pais"/>
     </Declaration>
     <Declaration>
+        <DataProperty IRI="organizacion_esta_activa"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="organizacion_fundada_en_anio"/>
+    </Declaration>
+    <Declaration>
         <DataProperty IRI="sigla_de_bloque"/>
     </Declaration>
     <Declaration>
@@ -283,12 +298,6 @@
     </Declaration>
     <Declaration>
         <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="organizacion_esta_activa"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="organizacion_fundada_en_anio"/>
     </Declaration>
     <Declaration>
         <DataProperty IRI="usa_lenguaje"/>
@@ -341,26 +350,21 @@
     <Declaration>
         <Datatype IRI="url"/>
     </Declaration>
-    <SubClassOf>
-        <Class IRI="formato_de_archivo_abierto"/>
-        <Class IRI="formato_de_archivo"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="formato_de_archivo"/>
-        <Class IRI="soporte_para_caracteristica_de_cdd"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="tipo_de_dato"/>
-        <Class IRI="soporte_para_caracteristica_de_cdd"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="esquema_de_metadatos"/>
-        <Class IRI="soporte_para_caracteristica_de_cdd"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="esquema_de_id_persistente"/>
-        <Class IRI="soporte_para_caracteristica_de_cdd"/>
-    </SubClassOf>
+    <Declaration>
+        <Datatype IRI="xsd:positiveInteger"/>
+    </Declaration>
+    <Declaration>
+        <Datatype abbreviatedIRI="lang:lenguaje"/>
+    </Declaration>
+    <Declaration>
+        <Datatype IRI="xsd:boolean"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="foaf:Organization"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="foaf:Person"/>
+    </Declaration>
     <SubClassOf>
         <Class IRI="agregador"/>
         <Class abbreviatedIRI="owl:Thing"/>
@@ -414,8 +418,24 @@
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="esquema_de_id_persistente"/>
+        <Class IRI="soporte_para_caracteristica_de_cdd"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="esquema_de_metadatos"/>
+        <Class IRI="soporte_para_caracteristica_de_cdd"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="exportacion_de_citas"/>
         <Class IRI="funcionalidad_de_repositorio"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="formato_de_archivo"/>
+        <Class IRI="soporte_para_caracteristica_de_cdd"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="formato_de_archivo_abierto"/>
+        <Class IRI="formato_de_archivo"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="funcionalidad_de_repositorio"/>
@@ -503,11 +523,11 @@
     </SubClassOf>
     <SubClassOf>
         <Class IRI="soporte_para_caracteristica_de_cdd"/>
-        <Class IRI="funcionalidad_de_repositorio"/>
+        <Class IRI="caracteristica_de_cdd"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="soporte_para_caracteristica_de_cdd"/>
-        <Class IRI="caracteristica_de_cdd"/>
+        <Class IRI="funcionalidad_de_repositorio"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="soporte_para_lenguaje_de_interfaz"/>
@@ -520,6 +540,10 @@
     <SubClassOf>
         <Class IRI="tamanio_en_disco"/>
         <Class IRI="tamanio"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="tipo_de_dato"/>
+        <Class IRI="soporte_para_caracteristica_de_cdd"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="tipo_de_id_de_organizacion"/>
@@ -535,6 +559,10 @@
         <Class IRI="servicio_de_versionado"/>
         <Class IRI="soporte_para_lenguaje_de_interfaz"/>
     </DisjointClasses>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="es_organizacion_padre"/>
+        <ObjectProperty IRI="es_organizacion_antecesora"/>
+    </SubObjectPropertyOf>
     <SubObjectPropertyOf>
         <ObjectProperty IRI="es_sub_disciplina_de"/>
         <ObjectProperty IRI="es_descendiente_disciplina_de"/>
@@ -575,8 +603,14 @@
     <FunctionalObjectProperty>
         <ObjectProperty IRI="utiliza_motor"/>
     </FunctionalObjectProperty>
+    <SymmetricObjectProperty>
+        <ObjectProperty IRI="es_organizacion_relacionada"/>
+    </SymmetricObjectProperty>
     <TransitiveObjectProperty>
         <ObjectProperty IRI="es_descendiente_disciplina_de"/>
+    </TransitiveObjectProperty>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="es_organizacion_antecesora"/>
     </TransitiveObjectProperty>
     <TransitiveObjectProperty>
         <ObjectProperty IRI="incluido_en"/>
@@ -588,6 +622,18 @@
     <ObjectPropertyDomain>
         <ObjectProperty IRI="es_disciplina_afin"/>
         <Class IRI="disciplina"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="es_organizacion_antecesora"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="es_organizacion_padre"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="es_organizacion_relacionada"/>
+        <Class IRI="organizacion"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
@@ -684,6 +730,18 @@
     <ObjectPropertyRange>
         <ObjectProperty IRI="es_disciplina_afin"/>
         <Class IRI="disciplina"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="es_organizacion_antecesora"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="es_organizacion_padre"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="es_organizacion_relacionada"/>
+        <Class IRI="organizacion"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
@@ -801,6 +859,12 @@
         <DataProperty IRI="nombre_de_pais"/>
     </FunctionalDataProperty>
     <FunctionalDataProperty>
+        <DataProperty IRI="organizacion_esta_activa"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="organizacion_fundada_en_anio"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
         <DataProperty IRI="sigla_de_bloque"/>
     </FunctionalDataProperty>
     <FunctionalDataProperty>
@@ -815,55 +879,6 @@
     <FunctionalDataProperty>
         <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
     </FunctionalDataProperty>
-    <FunctionalDataProperty>
-        <DataProperty IRI="organizacion_esta_activa"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
-        <DataProperty IRI="organizacion_fundada_en_anio"/>
-    </FunctionalDataProperty>
-    <Declaration>
-        <ObjectProperty IRI="es_organizacion_relacionada"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="es_organizacion_antecesora"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="es_organizacion_padre"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="es_organizacion_relacionada"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="es_organizacion_relacionada"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyRange>
-    <SymmetricObjectProperty>
-        <ObjectProperty IRI="es_organizacion_relacionada"/>
-    </SymmetricObjectProperty>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="es_organizacion_padre"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="es_organizacion_padre"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="es_organizacion_antecesora"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="es_organizacion_antecesora"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyRange>
-    <TransitiveObjectProperty>
-        <ObjectProperty IRI="es_organizacion_antecesora"/>
-    </TransitiveObjectProperty>
-    <SubObjectPropertyOf>
-        <ObjectProperty IRI="es_organizacion_padre"/>
-        <ObjectProperty IRI="es_organizacion_antecesora"/>
-    </SubObjectPropertyOf>
     <DataPropertyDomain>
         <DataProperty IRI="alfa_3_de_pais"/>
         <Class IRI="pais"/>
@@ -905,6 +920,14 @@
         <Class IRI="pais"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
+        <DataProperty IRI="organizacion_esta_activa"/>
+        <Class IRI="organizacion"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="organizacion_fundada_en_anio"/>
+        <Class IRI="organizacion"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
         <DataProperty IRI="sigla_de_bloque"/>
         <Class IRI="bloque_comercial"/>
     </DataPropertyDomain>
@@ -935,14 +958,6 @@
     <DataPropertyDomain>
         <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
         <Class IRI="relacion_repositorio_y_organizacion"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="organizacion_esta_activa"/>
-        <Class IRI="organizacion"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="organizacion_fundada_en_anio"/>
-        <Class IRI="organizacion"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="usa_lenguaje"/>
@@ -985,6 +1000,14 @@
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
     <DataPropertyRange>
+        <DataProperty IRI="organizacion_esta_activa"/>
+        <Datatype IRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="organizacion_fundada_en_anio"/>
+        <Datatype IRI="xsd:positiveInteger"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
         <DataProperty IRI="sigla_de_bloque"/>
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
@@ -1015,14 +1038,6 @@
     <DataPropertyRange>
         <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
         <Datatype IRI="tipo_de_relacion_con_organizacion"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="organizacion_esta_activa"/>
-        <Datatype IRI="xsd:boolean"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="organizacion_fundada_en_anio"/>
-        <Datatype IRI="xsd:positiveInteger"/>
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="usa_lenguaje"/>
@@ -1242,12 +1257,12 @@
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>funcionalidad_de_repositorio</IRI>
-        <Literal xml:lang="en">repository feature</Literal>
+        <Literal xml:lang="es">funcionalidad de repositorio</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>funcionalidad_de_repositorio</IRI>
-        <Literal xml:lang="es">funcionalidad de repositorio</Literal>
+        <Literal xml:lang="en">repository feature</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
@@ -1387,14 +1402,13 @@
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>servicio_de_versionado</IRI>
-        <Literal xml:lang="en">versioning service</Literal>
+        <Literal xml:lang="es">servicio de versionado</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>servicio_de_versionado</IRI>
-        <Literal xml:lang="es">servicio de versionado</Literal>
+        <Literal xml:lang="en">versioning service</Literal>
     </AnnotationAssertion>
-
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>soporte_para_lenguaje_de_interfaz</IRI>
@@ -1416,16 +1430,16 @@
     <DatatypeDefinition>
         <Datatype IRI="tipo_de_organizacion"/>
         <DataOneOf>
-            <Literal>comercial</Literal>
-            <Literal>no-comercial</Literal>
-            <Literal>education</Literal>
-            <Literal>funder</Literal>
-            <Literal>healthcare</Literal>
-            <Literal>company</Literal>
             <Literal>archive</Literal>
-            <Literal>nonprofit</Literal>
-            <Literal>government</Literal>
+            <Literal>comercial</Literal>
+            <Literal>company</Literal>
+            <Literal>education</Literal>
             <Literal>facility</Literal>
+            <Literal>funder</Literal>
+            <Literal>government</Literal>
+            <Literal>healthcare</Literal>
+            <Literal>no-comercial</Literal>
+            <Literal>nonprofit</Literal>
             <Literal>other</Literal>
         </DataOneOf>
     </DatatypeDefinition>
