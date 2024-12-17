@@ -11,7 +11,6 @@
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
-    <Prefix name="foaf" IRI="http://xmlns.com/foaf/0.1/"/>
     <Prefix name="lang" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/languajes.owl#"/>
     <Prefix name="obda" IRI="https://w3id.org/obda/vocabulary#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
@@ -22,6 +21,7 @@
     <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/instances.xml</Import>
     <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/locations.xml</Import>
     <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/organizations.xml</Import>
+    <Import>https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/lenguajes.owl#</Import>
     <Import>https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/principles.owl#</Import>
     <Declaration>
         <Class IRI="agregador"/>
@@ -112,9 +112,6 @@
     </Declaration>
     <Declaration>
         <Class IRI="pais"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="periodo_de_embargo"/>
     </Declaration>
     <Declaration>
         <Class IRI="planeta"/>
@@ -351,19 +348,7 @@
         <Datatype IRI="url"/>
     </Declaration>
     <Declaration>
-        <Datatype IRI="xsd:positiveInteger"/>
-    </Declaration>
-    <Declaration>
         <Datatype abbreviatedIRI="lang:lenguaje"/>
-    </Declaration>
-    <Declaration>
-        <Datatype IRI="xsd:boolean"/>
-    </Declaration>
-    <Declaration>
-        <Class abbreviatedIRI="foaf:Organization"/>
-    </Declaration>
-    <Declaration>
-        <Class abbreviatedIRI="foaf:Person"/>
     </Declaration>
     <SubClassOf>
         <Class IRI="agregador"/>
@@ -380,10 +365,6 @@
     <SubClassOf>
         <Class IRI="autor"/>
         <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="autor"/>
-        <Class abbreviatedIRI="foaf:Person"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="bloque_comercial"/>
@@ -478,16 +459,8 @@
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="organizacion"/>
-        <Class abbreviatedIRI="foaf:Organization"/>
-    </SubClassOf>
-    <SubClassOf>
         <Class IRI="pais"/>
         <Class IRI="locacion"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="periodo_de_embargo"/>
-        <Class IRI="funcionalidad_de_repositorio"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="planeta"/>
@@ -554,7 +527,6 @@
         <Class IRI="control_de_acceso"/>
         <Class IRI="exportacion_de_citas"/>
         <Class IRI="integracion_con_red_social"/>
-        <Class IRI="periodo_de_embargo"/>
         <Class IRI="servicio_de_curaduria"/>
         <Class IRI="servicio_de_versionado"/>
         <Class IRI="soporte_para_lenguaje_de_interfaz"/>
@@ -1001,11 +973,11 @@
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="organizacion_esta_activa"/>
-        <Datatype IRI="xsd:boolean"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="organizacion_fundada_en_anio"/>
-        <Datatype IRI="xsd:positiveInteger"/>
+        <Datatype abbreviatedIRI="xsd:positiveInteger"/>
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="sigla_de_bloque"/>
@@ -1329,16 +1301,259 @@
         <IRI>pais</IRI>
         <Literal xml:lang="es">país</Literal>
     </AnnotationAssertion>
+
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>periodo_de_embargo</IRI>
-        <Literal xml:lang="en">embargo period</Literal>
+        <IRI>soporte_para_periodo_de_embargo</IRI>
+        <Literal xml:lang="en">support to embargo period</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>periodo_de_embargo</IRI>
-        <Literal xml:lang="es">período de embargo</Literal>
+        <IRI>soporte_para_periodo_de_embargo</IRI>
+        <Literal xml:lang="es">soporte para período de embargo</Literal>
     </AnnotationAssertion>
+    <Declaration>
+        <Class IRI="soporte_para_periodo_de_embargo"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="soporte_para_periodo_de_embargo"/>
+        <Class IRI="funcionalidad_de_repositorio"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>maxima_duracion_periodo_de_embargo</IRI>
+        <Literal xml:lang="en">max duration for embargo period</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>maxima_duracion_periodo_de_embargo</IRI>
+        <Literal xml:lang="es">máxima duración para período de embargo</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
+    </Declaration>
+    <FunctionalDataProperty>
+        <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
+    </FunctionalDataProperty>
+    <DataPropertyDomain>
+        <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
+        <Class IRI="repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
+        <Datatype abbreviatedIRI="xsd:duration"/>
+    </DataPropertyRange>
+
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>tiene_descripcion_repositorio</IRI>
+        <Literal xml:lang="en">repositorio has description</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>tiene_descripcion_repositorio</IRI>
+        <Literal xml:lang="es">tiene descripcion repositorio</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="tiene_descripcion_repositorio"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_descripcion_repositorio"/>
+        <Class IRI="repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_descripcion_repositorio"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_creado_en_anio</IRI>
+        <Literal xml:lang="en">year of repository creation</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_creado_en_anio</IRI>
+        <Literal xml:lang="es">repositorio creado en año</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="repositorio_creado_en_anio"/>
+    </Declaration>
+    <FunctionalDataProperty>
+        <DataProperty IRI="repositorio_creado_en_anio"/>
+    </FunctionalDataProperty>
+    <DataPropertyDomain>
+        <DataProperty IRI="repositorio_creado_en_anio"/>
+        <Class IRI="repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="repositorio_creado_en_anio"/>
+        <Datatype IRI="positiveInteger_or_null"/>
+    </DataPropertyRange>
+
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_cerrado_en_anio</IRI>
+        <Literal xml:lang="en">year of repository close</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_cerrado_en_anio</IRI>
+        <Literal xml:lang="es">repositorio creado en año</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="repositorio_cerrado_en_anio"/>
+    </Declaration>
+    <FunctionalDataProperty>
+        <DataProperty IRI="repositorio_cerrado_en_anio"/>
+    </FunctionalDataProperty>
+    <DataPropertyDomain>
+        <DataProperty IRI="repositorio_cerrado_en_anio"/>
+        <Class IRI="repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="repositorio_cerrado_en_anio"/>
+        <Datatype abbreviatedIRI="xsd:positiveInteger" />
+    </DataPropertyRange>
+
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_opera_en_pais</IRI>
+        <Literal xml:lang="en">repository operates at country</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_opera_en_pais</IRI>
+        <Literal xml:lang="es">repositorio opera en país</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <ObjectProperty IRI="repositorio_opera_en_pais"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="repositorio_opera_en_pais"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="repositorio_opera_en_pais"/>
+        <Class IRI="pais"/>
+    </ObjectPropertyRange>
+
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_esta_activo</IRI>
+        <Literal xml:lang="en">is repository active</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_esta_activo</IRI>
+        <Literal xml:lang="es">repositorio esta activo</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="repositorio_esta_activo"/>
+    </Declaration>
+    <FunctionalDataProperty>
+        <DataProperty IRI="repositorio_esta_activo"/>
+    </FunctionalDataProperty>
+    <DataPropertyDomain>
+        <DataProperty IRI="repositorio_esta_activo"/>
+        <Class IRI="repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="repositorio_esta_activo"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_tiene_politica_de_preservacion</IRI>
+        <Literal xml:lang="en">repository has preservation policy</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_tiene_politica_de_preservacion</IRI>
+        <Literal xml:lang="es">repositorio tiene politica de preservación</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <ObjectProperty IRI="repositorio_tiene_politica_de_preservacion"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="repositorio_tiene_politica_de_preservacion"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="repositorio_tiene_politica_de_preservacion"/>
+        <Class IRI="politica"/>
+    </ObjectPropertyRange>
+
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_aporta_funcionalidad</IRI>
+        <Literal xml:lang="en">repository has feature</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_aporta_funcionalidad</IRI>
+        <Literal xml:lang="es">repositorio aporta funcionalidad</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <ObjectProperty IRI="repositorio_aporta_funcionalidad"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="repositorio_aporta_funcionalidad"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="repositorio_aporta_funcionalidad"/>
+        <Class IRI="funcionalidad_de_repositorio"/>
+    </ObjectPropertyRange>
+
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>soporta_enlazado_de_articulos</IRI>
+        <Literal xml:lang="en">supports article interlinking</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>soporta_enlazado_de_articulos</IRI>
+        <Literal xml:lang="es">soporta enlazado de articulos</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="soporta_enlazado_de_articulos"/>
+    </Declaration>
+    <FunctionalDataProperty>
+        <DataProperty IRI="soporta_enlazado_de_articulos"/>
+    </FunctionalDataProperty>
+    <DataPropertyDomain>
+        <DataProperty IRI="soporta_enlazado_de_articulos"/>
+        <Class IRI="repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="soporta_enlazado_de_articulos"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_tiene_documentacion</IRI>
+        <Literal xml:lang="en">repository has documentation</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_tiene_documentacion</IRI>
+        <Literal xml:lang="es">repositorio tiene documentación</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="repositorio_tiene_documentacion"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="repositorio_tiene_documentacion"/>
+        <Class IRI="repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="repositorio_tiene_documentacion"/>
+        <Datatype abbreviatedIRI="xsd:anyURI"/>
+    </DataPropertyRange>
+
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>planeta</IRI>
@@ -1446,9 +1661,18 @@
     <DatatypeDefinition>
         <Datatype IRI="tipo_de_relacion_con_organizacion"/>
         <DataOneOf>
-            <Literal>administrativa</Literal>
+            <Literal>general</Literal>
             <Literal>financiamiento</Literal>
             <Literal>técnica</Literal>
+            <Literal>patrocinio</Literal>
+        </DataOneOf>
+    </DatatypeDefinition>
+    <DatatypeDefinition>
+        <Datatype IRI="positiveInteger_or_null"/>
+        <DataOneOf>
+            <Literal>true</Literal>
+            <Literal>false</Literal>
+            <Literal>null</Literal>
         </DataOneOf>
     </DatatypeDefinition>
 </Ontology>

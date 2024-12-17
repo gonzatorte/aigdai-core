@@ -105,12 +105,12 @@ def initiate():
             ow.locstr("access control", lang="en"),
         ]
 
-        class periodo_de_embargo(funcionalidad_de_repositorio):
+        class soporte_para_periodo_de_embargo(funcionalidad_de_repositorio):
             pass
 
-        periodo_de_embargo.nombre_usual = [
-            ow.locstr("período de embargo", lang="es"),
-            ow.locstr("embargo period", lang="en"),
+        soporte_para_periodo_de_embargo.nombre_usual = [
+            ow.locstr("soporte para período de embargo", lang="es"),
+            ow.locstr("support to embargo period", lang="en"),
         ]
 
         class servicio_de_curaduria(funcionalidad_de_repositorio):
@@ -126,7 +126,7 @@ def initiate():
             control_de_acceso,
             integracion_con_red_social,
             soporte_para_lenguaje_de_interfaz,
-            periodo_de_embargo,
+            soporte_para_periodo_de_embargo,
             servicio_de_curaduria,
         ])
 

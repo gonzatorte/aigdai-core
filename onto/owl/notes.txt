@@ -23,6 +23,8 @@ ToDo: extiende_de transitiva y reflexiba y antisimetrica (orden amplio) u orden 
 
 ToDo: Para todas las relaciones reificadas, tengo que ponerle hasKey si quiero reificar. Tambien tengo que ponerle functional a ambas relaciones del id o ya se asume por ser HasKey?
 
+ToDo: Falta una relacion entre maxima_duracion_periodo_de_embargo y soporte_para_periodo_de_embargo (una regla?)
+
 ToDo: Ver si usar extiende_de o reificar (relacion_de_extension + extiende_desde + extiende_hacia) para poder colgar de el nivel de extension, o si es extension negativa o positiva
     El mayor problema con esto es que no se como hacerla transitiva, asimetrica e irreflexiba. Tengo que ponerle hasKey si quiero reificar
     <Declaration>

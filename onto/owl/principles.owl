@@ -39,7 +39,7 @@
         <ObjectProperty IRI="extiende_de_criterio"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="regula_funcionalidad"/>
+        <ObjectProperty IRI="evalua_funcionalidad"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="satisface_criterio"/>
@@ -89,7 +89,7 @@
         <Class IRI="criterio_de_calidad"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
-        <ObjectProperty IRI="regula_funcionalidad"/>
+        <ObjectProperty IRI="evalua_funcionalidad"/>
         <Class IRI="criterio_de_calidad"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
@@ -109,7 +109,7 @@
         <Class IRI="criterio_de_calidad"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
-        <ObjectProperty IRI="regula_funcionalidad"/>
+        <ObjectProperty IRI="evalua_funcionalidad"/>
         <Class abbreviatedIRI="drepo:repositorio"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>

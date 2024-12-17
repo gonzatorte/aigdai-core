@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="User Entered Import Resolution" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/lenguajes.owl#" uri="languajes.owl"/>
     <uri id="User Entered Import Resolution" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#" uri="aigdai.owx"/>
     <uri id="User Entered Import Resolution" name="file:./criterios.xml" uri="criterios.xml"/>
     <uri id="User Entered Import Resolution" name="file:./organizations.xml" uri="organizations.xml"/>
@@ -8,9 +9,8 @@
     <uri id="User Entered Import Resolution" name="file:./commons.xml" uri="commons.xml"/>
     <uri id="User Entered Import Resolution" name="file:./instances.xml" uri="instances.xml"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1734229265853" name="duplicate:https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#" uri="principles_wip.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1734229265853" name="duplicate:https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#" uri="aigdai.owx"/>
-        <uri id="Automatically generated entry, Timestamp=1734229265853" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/languajes.owl#" uri="languajes.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1734229265853" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/principles.owl#" uri="principles.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1734397877143" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#" uri="aigdai.owx"/>
+        <uri id="Automatically generated entry, Timestamp=1734397877143" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/languajes.owl#" uri="languajes.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1734397877143" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/principles.owl#" uri="principles.owl"/>
     </group>
 </catalog>

@@ -25,6 +25,29 @@ def refine_iterator(iterator, white_list: [str], allow_whitelist: bool):
         refined.append(rrr)
     return refined
 
+def remap_institution_type(institution_type: str):
+    if institution_type == 'commercial':
+        return 'comercial'
+    elif institution_type == 'non-profit':
+        return 'nonprofit'
+    elif institution_type is None:
+        return None
+    raise Exception()
+
+
+def remap_institution_relation_type(relation_type: str):
+    if relation_type == 'sponsoring':
+        return 'patrocinio'
+    elif relation_type == 'general':
+        return 'general'
+    elif relation_type == 'funding':
+        return 'financiamiento'
+    elif relation_type == 'technical':
+        return 'técnica'
+    elif relation_type is None:
+        return None
+    raise Exception()
+
 
 def refine_and_insert_on_rdf():
     g_repos = Graph()
@@ -77,7 +100,9 @@ def refine_and_insert_on_rdf():
                 g_repos.set((location, RDF.type, rdf_types.BloqueComercial))
             g_repos.set((r_instance, rdf_types.se_ubica_en, location))
 
-            g_repos.add((r_instance, rdf_types.tiene_tipo_de_organizacion, Literal(db_instance['institutionType'])))
+            g_repos.add((r_instance, rdf_types.tiene_tipo_de_organizacion, Literal(
+                remap_institution_type(db_instance['institutionType'])
+            )))
 
             id_match = re.match('^(?P<type>.+(?=[:;.])|CrossrefFunderID)', id_org)
             if not id_match:
@@ -94,31 +119,15 @@ def refine_and_insert_on_rdf():
             g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(id_org)))
             g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, r_instance))
 
-            # ToDo: Falta el tipo de relacion que tiene con el repositorio
-            #     <DatatypeDefinition>
-            #         <Datatype IRI="tipo_de_organizacion"/>
-            #         <DataOneOf>
-            #             <Literal>comercial</Literal>
-            #             <Literal>no-comercial</Literal>
-            #         </DataOneOf>
-            #     </DatatypeDefinition>
-            #     <DatatypeDefinition>
-            #         <Datatype IRI="tipo_de_relacion_con_organizacion"/>
-            #         <DataOneOf>
-            #             <Literal>administrativa</Literal>
-            #             <Literal>financiamiento</Literal>
-            #             <Literal>técnica</Literal>
-            #         </DataOneOf>
-            #     </DatatypeDefinition>
-
             for responsibilityType in db_instance.get('responsibilityType', []):
-                # ToDo: responsibilityType puede ser general, profit, non-profit, y que otro?
                 relacion_repositorio_y_organizacion = URIRef("#relacion_repositorio_y_organizacion/%s-%s-%s" % (id_org, repository_info['id'], responsibilityType), rdf_types.my_ns)
                 g_repos.set((relacion_repositorio_y_organizacion, RDF.type, rdf_types.RelacionRepositorioYOrganizacion))
                 g_repos.set((relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_repositorio, repositorio))
                 g_repos.set((relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_organizacion, r_instance))
                 # g.set((relacion_repositorio_y_organizacion, tiene_periodo_de_relacion_con_organizacion, ))
-                g_repos.set((relacion_repositorio_y_organizacion, rdf_types.tiene_tipo_de_relacion_con_organizacion, Literal(responsibilityType)))
+                g_repos.set((relacion_repositorio_y_organizacion, rdf_types.tiene_tipo_de_relacion_con_organizacion, Literal(
+                    remap_institution_relation_type(responsibilityType)
+                )))
 
         software_names = [x for x in repository_info['softwareNames'] if x != 'unknown']
         software_name = software_names[0] if len(software_names) >= 1 else None
@@ -173,6 +182,8 @@ def seed_commons():
         ('api_para_cosecha', cts.apis_para_cosecha),
         ('integracion_con_red_social', cts.integraciones_con_red_social),
         ('exportacion_de_citas', cts.formatos_de_exportacion_de_citas),
+        ('servicio_de_curaduria', cts.enum_servicio_de_curaduria),
+        ('servicio_de_versionado', cts.enum_versionado),
     ]:
         my_type = URIRef('#%s' % (name,), rdf_types.my_ns)
         items_g = []

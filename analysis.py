@@ -283,6 +283,26 @@ def re3data_keywords():
     ], []))
     print(len(keywords)) # 10756
 
+def re3data_institutions():
+    # cuales son los posibles enumerados de responsibilityType?
+    database = get_database_client()
+    collection = database['drepo']
+    count_w_institutions = collection.count_documents({'institutions.0': {'$exists': True}})
+    print(count_w_institutions)
+    responsibility_types_arr = list(collection.find({}, {'institutions.responsibilityType': True, 'institutions.institutionType': True}))
+    responsibility_types = set(sum([
+        sum([
+            xx.get('responsibilityType', []) for xx in x['institutions']
+        ], []) for x in responsibility_types_arr
+    ], []))
+    print(responsibility_types)
+    institution_types = set(sum([
+        [
+            xx['institutionType'] for xx in x['institutions']
+        ] for x in responsibility_types_arr
+    ], []))
+    print(institution_types)
+
 def re3data_policies():
     # cuales son los posibles enumerados de politicas?
     database = get_database_client()
@@ -798,7 +818,8 @@ def re3data_cs_soc():
 
 
 if __name__ == '__main__':
-    service_providers_dont_declare_contentes()
+    re3data_institutions()
+    # service_providers_dont_declare_contentes()
     # analysis()
     # fields_of_science_analysis()
     # async def run():
