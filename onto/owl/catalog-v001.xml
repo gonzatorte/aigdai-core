@@ -9,8 +9,8 @@
     <uri id="User Entered Import Resolution" name="file:./commons.xml" uri="commons.xml"/>
     <uri id="User Entered Import Resolution" name="file:./instances.xml" uri="instances.xml"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1734397877143" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#" uri="aigdai.owx"/>
-        <uri id="Automatically generated entry, Timestamp=1734397877143" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/languajes.owl#" uri="languajes.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1734397877143" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/principles.owl#" uri="principles.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1734398993361" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#" uri="aigdai.owx"/>
+        <uri id="Automatically generated entry, Timestamp=1734398993361" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/languajes.owl#" uri="languajes.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1734398993361" name="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/principles.owl#" uri="principles.owl"/>
     </group>
 </catalog>

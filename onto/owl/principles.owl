@@ -15,7 +15,7 @@
     <Prefix name="drepo" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#"/>
     <Prefix name="dcterms" IRI="http://purl.org/dc/terms/"/>
     <Prefix name="fairvoc" IRI="https://w3id.org/fair/principles/terms/"/>
-    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/criterios.xml</Import>
+    <Import>https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/criterios.xml</Import>
     <Import>https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#</Import>
     <Declaration>
         <Class abbreviatedIRI="drepo:repositorio"/>
