@@ -85,46 +85,63 @@ def refine_and_insert_on_rdf():
     def process(repository_info):
         repositorio = URIRef("#repositorio/%s" % (repository_info['id'], ), rdf_types.my_ns)
         g_repos.set((repositorio, RDF.type, rdf_types.Repositorio))
-        g_repos.set((repositorio, rdf_types.tiene_nombre_repositorio, Literal(repository_info['repositoryName'])))
+        g_repos.set((repositorio, rdf_types.tiene_nombre_repositorio, Literal(repository_info['repositoryName']['text'], lang=repository_info['repositoryName']['lang'])))
+        g_repos.set((repositorio, rdf_types.tiene_descripcion_repositorio, Literal(repository_info['description']['text'], lang=repository_info['description']['lang'])))
+        g_repos.set((repositorio, rdf_types.tiene_url_repositorio, Literal(repository_info['repositoryURL'])))
 
         for db_instance in repository_info['institutions']:
             id_org = db_instance['id'].replace(' ', '')
             r_instance = URIRef("#organizacion/%s" % (id_org,), rdf_types.my_ns)
             g_repos.set((r_instance, RDF.type, rdf_types.Organizacion))
-            g_repos.set((r_instance, rdf_types.tiene_nombre_organizacion, Literal(db_instance['institutionName'])))
-            if db_instance['institutionCountry'] != 'EEC':
-                location = URIRef("#pais/%s" % (db_instance['institutionCountry'],), rdf_types.my_ns)
-                g_repos.set((location, RDF.type, rdf_types.Pais))
-            else:
+
+            g_repos.set((r_instance, rdf_types.tiene_nombre_organizacion, Literal(db_instance['institutionName']['text'], lang=db_instance['institutionName']['lang'])))
+            for instName in db_instance['institutionAdditionalNames']:
+                g_repos.set((r_instance, rdf_types.tiene_nombre_organizacion, Literal(instName['text'], lang=instName['lang'])))
+
+            if db_instance['institutionCountry'] == 'EEC':
                 location = URIRef("#bloque_comercial/%s" % ('UE',), rdf_types.my_ns)
                 g_repos.set((location, RDF.type, rdf_types.BloqueComercial))
+            elif db_instance['institutionCountry'] == 'AAA':
+                location = URIRef("#planeta/tierra", rdf_types.my_ns)
+                g_repos.set((location, RDF.type, rdf_types.Planeta))
+            else:
+                location = URIRef("#pais/%s" % (db_instance['institutionCountry'],), rdf_types.my_ns)
+                g_repos.set((location, RDF.type, rdf_types.Pais))
             g_repos.set((r_instance, rdf_types.se_ubica_en, location))
 
             g_repos.add((r_instance, rdf_types.tiene_tipo_de_organizacion, Literal(
                 remap_institution_type(db_instance['institutionType'])
             )))
 
-            id_match = re.match('^(?P<type>.+(?=[:;.])|CrossrefFunderID)', id_org)
-            if not id_match:
-                print(id_org, repository_info['id'])
-                continue
-            tipo_de_id_de_organizacion_str = id_match.groupdict().get('type')
-            tipo_de_id_de_organizacion = URIRef("#tipo_de_id_de_organizacion/%s" % (tipo_de_id_de_organizacion_str.upper(),), rdf_types.my_ns)
+            for raw_idd_org in db_instance['ids']:
+                idd_org = raw_idd_org.replace(' ', '')
+                idd_match = re.match('^(?P<type>.+(?=[:;.])|CrossrefFunderID)', idd_org, re.IGNORECASE)
+                if not idd_match:
+                    print(idd_org, raw_idd_org)
+                    continue
+                tipo_de_id_de_organizacion_str = idd_match.groupdict().get('type')
+                tipo_de_id_de_organizacion = URIRef("#tipo_de_id_de_organizacion/%s" % (tipo_de_id_de_organizacion_str.upper(),), rdf_types.my_ns)
 
-            # ToDo: Ver si el id_org tiene un prefijo
-            id_de_organizacion = URIRef("#id_de_organizacion/%s" % (id_org,), rdf_types.my_ns)
-            g_repos.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
-            # ToDo: tipo_de_id_de_organizacion puede ser ROR, RRID, local y que otro?
-            g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion))
-            g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(id_org)))
-            g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, r_instance))
+                # ToDo: Ver si el id_org tiene un prefijo
+                id_de_organizacion = URIRef("#id_de_organizacion/%s" % (idd_org,), rdf_types.my_ns)
+                g_repos.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
+                # ToDo: tipo_de_id_de_organizacion puede ser ROR, RRID, LOCAL y que otro?
+                #  new Set(db.drepo.aggregate([{$project: {'institutions': 1}}, {$unwind: '$institutions'},{$project: {'institutions.id': 1}}]).toArray().map(a => a.institutions.id.replace(' ', ':').split(/[:.;]/)[0]))
+                g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion))
+                g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(idd_org)))
+                g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, r_instance))
 
-            for responsibilityType in db_instance.get('responsibilityType', []):
+            inicio_periodo_de_relacion_con_organizacion = db_instance.get('responsibilityTypes', None)
+            fin_periodo_de_relacion_con_organizacion = db_instance.get('responsibilityTypes', None)
+            for responsibilityType in db_instance.get('responsibilityTypes', []):
                 relacion_repositorio_y_organizacion = URIRef("#relacion_repositorio_y_organizacion/%s-%s-%s" % (id_org, repository_info['id'], responsibilityType), rdf_types.my_ns)
                 g_repos.set((relacion_repositorio_y_organizacion, RDF.type, rdf_types.RelacionRepositorioYOrganizacion))
                 g_repos.set((relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_repositorio, repositorio))
                 g_repos.set((relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_organizacion, r_instance))
-                # g.set((relacion_repositorio_y_organizacion, tiene_periodo_de_relacion_con_organizacion, ))
+                if inicio_periodo_de_relacion_con_organizacion:
+                    g_repos.set((relacion_repositorio_y_organizacion, rdf_types.tiene_inicio_periodo_de_relacion_con_organizacion, Literal(inicio_periodo_de_relacion_con_organizacion)))
+                if fin_periodo_de_relacion_con_organizacion:
+                    g_repos.set((relacion_repositorio_y_organizacion, rdf_types.tiene_fin_periodo_de_relacion_con_organizacion, Literal(fin_periodo_de_relacion_con_organizacion)))
                 g_repos.set((relacion_repositorio_y_organizacion, rdf_types.tiene_tipo_de_relacion_con_organizacion, Literal(
                     remap_institution_relation_type(responsibilityType)
                 )))
@@ -188,11 +205,11 @@ def refine_and_insert_on_rdf():
             g_repos.set((tipo_de_dato, RDF.type, rdf_types.TipoDeDato))
             g_repos.set((tipo_de_dato, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
-        for quality_management in repository_info['qualityManagement']:
-            # ToDo: Revisar si es un ObjectProperty, y si modelarlo como bool
-            servicio_de_curaduria = URIRef("#servicio_de_curaduria/%s" % (quality_management, ), rdf_types.my_ns)
-            g_repos.set((servicio_de_curaduria, RDF.type, rdf_types.ServicioDeCuraduria))
-            g_repos.set((servicio_de_curaduria, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+        # for quality_management in repository_info['qualityManagement']:
+        #     # ToDo: Revisar si es un ObjectProperty, y si modelarlo como bool
+        #     servicio_de_curaduria = URIRef("#servicio_de_curaduria/%s" % (quality_management, ), rdf_types.my_ns)
+        #     g_repos.set((servicio_de_curaduria, RDF.type, rdf_types.ServicioDeCuraduria))
+        #     g_repos.set((servicio_de_curaduria, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
         # databaseLicenses
         # databaseAccess
@@ -207,8 +224,8 @@ def refine_and_insert_on_rdf():
             # ToDo: Revisar si es un ObjectProperty
             g_repos.set((politica, RDF.type, rdf_types.Politica))
             g_repos.set((politica, rdf_types.repositorio_aporta_funcionalidad, repositorio))
-            g_repos.set((politica, rdf_types.tiene_nombre_politica, Literal(repositorio['name'])))
-            g_repos.set((politica, rdf_types.tiene_url_politica, Literal(repositorio['url'])))
+            g_repos.set((politica, rdf_types.tiene_nombre_politica, Literal(policy['name'])))
+            g_repos.set((politica, rdf_types.tiene_url_politica, Literal(policy['url'])))
 
         for data_license in repository_info['dataLicenses']:
             local_id_data_license = hashlib.md5(data_license['url'].encode('utf-8')).hexdigest()
@@ -216,14 +233,14 @@ def refine_and_insert_on_rdf():
             # ToDo: Revisar si es un ObjectProperty
             g_repos.set((licencia_data, RDF.type, rdf_types.Licencia))
             g_repos.set((licencia_data, rdf_types.repositorio_aporta_funcionalidad, repositorio))
-            g_repos.set((licencia_data, rdf_types.tiene_nombre_politica, Literal(repositorio['name'])))
-            g_repos.set((licencia_data, rdf_types.tiene_url_politica, Literal(repositorio['url'])))
+            g_repos.set((licencia_data, rdf_types.tiene_nombre_politica, Literal(data_license['name'])))
+            g_repos.set((licencia_data, rdf_types.tiene_url_politica, Literal(data_license['url'])))
 
-        data_access_types = [x['type'] for x in repository_info['dataAccess']]
-        is_open_access_supported = 'open' in data_access_types
-        is_restricted_access_supported = 'restricted' in data_access_types
-        # restrictions
-        is_closed_access_supported = 'closed' in data_access_types
+        # data_access_types = [x['type'] for x in repository_info['dataAccess']]
+        # is_open_access_supported = 'open' in data_access_types
+        # is_restricted_access_supported = 'restricted' in data_access_types
+        # # restrictions
+        # is_closed_access_supported = 'closed' in data_access_types
 
         for subject in repository_info['subjects']:
             disciplina = URIRef("#disciplina/%s" % (subject,), rdf_types.my_ns)

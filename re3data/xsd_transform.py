@@ -148,6 +148,11 @@ def refine_repository_info(
             return urr['$'] if '$' in urr else urr
         return urr
 
+    def get_lang_sensible_text(urr):
+        if isinstance(urr, dict):
+            return {'lang': urr.get('language', None), 'text': urr['$'] if '$' in urr else urr}
+        return {'lang': None, 'text': urr}
+
     def coerce_single(key, postprocess=lambda x: x, remove_dup: bool = False, empty_value = None, other_value = None):
         urr = decoded.get(key)
         if urr is None:
@@ -210,12 +215,24 @@ def refine_repository_info(
 
     def process_institution(xx):
         dd = {tk[4:]: handle_atom(tv) for (tk, tv) in xx.items()}
-        if 'institutionIdentifier' in dd and len(dd['institutionIdentifier']) >= 1:
+        dd['institutionName'] = get_lang_sensible_text(xx.get('r3d:institutionName', None))
+        dd['institutionAdditionalNames'] = [get_lang_sensible_text(xxx) for xxx in xx.get('r3d:institutionAdditionalName', [])]
+        dd['institutionCountry'] = handle_atom(xx.get('r3d:institutionCountry', None))
+        dd['responsibilityTypes'] = [handle_atom(xxx) for xxx in xx.get('r3d:responsibilityType', [])]
+        dd['responsibilityStartDate'] = handle_atom(xx.get('r3d:responsibilityStartDate', None))
+        dd['responsibilityEndDate'] = handle_atom(xx.get('r3d:responsibilityEndDate', None))
+        dd['institutionURL'] = handle_atom(xx.get('r3d:institutionURL', None))
+        dd['institutionContacts'] = xx.get('r3d:institutionContact', [])
+
+        print(dd)
+        if 'institutionIdentifier' in xx and len(xx['r3d:institutionIdentifier']) >= 1:
             # ToDo: Extraer todos los identificadores
-            dd['id'] = dd['institutionIdentifier'][0]
+            dd['id'] = xx['institutionIdentifier'][0]
+            dd['ids'] = xx['institutionIdentifier']
         else:
-            local_id = hashlib.md5(dd['institutionName'].encode('utf-8')).hexdigest()
+            local_id = hashlib.md5(dd['institutionName']['text'].encode('utf-8')).hexdigest()
             dd['id'] = 'LOCAL:%s' % (local_id, )
+            dd['ids'] = [dd['id']]
         return dd
 
     def transform_access(x, level: str):
@@ -236,9 +253,10 @@ def refine_repository_info(
 
     return {
         "id": decoded["r3d:re3data.orgIdentifier"],
-        "repositoryName": decoded["r3d:repositoryName"]['$'],
+        "repositoryName": get_lang_sensible_text(decoded["r3d:repositoryName"]),
+        "additionalNames": [get_lang_sensible_text(x) for x in decoded.get("r3d:additionalName", [])],
         "repositoryURL": decoded["r3d:repositoryURL"],
-        "description": decoded["r3d:description"]['$'],
+        "description": get_lang_sensible_text(decoded["r3d:description"]),
         "isDisciplinar": len([x for x in decoded.get("r3d:type", []) if x.lower() == 'disciplinary']) > 0,
         "isInstitutional": len([x for x in decoded.get("r3d:type", []) if x.lower() == 'institutional']) > 0,
         "softwareNames": process_multi("r3d:software", None, lambda x: x['r3d:softwareName'].lower(), True, {'r3d:softwareName': 'unknown'}, {'r3d:softwareName': 'other'}),
@@ -328,10 +346,11 @@ if __name__ == '__main__':
     from re3data.xsd_transform_samples import sample_data_8, sample_data_7, sample_data_6, sample_data_5, sample_data_4, sample_data_3, sample_data_2, sample_data_1
     expected_item_1 = {
         'id': ('r3d100000001',),
-        'repositoryName': ('Odum Institute Archive Dataverse',),  # ToDo: Falta honrrar el lenguaje (en varios casos)
+        'repositoryName': ({'text': 'Odum Institute Archive Dataverse', 'lang': 'eng'},),
+        'additionalNames': ([],),
         'repositoryURL': ('https://dataverse.unc.edu/dataverse/odum',),
         'description': (
-            'The Odum Institute Archive Dataverse contains social science data curated and archived by the Odum Institute Data Archive at the University of North Carolina at Chapel Hill. Some key collections include the primary holdings of the Louis Harris Data Center, the National Network of State Polls, and other Southern-focused public opinion data.\nPlease note that some datasets in this collection are restricted to University of North Carolina at Chapel Hill affiliates. Access to these datasets require UNC ONYEN institutional login to the Dataverse system.',),
+            {'text': 'The Odum Institute Archive Dataverse contains social science data curated and archived by the Odum Institute Data Archive at the University of North Carolina at Chapel Hill. Some key collections include the primary holdings of the Louis Harris Data Center, the National Network of State Polls, and other Southern-focused public opinion data.\nPlease note that some datasets in this collection are restricted to University of North Carolina at Chapel Hill affiliates. Access to these datasets require UNC ONYEN institutional login to the Dataverse system.', 'lang': 'eng'},),
         'repositoryContact': (['https://dataverse.unc.edu/dataverse/odum#', 'odumarchive@unc.edu'],),
         'isDisciplinar': (True,),
         'isInstitutional': (False,),
@@ -425,11 +444,12 @@ if __name__ == '__main__':
     }
     expected_item_2 = {
         'id': ('r3d100000002',),
-        'repositoryName': ('Access to Archival Databases',),
+        'repositoryName': ({'text': 'Access to Archival Databases', 'lang': 'eng'},),
+        'additionalNames': ([{'text': 'AAD', 'lang': 'eng'}],),
         'repositoryURL': ('https://aad.archives.gov/aad/',),
         'description': (
-            '''You will find in the Access to Archival Databases (AAD) resource online access to records in a small selection of historic databases preserved permanently in NARA. Out of the nearly 200,000 data files in its holdings, NARA has selected approximately 475 of them for public searching through AAD. We selected these data because the records identify specific persons, geographic areas, organizations, and dates. The records cover a wide variety of civilian and military functions and have many genealogical, social, political, and economic research uses. AAD provides: Access to over 85 million historic electronic records created by more than 30 agencies of the U.S. federal government and from collections of donated historical materials.
-Both free-text and fielded searching options. The ability to retrieve, print, and download records with the specific information that you seek. Information to help you find and understand the records.''',),
+            {'text': ''''You will find in the Access to Archival Databases (AAD) resource online access to records in a small selection of historic databases preserved permanently in NARA. Out of the nearly 200,000 data files in its holdings, NARA has selected approximately 475 of them for public searching through AAD. We selected these data because the records identify specific persons, geographic areas, organizations, and dates. The records cover a wide variety of civilian and military functions and have many genealogical, social, political, and economic research uses. AAD provides: Access to over 85 million historic electronic records created by more than 30 agencies of the U.S. federal government and from collections of donated historical materials.
+Both free-text and fielded searching options. The ability to retrieve, print, and download records with the specific information that you seek. Information to help you find and understand the records.''', 'lang': 'eng'},),
         'repositoryContact': (['https://www.archives.gov/contact'],),
         'isDisciplinar': (True,),
         'isInstitutional': (False,),

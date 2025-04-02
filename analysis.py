@@ -652,7 +652,7 @@ def service_providers_dont_declare_contentes():
     re3data_only_service_providers = re3data_coll.count_documents({'isDataProvider': False, 'isServiceProvider': True})
     print(re3data_only_service_providers) # 255
 
-    a = [x['repositoryName'] for x in re3data_coll.find({'isDataProvider': False, 'isServiceProvider': True}) if x['published']]
+    a = [x['repositoryName']['text'] for x in re3data_coll.find({'isDataProvider': False, 'isServiceProvider': True}) if x['published']]
 
     aa = [x['datacite_graphql_data'] for x in datacite_coll.find({'$and': [
         {'datacite_graphql_data.providerType': {'$all': ['serviceProvider']}},

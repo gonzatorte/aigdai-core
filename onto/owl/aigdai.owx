@@ -1,21 +1,25 @@
 <?xml version="1.0"?>
 <Ontology xmlns="http://www.w3.org/2002/07/owl#"
-     xml:base="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#"
+     xml:base="file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     ontologyIRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#">
-    <Prefix name="" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#"/>
+     ontologyIRI="./aigdai.owx#">
+    <Prefix name="" IRI="./aigdai.owx#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
-    <Prefix name="lang" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/lenguajes.owl#"/>
+    <Prefix name="lang" IRI="./lenguajes.owl#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
-    <Prefix name="principle" IRI="https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/criterios.owl#"/>
-    <Import>https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/lenguajes.owl#</Import>
-    <Import>https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/criterios.owl#</Import>
+    <Prefix name="principle" IRI="./criterios.owl#"/>
+    <Import>./lenguajes.owl</Import>
+    <Import>./criterios.owl</Import>
+    <Import>./commons.xml</Import>
+    <Import>./disciplinas.xml</Import>
+    <Import>./localizaciones.xml</Import>
+    <Import>./organizaciones.xml</Import>
     <Declaration>
         <Class IRI="agregador"/>
     </Declaration>
@@ -264,7 +268,10 @@
         <DataProperty IRI="tiene_nombre_repositorio"/>
     </Declaration>
     <Declaration>
-        <DataProperty IRI="tiene_periodo_de_relacion_con_organizacion"/>
+        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
     </Declaration>
     <Declaration>
         <DataProperty IRI="tiene_tipo_de_organizacion"/>
@@ -767,7 +774,7 @@
         <DataProperty IRI="sigla_de_bloque"/>
     </FunctionalDataProperty>
     <FunctionalDataProperty>
-        <DataProperty IRI="tiene_periodo_de_relacion_con_organizacion"/>
+        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
     </FunctionalDataProperty>
     <FunctionalDataProperty>
         <DataProperty IRI="tiene_tipo_de_organizacion"/>
@@ -839,8 +846,23 @@
         <DataProperty IRI="tiene_nombre_repositorio"/>
         <Class IRI="repositorio"/>
     </DataPropertyDomain>
+    <Declaration>
+        <DataProperty IRI="tiene_url_repositorio"/>
+    </Declaration>
     <DataPropertyDomain>
-        <DataProperty IRI="tiene_periodo_de_relacion_con_organizacion"/>
+        <DataProperty IRI="tiene_url_repositorio"/>
+        <Class IRI="repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_url_repositorio"/>
+        <Datatype IRI="url"/>
+    </DataPropertyRange>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
         <Class IRI="relacion_repositorio_y_organizacion"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
@@ -916,8 +938,12 @@
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
     <DataPropertyRange>
-        <DataProperty IRI="tiene_periodo_de_relacion_con_organizacion"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
+        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
+        <Datatype IRI="gross_date"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
+        <Datatype IRI="gross_date"/>
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="tiene_tipo_de_organizacion"/>
@@ -1513,5 +1539,16 @@
             <Literal>false</Literal>
             <Literal>null</Literal>
         </DataOneOf>
+    </DatatypeDefinition>
+    <Declaration>
+        <Datatype IRI="gross_date"/>
+    </Declaration>
+    <DatatypeDefinition>
+        <Datatype IRI="gross_date"/>
+        <DataUnionOf>
+            <Datatype IRI="xs:gYear"/>
+            <Datatype IRI="xs:gYearMonth"/>
+            <Datatype IRI="xs:date"/>
+        </DataUnionOf>
     </DatatypeDefinition>
 </Ontology>
