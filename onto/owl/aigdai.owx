@@ -5,21 +5,21 @@
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     ontologyIRI="file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/aigdai.owx#">
-    <Prefix name="" IRI="./aigdai.owx#"/>
+     ontologyIRI="file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/aigdai.owx">
+    <Prefix name="" IRI="file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/aigdai.owx#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
-    <Prefix name="lang" IRI="./lenguajes.owl#"/>
+    <Prefix name="lang" IRI="file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/lenguajes.owl#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Prefix name="principle" IRI="./criterios.owl#"/>
-    <Import>./lenguajes.owl</Import>
-    <Import>./criterios.owl</Import>
-    <Import>./commons.xml</Import>
-    <Import>./disciplinas.xml</Import>
-    <Import>./localizaciones.xml</Import>
-    <Import>./organizaciones.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/lenguajes.owl</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/criterios.owl</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/commons.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/disciplinas.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/localizaciones.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/organizaciones.xml</Import>
     <Declaration>
         <Class IRI="agregador"/>
     </Declaration>
