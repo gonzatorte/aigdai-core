@@ -2,9 +2,10 @@ from typing import Any, Iterable, Mapping, MutableMapping, Optional
 import httpx
 import requests
 import asyncio
+from urllib.parse import urlparse, parse_qs
 
 from lib.no_relational_database import get_database_client
-from doi import fetch_single_doi
+from doi import fetch_single_doi, fetch_multiple_doi
 
 REDUNDANT_FIELDS = {
     "fairsharing_licence",
@@ -14,7 +15,7 @@ REDUNDANT_FIELDS = {
 FAIRSHARING_DOI_PREFIX = "10.25504/"
 
 def process_record(
-        in_record: MutableMapping[str, Any]
+    in_record: MutableMapping[str, Any]
 ) -> Optional[MutableMapping[str, Any]]:
     attributes = in_record.pop("attributes")
     record = {**in_record, **attributes}
@@ -65,21 +66,44 @@ class FairsharingClient:
         res = requests.post(f"{self.base_url}/users/sign_in", json=payload).json()
         return res["jwt"]
 
-    def iter_records(self, size: int = 25, page: int = 1) -> Iterable[Mapping[str, Any]]:
-        yield from self._iter_records_helper(f"{self.base_url}/fairsharing_records/?fairsharing_registry=database&page%5Bnumber%5D={page}&page%5Bsize%5D={size}")
+    def iter_all(self, size: int, page: int) -> Iterable[Mapping[str, Any]]:
+        next_url = f"{self.base_url}/fairsharing_records/?fairsharing_registry={record_type}&page%5Bnumber%5D={page}&page%5Bsize%5D={size}"
+        while next_url:
+            res = self.session.get(next_url).json()
+            for record in res["data"]:
+                yv = process_record(record)
+                if yv:
+                    yield yv
+            next_url = res["links"].get("next")
+            last_url = res["links"].get("last")
+            last_page_count = parse_qs(urlparse(last_url).query)['page[number]'][0]
+            current_url = res["links"].get("self")
+            current_page_count = parse_qs(urlparse(current_url).query)['page[number]'][0]
+            print("%s out of %s" % (current_page_count, last_page_count))
 
-    def _iter_records_helper(self, url: str) -> Iterable[Mapping[str, Any]]:
-        res = self.session.get(url).json()
-        for record in res["data"]:
-            yv = process_record(record)
-            if yv:
-                yield yv
-        next_url = res["links"].get("next")
-        last_url = res["links"].get("last")
-        current_url = res["links"].get("self")
-        print("%s out of %s" % (current_url, last_url))
-        if next_url:
-            yield from self._iter_records_helper(next_url)
+    def iter_databases(self, size: int, page: int) -> Iterable[Mapping[str, Any]]:
+        yield from self.iter_records(size, page, 'database')
+
+    def iter_standards(self, size: int, page: int) -> Iterable[Mapping[str, Any]]:
+        yield from self.iter_records(size, page, 'standard')
+
+    def iter_policies(self, size: int, page: int) -> Iterable[Mapping[str, Any]]:
+        yield from self.iter_records(size, page, 'Policy')
+
+    def iter_records(self, size: int, page: int, record_type: str) -> Iterable[Mapping[str, Any]]:
+        next_url = f"{self.base_url}/search/fairsharing_records/?fairsharing_registry={record_type}&page%5Bnumber%5D={page}&page%5Bsize%5D={size}"
+        while next_url:
+            res = self.session.post(next_url).json()
+            for record in res["data"]:
+                yv = process_record(record)
+                if yv:
+                    yield yv
+            next_url = res["links"].get("next")
+            last_url = res["links"].get("last")
+            last_page_count = parse_qs(urlparse(last_url).query)['page[number]'][0]
+            current_url = res["links"].get("self")
+            current_page_count = parse_qs(urlparse(current_url).query)['page[number]'][0]
+            print("%s out of %s" % (current_page_count, last_page_count))
 
 
 def remove_prefix(s: Optional[str], prefix) -> Optional[str]:
@@ -90,70 +114,89 @@ def remove_prefix(s: Optional[str], prefix) -> Optional[str]:
     return s
 
 
-async def extract_and_store(username: str, password: str):
+async def add_doi_data(collection_name: str):
     database = get_database_client()
-    collection = database['fairsharing']
-    collection.create_index('id', unique=True)
+    collection = database[collection_name]
 
-    # "gonzatorte+test@gmail.com"
-    client = FairsharingClient(username, password)
-    async with httpx.AsyncClient() as http_client:
-        for rr in client.iter_records(size=25, page=1):
-            collection.insert_one(
-                {'_id': rr['id'], **rr},
-            )
-            # collection.update_one(
-            #     {'_id': rr['id']},
-            #     {'$set': rr},
-            #     upsert=True,
-            # )
-            doi = rr.get('doi', None)
-            if doi:
-                doi_data = await fetch_single_doi(doi, http_client)
-                collection.update_one(
-                    {'_id': rr['id']},
-                    {'$set': {'doi_data': doi_data}},
-                )
+    with_doi = [(x['doi'], x['id']) for x in collection.find({'doi_data': {'$exists': False}}) if x.get('doi', None) is not None]
 
-async def add_doi_data():
-    database = get_database_client()
-    collection = database['fairsharing']
+    async for (doi_data, (_, idd)) in fetch_multiple_doi(with_doi, 25, 1):
+        collection.update_one(
+            {'id': idd},
+            {'$set': {'doi_data': doi_data}},
+        )
 
-    async with httpx.AsyncClient() as http_client:
-        for rr in collection.find({'doi_data': {'$exists': False}}):
-            doi = rr.get('doi', None)
-            if doi:
-                doi_data = await fetch_single_doi(doi, http_client)
-                collection.update_one(
-                    {'_id': rr['id']},
-                    {'$set': {'doi_data': doi_data}},
-                )
 
 async def extract_and_store(username: str, password: str):
     database = get_database_client()
-    collection = database['fairsharing']
-    collection.create_index('id', unique=True)
-
-    # "gonzatorte+test@gmail.com"
     client = FairsharingClient(username, password)
-    async with httpx.AsyncClient() as http_client:
-        for rr in client.iter_records(size=25, page=1):
-            collection.insert_one(
-                {'_id': rr['id'], **rr},
-            )
-            # collection.update_one(
-            #     {'_id': rr['id']},
-            #     {'$set': rr},
-            #     upsert=True,
-            # )
-            doi = rr.get('doi', None)
-            if doi:
-                doi_data = await fetch_single_doi(doi, http_client)
-                collection.update_one(
-                    {'_id': rr['id']},
-                    {'$set': {'doi_data': doi_data}},
-                )
+
+    collection_repo = database['fairsharing']
+    collection_repo.create_index('id', unique=True)
+    with_doi = []
+    for rr in client.iter_databases(size=25, page=1):
+        collection_repo.update_one(
+            {'_id': rr['id']},
+            {'$set': rr},
+            upsert=True,
+        )
+        doi = rr.get('doi', None)
+        if doi:
+            with_doi.append((doi, rr['id']))
+
+    async for (doi_data, (_, idd)) in fetch_multiple_doi(with_doi, 25, 1):
+        collection_repo.update_one(
+            {'_id': idd},
+            {'$set': {'doi_data': doi_data}},
+        )
+
+    collection_standard = database['standards']
+    collection_standard.create_index('id', unique=True)
+    for rr in client.iter_standards(size=25, page=1):
+        collection_standard.update_one(
+            {'_id': rr['id']},
+            {'$set': rr},
+            upsert=True,
+        )
+
+    collection_policy = database['policies']
+    collection_policy.create_index('id', unique=True)
+    for rr in client.iter_policies(size=25, page=1):
+        collection_policy.update_one(
+            {'_id': rr['id']},
+            {'$set': rr},
+            upsert=True,
+        )
+
 
 if __name__ == "__main__":
-    asyncio.run(extract_and_store(username="gonzatortetest", password="GT_@pr0y3ctD41"))
-    # asyncio.run(add_doi_data())
+    # ToDo: Tambien puedo extraer las organizaciones de fairsharing
+        # Hay registros en fairsharing que no estan en ROR
+        #  será pq no cumplen el criterio de ser considerados organizaciones por fairsharing? (eg: independencia)
+        # ¿y viceversa? hay en ror que no esten indexados por fairsharing?
+        # Tiene tipos diferentes:
+        # En ror:
+        # Education,
+        # Healthcare,
+        # Company,
+        # Archive,
+        # Nonprofit,
+        # Government,
+        # Facility,
+        # Funder,
+        # Other,
+        #
+        # En fairsharing:
+        # "Charitable foundation"
+        # "Company"
+        # "Consortium"
+        # "Government body"
+        # "Lab"
+        # "Publisher"
+        # "Research institute"
+        # "Undefined"
+        # "University"
+    # asyncio.run(extract_and_store(username="gonzatortetest", password="GT_@pr0y3ctD41"))
+    asyncio.run(add_doi_data('fairsharing'))
+    # asyncio.run(add_doi_data('standards'))
+    # asyncio.run(add_doi_data('policies'))

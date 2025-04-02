@@ -187,7 +187,7 @@ def extract_and_store():
     # ToDo: Tendria que declarar que todas estas organizaciones son distintas entre si por ser verificadas por un mismo proveedor de datos?
 
     # print('count_v1', count_v1, 'out of', len(registries))
-    g_orgs.serialize(destination='../onto/owl/organizations.xml', format="xml")
+    g_orgs.serialize(destination='../onto/owl/organizaciones.xml', format="xml")
 
 if __name__ == "__main__":
     extract_and_store()

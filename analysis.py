@@ -117,11 +117,6 @@ def re3data_openness():
     database = get_database_client()
     re3data_coll = database['drepo']
 
-    # databaseLicense
-    # dataLicense
-    # databaseAccess
-    # dataAccess
-
     # tienen al menos un access de tipo open (en database o data)
     no_access_declared = re3data_coll.count_documents({'$and': [{'dataAccess.0': {'$exists': False}}, {'databaseAccess': {'$exists': False}}]})
     print(no_access_declared) # 4
@@ -130,14 +125,32 @@ def re3data_openness():
     no_open_data_access_declared = re3data_coll.count_documents({'$and': [{'dataAccess.0': {'$exists': False}}]})
     print(no_open_data_access_declared) # 0
 
+    # data open implica database open
     open_access = re3data_coll.count_documents({'$and': [{'dataAccess': {'$elemMatch': {'type': 'open'}}}]})
     print(open_access) # 2724
     only_open_access = re3data_coll.count_documents({'dataAccess': {'$size': 1, '$elemMatch': {'type': 'open'}}})
     print(only_open_access) # 1452
+
+    # Ver si el estado CLOSED se relacion más a que el servidor esté offline en vez de los temas de permisos
+    re3data_coll.count_documents({'databaseAccess.type': 'closed'})  # 22
+    re3data_coll.count_documents({'databaseAccess.type': 'restricted'})  # 161
+
+    # Verificacion de consistencia de datos
+    re3data_coll.count_documents({'dataAccess': {'$elemMatch': {'type': 'open', 'restriction.0': {'$exists': True}}}}) # 5
+    re3data_coll.count_documents({'dataAccess': {'$size': 1, '$elemMatch': {'type': 'open', 'restriction.0': {'$exists': True}}}}) # 1
+    re3data_coll.count_documents({'databaseAccess.type': 'open', 'databaseAccess.restriction.0': {'$exists': True}}) # 3
+    re3data_coll.count_documents({'dataAccess': {'$elemMatch': {'type': 'restricted', 'restriction.0': {'$exists': False}}}}) # 18
+    re3data_coll.count_documents({'databaseAccess.type': 'restricted', 'databaseAccess.restriction.0': {'$exists': False}}) # 2
+    re3data_coll.count_documents({'dataAccess': {'$elemMatch': {'type': 'closed', 'restriction.0': {'$exists': True}}}})  # 7
+    re3data_coll.count_documents({'databaseAccess.type': 'closed', 'databaseAccess.restriction.0': {'$exists': True}})  # 0
+
     fee_required = re3data_coll.count_documents({'dataAccess.restriction': 'feerequired'})
     print(fee_required) # 224
 
-    # database open implica data open? ToDo: Calcular correlacion entre eso
+def re3data_licences():
+    # cuantos se los puede considerar abiertos?
+    database = get_database_client()
+    re3data_coll = database['drepo']
 
     # no tienen informacion de licencia (ni en database ni data)
     no_licence_info = re3data_coll.count_documents({'$and': [{'databaseLicense.0': {'$exists': False}}, {'dataLicense.0': {'$exists': False}}]})

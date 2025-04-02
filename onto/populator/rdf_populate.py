@@ -6,6 +6,7 @@ from lib.no_relational_database import get_database_client
 from re3data.xsd_transform import refine_repository_info, load_schema
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF, OWL
+import hashlib
 
 def owl_all_different(g, instances):
     for (idx, instance1) in enumerate(instances):
@@ -64,8 +65,7 @@ def refine_and_insert_on_rdf():
     (g_commons, ) = seed_commons()
     g_commons.serialize(destination='../owl/commons.xml', format="xml")
     (g_locaciones, ) = seed_locaciones()
-    g_locaciones.serialize(destination='../owl/locations.xml', format="xml")
-
+    g_locaciones.serialize(destination='../owl/localizaciones.xml', format="xml")
 
     # database = get_database_async()
     database = get_database_client()
@@ -140,17 +140,94 @@ def refine_and_insert_on_rdf():
             #  justo con other_algo no pasa eso. other_1 es diferente a ckan, a dataverse, etc... pero no es diferente a other_2...
             g_repos.set((repositorio, rdf_types.utiliza_motor, motor))
 
-        # for api in repository_info['apis']:
-        #     r_instance = Api(
-        #         id=api['url'],
-        #         type=api['type'],
-        #     )
-        #     session.add(r_instance)
-        #     result = r_instance
+        for api in repository_info['apis']:
+            api_type = api['type']
+            if api_type == 'other':
+                api_type = "other_%s" % (repository_info['id'],)
+            api_para_cosecha = URIRef("#api_para_cosecha/%s" % (api_type, ), rdf_types.my_ns)
+            g_repos.set((api_para_cosecha, RDF.type, rdf_types.ApiParaCosecha))
+            # Should be inferred
+            # g_repos.set((api_para_cosecha, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
-        for db_instance in repository_info['subjects']:
-            r_instance = URIRef("#disciplina/%s" % (db_instance,), rdf_types.my_ns)
-            g_repos.add((repositorio, rdf_types.repositorio_afin_a_disciplina, r_instance))
+            api_para_cosecha_con_url = URIRef("#api_para_cosecha_con_url/%s" % (api['url'], ), rdf_types.my_ns)
+            g_repos.set((api_para_cosecha_con_url, RDF.type, rdf_types.ApiParaCosechaConUrl))
+            g_repos.set((api_para_cosecha_con_url, rdf_types.api_para_cosecha_con_url_tiene_url, Literal(api['url'])))
+            g_repos.set((api_para_cosecha_con_url, rdf_types.api_para_cosecha_con_url_tiene_api_para_cosecha, api_para_cosecha))
+            g_repos.set((api_para_cosecha_con_url, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+
+        for metadata_standard in repository_info['metadataStandards']:
+            # ToDo: Poner modelo intermedio con evidencia
+            metadata_standard_name = metadata_standard['name']
+            if metadata_standard_name == 'other':
+                metadata_standard_name = "other_%s" % (repository_info['id'],)
+            # ToDo: Unificar enumerados o declarar same-as
+            esquema_de_metadatos = URIRef("#esquema_de_metadatos/%s" % (metadata_standard_name, ), rdf_types.my_ns)
+            g_repos.set((esquema_de_metadatos, RDF.type, rdf_types.EsquemaDeMetadatos))
+            g_repos.set((esquema_de_metadatos, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+
+        for aid_system in repository_info['aidSystems']:
+            if aid_system == 'other':
+                aid_system = "other_%s" % (repository_info['id'],)
+            # ToDo: Unificar enumerados o declarar same-as
+            esquema_de_id_de_autor = URIRef("#esquema_de_id_de_autor/%s" % (aid_system, ), rdf_types.my_ns)
+            g_repos.set((esquema_de_id_de_autor, RDF.type, rdf_types.EsquemaDeIdDeAutor))
+            g_repos.set((esquema_de_id_de_autor, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+
+        for pid_system in repository_info['pidSystems']:
+            if pid_system == 'other':
+                pid_system = "other_%s" % (repository_info['id'],)
+            # ToDo: Unificar enumerados o declarar same-as
+            esquema_de_id_persistente = URIRef("#esquema_de_id_persistente/%s" % (pid_system, ), rdf_types.my_ns)
+            g_repos.set((esquema_de_id_persistente, RDF.type, rdf_types.EsquemaDeIdPersistente))
+            g_repos.set((esquema_de_id_persistente, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+
+        for content_type in repository_info['contentType']:
+            # ToDo: Manejar other, ponerle other_id
+            # ToDo: Unificar enumerados o declarar same-as
+            tipo_de_dato = URIRef("#tipo_de_dato/%s" % (content_type, ), rdf_types.my_ns)
+            g_repos.set((tipo_de_dato, RDF.type, rdf_types.TipoDeDato))
+            g_repos.set((tipo_de_dato, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+
+        for quality_management in repository_info['qualityManagement']:
+            # ToDo: Revisar si es un ObjectProperty, y si modelarlo como bool
+            servicio_de_curaduria = URIRef("#servicio_de_curaduria/%s" % (quality_management, ), rdf_types.my_ns)
+            g_repos.set((servicio_de_curaduria, RDF.type, rdf_types.ServicioDeCuraduria))
+            g_repos.set((servicio_de_curaduria, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+
+        # databaseLicenses
+        # databaseAccess
+        # dataLicenses
+        # dataAccess
+        # dataUploadLicenses
+        # dataUpload
+
+        for policy in repository_info['policies']:
+            local_id_politica = hashlib.md5(policy['url'].encode('utf-8')).hexdigest()
+            politica = URIRef("#politica/%s" % (local_id_politica, ), rdf_types.my_ns)
+            # ToDo: Revisar si es un ObjectProperty
+            g_repos.set((politica, RDF.type, rdf_types.Politica))
+            g_repos.set((politica, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+            g_repos.set((politica, rdf_types.tiene_nombre_politica, Literal(repositorio['name'])))
+            g_repos.set((politica, rdf_types.tiene_url_politica, Literal(repositorio['url'])))
+
+        for data_license in repository_info['dataLicenses']:
+            local_id_data_license = hashlib.md5(data_license['url'].encode('utf-8')).hexdigest()
+            licencia_data = URIRef("#licencia/%s" % (local_id_data_license, ), rdf_types.my_ns)
+            # ToDo: Revisar si es un ObjectProperty
+            g_repos.set((licencia_data, RDF.type, rdf_types.Licencia))
+            g_repos.set((licencia_data, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+            g_repos.set((licencia_data, rdf_types.tiene_nombre_politica, Literal(repositorio['name'])))
+            g_repos.set((licencia_data, rdf_types.tiene_url_politica, Literal(repositorio['url'])))
+
+        data_access_types = [x['type'] for x in repository_info['dataAccess']]
+        is_open_access_supported = 'open' in data_access_types
+        is_restricted_access_supported = 'restricted' in data_access_types
+        # restrictions
+        is_closed_access_supported = 'closed' in data_access_types
+
+        for subject in repository_info['subjects']:
+            disciplina = URIRef("#disciplina/%s" % (subject,), rdf_types.my_ns)
+            g_repos.add((repositorio, rdf_types.repositorio_afin_a_disciplina, disciplina))
 
     repository_infos = refine_iterator(instances, not_repeated_ids, True)
     total = len(repository_infos)
@@ -161,8 +238,8 @@ def refine_and_insert_on_rdf():
         counter += 1
         if counter % 10 == 0:
             print("ready %s out of %s" % (counter, total))
-    g_repos.serialize(destination='../owl/instances.xml', format="xml")
-    # print(g.serialize(destination='../owl/instances.xml', format="pretty-xml"))
+    g_repos.serialize(destination='../owl/repositorios.xml', format="xml")
+    # print(g.serialize(destination='../owl/repositorios.xml', format="pretty-xml"))
 
 CERTIFICACIONES = []
 LENGUAJES = []
@@ -172,26 +249,32 @@ def seed_commons():
     g = Graph()
     g.bind('', rdf_types.my_ns)
 
-    for (name, items) in [
-        ('motor_de_repositorio', cts.motores),
-        ('esquema_de_id_de_autor', cts.esquemas_de_id_de_autor),
-        ('esquema_de_id_persistente', cts.esquemas_de_id_persistente),
-        ('esquema_de_metadatos', cts.esquemas_de_metadatos),
-        ('licencia', cts.licencias),
-        ('tipo_de_dato', cts.tipos_de_dato),
-        ('api_para_cosecha', cts.apis_para_cosecha),
-        ('integracion_con_red_social', cts.integraciones_con_red_social),
-        ('exportacion_de_citas', cts.formatos_de_exportacion_de_citas),
-        ('servicio_de_curaduria', cts.enum_servicio_de_curaduria),
-        ('servicio_de_versionado', cts.enum_versionado),
+    for (my_type, name, items) in [
+        (rdf_types.MotorDeRepositorio, 'motor_de_repositorio', cts.motores),
+        (rdf_types.EsquemaDeIdDeAutor, 'esquema_de_id_de_autor', cts.esquemas_de_id_de_autor),
+        (rdf_types.EsquemaDeIdPersistente, 'esquema_de_id_persistente', cts.esquemas_de_id_persistente),
+        (rdf_types.EsquemaDeMetadatos, 'esquema_de_metadatos', cts.esquemas_de_metadatos),
+        (rdf_types.Licencia, 'licencia', cts.licencias),
+        (rdf_types.TipoDeDato, 'tipo_de_dato', cts.tipos_de_dato),
+        (rdf_types.ApiParaCosecha, 'api_para_cosecha', cts.apis_para_cosecha),
+        (rdf_types.IntegracionConRedSocial, 'integracion_con_red_social', cts.integraciones_con_red_social),
+        (rdf_types.ExportacionDeCitas, 'exportacion_de_citas', cts.formatos_de_exportacion_de_citas),
+        (rdf_types.ServicioDeCuraduria, 'servicio_de_curaduria', cts.enum_servicio_de_curaduria),
+        (rdf_types.ServicioDeVersionado, 'servicio_de_versionado', cts.enum_versionado),
     ]:
-        my_type = URIRef('#%s' % (name,), rdf_types.my_ns)
         items_g = []
         for item_id in items:
+            if type(item_id) is tuple:
+                item_id = item_id[0]
             item = URIRef("#%s/%s" % (name, item_id), rdf_types.my_ns)
             items_g.append(item)
             g.set((item, RDF.type, my_type))
         owl_all_different(g, items_g)
+
+    for (esquema_de_metadatos, esquema_hijo) in cts.esquemas_de_metadatos:
+        item = URIRef("#esquema_de_metadatos/%s" % (esquema_de_metadatos, ), rdf_types.my_ns)
+        item_hijo = URIRef("#esquema_de_metadatos/%s" % (esquema_hijo, ), rdf_types.my_ns)
+        g.set((item, rdf_types.extiende_a_esquema_de_metadatos, item_hijo))
 
     formatos = []
     formato_de_archivo = URIRef('#formato_de_archivo', rdf_types.my_ns)

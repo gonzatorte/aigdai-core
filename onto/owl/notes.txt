@@ -1,8 +1,52 @@
 
-ToDo:
-    - Me falta algo que lo relacione con las caracteristicas del repositorio...
-    - Las certificaciones es medio facil pq son un criterio de calidad
-    - Tener algunas relaciones con funcionalidades que no sean "computables" pero que al menos queden referenciadas para su consideración manual
+- Tener algunas relaciones con funcionalidades que no sean "computables" pero que al menos queden referenciadas para su consideración manual
+
+Propiedades que se pueden inferir por los motores:
+- Integraciones soportadas (API de cosecha, API de métricas)
+- Esquema de identificador persistentes para colecciones (eg: DOI, handle)
+- AidS (eg: ORCID)
+- Esquemas de metadatos?
+- Soporte para comunidades/foros
+- Formato de exportación de citas
+- Métricas disponibles
+- Versionado
+- Soporte para lenguaje
+- Integraciones (con otros software. Todos los motores son software. Acá se incluyen lenguajes de programación).
+
+Las reglas de citado no son un documento más, pueden ser un accionable perfectamente...
+
+Del análisis de los motores se pueden inferir tb funciones como:
+- interop con ciertos agregadores (eg: openaire, schema.org)
+- soporte para lenguajes controlados
+
+Disciplinas:
+- Crosswalk con el esquema dnet de openAIRE (https://api.openaire.eu/vocabularies/dnet:fos). Mapear algunos conceptos
+
+Pensar si declarar las disciplinas como una collection para poder usar constructores como union e intersección y mapear mejor a otros esquema de disciplinas...
+
+Poner los Disjoint en las entidades faltantes (por ejemplo, en las funcionalidades)
+
+Poner cardinalidades? Hace falta si son cardinalidades de 0 y 1 o alcanza con functional property?
+
+Sacar de openAIRE y FairSharing codigueras de tipos de archivos y formatos?
+Sacar FairSharing o CoData? o COAR los estandares disciplinares.
+
+Falta algo que conecte las metricas de los repositorios, las funcionalidades del repositorio con las caracteristicas de los datasets.
+
+Hay que modelar que algunos criterios NO admiten otras relaciones con sub_criterios pq son cerrados en ese conjunto (la misma idea de clase definida pero con instancias).
+    Hacerlo una colección y usar OWL:unionOf?
+
+Revisar nombres en onto (empezar con los mas largos)
+Documentar ontologia
+
+Arreglar el problema con la propiedad asimetrica
+
+Escribir las preguntas de competencia
+
+Modulo de compat o croswalk con otras ontologias?
+
+Baja prioridad:
+    Hacer clases definidas para que quede más claro la aplicación
 
 ToDo: Agregar cosas como el nombre del criterio y la url del mismo
    <Declaration>
@@ -58,3 +102,108 @@ ToDo: Ver si usar extiende_de o reificar (relacion_de_extension + extiende_desde
     <FunctionalObjectProperty>
         <ObjectProperty IRI="extiende_hacia"/>
     </FunctionalObjectProperty>
+
+Crear propiedad extensible con repositorio y declarar sub props
+ToDo: No veo una manera de evitar escribir reglas de covarianza cada vez. Ésta no funciona pq comparte los objectos covariantes con las relaciones
+    <Declaration>
+        <Class IRI="objeto_covariante_a_repositorio"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="objeto_covariante_a_repositorio"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <Declaration>
+        <ObjectProperty IRI="propiedad_objeto_covariante_a_repositorio"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="propiedad_objeto_covariante_a_repositorio"/>
+        <Class IRI="objeto_covariante_a_repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="propiedad_objeto_covariante_a_repositorio"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyRange>
+    <Declaration>
+        <ObjectProperty IRI="propiedad_objeto_extensible_a_repositorio"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="propiedad_objeto_extensible_a_repositorio"/>
+        <Class IRI="objeto_covariante_a_repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="propiedad_objeto_covariante_a_repositorio"/>
+        <Class IRI="objeto_covariante_a_repositorio"/>
+    </ObjectPropertyRange>
+    <DLSafeRule>
+        <Annotation>
+            <AnnotationProperty IRI="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#boolean">true</Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+            <Literal></Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+            <Literal>repositorio_covariante_a_propiedad_extensible</Literal>
+        </Annotation>
+        <Body>
+            <ClassAtom>
+                <Class IRI="repositorio"/>
+                <Variable IRI="urn:swrl:var#x"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="objeto_covariante_a_repositorio"/>
+                <Variable IRI="urn:swrl:var#y"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="propiedad_objeto_extensible_a_repositorio"/>
+                <Variable IRI="urn:swrl:var#y"/>
+                <Variable IRI="urn:swrl:var#z"/>
+            </ObjectPropertyAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="propiedad_objeto_covariante_a_repositorio"/>
+                <Variable IRI="urn:swrl:var#x"/>
+                <Variable IRI="urn:swrl:var#y"/>
+            </ObjectPropertyAtom>
+        </Body>
+        <Head>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="propiedad_objeto_covariante_a_repositorio"/>
+                <Variable IRI="urn:swrl:var#x"/>
+                <Variable IRI="urn:swrl:var#z"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+    <SubClassOf>
+        <Class IRI="disciplina"/>
+        <Class IRI="objeto_covariante_a_repositorio"/>
+    </SubClassOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="repositorio_afin_a_subdisciplina"/>
+        <ObjectProperty IRI="propiedad_objeto_covariante_a_repositorio"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="es_descendiente_disciplina_de"/>
+        <ObjectProperty IRI="propiedad_objeto_extensible_a_repositorio"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
+        <ObjectProperty IRI="repositorio_afin_a_subdisciplina"/>
+    </SubObjectPropertyOf>
+
+Reglas:
+    - repositorio_covariante_con_subdisciplina
+    - repositorio_covariante_con_subcriterio
+    - repositorio_covariante_con_suborganizacion? Si es un repositorio de la fing, es un repositorio de la udelar
+    - funcionalidades_de_repositorio_solidario_con_posibles_funcionalidades_de_motor?
+
+    - cosecha de repositorios transitiva:
+      - declarar a una relacion R1 no transitiva entre agregadores y repos, y otra propiedad si transitiva llamada R2 entre agregadores y agregadores.
+        Luego, definir la propiedad R3 con DL tal que R R3 A sii Repo(R) ^ R R1 some Agregador(A1) ^ A1 R2 A
+      - tener una relación más debil que R1, que sea inferida a partir de cohincidencia de las funcionalidad de API para cosecha entre el repo y el agregador?
+
+    - Metricas
+      - Metrica -> Resumen
+      - Tener la idea de facetas como una agregacion posible?
+      - Tamaño es solo una métrica más? No es una métrica de citado sin dudas...

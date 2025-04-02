@@ -1,0 +1,17 @@
+
+services:
+  fuseki:
+    image: stain/jena-fuseki
+    container_name: st_fuseki
+    restart: always
+    environment:
+#      FUSEKI_DATASET_1: /opt/ontop/input/aigdai.ttl
+#      FUSEKI_DATASET_2: /opt/ontop/input/aigdai.ttl
+#      JVM_ARGS: "-Xmx2g"
+      ADMIN_PASSWORD: pw123
+#      TDB: 2
+    volumes:
+      - ./fuseki-data:/fuseki
+#      - ./fuseki-config:/fuseki/configuration
+    ports:
+      - "3030:3030"

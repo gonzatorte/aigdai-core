@@ -110,7 +110,7 @@ def initiate():
 
         soporte_para_periodo_de_embargo.nombre_usual = [
             ow.locstr("soporte para período de embargo", lang="es"),
-            ow.locstr("support to embargo period", lang="en"),
+            ow.locstr("support for embargo period", lang="en"),
         ]
 
         class servicio_de_curaduria(funcionalidad_de_repositorio):

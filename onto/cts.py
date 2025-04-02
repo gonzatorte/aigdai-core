@@ -864,7 +864,7 @@ motor_2_feature = [
         [
             'lenguaje/es',
             'lenguaje/en',
-            'api_cosecha/oaipmh',
+            'api_cosecha/oai-pmh',
             'control_de_acceso/si',
             'soporte_para_periodo_de_embargo/no',
 
@@ -1122,7 +1122,7 @@ rda_fair_maturity_model_statements = [
 # ToDo: Enumerados como versionado/no deben tener la semántica de ser inconsistentes con versionado/si. Algo como versionado/no y versionado/si implican bottom?
 
 metricas_plan_s = [
-    ('plans_1', None, 'Use of PIDs for the deposited versions of the publications (with versioning, for example in case of revisions), such as DOI (preferable), URN, or Handle.', 'esencial', ['esquema_de_id_persistente']), # existe un elemento de esquema_de_id_persistente?
+    ('plans_1', None, 'Use of PIDs for the deposited versions of the publications (with versioning, for example in case of revisions), such as DOI (preferable), URN, or Handle.', 'esencial', ['esquema_de_id_persistente/basico']),
     ('plans_2', None, 'High quality article level metadata in standard interoperable non-proprietary format, under a CC0 public domain dedication. This must include information on the DOI (or other PIDs) both of the original publication and the deposited version, on the version deposited (AAM/VoR), and on the Open Access status and the license of the deposited version. Metadata must include complete and reliable information on funding provided by cOAlition S funders (including as a minimum the name of the funder and the grant number/identifier).', 'esencial', []),
     ('plans_3', None, 'Machine readable information on the Open Access status and the license embedded in the article, in standard non-proprietary format.', 'esencial', []),
     ('plans_4', None, 'Continuous availability (uptime at least 99.7%, not taking into account scheduled downtime for maintenance or upgrades).', 'esencial', []),
@@ -1231,44 +1231,49 @@ same_individuals = [
 #                                             rdfs:label "F3"@en ;
 #                                             <http://www.w3.org/2004/02/skos/core#definition> "metadata clearly and explicitly include the identifier of the data it describes"@en .
 
-# ToDo: Cosas como "Descubrimiento" pueden ser un criterio de calidad en si mismo...
+# ToDo:
+#  Cosas como "coar_Descubrimiento" pueden ser un criterio de calidad en si mismo...
+#  El mapeo entre criterio y funcionalidad debería ser 1 a 1? Que significaría que un criterio tenga 2 funcionalidades? Es or de ambas, el and de ambas?
+#   ver como decir que un conjunto de criterios es exhaustivo para lograr cumplir el criterio en su totalidad
+#  Relacionar un criterio con una funcionalidad ¿implicaría que tiene esa un impacto positivo o negativo? Por lo gral la sola presencia es positiva (por mundo abierto)
+#  Ver si crear instancias artificiales (eg: esquema_de_metadatos/basico) o si atribuir un tipo específico a una relación de tiene/no-tiene
 metricas_coar = [
-    ('coar_D1', 'coar_Descubrimiento', 'El repositorio soporta metadatos de alta calidad', 'esencial', ['esquema_de_metadatos']),
-    ('coar_D2', 'coar_Descubrimiento', 'El repositorio soporta la recolección de metadatos usando el protocolo OAI-PMH', 'esencial', ['oai-pmh']),
+    ('coar_D1', 'coar_Descubrimiento', 'El repositorio soporta metadatos de alta calidad', 'esencial', ['esquema_de_metadatos/basico']),
+    ('coar_D2', 'coar_Descubrimiento', 'El repositorio soporta la recolección de metadatos usando el protocolo OAI-PMH', 'esencial', ['api_para_cosecha/oai-pmh']),
     ('coar_D3', 'coar_Descubrimiento', 'Los metadatos del repositorio están disponibles incluso en los casos en los que el recurso ya no esté disponible', 'esencial', []),
-    ('coar_D4', 'coar_Descubrimiento', 'El repositorio asigna un identificador persistente (PID) que apunta a la página de destino del recurso, incluso en los casos en los que el recurso no esté disponible', 'esencial', ['esquema_de_id_persistente']),
-    ('coar_D5', 'coar_Descubrimiento', 'El repositorio ofrece una herramienta de búsqueda y/o los metadatos están indexados por servicios externos de descubrimiento y/o agregadores.', 'esencial', []),
-    ('coar_D6', 'coar_Descubrimiento', 'El repositorio está incluido en uno o más registros de recursos, ya sea por disciplinas o generales', 'esencial', ['id_de_repositorio_tiene_catalogo']),
+    ('coar_D4', 'coar_Descubrimiento', 'El repositorio asigna un identificador persistente (PID) que apunta a la página de destino del recurso, incluso en los casos en los que el recurso no esté disponible', 'esencial', ['esquema_de_id_persistente/basico']),
+    ('coar_D5', 'coar_Descubrimiento', 'El repositorio ofrece una herramienta de búsqueda y/o los metadatos están indexados por servicios externos de descubrimiento y/o agregadores.', 'esencial', []), # ToDo: Modelar dependencia
+    ('coar_D6', 'coar_Descubrimiento', 'El repositorio está incluido en uno o más registros de recursos, ya sea por disciplinas o generales', 'esencial', []), # ToDo: Modelar dependencia, relacion con id_de_repositorio_tiene_catalogo?
 
-    ('coar_D7', 'coar_Descubrimiento', 'El repositorio soporta enlaces entre recursos relacionados como artículos, conjuntos de datos y software (ej. incluyendo Identificadores Persistentes de recursos relacionados localizados en cualquier sitio).', 'deseable', []),
-    ('coar_D8', 'coar_Descubrimiento', 'El repositorio soporta encabezamientos tipados HTTP que permiten el descubrimiento automático de registros de metadatos y recursos de contenido asociados con documentos del repositorio. Recomendamos enlaces codificados de Signposting para soportarlo.', 'deseable', []),
-    ('coar_D9', 'coar_Descubrimiento', 'El repositorio soporta los identificadores persistentes de autor, financiadores, programas de financiación y subvenciones, instituciones y otras entidades relevantes.', 'deseable', []),
-    ('coar_D10', 'coar_Descubrimiento', 'Los metadatos en el repositorio son accesibles a través de Licencias Creative Commons de Dominio Público y pueden descargarse en formatos bibliográficos estándar.', 'deseable', []),
-    ('coar_D11', 'coar_Descubrimiento', 'Los metadatos de los repositorios están disponibles tanto para la lectura por humanos, como por máquinas.', 'deseable', []),
-    ('coar_D12', 'coar_Descubrimiento', 'En caso de datos de investigación, el repositorio soporta identificadores persistentes de datos a diferentes niveles de granularidad, según corresponda (por ejemplo, si un investigador está utilizando un subconjunto de datos, es necesario poder citar correctamente este subconjunto).', 'deseable', []),
+    ('coar_D7', 'coar_Descubrimiento', 'El repositorio soporta enlaces entre recursos relacionados como artículos, conjuntos de datos y software (ej. incluyendo Identificadores Persistentes de recursos relacionados localizados en cualquier sitio).', 'deseable', []), # ToDo: Modelar dependencia
+    ('coar_D8', 'coar_Descubrimiento', 'El repositorio soporta encabezamientos tipados HTTP que permiten el descubrimiento automático de registros de metadatos y recursos de contenido asociados con documentos del repositorio. Recomendamos enlaces codificados de Signposting para soportarlo.', 'deseable', []), # ToDo: Modelar dependencia
+    ('coar_D9', 'coar_Descubrimiento', 'El repositorio soporta los identificadores persistentes de autor, financiadores, programas de financiación y subvenciones, instituciones y otras entidades relevantes.', 'deseable', []), # ToDo: Modelar dependencia. Relacion con id_de_autor_tiene_esquema_de_id_de_autor, id_de_organizacion_tiene_tipo
+    ('coar_D10', 'coar_Descubrimiento', 'Los metadatos en el repositorio son accesibles a través de Licencias Creative Commons de Dominio Público y pueden descargarse en formatos bibliográficos estándar.', 'deseable', []), # ToDo: Modelar dependencia. Relacion con licencia/cc0, exportacion_de_citas
+    ('coar_D11', 'coar_Descubrimiento', 'Los metadatos de los repositorios están disponibles tanto para la lectura por humanos, como por máquinas.', 'deseable', []), # ToDo: Modelar dependencia. Relacion con herramienta de software API o humana
+    ('coar_D12', 'coar_Descubrimiento', 'En caso de datos de investigación, el repositorio soporta identificadores persistentes de datos a diferentes niveles de granularidad, según corresponda (por ejemplo, si un investigador está utilizando un subconjunto de datos, es necesario poder citar correctamente este subconjunto).', 'deseable', []), # ToDo: Modelar dependencia. Relacion con algun conjunto de esquema_de_id_persistente
 
-    ('coar_A1', 'coar_Acceso', 'El acceso a los datos publicados en el repositorio no supone ningún coste para el usuario.', 'esencial', []),
-    ('coar_A2', 'coar_Acceso', 'El repositorio garantiza el acceso continuo a los recursos durante un período de tiempo establecido públicamente.', 'esencial', []),
-    ('coar_A3', 'coar_Acceso', 'El repositorio soporta el acceso a sus registros y documentación a personas en situación de discapacidad.', 'esencial', []),
-    ('coar_A4', 'coar_Acceso', 'Neutralidad del dispositivo: no se necesita un dispositivo específico para que los usuarios accedan al repositorio.', 'esencial', []),
+    ('coar_A1', 'coar_Acceso', 'El acceso a los datos publicados en el repositorio no supone ningún coste para el usuario.', 'esencial', []), # ToDo: Modelar dependencia. Relación con modelo de negocio
+    ('coar_A2', 'coar_Acceso', 'El repositorio garantiza el acceso continuo a los recursos durante un período de tiempo establecido públicamente.', 'esencial', []), # ToDo: Modelar dependencia. Relación con politica de sustentabilidad
+    ('coar_A3', 'coar_Acceso', 'El repositorio soporta el acceso a sus registros y documentación a personas en situación de discapacidad.', 'esencial', []), # ToDo: No tengo datos sobre este aspecto
+    ('coar_A4', 'coar_Acceso', 'Neutralidad del dispositivo: no se necesita un dispositivo específico para que los usuarios accedan al repositorio.', 'esencial', []), # ToDo: No tengo datos sobre este aspecto
 
-    ('coar_A5', 'coar_Acceso', 'El repositorio proporciona un mecanismo para poner archivos muy grandes a disposición de los usuarios fuera de la interfaz de usuario normal (en los casos en que el tamaño del archivo complique su manejo para el usuario).', 'deseable', []),
-    ('coar_A6', 'coar_Acceso', 'En los casos en que hay acceso restringido a un recurso, el repositorio facilita una forma indirecta de acceder a este recurso (por ejemplo, contactando al autor).', 'deseable', []),
+    ('coar_A5', 'coar_Acceso', 'El repositorio proporciona un mecanismo para poner archivos muy grandes a disposición de los usuarios fuera de la interfaz de usuario normal (en los casos en que el tamaño del archivo complique su manejo para el usuario).', 'deseable', []), # ToDo: No tengo datos sobre este aspecto
+    ('coar_A6', 'coar_Acceso', 'En los casos en que hay acceso restringido a un recurso, el repositorio facilita una forma indirecta de acceder a este recurso (por ejemplo, contactando al autor).', 'deseable', []), # ToDo: No tengo datos sobre este aspecto
 
-    ('coar_P1', 'coar_Privacidad_de_datos_sensibles', 'En los casos en los que el repositorio está recabando datos de investigación sensibles, cuenta con mecanismos para que los propietarios de los datos puedan limitar el acceso sólo a usuarios autorizados.', 'esencial', ['control_de_acceso']),
-    ('coar_P2', 'coar_Privacidad_de_datos_sensibles', 'En los casos en los que el repositorio está recabando datos de investigación sensibles, el repositorio proporciona acceso restringido en función de los diferentes niveles de seguridad requeridos por los datos.', 'deseable', ['control_de_acceso']),
+    ('coar_P1', 'coar_Privacidad_de_datos_sensibles', 'En los casos en los que el repositorio está recabando datos de investigación sensibles, cuenta con mecanismos para que los propietarios de los datos puedan limitar el acceso sólo a usuarios autorizados.', 'esencial', []), # ToDo: Modelar. Relacionar con control_de_acceso/si
+    ('coar_P2', 'coar_Privacidad_de_datos_sensibles', 'En los casos en los que el repositorio está recabando datos de investigación sensibles, el repositorio proporciona acceso restringido en función de los diferentes niveles de seguridad requeridos por los datos.', 'deseable', []), # ToDo: Modelar. Relacionar con control_de_acceso/nivel_de_granularidad?
 
-    ('coar_R1', 'coar_Reutilizacion', 'El repositorio incluye información sobre las licencias en el registro de metadatos que estipulan las condiciones de reutilización.', 'esencial', []),
-    ('coar_R2', 'coar_Reutilizacion', 'El repositorio ofrece identificadores persistentes citables.', 'esencial', ['esquema_de_id_persistente']),
-    ('coar_R3', 'coar_Reutilizacion', 'El repositorio ofrece una lista de formatos preferidos, no propietarios.', 'esencial', ['formato_de_archivo']),
+    ('coar_R1', 'coar_Reutilizacion', 'El repositorio incluye información sobre las licencias en el registro de metadatos que estipulan las condiciones de reutilización.', 'esencial', []), # ToDo: Relacionar con soporta_licencia/alguna?
+    ('coar_R2', 'coar_Reutilizacion', 'El repositorio ofrece identificadores persistentes citables.', 'esencial', []), # ToDo: Relacionar con esquema_de_id_persistente/basico?
+    ('coar_R3', 'coar_Reutilizacion', 'El repositorio ofrece una lista de formatos preferidos, no propietarios.', 'esencial', []), # ToDo: Relacionar con formato_de_archivo/abierto? No sé cuan correcto es definir esas cosas artificiales...
     ('coar_R4', 'coar_Reutilizacion', 'Las páginas de destino incluyen los metadatos del registro, incluida la información necesaria para las citas, tanto en formato legible por máquina como por humanos.', 'esencial', []),
-    ('coar_R5', 'coar_Reutilizacion', 'El repositorio tiene APIs abiertas que soportan la recolección a texto completo y/o minería de texto y datos.', 'deseable', ['api_para_cosecha']),
-    ('coar_R6', 'coar_Reutilizacion', 'Los recursos se almacenan en formatos estándar legibles por máquinas.', 'deseable', ['formato_de_archivo']),
+    ('coar_R5', 'coar_Reutilizacion', 'El repositorio tiene APIs abiertas que soportan la recolección a texto completo y/o minería de texto y datos.', 'deseable', []), # ToDo: Relacionar con api_para_cosecha o con herramienta_de_software/automatico?
+    ('coar_R6', 'coar_Reutilizacion', 'Los recursos se almacenan en formatos estándar legibles por máquinas.', 'deseable', []), # ToDo: relacionar con formato_de_archivo? No sabría a que relacionarlo
 
-    ('coar_I1', 'coar_Integridad_y_autenticidad', 'El repositorio proporciona documentación o tiene una política que describe las prácticas que evitan el acceso/manipulación no autorizados de los recursos.', 'esencial', []),
+    ('coar_I1', 'coar_Integridad_y_autenticidad', 'El repositorio proporciona documentación o tiene una política que describe las prácticas que evitan el acceso/manipulación no autorizados de los recursos.', 'esencial', []), # ToDo: Refiere a una caracteristica que no esta modelada como funcionalidad ¿Como mapealo?
     ('coar_I2', 'coar_Integridad_y_autenticidad', 'El repositorio conserva un registro de todos los cambios de metadatos y recursos del repositorio.', 'esencial', []),
-    ('coar_I3', 'coar_Integridad_y_autenticidad', 'El repositorio admite el control de versiones de los metadatos y recursos tras su depósito.', 'esencial', ['servicio_de_versionado']),
-    ('coar_I4', 'coar_Integridad_y_autenticidad', 'El repositorio ofrece información acerca del/los proveedor/es de contenido, incluyendo el nombre de la/s persona/s o institución/es responsable/s del recurso.', 'deseable', []),
+    ('coar_I3', 'coar_Integridad_y_autenticidad', 'El repositorio admite el control de versiones de los metadatos y recursos tras su depósito.', 'esencial', []), # ToDo: Relacionar con servicio_de_versionado/si ?
+    ('coar_I4', 'coar_Integridad_y_autenticidad', 'El repositorio ofrece información acerca del/los proveedor/es de contenido, incluyendo el nombre de la/s persona/s o institución/es responsable/s del recurso.', 'deseable', []), # ToDo: Refiere a una caracteristica que no esta modelada como funcionalidad ¿Como mapealo?
 
     ('coar_Q1', 'coar_Garantia_de_calidad', 'El repositorio realiza tareas básicas de curación de los metadatos (y de los datos, cuando es requerido) ej. breve verificación y adición de metadatos básicos o documentación cuando sea necesario.', 'esencial', ['servicio_de_curaduria', 'esquema_de_metadatos']),
     ('coar_Q2', 'coar_Garantia_de_calidad', 'El repositorio proporciona documentación o tiene una política que describe qué procesos de curación se aplican a los recursos y metadatos.', 'esencial', ['esquema_de_metadatos']),
@@ -1299,19 +1304,21 @@ esquemas_de_id_de_autor = [
 ]
 
 esquemas_de_id_persistente = [
-    'doi',
-    'ark',
-    'handle',
-    'purl',
+    ('basico', []),
+    ('doi', ['basico']),
+    ('ark', ['basico']),
+    ('handle', ['basico']),
+    ('purl', ['basico']),
 ]
 
 esquemas_de_metadatos = [
-    'dc',
-    'ddi',
-    'oai-pmh',
-    'schemaorg',
-    'doi-datacite',
-    'doi-crossref',
+    ('basico', []),
+    ('dc', ['basico']),
+    ('ddi', ['basico']),
+    ('oai-pmh', ['basico']),
+    ('schemaorg', ['basico']),
+    ('doi-datacite', ['basico']),
+    ('doi-crossref', ['basico']),
 ]
 
 licencias = [
@@ -1430,6 +1437,7 @@ formatos_de_archivo_abierto = [
 	('YAML', 'human readable data serialization format'),
 ]
 
+# ToDo: Sacar enumerados desde https://vocabularies.coar-repositories.org/resource_types/ (mismo vocabulario usado por re3data)
 tipos_de_dato = [
     'articulo',
     'cuaderno_de_laboratorio',

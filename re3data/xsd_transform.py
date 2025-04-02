@@ -184,13 +184,15 @@ def refine_repository_info(
                 return None
         raise Exception('cannot coerce to bool %s' % (urr,))
 
-    def process_multi(key, postprocess=lambda x: x, remove_dup: bool = False, empty_value = None, other_value = None):
+    def process_multi(key, preprocess = None, postprocess = None, remove_dup: bool = False, empty_value = None, other_value = None):
+        preprocess2 = (lambda x: x) if preprocess is None else preprocess
+        postprocess2 = (lambda x: x) if postprocess is None else postprocess
         urr = decoded.get(key)
         if urr is None:
             return []
         elif isinstance(urr, list):
             rr = urr if urr is not None else []
-            rr = [handle_atom(rxx) for rxx in rr]
+            rr = [handle_atom(preprocess2(rxx)) for rxx in rr]
             if remove_dup:
                 rr = [x for idx, x in enumerate(rr) if x not in rr[:idx]]
             if empty_value is not None and empty_value in rr and len(rr) > 1:
@@ -202,7 +204,7 @@ def refine_repository_info(
         else:
             raise Exception('cannot process not list')
         try:
-            return [postprocess(rx) for rx in rr]
+            return [postprocess2(rx) for rx in rr]
         except BaseException as e:
             raise e
 
@@ -216,13 +218,21 @@ def refine_repository_info(
             dd['id'] = 'LOCAL:%s' % (local_id, )
         return dd
 
-    def transform_access(x, is_database: bool):
+    def transform_access(x, level: str):
         # if 'r3d:databaseAccessRestriction' not in x:
         #     pass
-        access_restriction = [xx.lower() for xx in x.get('r3d:databaseAccessRestriction' if is_database else 'r3d:dataAccessRestriction', [])]
+        key_restriction = 'r3d:dataAccessRestriction'
+        key_type = 'r3d:dataAccessType'
+        if level == 'database':
+            key_restriction = 'r3d:databaseAccessRestriction'
+            key_type = 'r3d:databaseAccessType'
+        elif level == 'upload':
+            key_restriction = 'r3d:dataUploadRestriction'
+            key_type = 'r3d:dataUploadType'
+        access_restriction = [xx.lower() for xx in x.get(key_restriction, [])]
         if 'feeRequired' in access_restriction:
             pass
-        return {'type': x['r3d:databaseAccessType' if is_database else 'r3d:dataAccessType'], 'restriction': access_restriction}
+        return {'type': x[key_type], 'restrictions': access_restriction}
 
     return {
         "id": decoded["r3d:re3data.orgIdentifier"],
@@ -231,7 +241,7 @@ def refine_repository_info(
         "description": decoded["r3d:description"]['$'],
         "isDisciplinar": len([x for x in decoded.get("r3d:type", []) if x.lower() == 'disciplinary']) > 0,
         "isInstitutional": len([x for x in decoded.get("r3d:type", []) if x.lower() == 'institutional']) > 0,
-        "softwareNames": process_multi("r3d:software", lambda x: x['r3d:softwareName'].lower(), True, {'r3d:softwareName': 'unknown'}, {'r3d:softwareName': 'other'}),
+        "softwareNames": process_multi("r3d:software", None, lambda x: x['r3d:softwareName'].lower(), True, {'r3d:softwareName': 'unknown'}, {'r3d:softwareName': 'other'}),
         # "softwareName": coerce_single("r3d:software", lambda x: x['r3d:softwareName'], True, None, {'r3d:softwareName': 'other'}),
         "size": coerce_single("r3d:size"),
         "subjects": [x['$'] for x in decoded.get("r3d:subject", [])],
@@ -240,9 +250,8 @@ def refine_repository_info(
         # "apis": coerce_single('r3d:api', lambda x: {'url': x['$'], 'type': x['@apiType'].lower()} if x is not None else None),
         # "apis": process_multi("r3d:api", lambda x: {'url': x['$'], 'type': x['@apiType'].lower()}, False),
         "apis": [{'url': x['$'], 'type': x['@apiType'].lower()} if x is not None else None for x in decoded.get("r3d:api", [])],
-        'pidSystems': decoded.get('r3d:pidSystem', []),
-        'databaseAccess': transform_access(decoded.get("r3d:databaseAccess", None), True) if decoded.get("r3d:databaseAccess", None) is not None else None,
-        'dataAccess': [transform_access(x, False) for x in decoded.get("r3d:dataAccess", [])],
+        'pidSystems': process_multi('r3d:pidSystem', lambda x: x.lower(), None, True, 'none', 'other'),
+        'aidSystems': process_multi('r3d:aidSystem', lambda x: x.lower(), None, True, 'none', 'other'),
         'versioning': coerce_boolean('r3d:versioning', 'yes', 'no', [None, 'unknown']),
         'enhancedPublication': decoded.get('r3d:enhancedPublication', None),
         'qualityManagement': coerce_boolean('r3d:qualityManagement', 'yes', 'no', [None, 'unknown']),
@@ -257,9 +266,21 @@ def refine_repository_info(
             [x for x in decoded.get("r3d:providerType", []) if x.lower() == 'serviceprovider']) > 0,
         'missionStatementURL': coerce_single('r3d:missionStatementURL'),
         'contentType': [x['$'] for x in decoded.get("r3d:contentType", [])],
-        'policies': [{'name': x['r3d:policyName'], 'url': x['r3d:policyURL']} for x in decoded.get("r3d:policy", [])],
         'metadataStandards': [{'name': x['r3d:metadataStandardName']['$'].lower(), 'url': x['r3d:metadataStandardURL'].lower()} for x in
                               decoded.get("r3d:metadataStandard", [])],
+
+        # ToDo: En versiones intermedias de re3data se consideraba un tipo que podia tener esos enumerados
+        # Access policy
+        # Collection policy
+        # Data policy
+        # Metadata policy
+        # Preservation policy
+        # Submission policy
+        # Terms of use
+        # Usage policy
+        # Quality policy
+        'policies': [{'name': x['r3d:policyName'], 'url': x['r3d:policyURL']} for x in decoded.get("r3d:policy", [])],
+
         #  ToDo: normalizar licencias a los siguiente valores del nombre y descartar las otras cosas...
         #    aunque se podría desempatar usando la "other" y la url...
         #  'apache license 2.0',
@@ -274,10 +295,29 @@ def refine_repository_info(
         #  'other',
         #  'public domain',
         #  'rl',
-        'databaseLicense': [{'name': x['r3d:databaseLicenseName'], 'url': x['r3d:databaseLicenseURL']} for x in
-                            decoded.get("r3d:databaseLicense", [])],
-        'dataLicense': [{'name': x['r3d:dataLicenseName'], 'url': x['r3d:dataLicenseURL']} for x in
-                        decoded.get("r3d:dataLicense", [])],
+        'databaseAccess': transform_access(
+            decoded.get("r3d:databaseAccess", None), 'database'
+        ) if decoded.get("r3d:databaseAccess", None) is not None else None,
+        'dataAccess': [
+            transform_access(x, 'data')
+            for x in decoded.get("r3d:dataAccess", [])
+        ],
+        'dataUpload': [
+            transform_access(x, 'upload')
+            for x in decoded.get("r3d:dataUpload", [])
+        ],
+        'databaseLicenses': [
+            {'name': x['r3d:databaseLicenseName'], 'url': x['r3d:databaseLicenseURL']} for x in
+            decoded.get("r3d:databaseLicense", [])
+        ],
+        'dataLicenses': [
+            {'name': x['r3d:dataLicenseName'], 'url': x['r3d:dataLicenseURL']} for x in
+            decoded.get("r3d:dataLicense", [])
+        ],
+        'dataUploadLicenses': [
+            {'name': x['r3d:dataUploadLicenseName'], 'url': x['r3d:dataUploadLicenseURL']}
+            for x in decoded.get("r3d:dataUploadLicense", [])
+        ],
         'remarks': decoded.get('r3d:remarks', None),
         'entryDate': decoded['r3d:entryDate'],
     }
