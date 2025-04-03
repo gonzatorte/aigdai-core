@@ -2,6 +2,7 @@ from rdflib.namespace import RDF, OWL
 import onto.generator.rdf as rdf_types
 from rdflib import Graph, Literal, URIRef
 import json
+import os
 
 ROR_PREFIX = 'https://ror.org/'
 def normalize_id(idd: str):
@@ -73,8 +74,15 @@ def v2_parse(registry):
         successors,
     )
 
-def extract_and_store():
-    with open('./data/v1.49-2024-07-11-ror-data_schema_v2.json', 'r') as file:
+def insert_on_rdf():
+    # data_path = os.path.dirname(os.path.realpath(__file__))
+    base_path = os.path.dirname(__file__)
+    alfa2_alfa3_path = os.path.join(base_path, './data/alfa2_alfa3.json')
+    with open(alfa2_alfa3_path, 'r') as file:
+        alfa2_alfa3_pairs = json.load(file)
+        alfa2_alfa3 = {x: y for [x, y] in alfa2_alfa3_pairs}
+    data_path = os.path.join(base_path, './data/v1.49-2024-07-11-ror-data_schema_v2.json')
+    with open(data_path, 'r') as file:
         registries = json.load(file)
         g_orgs = Graph()
         g_orgs.bind('', rdf_types.my_ns)
@@ -135,8 +143,11 @@ def extract_and_store():
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(external_id)))
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, organizacion))
 
-            for location in countries:
-                location = URIRef("#pais/%s" % (location,), rdf_types.my_ns)
+            for location_alfa2 in countries:
+                if location_alfa2 not in alfa2_alfa3:
+                    raise Exception("not found in alfa country code map")
+                location_alfa3 = alfa2_alfa3[location_alfa2]
+                location = URIRef("#pais/%s" % (location_alfa3,), rdf_types.my_ns)
                 g_orgs.set((location, RDF.type, rdf_types.Pais))
                 g_orgs.add((organizacion, rdf_types.se_ubica_en, location))
 
@@ -187,7 +198,8 @@ def extract_and_store():
     # ToDo: Tendria que declarar que todas estas organizaciones son distintas entre si por ser verificadas por un mismo proveedor de datos?
 
     # print('count_v1', count_v1, 'out of', len(registries))
-    g_orgs.serialize(destination='../onto/owl/organizaciones.xml', format="xml")
+    xml_path = os.path.join(base_path, '../onto/owl/organizaciones.xml')
+    g_orgs.serialize(destination=xml_path, format="xml")
 
 if __name__ == "__main__":
-    extract_and_store()
+    insert_on_rdf()

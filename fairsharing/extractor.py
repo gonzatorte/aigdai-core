@@ -1,11 +1,11 @@
 from typing import Any, Iterable, Mapping, MutableMapping, Optional
-import httpx
 import requests
 import asyncio
 from urllib.parse import urlparse, parse_qs
+from config import FAIRSHARING_USERNAME, FAIRSHARING_PASSWORD
 
 from lib.no_relational_database import get_database_client
-from doi import fetch_single_doi, fetch_multiple_doi
+from doi import fetch_multiple_doi
 
 REDUNDANT_FIELDS = {
     "fairsharing_licence",
@@ -196,7 +196,7 @@ if __name__ == "__main__":
         # "Research institute"
         # "Undefined"
         # "University"
-    # asyncio.run(extract_and_store(username="gonzatortetest", password="GT_@pr0y3ctD41"))
+    # asyncio.run(extract_and_store(username=FAIRSHARING_USERNAME, password=FAIRSHARING_PASSWORD))
     asyncio.run(add_doi_data('fairsharing'))
     # asyncio.run(add_doi_data('standards'))
     # asyncio.run(add_doi_data('policies'))

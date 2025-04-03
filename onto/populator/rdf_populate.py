@@ -8,6 +8,9 @@ from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF, OWL
 import hashlib
 
+from ror.extractor import insert_on_rdf
+
+
 def owl_all_different(g, instances):
     for (idx, instance1) in enumerate(instances):
         for instance2 in instances[idx+1:]:
@@ -178,7 +181,7 @@ def refine_and_insert_on_rdf():
             if metadata_standard_name == 'other':
                 metadata_standard_name = "other_%s" % (repository_info['id'],)
             # ToDo: Unificar enumerados o declarar same-as
-            esquema_de_metadatos = URIRef("#esquema_de_metadatos/%s" % (metadata_standard_name, ), rdf_types.my_ns)
+            esquema_de_metadatos = URIRef("#esquema_de_metadatos/%s" % (metadata_standard_name.lower().replace(' ', '_'), ), rdf_types.my_ns)
             g_repos.set((esquema_de_metadatos, RDF.type, rdf_types.EsquemaDeMetadatos))
             g_repos.set((esquema_de_metadatos, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
@@ -201,7 +204,7 @@ def refine_and_insert_on_rdf():
         for content_type in repository_info['contentType']:
             # ToDo: Manejar other, ponerle other_id
             # ToDo: Unificar enumerados o declarar same-as
-            tipo_de_dato = URIRef("#tipo_de_dato/%s" % (content_type, ), rdf_types.my_ns)
+            tipo_de_dato = URIRef("#tipo_de_dato/%s" % (content_type.lower().replace(' ', '_'), ), rdf_types.my_ns)
             g_repos.set((tipo_de_dato, RDF.type, rdf_types.TipoDeDato))
             g_repos.set((tipo_de_dato, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
@@ -281,6 +284,7 @@ def seed_commons():
     ]:
         items_g = []
         for item_id in items:
+            old_id = item_id
             if type(item_id) is tuple:
                 item_id = item_id[0]
             item = URIRef("#%s/%s" % (name, item_id), rdf_types.my_ns)
@@ -288,10 +292,11 @@ def seed_commons():
             g.set((item, RDF.type, my_type))
         owl_all_different(g, items_g)
 
-    for (esquema_de_metadatos, esquema_hijo) in cts.esquemas_de_metadatos:
+    for (esquema_de_metadatos, esquema_hijos) in cts.esquemas_de_metadatos:
         item = URIRef("#esquema_de_metadatos/%s" % (esquema_de_metadatos, ), rdf_types.my_ns)
-        item_hijo = URIRef("#esquema_de_metadatos/%s" % (esquema_hijo, ), rdf_types.my_ns)
-        g.set((item, rdf_types.extiende_a_esquema_de_metadatos, item_hijo))
+        for esquema_hijo in esquema_hijos:
+            item_hijo = URIRef("#esquema_de_metadatos/%s" % (esquema_hijo, ), rdf_types.my_ns)
+            g.set((item, rdf_types.extiende_a_esquema_de_metadatos, item_hijo))
 
     formatos = []
     formato_de_archivo = URIRef('#formato_de_archivo', rdf_types.my_ns)
@@ -489,3 +494,4 @@ def seed_locaciones():
 
 if __name__ == '__main__':
     refine_and_insert_on_rdf()
+    insert_on_rdf()

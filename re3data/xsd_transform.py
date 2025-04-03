@@ -224,7 +224,6 @@ def refine_repository_info(
         dd['institutionURL'] = handle_atom(xx.get('r3d:institutionURL', None))
         dd['institutionContacts'] = xx.get('r3d:institutionContact', [])
 
-        print(dd)
         if 'institutionIdentifier' in xx and len(xx['r3d:institutionIdentifier']) >= 1:
             # ToDo: Extraer todos los identificadores
             dd['id'] = xx['institutionIdentifier'][0]

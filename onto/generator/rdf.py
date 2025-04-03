@@ -1,13 +1,19 @@
 from rdflib import URIRef, Namespace
+from config import DREPO_NS, CRITERIA_NS, ORGANIZATIONS_NS, LANGUAGE_NS
 
-my_ns = Namespace('https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/aigdai.owx#')
-Organizacion = URIRef("#organizacion", my_ns)
-Repositorio = URIRef("#repositorio", my_ns)
-TipoDeIdDeOrganizacion = URIRef("#tipo_de_id_de_organizacion", my_ns)
+lang_ns = Namespace(LANGUAGE_NS)
+lenguaje = URIRef("#lenguaje", lang_ns)
+
+my_ns = Namespace(DREPO_NS)
+
 Pais = URIRef("#pais", my_ns)
 BloqueComercial = URIRef("#bloque_comercial", my_ns)
 Planeta = URIRef("#planeta", my_ns)
 Locacion = URIRef("#locacion", my_ns)
+
+Organizacion = URIRef("#organizacion", my_ns)
+Repositorio = URIRef("#repositorio", my_ns)
+TipoDeIdDeOrganizacion = URIRef("#tipo_de_id_de_organizacion", my_ns)
 Disciplina = URIRef("#disciplina", my_ns)
 es_sub_disciplina_de = URIRef("#es_sub_disciplina_de", my_ns)
 esquema_de_disciplina = URIRef("#esquema_de_disciplina", my_ns)
@@ -51,7 +57,7 @@ tiene_url_politica = URIRef('#tiene_url_politica', my_ns)
 extiende_a_esquema_de_metadatos = URIRef('#extiende_a_esquema_de_metadatos', my_ns)
 extiende_a_esquema_de_id_persistente = URIRef('#extiende_a_esquema_de_id_persistente', my_ns)
 
-principles_ns = Namespace('https://raw.githubusercontent.com/gonzatorte/aigdai-core/refs/heads/main/onto/owl/criterios.owl#')
+principles_ns = Namespace(CRITERIA_NS)
 CriterioDeCalidad = URIRef("#criterio_de_calidad", principles_ns)
 GrupoDeCriterio = URIRef("#grupo_de_criterio", principles_ns)
 criterio_pertenece_a_grupo = URIRef("#criterio_pertenece_a_grupo", principles_ns)
@@ -71,4 +77,4 @@ RelacionRepositorioYOrganizacion = URIRef('#relacion_repositorio_y_organizacion'
 relacion_repositorio_y_organizacion_tiene_repositorio = URIRef('#relacion_repositorio_y_organizacion_tiene_repositorio', my_ns)
 relacion_repositorio_y_organizacion_tiene_organizacion = URIRef('#relacion_repositorio_y_organizacion_tiene_organizacion', my_ns)
 
-ror_ns = Namespace('http://ror.org#')
+ror_ns = Namespace(ORGANIZATIONS_NS)

@@ -1,25 +1,26 @@
 <?xml version="1.0"?>
 <Ontology xmlns="http://www.w3.org/2002/07/owl#"
-     xml:base="file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/aigdai.owx"
+     xml:base="http://aigdai.owx#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     ontologyIRI="file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/aigdai.owx">
-    <Prefix name="" IRI="file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/aigdai.owx#"/>
+     ontologyIRI="http://aigdai.owx"
+     versionIRI="http://aigdai.owx/v0.1">
+    <Prefix name="" IRI="http://aigdai.owx#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
-    <Prefix name="lang" IRI="file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/lenguajes.owl#"/>
+    <Prefix name="lang" IRI="http://lenguajes.owl#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
-    <Prefix name="principle" IRI="./criterios.owl#"/>
-    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/lenguajes.owl</Import>
-    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/criterios.owl</Import>
-    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/commons.xml</Import>
-    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/disciplinas.xml</Import>
-    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/localizaciones.xml</Import>
-    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/organizaciones.xml</Import>
+    <Prefix name="principle" IRI="http://criterios.owl#"/>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/criterios.owl</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/lenguajes.owl</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/commons.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/disciplinas.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/localizaciones.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/organizaciones.xml</Import>
     <Declaration>
         <Class IRI="agregador"/>
     </Declaration>
@@ -128,13 +129,6 @@
     <Declaration>
         <Class IRI="tamanio_en_disco"/>
     </Declaration>
-    <Declaration>
-        <Class IRI="tipo_de_dato"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="tipo_de_id_de_organizacion"/>
-    </Declaration>
-
 
     <Declaration>
         <ObjectProperty IRI="es_cosechado_por"/>
@@ -206,9 +200,6 @@
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="repositorio_certificado_por"/>
@@ -312,6 +303,15 @@
     <Declaration>
         <Datatype abbreviatedIRI="lang:lenguaje"/>
     </Declaration>
+
+    <Declaration>
+        <Class IRI="tipo_de_dato"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="tipo_de_dato"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+
     <SubClassOf>
         <Class IRI="agregador"/>
         <Class abbreviatedIRI="owl:Thing"/>
@@ -428,10 +428,55 @@
         <Class IRI="tamanio_en_disco"/>
         <Class IRI="tamanio"/>
     </SubClassOf>
+
+    <Declaration>
+        <Class IRI="tipo_de_id_de_organizacion"/>
+    </Declaration>
     <SubClassOf>
         <Class IRI="tipo_de_id_de_organizacion"/>
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
+
+    <DisjointClasses>
+        <Class IRI="disciplina"/>
+        <Class IRI="repositorio"/>
+        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
+        <Class abbreviatedIRI="principle:grupo_de_criterio"/>
+    </DisjointClasses>
+
+    <Declaration>
+        <ObjectProperty IRI="satisface_criterio"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="satisface_criterio"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="satisface_criterio"/>
+        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
+    </ObjectPropertyRange>
+    <SubObjectPropertyOf>
+        <ObjectPropertyChain>
+            <ObjectProperty IRI="satisface_criterio"/>
+            <ObjectInverseOf>
+                <ObjectProperty abbreviatedIRI="principle:extiende_de_criterio"/>
+            </ObjectInverseOf>
+        </ObjectPropertyChain>
+        <ObjectProperty IRI="satisface_criterio"/>
+    </SubObjectPropertyOf>
+
+    <Declaration>
+        <ObjectProperty IRI="evalua_funcionalidad"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="evalua_funcionalidad"/>
+        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="evalua_funcionalidad"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyRange>
+
     <SubObjectPropertyOf>
         <ObjectProperty IRI="es_organizacion_padre"/>
         <ObjectProperty IRI="es_organizacion_antecesora"/>
@@ -575,10 +620,7 @@
         <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
         <Class IRI="relacion_repositorio_y_organizacion"/>
     </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
-        <Class IRI="repositorio"/>
-    </ObjectPropertyDomain>
+
     <ObjectPropertyDomain>
         <ObjectProperty IRI="repositorio_certificado_por"/>
         <Class IRI="repositorio"/>
@@ -672,10 +714,7 @@
         <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
         <Class IRI="repositorio"/>
     </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
-        <Class IRI="disciplina"/>
-    </ObjectPropertyRange>
+
     <ObjectPropertyRange>
         <ObjectProperty IRI="repositorio_certificado_por"/>
         <Class IRI="certificacion"/>
@@ -693,6 +732,27 @@
         <ObjectProperty IRI="utiliza_motor"/>
         <Class IRI="motor_de_repositorio"/>
     </ObjectPropertyRange>
+
+    <Declaration>
+        <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
+        <Class IRI="disciplina"/>
+    </ObjectPropertyRange>
+    <SubObjectPropertyOf>
+        <ObjectPropertyChain>
+            <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
+            <ObjectInverseOf>
+                <ObjectProperty IRI="es_descendiente_disciplina_de"/>
+            </ObjectInverseOf>
+        </ObjectPropertyChain>
+        <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
+    </SubObjectPropertyOf>
 
     <Declaration>
         <ObjectProperty IRI="usa_politica"/>
@@ -972,47 +1032,7 @@
         <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
         <DataProperty IRI="id_de_repositorio_tiene_literal"/>
     </HasKey>
-    <DLSafeRule>
-        <Annotation>
-            <AnnotationProperty IRI="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"/>
-            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#boolean">true</Literal>
-        </Annotation>
-        <Annotation>
-            <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
-            <Literal></Literal>
-        </Annotation>
-        <Annotation>
-            <AnnotationProperty abbreviatedIRI="rdfs:label"/>
-            <Literal>repositorio_covariante_con_subdisciplina</Literal>
-        </Annotation>
-        <Body>
-            <ClassAtom>
-                <Class IRI="repositorio"/>
-                <Variable IRI="urn:swrl:var#x"/>
-            </ClassAtom>
-            <ClassAtom>
-                <Class IRI="disciplina"/>
-                <Variable IRI="urn:swrl:var#y"/>
-            </ClassAtom>
-            <ObjectPropertyAtom>
-                <ObjectProperty IRI="es_descendiente_disciplina_de"/>
-                <Variable IRI="urn:swrl:var#y"/>
-                <Variable IRI="urn:swrl:var#z"/>
-            </ObjectPropertyAtom>
-            <ObjectPropertyAtom>
-                <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
-                <Variable IRI="urn:swrl:var#x"/>
-                <Variable IRI="urn:swrl:var#y"/>
-            </ObjectPropertyAtom>
-        </Body>
-        <Head>
-            <ObjectPropertyAtom>
-                <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
-                <Variable IRI="urn:swrl:var#x"/>
-                <Variable IRI="urn:swrl:var#z"/>
-            </ObjectPropertyAtom>
-        </Head>
-    </DLSafeRule>
+
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>agregador</IRI>

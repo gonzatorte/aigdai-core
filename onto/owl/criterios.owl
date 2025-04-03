@@ -1,162 +1,53 @@
 <?xml version="1.0"?>
 <Ontology xmlns="http://www.w3.org/2002/07/owl#"
-     xml:base="file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/criterios.owl"
+     xml:base="http://criterios.owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     ontologyIRI="file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/criterios.owl">
-    <Prefix name="" IRI="file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/criterios.owl#"/>
+     ontologyIRI="http://criterios.owl"
+     versionIRI="http://criterios.owl/v0.1">
+    <Prefix name="" IRI="http://criterios.owl#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
-    <Prefix name="drepo" IRI="file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/aigdai.owx#"/>
     <Prefix name="dcterms" IRI="http://purl.org/dc/terms/"/>
     <Prefix name="fairvoc" IRI="https://w3id.org/fair/principles/terms/"/>
-    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/criterios.xml</Import>
-    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/aigdai.owx#</Import>
-    <Declaration>
-        <Class abbreviatedIRI="drepo:repositorio"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="criterio_de_calidad"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="grupo_de_criterio"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="considera_criterio"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="criterio_pertenece_a_grupo"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="es_organizacion_relacionada"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="extiende_de_criterio"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="evalua_funcionalidad"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="satisface_criterio"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="criterio_tiene_descripcion"/>
-    </Declaration>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/criterios.xml</Import>
+
     <Declaration>
         <AnnotationProperty IRI="nombre_usual"/>
     </Declaration>
+
+    <Declaration>
+        <Class IRI="criterio_de_calidad"/>
+    </Declaration>
     <SubClassOf>
         <Class IRI="criterio_de_calidad"/>
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
+
+    <Declaration>
+        <Class IRI="grupo_de_criterio"/>
+    </Declaration>
     <SubClassOf>
         <Class IRI="grupo_de_criterio"/>
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
-    <DisjointClasses>
-        <Class abbreviatedIRI="drepo:repositorio"/>
-        <Class IRI="criterio_de_calidad"/>
-        <Class IRI="grupo_de_criterio"/>
-    </DisjointClasses>
-    <SubObjectPropertyOf>
-        <ObjectProperty IRI="extiende_de_criterio"/>
+
+    <Declaration>
         <ObjectProperty IRI="considera_criterio"/>
-    </SubObjectPropertyOf>
-    <AsymmetricObjectProperty>
-        <ObjectProperty IRI="extiende_de_criterio"/>
-    </AsymmetricObjectProperty>
-    <TransitiveObjectProperty>
-        <ObjectProperty IRI="extiende_de_criterio"/>
-    </TransitiveObjectProperty>
-    <IrreflexiveObjectProperty>
-        <ObjectProperty IRI="extiende_de_criterio"/>
-    </IrreflexiveObjectProperty>
+    </Declaration>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="considera_criterio"/>
         <Class IRI="criterio_de_calidad"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="criterio_pertenece_a_grupo"/>
-        <Class IRI="criterio_de_calidad"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="extiende_de_criterio"/>
-        <Class IRI="criterio_de_calidad"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="evalua_funcionalidad"/>
-        <Class IRI="criterio_de_calidad"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="satisface_criterio"/>
-        <Class abbreviatedIRI="drepo:repositorio"/>
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
         <ObjectProperty IRI="considera_criterio"/>
         <Class IRI="criterio_de_calidad"/>
     </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="criterio_pertenece_a_grupo"/>
-        <Class IRI="grupo_de_criterio"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="extiende_de_criterio"/>
-        <Class IRI="criterio_de_calidad"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="evalua_funcionalidad"/>
-        <Class abbreviatedIRI="drepo:repositorio"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="satisface_criterio"/>
-        <Class IRI="criterio_de_calidad"/>
-    </ObjectPropertyRange>
-    <DataPropertyDomain>
-        <DataProperty IRI="criterio_tiene_descripcion"/>
-        <Class IRI="criterio_de_calidad"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="criterio_tiene_descripcion"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DLSafeRule>
-        <Body>
-            <ClassAtom>
-                <Class abbreviatedIRI="drepo:repositorio"/>
-                <Variable IRI="urn:swrl:var#r"/>
-            </ClassAtom>
-            <ClassAtom>
-                <Class IRI="criterio_de_calidad"/>
-                <Variable IRI="urn:swrl:var#q1"/>
-            </ClassAtom>
-            <ClassAtom>
-                <Class IRI="criterio_de_calidad"/>
-                <Variable IRI="urn:swrl:var#q2"/>
-            </ClassAtom>
-            <ObjectPropertyAtom>
-                <ObjectProperty IRI="satisface_criterio"/>
-                <Variable IRI="urn:swrl:var#r"/>
-                <Variable IRI="urn:swrl:var#q1"/>
-            </ObjectPropertyAtom>
-            <ObjectPropertyAtom>
-                <ObjectProperty IRI="extiende_de_criterio"/>
-                <Variable IRI="urn:swrl:var#q2"/>
-                <Variable IRI="urn:swrl:var#q1"/>
-            </ObjectPropertyAtom>
-        </Body>
-        <Head>
-            <ObjectPropertyAtom>
-                <ObjectProperty IRI="satisface_criterio"/>
-                <Variable IRI="urn:swrl:var#r"/>
-                <Variable IRI="urn:swrl:var#q2"/>
-            </ObjectPropertyAtom>
-        </Head>
-    </DLSafeRule>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>considera_criterio</IRI>
@@ -167,16 +58,25 @@
         <IRI>considera_criterio</IRI>
         <Literal xml:lang="en">Considers criteria</Literal>
     </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>criterio_de_calidad</IRI>
-        <Literal xml:lang="es">Criterio de calidad</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>criterio_de_calidad</IRI>
-        <Literal xml:lang="en">Quality Criteria</Literal>
-    </AnnotationAssertion>
+
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="extiende_de_criterio"/>
+        <ObjectProperty IRI="considera_criterio"/>
+    </SubObjectPropertyOf>
+    <Declaration>
+        <ObjectProperty IRI="extiende_de_criterio"/>
+    </Declaration>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="extiende_de_criterio"/>
+    </TransitiveObjectProperty>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="extiende_de_criterio"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="extiende_de_criterio"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyRange>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>extiende_de_criterio</IRI>
@@ -186,6 +86,40 @@
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>extiende_de_criterio</IRI>
         <Literal xml:lang="es">Extiende de</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="criterio_pertenece_a_grupo"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="criterio_pertenece_a_grupo"/>
+        <Class IRI="criterio_de_calidad"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="criterio_pertenece_a_grupo"/>
+        <Class IRI="grupo_de_criterio"/>
+    </ObjectPropertyRange>
+
+    <Declaration>
+        <DataProperty IRI="criterio_tiene_descripcion"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="criterio_tiene_descripcion"/>
+        <Class IRI="criterio_de_calidad"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="criterio_tiene_descripcion"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>criterio_de_calidad</IRI>
+        <Literal xml:lang="es">Criterio de calidad</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>criterio_de_calidad</IRI>
+        <Literal xml:lang="en">Quality Criteria</Literal>
     </AnnotationAssertion>
 </Ontology>
 
