@@ -21,20 +21,180 @@
     <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/disciplinas.xml</Import>
     <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/localizaciones.xml</Import>
     <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/organizaciones.xml</Import>
+    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/repositorios.xml</Import>
+
+    <Declaration>
+        <AnnotationProperty IRI="nombre_usual"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="sinonimo"/>
+    </Declaration>
+
     <Declaration>
         <Class IRI="agregador"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="agregador"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>agregador</IRI>
+        <Literal xml:lang="en">aggregator</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>agregador</IRI>
+        <Literal xml:lang="es">agregador</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="sinonimo"/>
+        <IRI>agregador</IRI>
+        <Literal xml:lang="es">buscador</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="resultado_de_investigacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="resultado_de_investigacion"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="resultado_relacionado"/>
+        <Class IRI="resultado_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="resultado_relacionado"/>
+        <Class IRI="resultado_de_investigacion"/>
+    </ObjectPropertyRange>
+    <Declaration>
+        <Class IRI="id_de_resultado_de_investigacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="id_de_resultado_de_investigacion"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="esquema_de_id_persistente"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="esquema_de_id_persistente"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>esquema_de_id_persistente</IRI>
+        <Literal xml:lang="es">esquema de identificador persistente</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>esquema_de_id_persistente</IRI>
+        <Literal xml:lang="en">persistent identifier schema</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <ObjectProperty IRI="extiende_a_esquema_de_id_persistente"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="extiende_a_esquema_de_id_persistente"/>
+        <Class IRI="esquema_de_id_persistente"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="extiende_a_esquema_de_id_persistente"/>
+        <Class IRI="esquema_de_id_persistente"/>
+    </ObjectPropertyRange>
+    <Declaration>
+        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_esquema_de_id_persistente"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_esquema_de_id_persistente"/>
+        <Class IRI="id_de_resultado_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_esquema_de_id_persistente"/>
+        <Class IRI="esquema_de_id_persistente"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_esquema_de_id_persistente"/>
+    </FunctionalObjectProperty>
+    <Declaration>
+        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_resultado_de_investigacion"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_resultado_de_investigacion"/>
+        <Class IRI="id_de_resultado_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_resultado_de_investigacion"/>
+        <Class IRI="resultado_de_investigacion"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_resultado_de_investigacion"/>
+    </FunctionalObjectProperty>
+    <Declaration>
+        <DataProperty IRI="id_de_resultado_de_investigacion_tiene_literal"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="id_de_resultado_de_investigacion_tiene_literal"/>
+        <Class IRI="id_de_resultado_de_investigacion"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="id_de_resultado_de_investigacion_tiene_literal"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="id_de_resultado_de_investigacion_tiene_literal"/>
+    </FunctionalDataProperty>
+    <Declaration>
+        <Class IRI="articulo"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="articulo"/>
+        <Class IRI="resultado_de_investigacion"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="cdd"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="cdd"/>
+        <Class IRI="resultado_de_investigacion"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>cdd</IRI>
+        <Literal xml:lang="es">coleccion de datos</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>cdd</IRI>
+        <Literal xml:lang="en">dataset</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="sinonimo"/>
+        <IRI>cdd</IRI>
+        <Literal xml:lang="es">conjunto de datos</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="repositorio_certificado_por"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="resultado_relacionado"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="utiliza_motor"/>
     </Declaration>
     <Declaration>
         <Class IRI="api_para_cosecha"/>
     </Declaration>
     <Declaration>
-        <Class IRI="articulo"/>
-    </Declaration>
-    <Declaration>
         <Class IRI="autor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="bloque_comercial"/>
     </Declaration>
     <Declaration>
         <Class IRI="cantidad_de_contenedores"/>
@@ -46,25 +206,13 @@
         <Class IRI="caracteristica_de_cdd"/>
     </Declaration>
     <Declaration>
-        <Class IRI="catalogo_de_repositorios"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="cdd"/>
-    </Declaration>
-    <Declaration>
         <Class IRI="certificacion"/>
     </Declaration>
     <Declaration>
         <Class IRI="control_de_acceso"/>
     </Declaration>
     <Declaration>
-        <Class IRI="disciplina"/>
-    </Declaration>
-    <Declaration>
         <Class IRI="esquema_de_id_de_autor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="esquema_de_id_persistente"/>
     </Declaration>
     <Declaration>
         <Class IRI="esquema_de_metadatos"/>
@@ -82,31 +230,10 @@
         <Class IRI="id_de_autor"/>
     </Declaration>
     <Declaration>
-        <Class IRI="id_de_organizacion"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="id_de_repositorio"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="id_de_resultado_de_investigacion"/>
-    </Declaration>
-    <Declaration>
         <Class IRI="licencia"/>
     </Declaration>
     <Declaration>
-        <Class IRI="locacion"/>
-    </Declaration>
-    <Declaration>
         <Class IRI="motor_de_repositorio"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="organizacion"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="pais"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="planeta"/>
     </Declaration>
     <Declaration>
         <Class IRI="politica"/>
@@ -117,42 +244,18 @@
     <Declaration>
         <Class IRI="relacion_repositorio_y_organizacion"/>
     </Declaration>
-    <Declaration>
-        <Class IRI="repositorio"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="resultado_de_investigacion"/>
-    </Declaration>
+
     <Declaration>
         <Class IRI="tamanio"/>
     </Declaration>
     <Declaration>
         <Class IRI="tamanio_en_disco"/>
     </Declaration>
-
     <Declaration>
         <ObjectProperty IRI="es_cosechado_por"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="es_descendiente_disciplina_de"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="es_disciplina_afin"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="es_organizacion_antecesora"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="es_organizacion_padre"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="es_organizacion_relacionada"/>
-    </Declaration>
-    <Declaration>
         <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="es_sub_disciplina_de"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="extiende_a_esquema_de_metadatos"/>
@@ -175,88 +278,11 @@
         <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="id_de_organizacion_tiene_organizacion"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="id_de_organizacion_tiene_tipo"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="id_de_repositorio_tiene_repositorio"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_esquema_de_id_persistente"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_resultado_de_investigacion"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="incluido_en"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="repositorio_certificado_por"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="resultado_relacionado"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="se_ubica_en"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="utiliza_motor"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="alfa_3_de_pais"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="esquema_de_disciplina"/>
-    </Declaration>
-    <Declaration>
         <DataProperty IRI="id_de_autor_tiene_literal"/>
     </Declaration>
-    <Declaration>
-        <DataProperty IRI="id_de_organizacion_tiene_literal"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="id_de_repositorio_tiene_literal"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="id_de_resultado_de_investigacion_tiene_literal"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="nombre_de_bloque"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="nombre_de_disciplina"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="nombre_de_pais"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="organizacion_esta_activa"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="organizacion_fundada_en_anio"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="sigla_de_bloque"/>
-    </Declaration>
+
     <Declaration>
         <DataProperty IRI="tiene_nombre_certificacion"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="tiene_nombre_organizacion"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="tiene_nombre_repositorio"/>
     </Declaration>
     <Declaration>
         <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
@@ -265,35 +291,13 @@
         <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
     </Declaration>
     <Declaration>
-        <DataProperty IRI="tiene_tipo_de_organizacion"/>
-    </Declaration>
-    <Declaration>
         <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
     </Declaration>
-    <Declaration>
-        <DataProperty IRI="usa_lenguaje"/>
-    </Declaration>
 
-    <Declaration>
-        <AnnotationProperty IRI="nombre_usual"/>
-    </Declaration>
-    <Declaration>
-        <AnnotationProperty IRI="sigla_de_bloque"/>
-    </Declaration>
-
-
-    <Declaration>
-        <AnnotationProperty IRI="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"/>
-    </Declaration>
-    <Declaration>
-        <AnnotationProperty IRI="sinonimo"/>
-    </Declaration>
     <Declaration>
         <Datatype IRI="escala"/>
     </Declaration>
-    <Declaration>
-        <Datatype IRI="tipo_de_organizacion"/>
-    </Declaration>
+
     <Declaration>
         <Datatype IRI="tipo_de_relacion_con_organizacion"/>
     </Declaration>
@@ -313,20 +317,8 @@
     </SubClassOf>
 
     <SubClassOf>
-        <Class IRI="agregador"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="articulo"/>
-        <Class IRI="resultado_de_investigacion"/>
-    </SubClassOf>
-    <SubClassOf>
         <Class IRI="autor"/>
         <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="bloque_comercial"/>
-        <Class IRI="locacion"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="cantidad_de_contenedores"/>
@@ -340,22 +332,12 @@
         <Class IRI="caracteristica_de_cdd"/>
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
-    <SubClassOf>
-        <Class IRI="catalogo_de_repositorios"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="cdd"/>
-        <Class IRI="resultado_de_investigacion"/>
-    </SubClassOf>
+
     <SubClassOf>
         <Class IRI="certificacion"/>
         <Class abbreviatedIRI="principle:criterio_de_calidad"/>
     </SubClassOf>
-    <SubClassOf>
-        <Class IRI="disciplina"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
+
     <SubClassOf>
         <Class IRI="formato_de_archivo_abierto"/>
         <Class IRI="formato_de_archivo"/>
@@ -364,42 +346,17 @@
         <Class IRI="id_de_autor"/>
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
-    <SubClassOf>
-        <Class IRI="id_de_organizacion"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="id_de_repositorio"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="id_de_resultado_de_investigacion"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
+
     <SubClassOf>
         <Class IRI="licencia"/>
         <Class IRI="politica"/>
     </SubClassOf>
-    <SubClassOf>
-        <Class IRI="locacion"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
+
     <SubClassOf>
         <Class IRI="motor_de_repositorio"/>
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
-    <SubClassOf>
-        <Class IRI="organizacion"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="pais"/>
-        <Class IRI="locacion"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="planeta"/>
-        <Class IRI="locacion"/>
-    </SubClassOf>
+
     <SubClassOf>
         <Class IRI="politica"/>
         <Class abbreviatedIRI="owl:Thing"/>
@@ -413,28 +370,12 @@
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="repositorio"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="resultado_de_investigacion"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <SubClassOf>
         <Class IRI="tamanio"/>
         <Class IRI="caracteristica_de_cdd"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="tamanio_en_disco"/>
         <Class IRI="tamanio"/>
-    </SubClassOf>
-
-    <Declaration>
-        <Class IRI="tipo_de_id_de_organizacion"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="tipo_de_id_de_organizacion"/>
-        <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
 
     <DisjointClasses>
@@ -477,261 +418,87 @@
         <Class IRI="repositorio"/>
     </ObjectPropertyRange>
 
-    <SubObjectPropertyOf>
-        <ObjectProperty IRI="es_organizacion_padre"/>
-        <ObjectProperty IRI="es_organizacion_antecesora"/>
-    </SubObjectPropertyOf>
-    <SubObjectPropertyOf>
-        <ObjectProperty IRI="es_sub_disciplina_de"/>
-        <ObjectProperty IRI="es_descendiente_disciplina_de"/>
-    </SubObjectPropertyOf>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="id_de_autor_tiene_autor"/>
-    </FunctionalObjectProperty>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
-    </FunctionalObjectProperty>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="id_de_organizacion_tiene_organizacion"/>
-    </FunctionalObjectProperty>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="id_de_organizacion_tiene_tipo"/>
-    </FunctionalObjectProperty>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
-    </FunctionalObjectProperty>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="id_de_repositorio_tiene_repositorio"/>
-    </FunctionalObjectProperty>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_esquema_de_id_persistente"/>
-    </FunctionalObjectProperty>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_resultado_de_investigacion"/>
-    </FunctionalObjectProperty>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
-    </FunctionalObjectProperty>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
-    </FunctionalObjectProperty>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="se_ubica_en"/>
-    </FunctionalObjectProperty>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="utiliza_motor"/>
-    </FunctionalObjectProperty>
-    <SymmetricObjectProperty>
-        <ObjectProperty IRI="es_organizacion_relacionada"/>
-    </SymmetricObjectProperty>
-    <TransitiveObjectProperty>
-        <ObjectProperty IRI="es_descendiente_disciplina_de"/>
-    </TransitiveObjectProperty>
-    <TransitiveObjectProperty>
-        <ObjectProperty IRI="es_organizacion_antecesora"/>
-    </TransitiveObjectProperty>
-    <TransitiveObjectProperty>
-        <ObjectProperty IRI="incluido_en"/>
-    </TransitiveObjectProperty>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="es_cosechado_por"/>
-        <Class IRI="repositorio"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="es_disciplina_afin"/>
-        <Class IRI="disciplina"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="es_organizacion_antecesora"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="es_organizacion_padre"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="es_organizacion_relacionada"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
-        <Class IRI="cdd"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="es_sub_disciplina_de"/>
-        <Class IRI="disciplina"/>
-    </ObjectPropertyDomain>
     <Declaration>
-        <ObjectProperty IRI="extiende_a_esquema_de_id_persistente"/>
+        <Class IRI="disciplina"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="disciplina"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>disciplina</IRI>
+        <Literal xml:lang="es">disciplina</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>disciplina</IRI>
+        <Literal xml:lang="en">subject</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="esquema_de_disciplina"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="esquema_de_disciplina"/>
+        <Class IRI="disciplina"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="esquema_de_disciplina"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+<!--  ToDo: Not sure if functional  -->
+    <FunctionalDataProperty>
+        <DataProperty IRI="esquema_de_disciplina"/>
+    </FunctionalDataProperty>
+    <Declaration>
+        <DataProperty IRI="nombre_de_disciplina"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="nombre_de_disciplina"/>
+        <Class IRI="disciplina"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="nombre_de_disciplina"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+<!--  ToDo: Not sure if functional  -->
+    <FunctionalDataProperty>
+        <DataProperty IRI="nombre_de_disciplina"/>
+    </FunctionalDataProperty>
+<!--  ToDo: No se si se usa el es_disciplina_afin  -->
+    <Declaration>
+        <ObjectProperty IRI="es_disciplina_afin"/>
     </Declaration>
     <ObjectPropertyDomain>
-        <ObjectProperty IRI="extiende_a_esquema_de_id_persistente"/>
-        <Class IRI="esquema_de_id_persistente"/>
+        <ObjectProperty IRI="es_disciplina_afin"/>
+        <Class IRI="disciplina"/>
     </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="extiende_a_esquema_de_id_persistente"/>
-        <Class IRI="esquema_de_id_persistente"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="formato_codifica_tipo_de_archivo"/>
-        <Class IRI="formato_de_archivo"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="id_de_autor_tiene_autor"/>
-        <Class IRI="id_de_autor"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
-        <Class IRI="id_de_autor"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="id_de_organizacion_tiene_organizacion"/>
-        <Class IRI="id_de_organizacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="id_de_organizacion_tiene_tipo"/>
-        <Class IRI="id_de_organizacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
-        <Class IRI="id_de_repositorio"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="id_de_repositorio_tiene_repositorio"/>
-        <Class IRI="id_de_repositorio"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_esquema_de_id_persistente"/>
-        <Class IRI="id_de_resultado_de_investigacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_resultado_de_investigacion"/>
-        <Class IRI="id_de_resultado_de_investigacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="incluido_en"/>
-        <Class IRI="locacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
-        <Class IRI="relacion_repositorio_y_organizacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
-        <Class IRI="relacion_repositorio_y_organizacion"/>
-    </ObjectPropertyDomain>
-
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="repositorio_certificado_por"/>
-        <Class IRI="repositorio"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="resultado_relacionado"/>
-        <Class IRI="resultado_de_investigacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="se_ubica_en"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyDomain>
-
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="utiliza_motor"/>
-        <Class IRI="repositorio"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="es_cosechado_por"/>
-        <Class IRI="agregador"/>
-    </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty IRI="es_disciplina_afin"/>
         <Class IRI="disciplina"/>
     </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="es_organizacion_antecesora"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="es_organizacion_padre"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="es_organizacion_relacionada"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
-        <Class IRI="productor_de_datos"/>
-    </ObjectPropertyRange>
+<!--  ToDo: No se si hace falta seguir teniendo es_sub_disciplina_de para los pasos de 1 -->
+    <Declaration>
+        <ObjectProperty IRI="es_sub_disciplina_de"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="es_sub_disciplina_de"/>
+        <Class IRI="disciplina"/>
+    </ObjectPropertyDomain>
     <ObjectPropertyRange>
         <ObjectProperty IRI="es_sub_disciplina_de"/>
         <Class IRI="disciplina"/>
     </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="formato_codifica_tipo_de_archivo"/>
-        <Class IRI="tipo_de_dato"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="id_de_autor_tiene_autor"/>
-        <Class IRI="autor"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
-        <Class IRI="esquema_de_id_de_autor"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="id_de_organizacion_tiene_organizacion"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="id_de_organizacion_tiene_tipo"/>
-        <Class IRI="tipo_de_id_de_organizacion"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
-        <Class IRI="catalogo_de_repositorios"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="id_de_repositorio_tiene_repositorio"/>
-        <Class IRI="repositorio"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_esquema_de_id_persistente"/>
-        <Class IRI="esquema_de_id_persistente"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="id_de_resultado_de_investigacion_tiene_resultado_de_investigacion"/>
-        <Class IRI="resultado_de_investigacion"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="incluido_en"/>
-        <Class IRI="locacion"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
-        <Class IRI="repositorio"/>
-    </ObjectPropertyRange>
-
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="repositorio_certificado_por"/>
-        <Class IRI="certificacion"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="resultado_relacionado"/>
-        <Class IRI="resultado_de_investigacion"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="se_ubica_en"/>
-        <Class IRI="locacion"/>
-    </ObjectPropertyRange>
-
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="utiliza_motor"/>
-        <Class IRI="motor_de_repositorio"/>
-    </ObjectPropertyRange>
+    <Declaration>
+        <ObjectProperty IRI="es_descendiente_disciplina_de"/>
+    </Declaration>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="es_sub_disciplina_de"/>
+        <ObjectProperty IRI="es_descendiente_disciplina_de"/>
+    </SubObjectPropertyOf>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="es_descendiente_disciplina_de"/>
+    </TransitiveObjectProperty>
 
     <Declaration>
         <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
@@ -753,6 +520,460 @@
         </ObjectPropertyChain>
         <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
     </SubObjectPropertyOf>
+
+    <Declaration>
+        <Class IRI="organizacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="organizacion"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>organizacion</IRI>
+        <Literal xml:lang="es">organización</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>organizacion</IRI>
+        <Literal xml:lang="en">organization</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="sinonimo"/>
+        <IRI>organizacion</IRI>
+        <Literal xml:lang="es">institución</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <ObjectProperty IRI="es_organizacion_antecesora"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="es_organizacion_antecesora"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="es_organizacion_antecesora"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyRange>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="es_organizacion_antecesora"/>
+    </TransitiveObjectProperty>
+    <Declaration>
+        <ObjectProperty IRI="es_organizacion_padre"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="es_organizacion_padre"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="es_organizacion_padre"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyRange>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="es_organizacion_padre"/>
+        <ObjectProperty IRI="es_organizacion_antecesora"/>
+    </SubObjectPropertyOf>
+    <Declaration>
+        <ObjectProperty IRI="es_organizacion_relacionada"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="es_organizacion_relacionada"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="es_organizacion_relacionada"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyRange>
+    <SymmetricObjectProperty>
+        <ObjectProperty IRI="es_organizacion_relacionada"/>
+    </SymmetricObjectProperty>
+    <Declaration>
+        <DataProperty IRI="tiene_nombre_organizacion"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_nombre_organizacion"/>
+        <Class IRI="organizacion"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_nombre_organizacion"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <Declaration>
+        <DataProperty IRI="organizacion_fundada_en_anio"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="organizacion_fundada_en_anio"/>
+        <Class IRI="organizacion"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="organizacion_fundada_en_anio"/>
+        <Datatype abbreviatedIRI="xsd:positiveInteger"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="organizacion_fundada_en_anio"/>
+    </FunctionalDataProperty>
+    <Declaration>
+        <Datatype IRI="tipo_de_organizacion"/>
+    </Declaration>
+    <DatatypeDefinition>
+        <Datatype IRI="tipo_de_organizacion"/>
+        <DataOneOf>
+            <Literal>archive</Literal>
+            <Literal>comercial</Literal>
+            <Literal>company</Literal>
+            <Literal>education</Literal>
+            <Literal>facility</Literal>
+            <Literal>funder</Literal>
+            <Literal>government</Literal>
+            <Literal>healthcare</Literal>
+            <Literal>no-comercial</Literal>
+            <Literal>nonprofit</Literal>
+            <Literal>other</Literal>
+        </DataOneOf>
+    </DatatypeDefinition>
+    <Declaration>
+        <DataProperty IRI="tiene_tipo_de_organizacion"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_tipo_de_organizacion"/>
+        <Class IRI="organizacion"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_tipo_de_organizacion"/>
+        <Datatype IRI="tipo_de_organizacion"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="tiene_tipo_de_organizacion"/>
+    </FunctionalDataProperty>
+    <Declaration>
+        <DataProperty IRI="organizacion_esta_activa"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="organizacion_esta_activa"/>
+        <Class IRI="organizacion"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="organizacion_esta_activa"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="organizacion_esta_activa"/>
+    </FunctionalDataProperty>
+    <Declaration>
+        <Class IRI="id_de_organizacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="id_de_organizacion"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>id_de_organizacion</IRI>
+        <Literal xml:lang="es">identificador de organizacion</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>id_de_organizacion</IRI>
+        <Literal xml:lang="en">organization identifier</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <Class IRI="tipo_de_id_de_organizacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="tipo_de_id_de_organizacion"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <Declaration>
+        <DataProperty IRI="id_de_organizacion_tiene_literal"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="id_de_organizacion_tiene_literal"/>
+        <Class IRI="id_de_organizacion"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="id_de_organizacion_tiene_literal"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="id_de_organizacion_tiene_literal"/>
+    </FunctionalDataProperty>
+    <Declaration>
+        <ObjectProperty IRI="id_de_organizacion_tiene_tipo"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="id_de_organizacion_tiene_tipo"/>
+        <Class IRI="id_de_organizacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="id_de_organizacion_tiene_tipo"/>
+        <Class IRI="tipo_de_id_de_organizacion"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="id_de_organizacion_tiene_tipo"/>
+    </FunctionalObjectProperty>
+    <HasKey>
+        <Class IRI="id_de_organizacion"/>
+        <ObjectProperty IRI="id_de_organizacion_tiene_tipo"/>
+        <DataProperty IRI="id_de_organizacion_tiene_literal"/>
+    </HasKey>
+    <Declaration>
+        <ObjectProperty IRI="id_de_organizacion_tiene_organizacion"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="id_de_organizacion_tiene_organizacion"/>
+        <Class IRI="id_de_organizacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="id_de_organizacion_tiene_organizacion"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="id_de_organizacion_tiene_organizacion"/>
+    </FunctionalObjectProperty>
+
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="id_de_autor_tiene_autor"/>
+    </FunctionalObjectProperty>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
+    </FunctionalObjectProperty>
+
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
+    </FunctionalObjectProperty>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
+    </FunctionalObjectProperty>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="utiliza_motor"/>
+    </FunctionalObjectProperty>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="es_cosechado_por"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyDomain>
+
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
+        <Class IRI="cdd"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="formato_codifica_tipo_de_archivo"/>
+        <Class IRI="formato_de_archivo"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="id_de_autor_tiene_autor"/>
+        <Class IRI="id_de_autor"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
+        <Class IRI="id_de_autor"/>
+    </ObjectPropertyDomain>
+
+    <Declaration>
+        <Class IRI="locacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="locacion"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>locacion</IRI>
+        <Literal xml:lang="es">locación</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>locacion</IRI>
+        <Literal xml:lang="en">location</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="incluido_en"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="incluido_en"/>
+        <Class IRI="locacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="incluido_en"/>
+        <Class IRI="locacion"/>
+    </ObjectPropertyRange>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="incluido_en"/>
+    </TransitiveObjectProperty>
+
+    <Declaration>
+        <Class IRI="pais"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="pais"/>
+        <Class IRI="locacion"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>pais</IRI>
+        <Literal xml:lang="en">country</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>pais</IRI>
+        <Literal xml:lang="es">país</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="alfa_3_de_pais"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="alfa_3_de_pais"/>
+        <Class IRI="pais"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="alfa_3_de_pais"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="alfa_3_de_pais"/>
+    </FunctionalDataProperty>
+    <HasKey>
+        <Class IRI="pais"/>
+        <ObjectProperty IRI="alfa_3_de_pais"/>
+    </HasKey>
+    <Declaration>
+        <DataProperty IRI="nombre_de_pais"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="nombre_de_pais"/>
+        <Class IRI="pais"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="nombre_de_pais"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+
+    <Declaration>
+        <Class IRI="bloque_comercial"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="bloque_comercial"/>
+        <Class IRI="locacion"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>bloque_comercial</IRI>
+        <Literal xml:lang="es">bloque comercial</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>bloque_comercial</IRI>
+        <Literal xml:lang="en">trade block</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="planeta"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="planeta"/>
+        <Class IRI="locacion"/>
+    </SubClassOf>
+
+    <Declaration>
+        <DataProperty IRI="nombre_de_bloque"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="nombre_de_bloque"/>
+        <Class IRI="bloque_comercial"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="nombre_de_bloque"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <Declaration>
+        <DataProperty IRI="sigla_de_bloque"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="sigla_de_bloque"/>
+        <Class IRI="bloque_comercial"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="sigla_de_bloque"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="sigla_de_bloque"/>
+    </FunctionalDataProperty>
+
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
+    </ObjectPropertyDomain>
+
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="repositorio_certificado_por"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyDomain>
+
+    <Declaration>
+        <ObjectProperty IRI="se_ubica_en"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="se_ubica_en"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="se_ubica_en"/>
+        <Class IRI="locacion"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="se_ubica_en"/>
+    </FunctionalObjectProperty>
+
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="utiliza_motor"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="es_cosechado_por"/>
+        <Class IRI="agregador"/>
+    </ObjectPropertyRange>
+
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
+        <Class IRI="productor_de_datos"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="formato_codifica_tipo_de_archivo"/>
+        <Class IRI="tipo_de_dato"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="id_de_autor_tiene_autor"/>
+        <Class IRI="autor"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
+        <Class IRI="esquema_de_id_de_autor"/>
+    </ObjectPropertyRange>
+
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyRange>
+
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="repositorio_certificado_por"/>
+        <Class IRI="certificacion"/>
+    </ObjectPropertyRange>
+
+
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="utiliza_motor"/>
+        <Class IRI="motor_de_repositorio"/>
+    </ObjectPropertyRange>
 
     <Declaration>
         <ObjectProperty IRI="usa_politica"/>
@@ -798,114 +1019,105 @@
     </HasKey>
 
     <FunctionalDataProperty>
-        <DataProperty IRI="alfa_3_de_pais"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
-        <DataProperty IRI="esquema_de_disciplina"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
         <DataProperty IRI="id_de_autor_tiene_literal"/>
     </FunctionalDataProperty>
-    <FunctionalDataProperty>
-        <DataProperty IRI="id_de_organizacion_tiene_literal"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
-        <DataProperty IRI="id_de_repositorio_tiene_literal"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
-        <DataProperty IRI="id_de_resultado_de_investigacion_tiene_literal"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
-        <DataProperty IRI="nombre_de_bloque"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
-        <DataProperty IRI="nombre_de_disciplina"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
-        <DataProperty IRI="nombre_de_pais"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
-        <DataProperty IRI="organizacion_esta_activa"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
-        <DataProperty IRI="organizacion_fundada_en_anio"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
-        <DataProperty IRI="sigla_de_bloque"/>
-    </FunctionalDataProperty>
+
+
     <FunctionalDataProperty>
         <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
     </FunctionalDataProperty>
     <FunctionalDataProperty>
-        <DataProperty IRI="tiene_tipo_de_organizacion"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
         <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
     </FunctionalDataProperty>
-    <DataPropertyDomain>
-        <DataProperty IRI="alfa_3_de_pais"/>
-        <Class IRI="pais"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="esquema_de_disciplina"/>
-        <Class IRI="disciplina"/>
-    </DataPropertyDomain>
+
     <DataPropertyDomain>
         <DataProperty IRI="id_de_autor_tiene_literal"/>
         <Class IRI="id_de_autor"/>
     </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="id_de_organizacion_tiene_literal"/>
-        <Class IRI="id_de_organizacion"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="id_de_repositorio_tiene_literal"/>
-        <Class IRI="id_de_repositorio"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="id_de_resultado_de_investigacion_tiene_literal"/>
-        <Class IRI="id_de_resultado_de_investigacion"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="nombre_de_bloque"/>
-        <Class IRI="bloque_comercial"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="nombre_de_bloque"/>
-        <Class IRI="pais"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="nombre_de_disciplina"/>
-        <Class IRI="disciplina"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="nombre_de_pais"/>
-        <Class IRI="pais"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="organizacion_esta_activa"/>
-        <Class IRI="organizacion"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="organizacion_fundada_en_anio"/>
-        <Class IRI="organizacion"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="sigla_de_bloque"/>
-        <Class IRI="bloque_comercial"/>
-    </DataPropertyDomain>
+
     <DataPropertyDomain>
         <DataProperty IRI="tiene_nombre_certificacion"/>
         <Class IRI="certificacion"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
-        <DataProperty IRI="tiene_nombre_organizacion"/>
-        <Class IRI="organizacion"/>
+        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
     </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
+    </DataPropertyDomain>
+
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
+    </DataPropertyDomain>
+
+    <DataPropertyRange>
+        <DataProperty IRI="id_de_autor_tiene_literal"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_nombre_certificacion"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
+        <Datatype IRI="gross_date"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
+        <Datatype IRI="gross_date"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
+        <Datatype IRI="tipo_de_relacion_con_organizacion"/>
+    </DataPropertyRange>
+    <HasKey>
+        <Class IRI="id_de_autor"/>
+        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
+        <DataProperty IRI="id_de_autor_tiene_literal"/>
+    </HasKey>
+
+    <Declaration>
+        <Class IRI="repositorio"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="repositorio"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio</IRI>
+        <Literal xml:lang="es">repositorio</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio</IRI>
+        <Literal xml:lang="en">repository</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="sinonimo"/>
+        <IRI>repositorio</IRI>
+        <Literal xml:lang="en">archive</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="sinonimo"/>
+        <IRI>repositorio</IRI>
+        <Literal xml:lang="es">archivo</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="tiene_nombre_repositorio"/>
+    </Declaration>
     <DataPropertyDomain>
         <DataProperty IRI="tiene_nombre_repositorio"/>
         <Class IRI="repositorio"/>
     </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_nombre_repositorio"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
     <Declaration>
         <DataProperty IRI="tiene_url_repositorio"/>
     </Declaration>
@@ -917,157 +1129,156 @@
         <DataProperty IRI="tiene_url_repositorio"/>
         <Datatype IRI="url"/>
     </DataPropertyRange>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
-        <Class IRI="relacion_repositorio_y_organizacion"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
-        <Class IRI="relacion_repositorio_y_organizacion"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_tipo_de_organizacion"/>
-        <Class IRI="organizacion"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
-        <Class IRI="relacion_repositorio_y_organizacion"/>
-    </DataPropertyDomain>
+<!--  ToDo: Renombrar a usa_lenguaje_repositorio  -->
+    <Declaration>
+        <DataProperty IRI="usa_lenguaje"/>
+    </Declaration>
     <DataPropertyDomain>
         <DataProperty IRI="usa_lenguaje"/>
         <Class IRI="repositorio"/>
     </DataPropertyDomain>
     <DataPropertyRange>
-        <DataProperty IRI="alfa_3_de_pais"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="esquema_de_disciplina"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="id_de_autor_tiene_literal"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="id_de_organizacion_tiene_literal"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="id_de_repositorio_tiene_literal"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="id_de_resultado_de_investigacion_tiene_literal"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="nombre_de_bloque"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="nombre_de_disciplina"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="nombre_de_pais"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="organizacion_esta_activa"/>
-        <Datatype abbreviatedIRI="xsd:boolean"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="organizacion_fundada_en_anio"/>
-        <Datatype abbreviatedIRI="xsd:positiveInteger"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="sigla_de_bloque"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_nombre_certificacion"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_nombre_organizacion"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_nombre_repositorio"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
-        <Datatype IRI="gross_date"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
-        <Datatype IRI="gross_date"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_tipo_de_organizacion"/>
-        <Datatype IRI="tipo_de_organizacion"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
-        <Datatype IRI="tipo_de_relacion_con_organizacion"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
         <DataProperty IRI="usa_lenguaje"/>
         <Datatype abbreviatedIRI="lang:lenguaje"/>
     </DataPropertyRange>
-    <HasKey>
-        <Class IRI="id_de_autor"/>
-        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
-        <DataProperty IRI="id_de_autor_tiene_literal"/>
-    </HasKey>
-    <HasKey>
-        <Class IRI="id_de_organizacion"/>
-        <ObjectProperty IRI="id_de_organizacion_tiene_tipo"/>
-        <DataProperty IRI="id_de_organizacion_tiene_literal"/>
-    </HasKey>
-    <HasKey>
+    <Declaration>
+        <DataProperty IRI="tiene_descripcion_repositorio"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_descripcion_repositorio"/>
+        <Class IRI="repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_descripcion_repositorio"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>tiene_descripcion_repositorio</IRI>
+        <Literal xml:lang="en">repositorio has description</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>tiene_descripcion_repositorio</IRI>
+        <Literal xml:lang="es">tiene descripcion repositorio</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="repositorio_creado_en_anio"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="repositorio_creado_en_anio"/>
+        <Class IRI="repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="repositorio_creado_en_anio"/>
+        <Datatype IRI="positiveInteger_or_null"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="repositorio_creado_en_anio"/>
+    </FunctionalDataProperty>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_creado_en_anio</IRI>
+        <Literal xml:lang="en">year of repository creation</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_creado_en_anio</IRI>
+        <Literal xml:lang="es">repositorio creado en año</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="repositorio_cerrado_en_anio"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="repositorio_cerrado_en_anio"/>
+        <Class IRI="repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="repositorio_cerrado_en_anio"/>
+        <Datatype abbreviatedIRI="xsd:positiveInteger" />
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="repositorio_cerrado_en_anio"/>
+    </FunctionalDataProperty>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_cerrado_en_anio</IRI>
+        <Literal xml:lang="en">year of repository close</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_cerrado_en_anio</IRI>
+        <Literal xml:lang="es">repositorio cerrado en año</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <ObjectProperty IRI="repositorio_opera_en_pais"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="repositorio_opera_en_pais"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="repositorio_opera_en_pais"/>
+        <Class IRI="pais"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_opera_en_pais</IRI>
+        <Literal xml:lang="en">repository operates at country</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_opera_en_pais</IRI>
+        <Literal xml:lang="es">repositorio opera en país</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="repositorio_esta_activo"/>
+    </Declaration>
+    <FunctionalDataProperty>
+        <DataProperty IRI="repositorio_esta_activo"/>
+    </FunctionalDataProperty>
+    <DataPropertyDomain>
+        <DataProperty IRI="repositorio_esta_activo"/>
+        <Class IRI="repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="repositorio_esta_activo"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_esta_activo</IRI>
+        <Literal xml:lang="en">is repository active</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_esta_activo</IRI>
+        <Literal xml:lang="es">repositorio esta activo</Literal>
+    </AnnotationAssertion>
+    <Declaration>
         <Class IRI="id_de_repositorio"/>
-        <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
-        <DataProperty IRI="id_de_repositorio_tiene_literal"/>
-    </HasKey>
-
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="id_de_repositorio"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>agregador</IRI>
-        <Literal xml:lang="en">aggregator</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>agregador</IRI>
-        <Literal xml:lang="es">agregador</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="sinonimo"/>
-        <IRI>agregador</IRI>
-        <Literal xml:lang="es">buscador</Literal>
+        <IRI>id_de_repositorio</IRI>
+        <Literal xml:lang="es">identificador de repositorio</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>api_para_cosecha</IRI>
-        <Literal xml:lang="es">api para cosecha</Literal>
+        <IRI>id_de_repositorio</IRI>
+        <Literal xml:lang="en">repository identifier</Literal>
     </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>api_para_cosecha</IRI>
-        <Literal xml:lang="en">harvesting api</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>bloque_comercial</IRI>
-        <Literal xml:lang="es">bloque comercial</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>bloque_comercial</IRI>
-        <Literal xml:lang="en">trade bloc</Literal>
-    </AnnotationAssertion>
+    <Declaration>
+        <Class IRI="catalogo_de_repositorios"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="catalogo_de_repositorios"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>catalogo_de_repositorios</IRI>
@@ -1078,25 +1289,63 @@
         <IRI>catalogo_de_repositorios</IRI>
         <Literal xml:lang="en">repository_catalog</Literal>
     </AnnotationAssertion>
+    <Declaration>
+        <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
+        <Class IRI="id_de_repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
+        <Class IRI="catalogo_de_repositorios"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
+    </FunctionalObjectProperty>
+    <Declaration>
+        <ObjectProperty IRI="id_de_repositorio_tiene_repositorio"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="id_de_repositorio_tiene_repositorio"/>
+        <Class IRI="id_de_repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="id_de_repositorio_tiene_repositorio"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="id_de_repositorio_tiene_repositorio"/>
+    </FunctionalObjectProperty>
+    <Declaration>
+        <DataProperty IRI="id_de_repositorio_tiene_literal"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="id_de_repositorio_tiene_literal"/>
+        <Class IRI="id_de_repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="id_de_repositorio_tiene_literal"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="id_de_repositorio_tiene_literal"/>
+    </FunctionalDataProperty>
+    <HasKey>
+        <Class IRI="id_de_repositorio"/>
+        <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
+        <DataProperty IRI="id_de_repositorio_tiene_literal"/>
+    </HasKey>
+    
     <AnnotationAssertion>
-        <AnnotationProperty IRI="sinonimo"/>
-        <IRI>catalogo_de_repositorios</IRI>
-        <Literal xml:lang="en">proveedor de servicio</Literal>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>api_para_cosecha</IRI>
+        <Literal xml:lang="es">api para cosecha</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>cdd</IRI>
-        <Literal xml:lang="es">coleccion de datos</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>cdd</IRI>
-        <Literal xml:lang="en">dataset</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="sinonimo"/>
-        <IRI>cdd</IRI>
-        <Literal xml:lang="es">conjunto de datos</Literal>
+        <IRI>api_para_cosecha</IRI>
+        <Literal xml:lang="en">harvesting api</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
@@ -1125,16 +1374,6 @@
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>disciplina</IRI>
-        <Literal xml:lang="es">disciplina</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>disciplina</IRI>
-        <Literal xml:lang="en">subject</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
         <IRI>esquema_de_id_de_autor</IRI>
         <Literal xml:lang="en">author identification schema</Literal>
     </AnnotationAssertion>
@@ -1147,16 +1386,6 @@
         <AnnotationProperty IRI="sinonimo"/>
         <IRI>esquema_de_id_de_autor</IRI>
         <Literal xml:lang="en">aids</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>esquema_de_id_persistente</IRI>
-        <Literal xml:lang="es">esquema de identificador persistente</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>esquema_de_id_persistente</IRI>
-        <Literal xml:lang="en">persistent identifier schema</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
@@ -1178,61 +1407,6 @@
         <IRI>formato_de_archivo</IRI>
         <Literal xml:lang="es">formato de archivo</Literal>
     </AnnotationAssertion>>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>id_de_organizacion</IRI>
-        <Literal xml:lang="es">identificador de organizacion</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>id_de_organizacion</IRI>
-        <Literal xml:lang="en">organization identifier</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>id_de_repositorio</IRI>
-        <Literal xml:lang="es">identificador de repositorio</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>id_de_repositorio</IRI>
-        <Literal xml:lang="en">repository identifier</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>locacion</IRI>
-        <Literal xml:lang="es">locación</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>locacion</IRI>
-        <Literal xml:lang="en">location</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>organizacion</IRI>
-        <Literal xml:lang="es">organización</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>organizacion</IRI>
-        <Literal xml:lang="en">organization</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="sinonimo"/>
-        <IRI>organizacion</IRI>
-        <Literal xml:lang="es">institución</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>pais</IRI>
-        <Literal xml:lang="en">country</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>pais</IRI>
-        <Literal xml:lang="es">país</Literal>
-    </AnnotationAssertion>
 
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
@@ -1257,125 +1431,6 @@
     <DataPropertyRange>
         <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
         <Datatype abbreviatedIRI="xsd:duration"/>
-    </DataPropertyRange>
-
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>tiene_descripcion_repositorio</IRI>
-        <Literal xml:lang="en">repositorio has description</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>tiene_descripcion_repositorio</IRI>
-        <Literal xml:lang="es">tiene descripcion repositorio</Literal>
-    </AnnotationAssertion>
-    <Declaration>
-        <DataProperty IRI="tiene_descripcion_repositorio"/>
-    </Declaration>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_descripcion_repositorio"/>
-        <Class IRI="repositorio"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_descripcion_repositorio"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>repositorio_creado_en_anio</IRI>
-        <Literal xml:lang="en">year of repository creation</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>repositorio_creado_en_anio</IRI>
-        <Literal xml:lang="es">repositorio creado en año</Literal>
-    </AnnotationAssertion>
-    <Declaration>
-        <DataProperty IRI="repositorio_creado_en_anio"/>
-    </Declaration>
-    <FunctionalDataProperty>
-        <DataProperty IRI="repositorio_creado_en_anio"/>
-    </FunctionalDataProperty>
-    <DataPropertyDomain>
-        <DataProperty IRI="repositorio_creado_en_anio"/>
-        <Class IRI="repositorio"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="repositorio_creado_en_anio"/>
-        <Datatype IRI="positiveInteger_or_null"/>
-    </DataPropertyRange>
-
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>repositorio_cerrado_en_anio</IRI>
-        <Literal xml:lang="en">year of repository close</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>repositorio_cerrado_en_anio</IRI>
-        <Literal xml:lang="es">repositorio creado en año</Literal>
-    </AnnotationAssertion>
-    <Declaration>
-        <DataProperty IRI="repositorio_cerrado_en_anio"/>
-    </Declaration>
-    <FunctionalDataProperty>
-        <DataProperty IRI="repositorio_cerrado_en_anio"/>
-    </FunctionalDataProperty>
-    <DataPropertyDomain>
-        <DataProperty IRI="repositorio_cerrado_en_anio"/>
-        <Class IRI="repositorio"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="repositorio_cerrado_en_anio"/>
-        <Datatype abbreviatedIRI="xsd:positiveInteger" />
-    </DataPropertyRange>
-
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>repositorio_opera_en_pais</IRI>
-        <Literal xml:lang="en">repository operates at country</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>repositorio_opera_en_pais</IRI>
-        <Literal xml:lang="es">repositorio opera en país</Literal>
-    </AnnotationAssertion>
-    <Declaration>
-        <ObjectProperty IRI="repositorio_opera_en_pais"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="repositorio_opera_en_pais"/>
-        <Class IRI="repositorio"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="repositorio_opera_en_pais"/>
-        <Class IRI="pais"/>
-    </ObjectPropertyRange>
-
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>repositorio_esta_activo</IRI>
-        <Literal xml:lang="en">is repository active</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>repositorio_esta_activo</IRI>
-        <Literal xml:lang="es">repositorio esta activo</Literal>
-    </AnnotationAssertion>
-    <Declaration>
-        <DataProperty IRI="repositorio_esta_activo"/>
-    </Declaration>
-    <FunctionalDataProperty>
-        <DataProperty IRI="repositorio_esta_activo"/>
-    </FunctionalDataProperty>
-    <DataPropertyDomain>
-        <DataProperty IRI="repositorio_esta_activo"/>
-        <Class IRI="repositorio"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="repositorio_esta_activo"/>
-        <Datatype abbreviatedIRI="xsd:boolean"/>
     </DataPropertyRange>
 
     <AnnotationAssertion>
@@ -1491,26 +1546,6 @@
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>repositorio</IRI>
-        <Literal xml:lang="es">repositorio</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>repositorio</IRI>
-        <Literal xml:lang="en">repository</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="sinonimo"/>
-        <IRI>repositorio</IRI>
-        <Literal xml:lang="en">archive</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="sinonimo"/>
-        <IRI>repositorio</IRI>
-        <Literal xml:lang="es">archivo</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
         <IRI>repositorio_certificado_por</IRI>
         <Literal xml:lang="es">repositorio certificado por</Literal>
     </AnnotationAssertion>
@@ -1525,22 +1560,6 @@
             <Literal>bueno</Literal>
             <Literal>malo</Literal>
             <Literal>regular</Literal>
-        </DataOneOf>
-    </DatatypeDefinition>
-    <DatatypeDefinition>
-        <Datatype IRI="tipo_de_organizacion"/>
-        <DataOneOf>
-            <Literal>archive</Literal>
-            <Literal>comercial</Literal>
-            <Literal>company</Literal>
-            <Literal>education</Literal>
-            <Literal>facility</Literal>
-            <Literal>funder</Literal>
-            <Literal>government</Literal>
-            <Literal>healthcare</Literal>
-            <Literal>no-comercial</Literal>
-            <Literal>nonprofit</Literal>
-            <Literal>other</Literal>
         </DataOneOf>
     </DatatypeDefinition>
     <DatatypeDefinition>
