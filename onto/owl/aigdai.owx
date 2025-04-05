@@ -33,9 +33,7 @@
     <Declaration>
         <Datatype IRI="escala"/>
     </Declaration>
-    <Declaration>
-        <Datatype IRI="tipo_de_relacion_con_organizacion"/>
-    </Declaration>
+
     <Declaration>
         <Datatype IRI="url"/>
     </Declaration>
@@ -48,15 +46,6 @@
             <Literal>bueno</Literal>
             <Literal>malo</Literal>
             <Literal>regular</Literal>
-        </DataOneOf>
-    </DatatypeDefinition>
-    <DatatypeDefinition>
-        <Datatype IRI="tipo_de_relacion_con_organizacion"/>
-        <DataOneOf>
-            <Literal>general</Literal>
-            <Literal>financiamiento</Literal>
-            <Literal>técnica</Literal>
-            <Literal>patrocinio</Literal>
         </DataOneOf>
     </DatatypeDefinition>
     <DatatypeDefinition>
@@ -121,6 +110,9 @@
         <Class IRI="resultado_de_investigacion"/>
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
+    <Declaration>
+        <ObjectProperty IRI="resultado_relacionado"/>
+    </Declaration>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="resultado_relacionado"/>
         <Class IRI="resultado_de_investigacion"/>
@@ -966,26 +958,266 @@
         <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
         <DataProperty IRI="id_de_repositorio_tiene_literal"/>
     </HasKey>
+    <Declaration>
+        <Class IRI="certificacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="certificacion"/>
+        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>certificacion</IRI>
+        <Literal xml:lang="en">certificacion</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>certificacion</IRI>
+        <Literal xml:lang="es">certificaction</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="sinonimo"/>
+        <IRI>certificacion</IRI>
+        <Literal xml:lang="es">sello</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="tiene_nombre_certificacion"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_nombre_certificacion"/>
+        <Class IRI="certificacion"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_nombre_certificacion"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <Declaration>
+        <ObjectProperty IRI="repositorio_certificado_por"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="repositorio_certificado_por"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="repositorio_certificado_por"/>
+        <Class IRI="certificacion"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_certificado_por</IRI>
+        <Literal xml:lang="es">repositorio certificado por</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>repositorio_certificado_por</IRI>
+        <Literal xml:lang="en">repository certified by</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="autor"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="autor"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="productor_de_datos"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="productor_de_datos"/>
+        <Class IRI="autor"/>
+    </SubClassOf>
+    <Declaration>
+        <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
+        <Class IRI="cdd"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
+        <Class IRI="productor_de_datos"/>
+    </ObjectPropertyRange>
+
+    <Declaration>
+        <Class IRI="id_de_autor"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="id_de_autor"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <Declaration>
+        <DataProperty IRI="id_de_autor_tiene_literal"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="id_de_autor_tiene_literal"/>
+        <Class IRI="id_de_autor"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="id_de_autor_tiene_literal"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="id_de_autor_tiene_literal"/>
+    </FunctionalDataProperty>
+    <Declaration>
+        <ObjectProperty IRI="id_de_autor_tiene_autor"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="id_de_autor_tiene_autor"/>
+        <Class IRI="id_de_autor"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="id_de_autor_tiene_autor"/>
+        <Class IRI="autor"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="id_de_autor_tiene_autor"/>
+    </FunctionalObjectProperty>
+    <Declaration>
+        <Class IRI="esquema_de_id_de_autor"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="esquema_de_id_de_autor"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>esquema_de_id_de_autor</IRI>
+        <Literal xml:lang="en">author identification schema</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>esquema_de_id_de_autor</IRI>
+        <Literal xml:lang="es">esquema de identificador de autores</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="sinonimo"/>
+        <IRI>esquema_de_id_de_autor</IRI>
+        <Literal xml:lang="en">aids</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
+        <Class IRI="id_de_autor"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
+        <Class IRI="esquema_de_id_de_autor"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
+    </FunctionalObjectProperty>
+    <HasKey>
+        <Class IRI="id_de_autor"/>
+        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
+        <DataProperty IRI="id_de_autor_tiene_literal"/>
+    </HasKey>
 
 <!--  REVISADO HASTA ACA  -->
 
     <Declaration>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <Declaration>
         <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
     </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
+    </FunctionalObjectProperty>
     <Declaration>
         <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
     </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
+    </FunctionalObjectProperty>
     <Declaration>
-        <ObjectProperty IRI="repositorio_certificado_por"/>
+        <Datatype IRI="tipo_de_relacion_con_organizacion"/>
     </Declaration>
+    <DatatypeDefinition>
+        <Datatype IRI="tipo_de_relacion_con_organizacion"/>
+        <DataOneOf>
+            <Literal>general</Literal>
+            <Literal>financiamiento</Literal>
+            <Literal>técnica</Literal>
+            <Literal>patrocinio</Literal>
+        </DataOneOf>
+    </DatatypeDefinition>
     <Declaration>
-        <ObjectProperty IRI="resultado_relacionado"/>
+        <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
     </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
+        <Datatype IRI="tipo_de_relacion_con_organizacion"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
+    </FunctionalDataProperty>
+    <Declaration>
+        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
+        <Datatype IRI="gross_date"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
+    </FunctionalDataProperty>
+    <Declaration>
+        <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
+        <Datatype IRI="gross_date"/>
+    </DataPropertyRange>
+    <Declaration>
+        <ObjectProperty IRI="usa_politica"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="usa_politica"/>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="usa_politica"/>
+        <Class IRI="politica"/>
+    </ObjectPropertyRange>
+
     <Declaration>
         <Class IRI="api_para_cosecha"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="autor"/>
     </Declaration>
     <Declaration>
         <Class IRI="cantidad_de_contenedores"/>
@@ -997,16 +1229,7 @@
         <Class IRI="caracteristica_de_cdd"/>
     </Declaration>
     <Declaration>
-        <Class IRI="certificacion"/>
-    </Declaration>
-    <Declaration>
         <Class IRI="control_de_acceso"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="esquema_de_id_de_autor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="esquema_de_metadatos"/>
     </Declaration>
     <Declaration>
         <Class IRI="formato_de_archivo"/>
@@ -1018,19 +1241,10 @@
         <Class IRI="funcionalidad_de_repositorio"/>
     </Declaration>
     <Declaration>
-        <Class IRI="id_de_autor"/>
-    </Declaration>
-    <Declaration>
         <Class IRI="licencia"/>
     </Declaration>
     <Declaration>
         <Class IRI="politica"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="productor_de_datos"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="relacion_repositorio_y_organizacion"/>
     </Declaration>
     <Declaration>
         <Class IRI="tamanio"/>
@@ -1039,8 +1253,22 @@
         <Class IRI="tamanio_en_disco"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
+        <Class IRI="esquema_de_metadatos"/>
     </Declaration>
+    <SubClassOf>
+        <Class IRI="esquema_de_metadatos"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>esquema_de_metadatos</IRI>
+        <Literal xml:lang="es">esquema de metadatos</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <IRI>esquema_de_metadatos</IRI>
+        <Literal xml:lang="en">metadata schema</Literal>
+    </AnnotationAssertion>
     <Declaration>
         <ObjectProperty IRI="extiende_a_esquema_de_metadatos"/>
     </Declaration>
@@ -1052,39 +1280,15 @@
         <ObjectProperty IRI="extiende_a_esquema_de_metadatos"/>
         <Class IRI="esquema_de_metadatos"/>
     </ObjectPropertyRange>
+<!--  ToDo: Hacer transitiva y ver si hacer que sea tambien la relacion con los repositorios  -->
     <Declaration>
         <ObjectProperty IRI="formato_codifica_tipo_de_archivo"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="id_de_autor_tiene_autor"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="id_de_autor_tiene_literal"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="tiene_nombre_certificacion"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
-    </Declaration>
-    <Declaration>
         <Class IRI="tipo_de_dato"/>
     </Declaration>
     <SubClassOf>
         <Class IRI="tipo_de_dato"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="autor"/>
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
     <SubClassOf>
@@ -1100,16 +1304,8 @@
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="certificacion"/>
-        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
-    </SubClassOf>
-    <SubClassOf>
         <Class IRI="formato_de_archivo_abierto"/>
         <Class IRI="formato_de_archivo"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="id_de_autor"/>
-        <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="licencia"/>
@@ -1117,14 +1313,6 @@
     </SubClassOf>
     <SubClassOf>
         <Class IRI="politica"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="productor_de_datos"/>
-        <Class IRI="autor"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="relacion_repositorio_y_organizacion"/>
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
     <SubClassOf>
@@ -1166,51 +1354,9 @@
         <ObjectProperty IRI="evalua_funcionalidad"/>
         <Class IRI="repositorio"/>
     </ObjectPropertyRange>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="id_de_autor_tiene_autor"/>
-    </FunctionalObjectProperty>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
-    </FunctionalObjectProperty>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
-    </FunctionalObjectProperty>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
-    </FunctionalObjectProperty>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
-        <Class IRI="cdd"/>
-    </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="formato_codifica_tipo_de_archivo"/>
         <Class IRI="formato_de_archivo"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="id_de_autor_tiene_autor"/>
-        <Class IRI="id_de_autor"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
-        <Class IRI="id_de_autor"/>
-    </ObjectPropertyDomain>
-    <DisjointClasses>
-        <Class IRI="disciplina"/>
-        <Class IRI="repositorio"/>
-        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
-        <Class abbreviatedIRI="principle:grupo_de_criterio"/>
-    </DisjointClasses>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
-        <Class IRI="relacion_repositorio_y_organizacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
-        <Class IRI="relacion_repositorio_y_organizacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="repositorio_certificado_por"/>
-        <Class IRI="repositorio"/>
     </ObjectPropertyDomain>
     <Declaration>
         <ObjectProperty IRI="se_ubica_en"/>
@@ -1227,43 +1373,8 @@
         <ObjectProperty IRI="se_ubica_en"/>
     </FunctionalObjectProperty>
     <ObjectPropertyRange>
-        <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
-        <Class IRI="productor_de_datos"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
         <ObjectProperty IRI="formato_codifica_tipo_de_archivo"/>
         <Class IRI="tipo_de_dato"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="id_de_autor_tiene_autor"/>
-        <Class IRI="autor"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
-        <Class IRI="esquema_de_id_de_autor"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
-        <Class IRI="organizacion"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
-        <Class IRI="repositorio"/>
-    </ObjectPropertyRange>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="repositorio_certificado_por"/>
-        <Class IRI="certificacion"/>
-    </ObjectPropertyRange>
-    <Declaration>
-        <ObjectProperty IRI="usa_politica"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="usa_politica"/>
-        <Class IRI="relacion_repositorio_y_organizacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="usa_politica"/>
-        <Class IRI="politica"/>
     </ObjectPropertyRange>
     <Declaration>
         <DataProperty IRI="tiene_nombre_politica"/>
@@ -1294,60 +1405,6 @@
         <Class IRI="politica"/>
         <ObjectProperty IRI="tiene_url_politica"/>
     </HasKey>
-    <FunctionalDataProperty>
-        <DataProperty IRI="id_de_autor_tiene_literal"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
-        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
-    </FunctionalDataProperty>
-    <FunctionalDataProperty>
-        <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
-    </FunctionalDataProperty>
-    <DataPropertyDomain>
-        <DataProperty IRI="id_de_autor_tiene_literal"/>
-        <Class IRI="id_de_autor"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_nombre_certificacion"/>
-        <Class IRI="certificacion"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
-        <Class IRI="relacion_repositorio_y_organizacion"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
-        <Class IRI="relacion_repositorio_y_organizacion"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
-        <Class IRI="relacion_repositorio_y_organizacion"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="id_de_autor_tiene_literal"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_nombre_certificacion"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_inicio_periodo_de_relacion_con_organizacion"/>
-        <Datatype IRI="gross_date"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
-        <Datatype IRI="gross_date"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_tipo_de_relacion_con_organizacion"/>
-        <Datatype IRI="tipo_de_relacion_con_organizacion"/>
-    </DataPropertyRange>
-    <HasKey>
-        <Class IRI="id_de_autor"/>
-        <ObjectProperty IRI="id_de_autor_tiene_esquema_de_id_de_autor"/>
-        <DataProperty IRI="id_de_autor_tiene_literal"/>
-    </HasKey>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>api_para_cosecha</IRI>
@@ -1360,21 +1417,6 @@
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>certificacion</IRI>
-        <Literal xml:lang="en">certificacion</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>certificacion</IRI>
-        <Literal xml:lang="es">certificaction</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="sinonimo"/>
-        <IRI>certificacion</IRI>
-        <Literal xml:lang="es">sello</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
         <IRI>control_de_acceso</IRI>
         <Literal xml:lang="en">access control</Literal>
     </AnnotationAssertion>
@@ -1382,31 +1424,6 @@
         <AnnotationProperty IRI="nombre_usual"/>
         <IRI>control_de_acceso</IRI>
         <Literal xml:lang="es">control de acceso</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>esquema_de_id_de_autor</IRI>
-        <Literal xml:lang="en">author identification schema</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>esquema_de_id_de_autor</IRI>
-        <Literal xml:lang="es">esquema de identificador de autores</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="sinonimo"/>
-        <IRI>esquema_de_id_de_autor</IRI>
-        <Literal xml:lang="en">aids</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>esquema_de_metadatos</IRI>
-        <Literal xml:lang="es">esquema de metadatos</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>esquema_de_metadatos</IRI>
-        <Literal xml:lang="en">metadata schema</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty IRI="nombre_usual"/>
@@ -1539,14 +1556,11 @@
         <IRI>politica</IRI>
         <Literal xml:lang="es">política</Literal>
     </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>repositorio_certificado_por</IRI>
-        <Literal xml:lang="es">repositorio certificado por</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>repositorio_certificado_por</IRI>
-        <Literal xml:lang="en">repository certified by</Literal>
-    </AnnotationAssertion>
+
+    <DisjointClasses>
+        <Class IRI="disciplina"/>
+        <Class IRI="repositorio"/>
+        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
+        <Class abbreviatedIRI="principle:grupo_de_criterio"/>
+    </DisjointClasses>
 </Ontology>
