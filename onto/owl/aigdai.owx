@@ -297,19 +297,6 @@
     <FunctionalDataProperty>
         <DataProperty IRI="nombre_de_disciplina"/>
     </FunctionalDataProperty>
-<!--  ToDo: No se si se usa el es_disciplina_afin  -->
-    <Declaration>
-        <ObjectProperty IRI="es_disciplina_afin"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="es_disciplina_afin"/>
-        <Class IRI="disciplina"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="es_disciplina_afin"/>
-        <Class IRI="disciplina"/>
-    </ObjectPropertyRange>
-<!--  ToDo: No se si hace falta seguir teniendo es_sub_disciplina_de para los pasos de 1 -->
     <Declaration>
         <ObjectProperty IRI="es_sub_disciplina_de"/>
     </Declaration>
@@ -321,17 +308,9 @@
         <ObjectProperty IRI="es_sub_disciplina_de"/>
         <Class IRI="disciplina"/>
     </ObjectPropertyRange>
-    <Declaration>
-        <ObjectProperty IRI="es_descendiente_disciplina_de"/>
-    </Declaration>
-    <SubObjectPropertyOf>
-        <ObjectProperty IRI="es_sub_disciplina_de"/>
-        <ObjectProperty IRI="es_descendiente_disciplina_de"/>
-    </SubObjectPropertyOf>
     <TransitiveObjectProperty>
-        <ObjectProperty IRI="es_descendiente_disciplina_de"/>
+        <ObjectProperty IRI="es_sub_disciplina_de"/>
     </TransitiveObjectProperty>
-
     <Declaration>
         <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
     </Declaration>
@@ -347,7 +326,7 @@
         <ObjectPropertyChain>
             <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
             <ObjectInverseOf>
-                <ObjectProperty IRI="es_descendiente_disciplina_de"/>
+                <ObjectProperty IRI="es_sub_disciplina_de"/>
             </ObjectInverseOf>
         </ObjectPropertyChain>
         <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
@@ -692,7 +671,17 @@
         <IRI>locacion</IRI>
         <Literal xml:lang="en">location</Literal>
     </AnnotationAssertion>
-
+    <Declaration>
+        <DataProperty IRI="nombre_de_locacion"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="nombre_de_locacion"/>
+        <Class IRI="locacion"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="nombre_de_locacion"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
     <Declaration>
         <ObjectProperty IRI="incluido_en"/>
     </Declaration>
@@ -743,77 +732,6 @@
         <Class IRI="pais"/>
         <ObjectProperty IRI="alfa_3_de_pais"/>
     </HasKey>
-    <Declaration>
-        <DataProperty IRI="nombre_de_pais"/>
-    </Declaration>
-    <DataPropertyDomain>
-        <DataProperty IRI="nombre_de_pais"/>
-        <Class IRI="pais"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="nombre_de_pais"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-<!-- ToDo: Eliminar planeta y bloque comercial y dejar un concepto más amplio de conjunto de paises -->
-    <Declaration>
-        <Class IRI="bloque_comercial"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="bloque_comercial"/>
-        <Class IRI="locacion"/>
-    </SubClassOf>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>bloque_comercial</IRI>
-        <Literal xml:lang="es">bloque comercial</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>bloque_comercial</IRI>
-        <Literal xml:lang="en">trade block</Literal>
-    </AnnotationAssertion>
-    <Declaration>
-        <Class IRI="planeta"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="planeta"/>
-        <Class IRI="locacion"/>
-    </SubClassOf>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>planeta</IRI>
-        <Literal xml:lang="en">planet</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
-        <IRI>planeta</IRI>
-        <Literal xml:lang="es">planeta</Literal>
-    </AnnotationAssertion>
-    <Declaration>
-        <DataProperty IRI="nombre_de_bloque"/>
-    </Declaration>
-    <DataPropertyDomain>
-        <DataProperty IRI="nombre_de_bloque"/>
-        <Class IRI="bloque_comercial"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="nombre_de_bloque"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <Declaration>
-        <DataProperty IRI="sigla_de_bloque"/>
-    </Declaration>
-    <DataPropertyDomain>
-        <DataProperty IRI="sigla_de_bloque"/>
-        <Class IRI="bloque_comercial"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="sigla_de_bloque"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <FunctionalDataProperty>
-        <DataProperty IRI="sigla_de_bloque"/>
-    </FunctionalDataProperty>
 
     <Declaration>
         <Class IRI="repositorio"/>

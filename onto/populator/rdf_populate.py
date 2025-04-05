@@ -102,11 +102,11 @@ def refine_and_insert_on_rdf():
                 g_repos.set((r_instance, rdf_types.tiene_nombre_organizacion, Literal(instName['text'], lang=instName['lang'])))
 
             if db_instance['institutionCountry'] == 'EEC':
-                location = URIRef("#bloque_comercial/%s" % ('UE',), rdf_types.my_ns)
-                g_repos.set((location, RDF.type, rdf_types.BloqueComercial))
+                location = URIRef("#locacion/%s" % ('UE',), rdf_types.my_ns)
+                g_repos.set((location, RDF.type, rdf_types.Locacion))
             elif db_instance['institutionCountry'] == 'AAA':
-                location = URIRef("#planeta/tierra", rdf_types.my_ns)
-                g_repos.set((location, RDF.type, rdf_types.Planeta))
+                location = URIRef("#locacion/global", rdf_types.my_ns)
+                g_repos.set((location, RDF.type, rdf_types.Locacion))
             else:
                 location = URIRef("#pais/%s" % (db_instance['institutionCountry'],), rdf_types.my_ns)
                 g_repos.set((location, RDF.type, rdf_types.Pais))
@@ -464,30 +464,30 @@ def seed_locaciones():
     g.bind('', rdf_types.my_ns)
 
     cys = []
-    planeta_tierra = URIRef("#planeta/%s" % ('tierra',), rdf_types.my_ns)
-    cys.append(planeta_tierra)
-    g.set((planeta_tierra, RDF.type, rdf_types.Planeta))
+    internacional = URIRef("#locacion/global", rdf_types.my_ns)
+    cys.append(internacional)
+    g.set((internacional, RDF.type, rdf_types.Locacion))
     for country_or_block in cts.countries:
         if len(country_or_block) >= 3:
-            bl = URIRef("#bloque_comercial/%s" % (country_or_block[0],), rdf_types.my_ns)
+            bl = URIRef("#locacion/%s" % (country_or_block[0],), rdf_types.my_ns)
             cys.append(bl)
-            g.set((bl, RDF.type, rdf_types.BloqueComercial))
-            bl.nombre_de_bloque = country_or_block[1]
-            g.set((bl, rdf_types.incluido_en, planeta_tierra))
+            g.set((bl, RDF.type, rdf_types.Locacion))
+            g.set((bl, rdf_types.nombre_de_locacion, Literal(country_or_block[1])))
+            g.set((bl, rdf_types.incluido_en, internacional))
             for country in country_or_block[2]:
                 cy = URIRef("#pais/%s" % (country[0],), rdf_types.my_ns)
                 cys.append(cy)
                 g.set((cy, RDF.type, rdf_types.Pais))
                 g.set((cy, rdf_types.incluido_en, bl))
                 g.set((cy, rdf_types.alfa_3_de_pais, Literal(country[0])))
-                g.set((cy, rdf_types.nombre_de_pais, Literal(country[1])))
+                g.set((cy, rdf_types.nombre_de_locacion, Literal(country[1])))
         else:
             cy = URIRef("#pais/%s" % (country_or_block[0],), rdf_types.my_ns)
             cys.append(cy)
             g.set((cy, RDF.type, rdf_types.Pais))
-            g.set((cy, rdf_types.incluido_en, planeta_tierra))
+            g.set((cy, rdf_types.incluido_en, internacional))
             g.set((cy, rdf_types.alfa_3_de_pais, Literal(country_or_block[0])))
-            g.set((cy, rdf_types.nombre_de_pais, Literal(country_or_block[1])))
+            g.set((cy, rdf_types.nombre_de_locacion, Literal(country_or_block[1])))
     owl_all_different(g, cys)
     return (g,)
 
