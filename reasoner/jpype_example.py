@@ -13,8 +13,8 @@ from org.semanticweb.HermiT import Configuration
 from org.semanticweb.HermiT.Reasoner import ReasonerFactory
 
 manager = OWLManager.createOWLOntologyManager()
-# inputOntologyFile = java.io.File('./onto/owl/aigdai.owx')
-inputOntologyFile = java.io.File('./pizza.owl')
+inputOntologyFile = java.io.File('../onto/owl/aigdai-tbox.owl')
+# inputOntologyFile = java.io.File('./pizza.owl')
 
 ontology = manager.loadOntologyFromOntologyDocument(inputOntologyFile)
 configuration = Configuration()

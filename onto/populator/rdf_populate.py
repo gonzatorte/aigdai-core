@@ -7,6 +7,7 @@ from re3data.xsd_transform import refine_repository_info, load_schema
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF, OWL
 import hashlib
+import config
 
 from ror.extractor import insert_on_rdf
 
@@ -490,12 +491,12 @@ def seed_locaciones():
 def serialize_all():
     g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones = refine_and_insert_on_rdf()
     # print(g.serialize(destination='../owl/repositorios.xml', format="pretty-xml"))
+    g_orgs = insert_on_rdf()
     g_repos.serialize(destination='../owl/repositorios.xml', format="xml")
     g_criterios.serialize(destination='../owl/criterios.xml', format="xml")
     g_disciplinas.serialize(destination='../owl/disciplinas.xml', format="xml")
     g_commons.serialize(destination='../owl/commons.xml', format="xml")
     g_locaciones.serialize(destination='../owl/localizaciones.xml', format="xml")
-    g_orgs = insert_on_rdf()
     g_orgs.serialize(destination='../owl/organizaciones.xml', format="xml")
 
 
@@ -505,18 +506,35 @@ def reason_on_memory():
 
     import owlready2 as ow
 
-    ow.JAVA_EXE = "/usr/bin/java"
+    ow.JAVA_EXE = config.JAVA_EXE_PATH
+    ow.onto_path.append('../owl/')
 
     # from io import BytesIO
     # my_str_as_bytes = str.encode(my_str)  # convert to binary
     # fobj = BytesIO(my_str_as_bytes)
     # abox = ow.get_ontology("some-random-path").load(fileobj=fobj)
 
-    tbox = ow.get_ontology('file://../owl/aigdai-tbox.owl').load()
+    tbox = ow.get_ontology('file://../owl/aigdai-tbox.owl').load(only_local=True)
+
+    for data_file_path in [
+        'repositorios.xml',
+        'criterios.xml',
+        'disciplinas.xml',
+        'commons.xml',
+        'localizaciones.xml',
+        'organizaciones.xml',
+    ]:
+        # ow.get_ontology('file://%s' % (data_file_path,)).load(only_local=True)
+        # tbox.imported_ontologies.append(ow.get_ontology('file://../owl/%s' % (data_file_path,)))
+        tbox.imported_ontologies.append(ow.get_ontology('file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/%s' % (data_file_path,)))
+        # tbox.imported_ontologies.append('file://%s' % (data_file_path,))
 
     ow.sync_reasoner()
     if len(list(ow.default_world.inconsistent_classes())) != 0:
         raise Exception('Inconsistent ontology')
+
+    print(list(tbox.individuals()))
+    # print(list(tbox.graph.triples((None, None, None))))
 
 
 if __name__ == '__main__':

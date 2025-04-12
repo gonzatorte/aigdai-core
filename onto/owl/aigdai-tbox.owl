@@ -35,11 +35,24 @@
     <Declaration>
         <Datatype IRI="duration"/>
     </Declaration>
-<!--  xsd:duration    -->
+    <DatatypeDefinition>
+        <Datatype IRI="duration"/>
+        <!--  xsd:duration    -->
+        <DataUnionOf>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataUnionOf>
+    </DatatypeDefinition>
 
     <Declaration>
         <Datatype IRI="url"/>
     </Declaration>
+    <DatatypeDefinition>
+        <Datatype IRI="url"/>
+        <DataUnionOf>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataUnionOf>
+    </DatatypeDefinition>
+
     <Declaration>
         <Datatype abbreviatedIRI="lang:lenguaje"/>
     </Declaration>
@@ -65,10 +78,39 @@
         <DataUnionOf>
             <Datatype abbreviatedIRI="xsd:boolean"/>
             <DataOneOf>
-                <Literal>true</Literal>
-                <Literal>false</Literal>
                 <Literal>unknown</Literal>
             </DataOneOf>
+        </DataUnionOf>
+    </DatatypeDefinition>
+
+    <Declaration>
+        <Datatype IRI="gYear"/>
+    </Declaration>
+    <DatatypeDefinition>
+        <Datatype IRI="gYear"/>
+        <DataUnionOf>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataUnionOf>
+    </DatatypeDefinition>
+
+    <Declaration>
+        <Datatype IRI="gYearMonth"/>
+    </Declaration>
+    <DatatypeDefinition>
+        <Datatype IRI="gYearMonth"/>
+        <DataUnionOf>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataUnionOf>
+    </DatatypeDefinition>
+
+    <Declaration>
+        <Datatype IRI="date"/>
+    </Declaration>
+    <DatatypeDefinition>
+        <!--  xsd:date    -->
+        <Datatype IRI="date"/>
+        <DataUnionOf>
+            <Datatype abbreviatedIRI="xsd:string"/>
         </DataUnionOf>
     </DatatypeDefinition>
 
@@ -78,9 +120,9 @@
     <DatatypeDefinition>
         <Datatype IRI="gross_date"/>
         <DataUnionOf>
-            <Datatype IRI="xs:gYear"/>
-            <Datatype IRI="xs:gYearMonth"/>
-            <Datatype IRI="xs:date"/>
+            <Datatype IRI="gYear"/>
+            <Datatype IRI="gYearMonth"/>
+            <Datatype IRI="date"/>
         </DataUnionOf>
     </DatatypeDefinition>
 
@@ -1106,7 +1148,7 @@
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
-        <Datatype IRI="duration"/>
+        <Datatype abbreviatedIRI="duration"/>
     </DataPropertyRange>
     <FunctionalDataProperty>
         <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
