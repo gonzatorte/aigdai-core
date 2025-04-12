@@ -185,10 +185,10 @@ def initiate():
 
         # ToDo: En realidad, un repositorio puede soportar más de 1 lenguaje... así que no es FunctionalProperty
         #  aunque el manejo de colecciones puede generar problemas para restringir la unicidad en esas colecciones (aunque no sé si importa)
-        class usa_lenguaje(ow.DataProperty):
+        class usa_lenguaje_repositorio(ow.DataProperty):
             domain = [repositorio]
             range = [base_onto.lenguaje]
-        # class usa_lenguaje(repositorio >> base_onto.lenguaje):
+        # class usa_lenguaje_repositorio(repositorio >> base_onto.lenguaje):
         #     pass
 
         class id_de_catalogacion_de_repositorio(ow.Thing):

@@ -200,8 +200,8 @@ def refine_repository_info(
             rr = [handle_atom(preprocess2(rxx)) for rxx in rr]
             if remove_dup:
                 rr = [x for idx, x in enumerate(rr) if x not in rr[:idx]]
-            if empty_value is not None and empty_value in rr and len(rr) > 1:
-                rr = [x for idx, x in enumerate(rr) if x not in rr[:idx] and x != empty_value]
+            if empty_value is not None and empty_value in rr:
+                rr = [x for x in rr if x != empty_value]
             # if callable(other_value) and any(map(other_value, rr)):
             #     rr = [x for idx, x in enumerate(rr) if x not in rr[:idx] and x != other_value]
             elif other_value is not None and len(rr) > 1 and other_value in rr:
@@ -252,6 +252,14 @@ def refine_repository_info(
 
     return {
         "id": decoded["r3d:re3data.orgIdentifier"],
+        # ToDo: Modelar todos los identificadores disponibles.
+        #  Quitar aquellos que YA ESTAN como un identificador de la organizacion
+        #   los de tipo ROR
+        #  Los de tipo RRID suelen venir de a pares y son la misma cosa (SCR de servicio, y el NLX que parece ser interno).
+        #   SI parecen identificar al repositorio y no a la organizacion
+        #  Los de tipo FAIRSHARING si son útiles (referenciar al catalogo de fairsharing)
+        #  Hay otros tipos?
+        "ids": [x for x in decoded.get("r3d:repositoryIdentifier", [])],
         "repositoryName": get_lang_sensible_text(decoded["r3d:repositoryName"]),
         "additionalNames": [get_lang_sensible_text(x) for x in decoded.get("r3d:additionalName", [])],
         "repositoryURL": decoded["r3d:repositoryURL"],

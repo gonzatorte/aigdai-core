@@ -267,6 +267,7 @@
         <IRI>disciplina</IRI>
         <Literal xml:lang="en">subject</Literal>
     </AnnotationAssertion>
+<!--  ToDo: Renombrar a disciplina_tiene_esquema  -->
     <Declaration>
         <DataProperty IRI="esquema_de_disciplina"/>
     </Declaration>
@@ -452,9 +453,6 @@
         <DataProperty IRI="tiene_tipo_de_organizacion"/>
         <Datatype IRI="tipo_de_organizacion"/>
     </DataPropertyRange>
-    <FunctionalDataProperty>
-        <DataProperty IRI="tiene_tipo_de_organizacion"/>
-    </FunctionalDataProperty>
     <Declaration>
         <DataProperty IRI="organizacion_esta_activa"/>
     </Declaration>
@@ -782,16 +780,16 @@
         <DataProperty IRI="tiene_url_repositorio"/>
         <Datatype IRI="url"/>
     </DataPropertyRange>
-<!--  ToDo: Renombrar a usa_lenguaje_repositorio  -->
+<!--  ToDo: No mapeado aun usa_lenguaje_repositorio -->
     <Declaration>
-        <DataProperty IRI="usa_lenguaje"/>
+        <DataProperty IRI="usa_lenguaje_repositorio"/>
     </Declaration>
     <DataPropertyDomain>
-        <DataProperty IRI="usa_lenguaje"/>
+        <DataProperty IRI="usa_lenguaje_repositorio"/>
         <Class IRI="repositorio"/>
     </DataPropertyDomain>
     <DataPropertyRange>
-        <DataProperty IRI="usa_lenguaje"/>
+        <DataProperty IRI="usa_lenguaje_repositorio"/>
         <Datatype abbreviatedIRI="lang:lenguaje"/>
     </DataPropertyRange>
     <Declaration>
@@ -863,6 +861,14 @@
         <IRI>repositorio_cerrado_en_anio</IRI>
         <Literal xml:lang="es">repositorio cerrado en año</Literal>
     </AnnotationAssertion>
+<!-- ToDo: Usar RDD y diferenciar los atributos que son solo para rdd. Nunnca instanciar repositorios, sinos RDD -->
+    <Declaration>
+        <Class IRI="rdd"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="rdd"/>
+        <Class IRI="repositorio"/>
+    </SubClassOf>
     <Declaration>
         <ObjectProperty IRI="repositorio_opera_en_pais"/>
     </Declaration>
@@ -1274,7 +1280,10 @@
         <ObjectProperty IRI="extiende_a_esquema_de_metadatos"/>
         <Class IRI="esquema_de_metadatos"/>
     </ObjectPropertyRange>
-<!--  ToDo: Hacer transitiva y ver si hacer que sea tambien la relacion con los repositorios  -->
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="extiende_a_esquema_de_metadatos"/>
+    </TransitiveObjectProperty>
+<!--  ToDo: Agregar la relacion con repositorios y extender su transitividad a esa relacion con extiende_a_esquema_de_metadatos -->
     <Declaration>
         <Class IRI="formato_de_archivo"/>
     </Declaration>
@@ -1306,18 +1315,18 @@
         <Class IRI="tipo_de_dato"/>
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
-<!--  ToDo: Renombrar a  formato_codifica_tipo_de_dato -->
     <Declaration>
-        <ObjectProperty IRI="formato_codifica_tipo_de_archivo"/>
+        <ObjectProperty IRI="formato_codifica_tipo_de_dato"/>
     </Declaration>
     <ObjectPropertyDomain>
-        <ObjectProperty IRI="formato_codifica_tipo_de_archivo"/>
+        <ObjectProperty IRI="formato_codifica_tipo_de_dato"/>
         <Class IRI="formato_de_archivo"/>
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
-        <ObjectProperty IRI="formato_codifica_tipo_de_archivo"/>
+        <ObjectProperty IRI="formato_codifica_tipo_de_dato"/>
         <Class IRI="tipo_de_dato"/>
     </ObjectPropertyRange>
+<!--  ToDo: relacion entre formato y tipo de dato falta -->
 
     <Declaration>
         <Class IRI="politica"/>
@@ -1491,9 +1500,62 @@
     </AnnotationAssertion>
 
 <!--  ToDo: Ver todas las clases disjuntas  -->
+<!--    relacion_repositorio_y_organizacion-->
+<!--    repositorio-->
+<!--
+<Class IRI="agregador"/>
+<Class IRI="repositorio"/>
+<Class IRI="rdd"/>
+<Class IRI="id_de_repositorio"/>
+<Class IRI="catalogo_de_repositorios"/>
+
+<Class IRI="id_de_resultado_de_investigacion"/>
+<Class IRI="esquema_de_id_persistente"/>
+<Class IRI="resultado_de_investigacion"/>
+<Class IRI="articulo"/>
+<Class IRI="cdd"/>
+<Class IRI="motor_de_repositorio"/>
+<Class IRI="disciplina"/>
+<Class IRI="organizacion"/>
+<Class IRI="id_de_organizacion"/>
+<Class IRI="tipo_de_id_de_organizacion"/>
+<Class IRI="relacion_repositorio_y_organizacion"/>
+<Class IRI="locacion"/>
+<Class IRI="certificacion"/>
+<Class IRI="autor"/>
+<Class IRI="id_de_autor"/>
+<Class IRI="esquema_de_id_de_autor"/>
+<Class IRI="esquema_de_metadatos"/>
+<Class IRI="formato_de_archivo"/>
+<Class IRI="formato_de_archivo_abierto"/>
+<Class IRI="tipo_de_dato"/>
+<Class IRI="politica"/>
+
+<Class IRI="funcionalidad_de_repositorio"/>
+<Class IRI="caracteristica_de_cdd"/>
+<Class IRI="tamanio"/>
+<Class IRI="cantidad_de_contenedores"/>
+<Class IRI="cantidad_de_elementos"/>
+<Class IRI="tamanio_en_disco"/>
+<Class IRI="api_para_cosecha"/>
+<Class IRI="control_de_acceso"/>
+-->
     <DisjointClasses>
+        <Class IRI="cdd"/>
+        <Class IRI="autor"/>
+        <Class IRI="motor_de_repositorio"/>
         <Class IRI="disciplina"/>
         <Class IRI="repositorio"/>
+        <Class IRI="agregador"/>
+        <Class IRI="organizacion"/>
+        <Class IRI="politica"/>
+        <Class IRI="caracteristica_de_cdd"/>
+        <Class IRI="esquema_de_id_persistente"/>
+        <Class IRI="esquema_de_metadatos"/>
+        <Class IRI="relacion_repositorio_y_organizacion"/>
+        <Class IRI="id_de_resultado_de_investigacion"/>
+        <Class IRI="id_de_repositorio"/>
+        <Class IRI="id_de_autor"/>
         <Class abbreviatedIRI="principle:criterio_de_calidad"/>
         <Class abbreviatedIRI="principle:grupo_de_criterio"/>
     </DisjointClasses>

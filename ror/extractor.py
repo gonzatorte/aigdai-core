@@ -6,7 +6,6 @@ import os
 
 ROR_PREFIX = 'https://ror.org/'
 def normalize_id(idd: str):
-    # https://ror.org/04ttjf776
     if not idd.startswith(ROR_PREFIX):
         raise Exception('')
     return idd[len(ROR_PREFIX):].lower()
@@ -91,7 +90,8 @@ def insert_on_rdf():
         tipo_de_id_de_organizacion_ror = URIRef("#tipo_de_id_de_organizacion/ROR", rdf_types.my_ns)
         g_orgs.set((tipo_de_id_de_organizacion_ror, RDF.type, rdf_types.TipoDeIdDeOrganizacion))
 
-        for (idx, registry) in enumerate(registries[:1000]):
+        # ToDo: Quitar esta limitacion de los 1eros 10
+        for (idx, registry) in enumerate(registries[:10]):
             if idx % 50 == 0:
                 print('idx', idx, 'out of', len(registries))
             # if registry['admin']['last_modified']['schema_version'] != '2.0':
@@ -100,7 +100,7 @@ def insert_on_rdf():
             #     # raise Exception('')
             (
                 idd,
-                established, # ToDo: Integrate
+                established,
                 names,
                 countries,
                 domains, # ToDo: Integrate
@@ -126,7 +126,8 @@ def insert_on_rdf():
             g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, organizacion))
 
             g_orgs.set((organizacion, rdf_types.organizacion_esta_activa, Literal(is_active)))
-            g_orgs.set((organizacion, rdf_types.organizacion_fundada_en_anio, Literal(established)))
+            if established:
+                g_orgs.set((organizacion, rdf_types.organizacion_fundada_en_anio, Literal(established)))
 
             for name in names:
                 g_orgs.add((organizacion, rdf_types.tiene_nombre_organizacion, Literal(name)))

@@ -52,7 +52,7 @@ def initiate():
         relacion_unr_unrrda.relacion_repositorio_y_organizacion_tiene_organizacion = unr
         relacion_unr_unrrda.relacion_repositorio_y_organizacion_tiene_repositorio = rda_unr
         relacion_unr_unrrda.tiene_tipo_de_relacion_con_organizacion = "administrativa"
-        rda_unr.usa_lenguaje.append('spa')
+        rda_unr.usa_lenguaje_repositorio.append('spa')
         r3d100013960 = repo_onto.id_de_catalogacion_de_repositorio('r3d100013960')
         r3d100013960.id_de_catalogacion_de_repositorio_tiene_catalogo = re3data
         r3d100013960.id_de_catalogacion_de_repositorio_tiene_repositorio = rda_unr
