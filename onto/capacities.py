@@ -47,7 +47,7 @@ def generate(ct, parent_id, acc, visited):
     <Class IRI="{parent_id}"/>
 </SubClassOf>
 <AnnotationAssertion>
-    <AnnotationProperty IRI="nombre_usual"/>
+    <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
     <IRI>{idd}</IRI>
     <Literal xml:lang="en">{eng_name}</Literal>
 </AnnotationAssertion>

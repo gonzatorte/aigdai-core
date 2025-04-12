@@ -199,8 +199,7 @@ def insert_on_rdf():
     # ToDo: Tendria que declarar que todas estas organizaciones son distintas entre si por ser verificadas por un mismo proveedor de datos?
 
     # print('count_v1', count_v1, 'out of', len(registries))
-    xml_path = os.path.join(base_path, '../onto/owl/organizaciones.xml')
-    g_orgs.serialize(destination=xml_path, format="xml")
+    return g_orgs
 
 if __name__ == "__main__":
     insert_on_rdf()

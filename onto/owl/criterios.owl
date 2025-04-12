@@ -8,6 +8,7 @@
      ontologyIRI="http://criterios.owl"
      versionIRI="http://criterios.owl/v0.1">
     <Prefix name="" IRI="http://criterios.owl#"/>
+    <Prefix name="base" IRI="http://base.owl#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
@@ -15,11 +16,7 @@
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Prefix name="dcterms" IRI="http://purl.org/dc/terms/"/>
     <Prefix name="fairvoc" IRI="https://w3id.org/fair/principles/terms/"/>
-    <Import>file:/home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/criterios.xml</Import>
-
-    <Declaration>
-        <AnnotationProperty IRI="nombre_usual"/>
-    </Declaration>
+    <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/base.owl</Import>
 
     <Declaration>
         <Class IRI="criterio_de_calidad"/>
@@ -49,12 +46,12 @@
         <Class IRI="criterio_de_calidad"/>
     </ObjectPropertyRange>
     <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
         <IRI>considera_criterio</IRI>
         <Literal xml:lang="es">Considera criterio</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
         <IRI>considera_criterio</IRI>
         <Literal xml:lang="en">Considers criteria</Literal>
     </AnnotationAssertion>
@@ -78,12 +75,12 @@
         <Class IRI="criterio_de_calidad"/>
     </ObjectPropertyRange>
     <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
         <IRI>extiende_de_criterio</IRI>
         <Literal xml:lang="en">Extends from</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
         <IRI>extiende_de_criterio</IRI>
         <Literal xml:lang="es">Extiende de</Literal>
     </AnnotationAssertion>
@@ -112,12 +109,12 @@
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
     <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
         <IRI>criterio_de_calidad</IRI>
         <Literal xml:lang="es">Criterio de calidad</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
-        <AnnotationProperty IRI="nombre_usual"/>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
         <IRI>criterio_de_calidad</IRI>
         <Literal xml:lang="en">Quality Criteria</Literal>
     </AnnotationAssertion>

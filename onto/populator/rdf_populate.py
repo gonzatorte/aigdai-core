@@ -62,13 +62,9 @@ def refine_and_insert_on_rdf():
     g_repos.bind('', rdf_types.my_ns)
 
     (g_criterios, ) = seed_criterios()
-    g_criterios.serialize(destination='../owl/criterios.xml', format="xml")
     (g_disciplinas, ) = seed_disciplinas()
-    g_disciplinas.serialize(destination='../owl/disciplinas.xml', format="xml")
     (g_commons, ) = seed_commons()
-    g_commons.serialize(destination='../owl/commons.xml', format="xml")
     (g_locaciones, ) = seed_locaciones()
-    g_locaciones.serialize(destination='../owl/localizaciones.xml', format="xml")
 
     # database = get_database_async()
     database = get_database_client()
@@ -258,8 +254,7 @@ def refine_and_insert_on_rdf():
         counter += 1
         if counter % 10 == 0:
             print("ready %s out of %s" % (counter, total))
-    g_repos.serialize(destination='../owl/repositorios.xml', format="xml")
-    # print(g.serialize(destination='../owl/repositorios.xml', format="pretty-xml"))
+    return g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones
 
 CERTIFICACIONES = []
 LENGUAJES = []
@@ -492,6 +487,38 @@ def seed_locaciones():
     return (g,)
 
 
+def serialize_all():
+    g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones = refine_and_insert_on_rdf()
+    # print(g.serialize(destination='../owl/repositorios.xml', format="pretty-xml"))
+    g_repos.serialize(destination='../owl/repositorios.xml', format="xml")
+    g_criterios.serialize(destination='../owl/criterios.xml', format="xml")
+    g_disciplinas.serialize(destination='../owl/disciplinas.xml', format="xml")
+    g_commons.serialize(destination='../owl/commons.xml', format="xml")
+    g_locaciones.serialize(destination='../owl/localizaciones.xml', format="xml")
+    g_orgs = insert_on_rdf()
+    g_orgs.serialize(destination='../owl/organizaciones.xml', format="xml")
+
+
+def reason_on_memory():
+    g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones = refine_and_insert_on_rdf()
+    g_orgs = insert_on_rdf()
+
+    import owlready2 as ow
+
+    ow.JAVA_EXE = "/usr/bin/java"
+
+    # from io import BytesIO
+    # my_str_as_bytes = str.encode(my_str)  # convert to binary
+    # fobj = BytesIO(my_str_as_bytes)
+    # abox = ow.get_ontology("some-random-path").load(fileobj=fobj)
+
+    tbox = ow.get_ontology('file://../owl/aigdai-tbox.owl').load()
+
+    ow.sync_reasoner()
+    if len(list(ow.default_world.inconsistent_classes())) != 0:
+        raise Exception('Inconsistent ontology')
+
+
 if __name__ == '__main__':
-    refine_and_insert_on_rdf()
-    insert_on_rdf()
+    # serialize_all()
+    reason_on_memory()
