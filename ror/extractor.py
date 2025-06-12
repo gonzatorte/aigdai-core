@@ -1,5 +1,5 @@
-from rdflib.namespace import RDF, OWL
-import onto.generator.rdf as rdf_types
+from rdflib.namespace import RDF
+import onto.populator.rdf as rdf_types
 from rdflib import Graph, Literal, URIRef
 import json
 import os

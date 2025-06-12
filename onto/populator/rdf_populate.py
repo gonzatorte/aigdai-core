@@ -1,7 +1,7 @@
 import re
 from re3data.extract_from_repo import BLACKLIST
 import onto.cts as cts
-import onto.generator.rdf as rdf_types
+import onto.populator.rdf as rdf_types
 from lib.no_relational_database import get_database_client
 from re3data.xsd_transform import refine_repository_info, load_schema
 from rdflib import Graph, Literal, URIRef
