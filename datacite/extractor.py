@@ -68,8 +68,8 @@ REPOSITORY_ATTRS = [
     'alternateName',
     'pidSystem',
     'certificate',
-    'downloadCount',
-    'viewCount',
+    'downloadCount', # Es la suma de las descargas de cada uno de sus datasets contenidos, como se explica en https://support.datacite.org/docs/repository-finder
+    'viewCount', # Es la suma de las vistas de cada uno de sus datasets contenidos, como se explica en https://support.datacite.org/docs/repository-finder
     'providerType',
     ('subject', '''
     {

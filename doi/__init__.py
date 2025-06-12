@@ -13,7 +13,6 @@ async def fetch_multiple_doi(doi_list: iter((str, T)), chunk_size: int, sleep: f
             yield metadata, doi_w_context
 
 async def fetch_single_doi(dd: str, http_client: httpx.AsyncClient):
-    print('metadata of', dd)
     doi_url = "%s%s" % (DOI_ENDPOINT, dd)
     doi_metadata_response = await http_client.get(doi_url, timeout=20)
     if doi_metadata_response.status_code == 404:

@@ -57,9 +57,12 @@ def re3data_dataproviders():
     # Cuantos son al menos data providers y cuantos directamente no declaran nada?
     database = get_database_client()
     collection = database['drepo']
-    not_declared = collection.count_documents({'providerType.0': {'$exists': False}}) # 5
-    data_providers = collection.count_documents({'providerType': 'dataProvider'}) # ~3000
-    print(not_declared, data_providers)
+    not_declared_providers = collection.count_documents({'isServiceProvider': False, 'isDataProvider': False})
+    only_service_providers = collection.count_documents({'isServiceProvider': True, 'isDataProvider': False})
+    only_data_providers = collection.count_documents({'isServiceProvider': False, 'isDataProvider': True})
+    service_and_data_providers = collection.count_documents({'isServiceProvider': True, 'isDataProvider': True})
+    service_or_data_providers = only_service_providers + only_data_providers + service_and_data_providers
+    print(not_declared_providers, only_service_providers, only_data_providers, service_and_data_providers, service_or_data_providers)
 
 def re3data_doi():
     # Cuantos usan DOI y cuantos usan DOI junto con otro sistema de identificadores?
@@ -315,6 +318,8 @@ def re3data_institutions():
         ] for x in responsibility_types_arr
     ], []))
     print(institution_types)
+    # ToDo: tipo_de_id_de_organizacion puede ser ROR, RRID, LOCAL y que otro?
+    #  new Set(db.drepo.aggregate([{$project: {'institutions': 1}}, {$unwind: '$institutions'},{$project: {'institutions.id': 1}}]).toArray().map(a => a.institutions.id.replace(' ', ':').split(/[:.;]/)[0]))
 
 def re3data_policies():
     # cuales son los posibles enumerados de politicas?
@@ -828,6 +833,23 @@ def re3data_cs_soc():
     sizes = [x['size'] for x in re3data.find({'subjects': re.compile('^1'), 'size': {'$exists': True, '$ne': None}}, {'size': True})]
     sizes = [x for x in sizes if re.match('^[0-9]', x)]
     [(x[0], x[2]) for x in dfg_subjects]
+
+
+def overlap_re3data_fairsharing():
+    database = get_database_client()
+    fairsharing = database['fairsharing']
+    re3data = database['drepo']
+    re3data_records_w_doi = re3data.count_documents({
+        'ids.0': {'$exists': True},
+        '$or': [
+            {'ids': {'$regex': '^fairsharing[:_]doi:', "$options": "i"}},
+            {'ids': {'$regex': '^doi:', "$options": "i"}},
+        ],
+    })
+    fairsharing_records = fairsharing.count_documents({
+        'doi_data.attributes.relatedIdentifiers.relatedIdentifier': {'$regex': '^https:\/\/www\.re3data\.org\/repository\/', "$options": "i"},
+    })
+    # extract_re3data_id
 
 
 if __name__ == '__main__':

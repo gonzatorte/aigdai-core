@@ -2,7 +2,7 @@
 services:
   mongo:
     image: mongo:7.0.5-jammy
-    restart: always
+    restart: no
     environment:
       MONGO_INITDB_ROOT_USERNAME: aigdai-user
       MONGO_INITDB_ROOT_PASSWORD: aigdai-password
@@ -13,6 +13,7 @@ services:
 
   db-postgres:
     image: postgres:16.1-alpine
+    restart: no
     ports:
       - "5432:5432"
     environment:

@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://estadisticos.owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://estadisticos.owl"
+     versionIRI="http://estadisticos.owl/v0.1">
+    <Prefix name="" IRI="http://estadisticos.owl#"/>
+    <Prefix name="base" IRI="http://base.owl#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="lang" IRI="http://lenguajes.owl#"/>
+    <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/base.owl</Import>
+
+    <Declaration>
+        <Class IRI="estadistico"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="estadistico"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>estadistico</IRI>
+        <Literal xml:lang="en">statistical</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>estadistico</IRI>
+        <Literal xml:lang="es">estadístico</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <DataProperty IRI="estadistico_tiene_valor"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="estadistico_tiene_valor"/>
+        <Class IRI="estadistico"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="estadistico_tiene_valor"/>
+        <Datatype abbreviatedIRI="xsd:decimal"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="estadistico_tiene_valor"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <Class IRI="filtro"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="filtro"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>filtro</IRI>
+        <Literal xml:lang="en">filter</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>filtro</IRI>
+        <Literal xml:lang="es">filtro</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="reductor"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="reductor"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>reductor</IRI>
+        <Literal xml:lang="en">reducer</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>reductor</IRI>
+        <Literal xml:lang="es">reductor</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="facetado"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="facetado"/>
+        <Class abbreviatedIRI="estadistico"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>facetado</IRI>
+        <Literal xml:lang="en">facet</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>facetado</IRI>
+        <Literal xml:lang="es">facetado</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="dimension"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="dimension"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>dimension</IRI>
+        <Literal xml:lang="en">dimension</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>dimension</IRI>
+        <Literal xml:lang="es">dimensión</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="mide"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="mide"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="mide"/>
+        <Class IRI="agregador"/>
+    </ObjectPropertyRange>
+
+<!-- ToDo: Pensar si vale la pena el concepto de fecha_de_computo o heredar los mismos que tiene un registro normal de PROV-O -->
+    <Declaration>
+        <DataProperty IRI="estadistico_tiene_fecha_de_computo"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="estadistico_tiene_fecha_de_computo"/>
+        <Class IRI="estadistico"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="estadistico_tiene_fecha_de_computo"/>
+        <Datatype abbreviatedIRI="xsd:date"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="estadistico_tiene_fecha_de_computo"/>
+    </FunctionalDataProperty>
+
+<!--     <DisjointClasses> -->
+<!--         <Class IRI="cdd"/> -->
+<!--     </DisjointClasses> -->
+</Ontology>

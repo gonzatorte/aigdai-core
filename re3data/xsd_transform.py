@@ -6,7 +6,7 @@ import re
 from xmlschema import XsdElement
 from xmlschema.validators import XsdUnion
 # from xmlschema import XsdType, ElementData
-from copy import copy, deepcopy
+from copy import deepcopy
 import hashlib
 
 class TransformError(Exception):
@@ -224,10 +224,10 @@ def refine_repository_info(
         dd['institutionURL'] = handle_atom(xx.get('r3d:institutionURL', None))
         dd['institutionContacts'] = xx.get('r3d:institutionContact', [])
 
-        if 'institutionIdentifier' in xx and len(xx['r3d:institutionIdentifier']) >= 1:
-            # ToDo: Extraer todos los identificadores
-            dd['id'] = xx['institutionIdentifier'][0]
-            dd['ids'] = xx['institutionIdentifier']
+        institution_identifiers = xx.get('r3d:institutionIdentifier', [])
+        if len(institution_identifiers) >= 1:
+            dd['id'] = institution_identifiers[0]
+            dd['ids'] = institution_identifiers
         else:
             local_id = hashlib.md5(dd['institutionName']['text'].encode('utf-8')).hexdigest()
             dd['id'] = 'LOCAL:%s' % (local_id, )

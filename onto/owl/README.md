@@ -19,7 +19,7 @@
 
 Hablar de los 3 mundos?
     Proceso de investigación
-    corpues de conocimiento disciplinar
+    corpus de conocimiento disciplinar
     agentes y recursos tecnológicos
 Hablar de los distintos niveles de abstracción y dirección de expansión considerados:
     los catálogos (entidades más o menos fijas).
@@ -32,15 +32,11 @@ Hablar de la visión de una comunidad por preservar contenidos:
     Métricas? (+ politicas, + criterios de calidad, etc)
     Repositorios (nexo entre ambos, la flecha)
 
-Hablar de la capacidad de la ontología de asociar diferentes lentes o capas a los mismos elementos de la realidad? (eg: una misma organización puede ser un consumidor de servicios en un contexto, en otro un prestador de servicio)
+Hablar de la capacidad de la ontología de asociar diferentes lentes o capas a los mismos elementos de la realidad?
+    eg: una misma organización puede ser un consumidor de servicios en un contexto, en otro un prestador de servicio
 Hablar del dilema de definir una entidad nueva o de atribuir nuevas características a una entidad existente...
     Hay un patron llamado role-attribution?
     Las instancias deberían tener una identidad no artificial del propio modelo, sino que un valor e identidad comprensible para el usuario final.
-
-### Patrones:
-- Hablar de DILIGENT?
-- Hablar de patrones o idioms más fundamentales como reificación?
-- (explicar el patron de id y esquema que se aplica para varios elementos). Ver como llamar a ese patron (entidad? alias?)
 
 ### Conceptos principales y narrativa:
 - repositorio: Los repositorios suelen alojar diferentes tipos de resultados de investigación (esta narrativa tb debería ser parte de anotaciones del modelo?)

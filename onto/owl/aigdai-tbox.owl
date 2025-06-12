@@ -819,6 +819,7 @@
     <Declaration>
         <DataProperty IRI="tiene_nombre_repositorio"/>
     </Declaration>
+
     <DataPropertyDomain>
         <DataProperty IRI="tiene_nombre_repositorio"/>
         <Class IRI="repositorio"/>
@@ -827,6 +828,7 @@
         <DataProperty IRI="tiene_nombre_repositorio"/>
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
+
     <Declaration>
         <DataProperty IRI="tiene_url_repositorio"/>
     </Declaration>
@@ -838,7 +840,7 @@
         <DataProperty IRI="tiene_url_repositorio"/>
         <Datatype IRI="url"/>
     </DataPropertyRange>
-<!--  ToDo: No mapeado aun usa_lenguaje_repositorio -->
+
     <Declaration>
         <DataProperty IRI="usa_lenguaje_repositorio"/>
     </Declaration>
@@ -850,6 +852,17 @@
         <DataProperty IRI="usa_lenguaje_repositorio"/>
         <Datatype abbreviatedIRI="lang:lenguaje"/>
     </DataPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>usa_lenguaje_repositorio</IRI>
+        <Literal xml:lang="en">repository uses language</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>usa_lenguaje_repositorio</IRI>
+        <Literal xml:lang="es">usa lenguaje repositorio</Literal>
+    </AnnotationAssertion>
+
     <Declaration>
         <DataProperty IRI="tiene_descripcion_repositorio"/>
     </Declaration>
@@ -871,6 +884,7 @@
         <IRI>tiene_descripcion_repositorio</IRI>
         <Literal xml:lang="es">tiene descripcion repositorio</Literal>
     </AnnotationAssertion>
+
     <Declaration>
         <DataProperty IRI="repositorio_creado_en_anio"/>
     </Declaration>
@@ -895,6 +909,7 @@
         <IRI>repositorio_creado_en_anio</IRI>
         <Literal xml:lang="es">repositorio creado en año</Literal>
     </AnnotationAssertion>
+
     <Declaration>
         <DataProperty IRI="repositorio_cerrado_en_anio"/>
     </Declaration>
@@ -919,14 +934,7 @@
         <IRI>repositorio_cerrado_en_anio</IRI>
         <Literal xml:lang="es">repositorio cerrado en año</Literal>
     </AnnotationAssertion>
-<!-- ToDo: Usar RDD y diferenciar los atributos que son solo para rdd. Nunnca instanciar repositorios, sinos RDD -->
-    <Declaration>
-        <Class IRI="rdd"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="rdd"/>
-        <Class IRI="repositorio"/>
-    </SubClassOf>
+
     <Declaration>
         <ObjectProperty IRI="repositorio_opera_en_pais"/>
     </Declaration>
@@ -948,12 +956,10 @@
         <IRI>repositorio_opera_en_pais</IRI>
         <Literal xml:lang="es">repositorio opera en país</Literal>
     </AnnotationAssertion>
+
     <Declaration>
         <DataProperty IRI="repositorio_esta_activo"/>
     </Declaration>
-    <FunctionalDataProperty>
-        <DataProperty IRI="repositorio_esta_activo"/>
-    </FunctionalDataProperty>
     <DataPropertyDomain>
         <DataProperty IRI="repositorio_esta_activo"/>
         <Class IRI="repositorio"/>
@@ -962,6 +968,9 @@
         <DataProperty IRI="repositorio_esta_activo"/>
         <Datatype abbreviatedIRI="xsd:boolean"/>
     </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="repositorio_esta_activo"/>
+    </FunctionalDataProperty>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
         <IRI>repositorio_esta_activo</IRI>
@@ -972,12 +981,75 @@
         <IRI>repositorio_esta_activo</IRI>
         <Literal xml:lang="es">repositorio esta activo</Literal>
     </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="repositorio_de_investigacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="repositorio_de_investigacion"/>
+        <Class IRI="repositorio"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_de_investigacion</IRI>
+        <Literal xml:lang="en">research repository</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_de_investigacion</IRI>
+        <Literal xml:lang="es">repositorio de investigación</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="rdd"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="rdd"/>
+        <Class IRI="repositorio_de_investigacion"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>rdd</IRI>
+        <Literal xml:lang="en">research data repository</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>rdd</IRI>
+        <Literal xml:lang="es">repositorio de datos de investigación</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <DataProperty IRI="soporta_servicio_de_curaduria"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="soporta_servicio_de_curaduria"/>
+        <Class IRI="rdd"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="soporta_servicio_de_curaduria"/>
+        <Datatype abbreviatedIRI="xsd:boolean" />
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="soporta_servicio_de_curaduria"/>
+    </FunctionalDataProperty>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>soporta_servicio_de_curaduria</IRI>
+        <Literal xml:lang="en">supports curatorial services</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>soporta_servicio_de_curaduria</IRI>
+        <Literal xml:lang="es">soporta servicio de curaduría</Literal>
+    </AnnotationAssertion>
+
+    <!-- ToDo: Revisar si siguen siendo instancias los Criterios de calidad -->
     <Declaration>
         <ObjectProperty IRI="satisface_criterio"/>
     </Declaration>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="satisface_criterio"/>
-        <Class IRI="repositorio"/>
+        <Class IRI="rdd"/>
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
         <ObjectProperty IRI="satisface_criterio"/>

@@ -1471,22 +1471,3 @@ formatos_de_exportacion_de_citas = [
     'vancouver',
     'chicago',
 ]
-
-enum_versionado = [
-    'si',
-    # 'si - gratis', # ToDo: Ver como hacer para que estas instancias sean "sub-intancias" de si. Tendria que poner una relacion entre enum_servicio_de_curaduria y enum_servicio_de_curaduria que sea irreflexiba, antismetrica y transitiva, y una regla que diga, si tengo la relacion con 'gratis', y A es predecesor_de 'gratis', entonces tengo la relación con A.
-    # 'si - pago',
-    'no',
-]
-
-# ToDo: MaxCardinality = 1
-# ToDo: Relacion total
-# ToDo: Esto seria una DataProperty o un objet property?
-# ToDo: Sería una functional property + el enumerado "no se"
-# ToDo: SI y NO son individuos diferentes si es una DataProperty
-enum_servicio_de_curaduria = [
-    'si',
-    # 'si - gratis', # ToDo: Ver como hacer para que estas instancias sean "sub-intancias" de si. Tendria que poner una relacion entre enum_servicio_de_curaduria y enum_servicio_de_curaduria que sea irreflexiba, antismetrica y transitiva, y una regla que diga, si tengo la relacion con 'gratis', y A es predecesor_de 'gratis', entonces tengo la relación con A.
-    # 'si - pago',
-    'no',
-]

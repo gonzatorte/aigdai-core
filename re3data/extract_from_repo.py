@@ -4,7 +4,8 @@ from lib import run_in_parallel
 from lib.no_relational_database import get_database_client, get_database_client_async
 import httpx
 from re3data.xsd_transform import load_schema, refine_repository_info
-
+from doi import fetch_multiple_doi
+import re
 
 # mal formateados de alguna manera (posiblemente por tags repetidos o atributos requeridos faltantes). Errores del estilo:
 #   Unexpected child with tag 'dataLicense' at position XX. Tag 'dataAccess' expected.
@@ -57,7 +58,7 @@ BLACKLIST = [
     'r3d100014401',
 ]
 
-async def raw():
+async def download_and_store_raw():
     database = get_database_client()
     raw_drepo_collection = database['raw_drepo']
     repo_ids = list_repositories()
@@ -75,7 +76,7 @@ async def raw():
             raw_drepo_collection.update_one({'idd': repo_id}, {'$set': {'data': repository_info.decode("utf-8"), 'bin': repository_info}}, upsert=True)
 
 
-async def refine():
+async def raw_and_store_refined():
     schema = load_schema()
     database = get_database_client_async()
     raw_drepo_collection = database['raw_drepo']
@@ -87,15 +88,39 @@ async def refine():
 
     async def refine_and_insert(instance):
         if instance['idd'] in BLACKLIST:
-            return
+            return None
         rr = refine_repository_info(schema, instance['bin'])
-        return await drepo_collection.update_one({'idd': instance['idd']}, {'$set': rr}, upsert=True)
+        await drepo_collection.update_one({'idd': instance['idd']}, {'$set': rr}, upsert=True)
+        return rr
 
-    async for _ in run_in_parallel(refine_and_insert, iter(instances), 100, 0):
-        pass
+    with_doi = []
+    counter_re3data = 0
+    async for (repository_info, _) in run_in_parallel(refine_and_insert, iter(instances), 100, 0):
+        counter_re3data += 1
+        if counter_re3data % 100 == 0:
+            print("re3data fetched %s out of %s" % (counter_re3data, len(instances)))
+
+        if repository_info is None:
+            continue
+        for iddd in repository_info['ids']:
+            iddd_match = re.match('^((?:fairsharing[:_]doi)|(?:doi)):(?P<doi>.+)', iddd, re.IGNORECASE)
+            if iddd_match:
+                doi = iddd_match.groupdict().get('doi').replace(' ', '')
+                with_doi.append((doi, repository_info['id']))
+                continue
+
+    counter_doi = 0
+    async for (doi_data, (_, idd)) in fetch_multiple_doi(with_doi, 25, 1):
+        await drepo_collection.update_one(
+            {'_id': idd},
+            {'$set': {'doi_data': doi_data}},
+        )
+        counter_doi += 1
+        if counter_doi % 10 == 0:
+            print("doi fetched %s out of %s" % (counter_doi, len(with_doi)))
 
 
-async def main():
+async def download_and_store_refined():
     database = get_database_client()
     drepo_collection = database['drepo']
     instances = {instance['idd'] for instance in database['drepo'].find({}, {'idd': 1})}
@@ -120,6 +145,6 @@ async def main():
 
 
 if __name__ == '__main__':
-    # asyncio.run(main())
-    # asyncio.run(raw())
-    asyncio.run(refine())
+    # asyncio.run(download_and_store_refined())
+    # asyncio.run(download_and_store_raw())
+    asyncio.run(raw_and_store_refined())
