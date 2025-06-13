@@ -1455,7 +1455,7 @@ apis_para_cosecha = [
     'sword',
 ]
 
-integraciones_con_red_social = [
+red_social = [
     'twitter',
     'facebook',
     'linkedin',

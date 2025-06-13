@@ -148,18 +148,73 @@
         <IRI>agregador</IRI>
         <Literal xml:lang="es">buscador</Literal>
     </AnnotationAssertion>
-<!--  ToDo: Renombrar como repositorio_es_cosechado_por_agregador -->
+
+<!--  ToDo: Reificar para expresar con que api es cosechando? -->
     <Declaration>
-        <ObjectProperty IRI="es_cosechado_por"/>
+        <ObjectProperty IRI="repositorio_es_cosechado_por_agregador"/>
     </Declaration>
     <ObjectPropertyDomain>
-        <ObjectProperty IRI="es_cosechado_por"/>
-        <Class IRI="repositorio"/>
+        <ObjectProperty IRI="repositorio_es_cosechado_por_agregador"/>
+        <Class IRI="repositorio_de_investigacion"/>
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
-        <ObjectProperty IRI="es_cosechado_por"/>
+        <ObjectProperty IRI="repositorio_es_cosechado_por_agregador"/>
         <Class IRI="agregador"/>
     </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_es_cosechado_por_agregador</IRI>
+        <Literal xml:lang="en">repository is harvested by aggregator</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_es_cosechado_por_agregador</IRI>
+        <Literal xml:lang="es">repositorio es cosechado por agregador</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="consume_protocolo_de_cosecha"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="consume_protocolo_de_cosecha"/>
+        <Class IRI="repositorio_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="consume_protocolo_de_cosecha"/>
+        <Class IRI="protocolo_de_cosecha"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>consume_protocolo_de_cosecha</IRI>
+        <Literal xml:lang="en">consumes harvesting protocol</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>consume_protocolo_de_cosecha</IRI>
+        <Literal xml:lang="es">consume protocolo de cosecha</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="consume_protocolo_de_metricas"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="consume_protocolo_de_metricas"/>
+        <Class IRI="repositorio_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="consume_protocolo_de_metricas"/>
+        <Class IRI="protocolo_de_metricas"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>consume_protocolo_de_metricas</IRI>
+        <Literal xml:lang="en">consumes metrics protocol</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>consume_protocolo_de_metricas</IRI>
+        <Literal xml:lang="es">consume protocolo de métricas</Literal>
+    </AnnotationAssertion>
 
     <Declaration>
         <Class IRI="resultado_de_investigacion"/>
@@ -790,6 +845,24 @@
     </HasKey>
 
     <Declaration>
+        <Class IRI="red_social"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="red_social"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>red_social</IRI>
+        <Literal xml:lang="en">social network</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>red_social</IRI>
+        <Literal xml:lang="es">red social</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
         <Class IRI="repositorio"/>
     </Declaration>
     <SubClassOf>
@@ -1001,6 +1074,140 @@
     </AnnotationAssertion>
 
     <Declaration>
+        <ObjectProperty IRI="integrado_con_red_social"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="integrado_con_red_social"/>
+        <Class IRI="repositorio_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="integrado_con_red_social"/>
+        <Class IRI="red_social"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>integrado_con_red_social</IRI>
+        <Literal xml:lang="en">integrated with social network</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>integrado_con_red_social</IRI>
+        <Literal xml:lang="es">integrado con red social</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="soporta_protocolo_de_cosecha"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="soporta_protocolo_de_cosecha"/>
+        <Class IRI="repositorio_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="soporta_protocolo_de_cosecha"/>
+        <Class IRI="protocolo_de_cosecha"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>soporta_protocolo_de_cosecha</IRI>
+        <Literal xml:lang="en">supports harvesting protocol</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>soporta_protocolo_de_cosecha</IRI>
+        <Literal xml:lang="es">soporta protocolo de cosecha</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="soporta_protocolo_de_metricas"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="soporta_protocolo_de_metricas"/>
+        <Class IRI="repositorio_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="soporta_protocolo_de_metricas"/>
+        <Class IRI="protocolo_de_metricas"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>soporta_protocolo_de_metricas</IRI>
+        <Literal xml:lang="en">supports metrics protocol</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>soporta_protocolo_de_metricas</IRI>
+        <Literal xml:lang="es">soporta protocolo de métricas</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="integrado_con_red_social"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="integrado_con_red_social"/>
+        <Class IRI="repositorio_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="integrado_con_red_social"/>
+        <Class IRI="red_social"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>integrado_con_red_social</IRI>
+        <Literal xml:lang="en">integrated with social network</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>integrado_con_red_social</IRI>
+        <Literal xml:lang="es">integrado con red social</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="admite_formato_de_exportacion_de_citas"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="admite_formato_de_exportacion_de_citas"/>
+        <Class IRI="repositorio_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="admite_formato_de_exportacion_de_citas"/>
+        <Class IRI="formato_de_exportacion_de_citas"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>admite_formato_de_exportacion_de_citas</IRI>
+        <Literal xml:lang="en">admits cite export format</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>admite_formato_de_exportacion_de_citas</IRI>
+        <Literal xml:lang="es">admite formato de exportación de citas</Literal>
+    </AnnotationAssertion>
+
+<!-- ToDo: Quizas es mejor hacer un admite_estandar y que luego se vea para que se usa ese formato? -->
+<!--  Quizas no, puesto que esto representa usar el formato pero en un sentido particular -->
+    <Declaration>
+        <ObjectProperty IRI="admite_formato_de_sindicacion"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="admite_formato_de_sindicacion"/>
+        <Class IRI="repositorio_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="admite_formato_de_sindicacion"/>
+        <Class IRI="formato_de_sindicacion"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>admite_formato_de_sindicacion</IRI>
+        <Literal xml:lang="en">admits syndication format</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>admite_formato_de_sindicacion</IRI>
+        <Literal xml:lang="es">admite formato de sindicación</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
         <Class IRI="rdd"/>
     </Declaration>
     <SubClassOf>
@@ -1019,62 +1226,30 @@
     </AnnotationAssertion>
 
     <Declaration>
-        <DataProperty IRI="soporta_servicio_de_curaduria"/>
+        <DataProperty IRI="nivel_de_curaduria"/>
     </Declaration>
     <DataPropertyDomain>
-        <DataProperty IRI="soporta_servicio_de_curaduria"/>
+        <DataProperty IRI="nivel_de_curaduria"/>
         <Class IRI="rdd"/>
     </DataPropertyDomain>
     <DataPropertyRange>
-        <DataProperty IRI="soporta_servicio_de_curaduria"/>
+        <DataProperty IRI="nivel_de_curaduria"/>
+        <!-- ToDo: Poner los niveles definidos en https://zenodo.org/records/11476980 -->
         <Datatype abbreviatedIRI="xsd:boolean" />
     </DataPropertyRange>
     <FunctionalDataProperty>
-        <DataProperty IRI="soporta_servicio_de_curaduria"/>
+        <DataProperty IRI="nivel_de_curaduria"/>
     </FunctionalDataProperty>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>soporta_servicio_de_curaduria</IRI>
-        <Literal xml:lang="en">supports curatorial services</Literal>
+        <IRI>nivel_de_curaduria</IRI>
+        <Literal xml:lang="en">curation level</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>soporta_servicio_de_curaduria</IRI>
-        <Literal xml:lang="es">soporta servicio de curaduría</Literal>
+        <IRI>nivel_de_curaduria</IRI>
+        <Literal xml:lang="es">nivel de curaduría</Literal>
     </AnnotationAssertion>
-
-    <!-- ToDo: Revisar si siguen siendo instancias los Criterios de calidad -->
-    <Declaration>
-        <ObjectProperty IRI="satisface_criterio"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="satisface_criterio"/>
-        <Class IRI="rdd"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="satisface_criterio"/>
-        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
-    </ObjectPropertyRange>
-    <SubObjectPropertyOf>
-        <ObjectPropertyChain>
-            <ObjectProperty IRI="satisface_criterio"/>
-            <ObjectInverseOf>
-                <ObjectProperty abbreviatedIRI="principle:extiende_de_criterio"/>
-            </ObjectInverseOf>
-        </ObjectPropertyChain>
-        <ObjectProperty IRI="satisface_criterio"/>
-    </SubObjectPropertyOf>
-    <Declaration>
-        <ObjectProperty IRI="evalua_funcionalidad"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="evalua_funcionalidad"/>
-        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="evalua_funcionalidad"/>
-        <Class IRI="repositorio"/>
-    </ObjectPropertyRange>
 
     <Declaration>
         <Class IRI="catalogo_de_repositorios"/>
@@ -1157,60 +1332,7 @@
         <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
         <DataProperty IRI="id_de_repositorio_tiene_literal"/>
     </HasKey>
-    <Declaration>
-        <Class IRI="certificacion"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="certificacion"/>
-        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
-    </SubClassOf>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>certificacion</IRI>
-        <Literal xml:lang="en">certificacion</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>certificacion</IRI>
-        <Literal xml:lang="es">certificaction</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:sinonimo"/>
-        <IRI>certificacion</IRI>
-        <Literal xml:lang="es">sello</Literal>
-    </AnnotationAssertion>
-    <Declaration>
-        <DataProperty IRI="tiene_nombre_certificacion"/>
-    </Declaration>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_nombre_certificacion"/>
-        <Class IRI="certificacion"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_nombre_certificacion"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <Declaration>
-        <ObjectProperty IRI="repositorio_certificado_por"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="repositorio_certificado_por"/>
-        <Class IRI="repositorio"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="repositorio_certificado_por"/>
-        <Class IRI="certificacion"/>
-    </ObjectPropertyRange>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>repositorio_certificado_por</IRI>
-        <Literal xml:lang="es">repositorio certificado por</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>repositorio_certificado_por</IRI>
-        <Literal xml:lang="en">repository certified by</Literal>
-    </AnnotationAssertion>
+
     <Declaration>
         <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
     </Declaration>
@@ -1383,6 +1505,258 @@
     </HasKey>
 
     <Declaration>
+        <Class IRI="politica"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="politica"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>politica</IRI>
+        <Literal xml:lang="en">policy</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>politica</IRI>
+        <Literal xml:lang="es">política</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="tiene_nombre_politica"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_nombre_politica"/>
+        <Class IRI="politica"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_nombre_politica"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <Declaration>
+        <DataProperty IRI="tiene_url_politica"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_url_politica"/>
+        <Class IRI="politica"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_url_politica"/>
+        <Datatype IRI="url"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="tiene_url_politica"/>
+    </FunctionalDataProperty>
+    <HasKey>
+        <Class IRI="politica"/>
+        <ObjectProperty IRI="tiene_url_politica"/>
+    </HasKey>
+
+    <!-- START Cosas relacionadas a las cualidades de los datasets -->
+    <Declaration>
+        <Class IRI="caracteristica_de_cdd"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="caracteristica_de_cdd"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="licencia"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="licencia"/>
+        <Class IRI="politica"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="licencia"/>
+        <Class IRI="caracteristica_de_cdd"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="tamanio"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="tamanio"/>
+        <Class IRI="caracteristica_de_cdd"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="cantidad_de_contenedores"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="cantidad_de_contenedores"/>
+        <Class IRI="tamanio"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="cantidad_de_elementos"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="cantidad_de_elementos"/>
+        <Class IRI="tamanio"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="tamanio_en_disco"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="tamanio_en_disco"/>
+        <Class IRI="tamanio"/>
+    </SubClassOf>
+    <!-- END cosas relacionaddas a los datasets -->
+
+    <!-- START Cosas relativas a los estándares -->
+    <Declaration>
+        <Class IRI="estandar"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="estandar"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>estandar</IRI>
+        <Literal xml:lang="es">standard</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>estandar</IRI>
+        <Literal xml:lang="en">estándar</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="extiende_de_estandar"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="extiende_de_estandar"/>
+        <Class IRI="estandar"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="extiende_de_estandar"/>
+        <Class IRI="estandar"/>
+    </ObjectPropertyRange>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="extiende_de_estandar"/>
+    </TransitiveObjectProperty>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>extiende_de_estandar</IRI>
+        <Literal xml:lang="en">extends from standard</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>extiende_de_estandar</IRI>
+        <Literal xml:lang="es">extiende de estándar</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="estandar_relacionado_con_estandar"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="estandar_relacionado_con_estandar"/>
+        <Class IRI="estandar"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="estandar_relacionado_con_estandar"/>
+        <Class IRI="estandar"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>estandar_relacionado_con_estandar</IRI>
+        <Literal xml:lang="en">standard related to standard</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>estandar_relacionado_con_estandar</IRI>
+        <Literal xml:lang="es">estándar relacionado con estándar</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="formato_de_sindicacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="formato_de_sindicacion"/>
+        <Class abbreviatedIRI="estandar"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>formato_de_sindicacion</IRI>
+        <Literal xml:lang="es">syndication format</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>formato_de_sindicacion</IRI>
+        <Literal xml:lang="en">formato de sindicación</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="protocolo_de_cosecha"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="protocolo_de_cosecha"/>
+        <Class abbreviatedIRI="estandar"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>protocolo_de_cosecha</IRI>
+        <Literal xml:lang="es">protocolo de cosecha</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>protocolo_de_cosecha</IRI>
+        <Literal xml:lang="en">harvesting protocol</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="protocolo_de_metricas"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="protocolo_de_metricas"/>
+        <Class abbreviatedIRI="estandar"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>protocolo_de_metricas</IRI>
+        <Literal xml:lang="es">metrics protocol</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>protocolo_de_metricas</IRI>
+        <Literal xml:lang="en">protocolo de métricas</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="esquema_de_metadatos"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="esquema_de_metadatos"/>
+        <Class abbreviatedIRI="estandar"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>esquema_de_metadatos</IRI>
+        <Literal xml:lang="es">metadata schema</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>esquema_de_metadatos</IRI>
+        <Literal xml:lang="en">esquema de metadatos</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="formato_de_exportacion_de_citas"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="formato_de_exportacion_de_citas"/>
+        <Class abbreviatedIRI="estandar"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>formato_de_exportacion_de_citas</IRI>
+        <Literal xml:lang="es">cite export format</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>formato_de_exportacion_de_citas</IRI>
+        <Literal xml:lang="en">formato de exportación de citas</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
         <Class IRI="esquema_de_metadatos"/>
     </Declaration>
     <SubClassOf>
@@ -1456,118 +1830,9 @@
         <ObjectProperty IRI="formato_codifica_tipo_de_dato"/>
         <Class IRI="tipo_de_dato"/>
     </ObjectPropertyRange>
-<!--  ToDo: relacion entre formato y tipo de dato falta -->
+    <!--  ToDo: relacion entre formato y tipo de dato falta -->
+    <!-- END Cosas relativas a los estándares -->
 
-    <Declaration>
-        <Class IRI="politica"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="politica"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>politica</IRI>
-        <Literal xml:lang="en">policy</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>politica</IRI>
-        <Literal xml:lang="es">política</Literal>
-    </AnnotationAssertion>
-    <Declaration>
-        <DataProperty IRI="tiene_nombre_politica"/>
-    </Declaration>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_nombre_politica"/>
-        <Class IRI="politica"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_nombre_politica"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <Declaration>
-        <DataProperty IRI="tiene_url_politica"/>
-    </Declaration>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_url_politica"/>
-        <Class IRI="politica"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_url_politica"/>
-        <Datatype IRI="url"/>
-    </DataPropertyRange>
-    <FunctionalDataProperty>
-        <DataProperty IRI="tiene_url_politica"/>
-    </FunctionalDataProperty>
-    <HasKey>
-        <Class IRI="politica"/>
-        <ObjectProperty IRI="tiene_url_politica"/>
-    </HasKey>
-    <Declaration>
-        <Class IRI="licencia"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="licencia"/>
-        <Class IRI="politica"/>
-    </SubClassOf>
-
-    <Declaration>
-        <Class IRI="funcionalidad_de_repositorio"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="funcionalidad_de_repositorio"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="caracteristica_de_cdd"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="caracteristica_de_cdd"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="tamanio"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="tamanio"/>
-        <Class IRI="caracteristica_de_cdd"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="cantidad_de_contenedores"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="cantidad_de_contenedores"/>
-        <Class IRI="tamanio"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="cantidad_de_elementos"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="cantidad_de_elementos"/>
-        <Class IRI="tamanio"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="tamanio_en_disco"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="tamanio_en_disco"/>
-        <Class IRI="tamanio"/>
-    </SubClassOf>
-
-    <Declaration>
-        <Class IRI="api_para_cosecha"/>
-    </Declaration>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>api_para_cosecha</IRI>
-        <Literal xml:lang="es">api para cosecha</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>api_para_cosecha</IRI>
-        <Literal xml:lang="en">harvesting api</Literal>
-    </AnnotationAssertion>
     <Declaration>
         <Class IRI="control_de_acceso"/>
     </Declaration>
@@ -1582,6 +1847,14 @@
         <Literal xml:lang="es">control de acceso</Literal>
     </AnnotationAssertion>
 
+    <!-- START cosas relativas a funcionalidades de repositorio -->
+    <Declaration>
+        <Class IRI="funcionalidad_de_repositorio"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="funcionalidad_de_repositorio"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
     <Declaration>
         <ObjectProperty IRI="repositorio_aporta_funcionalidad"/>
     </Declaration>
@@ -1603,73 +1876,99 @@
         <IRI>repositorio_aporta_funcionalidad</IRI>
         <Literal xml:lang="es">repositorio aporta funcionalidad</Literal>
     </AnnotationAssertion>
+    <Declaration>
+        <ObjectProperty IRI="evalua_funcionalidad"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="evalua_funcionalidad"/>
+        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="evalua_funcionalidad"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyRange>
+    <!-- END cosas relativas a funcionalidades de repositorio -->
+
+    <!-- START cosas relativas a criterios de calidad -->
+    <!-- ToDo: Revisar si siguen siendo instancias los Criterios de calidad -->
+    <Declaration>
+        <ObjectProperty IRI="satisface_criterio"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="satisface_criterio"/>
+        <Class IRI="rdd"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="satisface_criterio"/>
+        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
+    </ObjectPropertyRange>
+    <SubObjectPropertyOf>
+        <ObjectPropertyChain>
+            <ObjectProperty IRI="satisface_criterio"/>
+            <ObjectInverseOf>
+                <ObjectProperty abbreviatedIRI="principle:extiende_de_criterio"/>
+            </ObjectInverseOf>
+        </ObjectPropertyChain>
+        <ObjectProperty IRI="satisface_criterio"/>
+    </SubObjectPropertyOf>
 
     <Declaration>
-        <DataProperty IRI="soporta_enlazado_de_articulos"/>
+        <Class IRI="certificacion"/>
     </Declaration>
-    <FunctionalDataProperty>
-        <DataProperty IRI="soporta_enlazado_de_articulos"/>
-    </FunctionalDataProperty>
+    <SubClassOf>
+        <Class IRI="certificacion"/>
+        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>certificacion</IRI>
+        <Literal xml:lang="en">certificacion</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>certificacion</IRI>
+        <Literal xml:lang="es">certificaction</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:sinonimo"/>
+        <IRI>certificacion</IRI>
+        <Literal xml:lang="es">sello</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="tiene_nombre_certificacion"/>
+    </Declaration>
     <DataPropertyDomain>
-        <DataProperty IRI="soporta_enlazado_de_articulos"/>
-        <Class IRI="repositorio"/>
+        <DataProperty IRI="tiene_nombre_certificacion"/>
+        <Class IRI="certificacion"/>
     </DataPropertyDomain>
     <DataPropertyRange>
-        <DataProperty IRI="soporta_enlazado_de_articulos"/>
-        <Datatype abbreviatedIRI="xsd:boolean"/>
+        <DataProperty IRI="tiene_nombre_certificacion"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
+    <Declaration>
+        <ObjectProperty IRI="repositorio_certificado_por"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="repositorio_certificado_por"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="repositorio_certificado_por"/>
+        <Class IRI="certificacion"/>
+    </ObjectPropertyRange>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>soporta_enlazado_de_articulos</IRI>
-        <Literal xml:lang="en">supports article interlinking</Literal>
+        <IRI>repositorio_certificado_por</IRI>
+        <Literal xml:lang="es">repositorio certificado por</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>soporta_enlazado_de_articulos</IRI>
-        <Literal xml:lang="es">soporta enlazado de articulos</Literal>
+        <IRI>repositorio_certificado_por</IRI>
+        <Literal xml:lang="en">repository certified by</Literal>
     </AnnotationAssertion>
+    <!-- END cosas relativas a criterios de calidad -->
 
 <!--  ToDo: Ver todas las clases disjuntas  -->
-<!--    relacion_repositorio_y_organizacion-->
-<!--    repositorio-->
-<!--
-<Class IRI="agregador"/>
-<Class IRI="repositorio"/>
-<Class IRI="rdd"/>
-<Class IRI="id_de_repositorio"/>
-<Class IRI="catalogo_de_repositorios"/>
-
-<Class IRI="id_de_resultado_de_investigacion"/>
-<Class IRI="esquema_de_id_persistente"/>
-<Class IRI="resultado_de_investigacion"/>
-<Class IRI="articulo"/>
-<Class IRI="cdd"/>
-<Class IRI="motor_de_repositorio"/>
-<Class IRI="disciplina"/>
-<Class IRI="organizacion"/>
-<Class IRI="id_de_organizacion"/>
-<Class IRI="tipo_de_id_de_organizacion"/>
-<Class IRI="relacion_repositorio_y_organizacion"/>
-<Class IRI="locacion"/>
-<Class IRI="certificacion"/>
-<Class IRI="autor"/>
-<Class IRI="id_de_autor"/>
-<Class IRI="esquema_de_id_de_autor"/>
-<Class IRI="esquema_de_metadatos"/>
-<Class IRI="formato_de_archivo"/>
-<Class IRI="formato_de_archivo_abierto"/>
-<Class IRI="tipo_de_dato"/>
-<Class IRI="politica"/>
-
-<Class IRI="funcionalidad_de_repositorio"/>
-<Class IRI="caracteristica_de_cdd"/>
-<Class IRI="tamanio"/>
-<Class IRI="cantidad_de_contenedores"/>
-<Class IRI="cantidad_de_elementos"/>
-<Class IRI="tamanio_en_disco"/>
-<Class IRI="api_para_cosecha"/>
-<Class IRI="control_de_acceso"/>
--->
     <DisjointClasses>
         <Class IRI="cdd"/>
         <Class IRI="autor"/>

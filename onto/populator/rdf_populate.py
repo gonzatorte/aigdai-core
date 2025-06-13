@@ -289,7 +289,7 @@ def seed_commons():
         (rdf_types.Licencia, 'licencia', cts.licencias),
         (rdf_types.TipoDeDato, 'tipo_de_dato', cts.tipos_de_dato),
         (rdf_types.ApiParaCosecha, 'api_para_cosecha', cts.apis_para_cosecha),
-        (rdf_types.IntegracionConRedSocial, 'integracion_con_red_social', cts.integraciones_con_red_social),
+        (rdf_types.RedSocial, 'red_social', cts.red_social),
         (rdf_types.ExportacionDeCitas, 'exportacion_de_citas', cts.formatos_de_exportacion_de_citas),
     ]:
         items_g = []
