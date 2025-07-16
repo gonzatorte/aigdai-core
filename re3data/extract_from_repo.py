@@ -14,6 +14,104 @@ import re
 #   Unexpected child with tag 'subject' at position XX. Tag 'repositoryLanguage' expected.
 #   Unexpected child with tag 'missionStatementURL' at position XX. Tag 'subject' expected.
 BLACKLIST = [
+    'r3d100014568',
+    'r3d100014583',
+    'r3d100014595',
+    'r3d100014616',
+    'r3d100014625',
+    'r3d100014629',
+    'r3d100014636',
+    'r3d100014642',
+    'r3d100014648',
+    'r3d100014650',
+    'r3d100014525',
+    'r3d100014526',
+    'r3d100014528',
+    'r3d100014529',
+    'r3d100014531',
+    'r3d100014532',
+    'r3d100014534',
+    'r3d100014536',
+    'r3d100014537',
+    'r3d100014538',
+    'r3d100014539',
+    'r3d100014540',
+    'r3d100014541',
+    'r3d100014543',
+    'r3d100014545',
+    'r3d100014546',
+    'r3d100014552',
+    'r3d100014553',
+    'r3d100014554',
+    'r3d100014555',
+    'r3d100014557',
+    'r3d100014558',
+    'r3d100014560',
+    'r3d100014561',
+    'r3d100014562',
+    'r3d100014563',
+    'r3d100014564',
+    'r3d100014567',
+    'r3d100014569',
+    'r3d100014570',
+    'r3d100014571',
+    'r3d100014572',
+    'r3d100014573',
+    'r3d100014574',
+    'r3d100014575',
+    'r3d100014578',
+    'r3d100014584',
+    'r3d100014586',
+    'r3d100014587',
+    'r3d100014588',
+    'r3d100014590',
+    'r3d100014593',
+    'r3d100014594',
+    'r3d100014596',
+    'r3d100014597',
+    'r3d100014600',
+    'r3d100014604',
+    'r3d100014605',
+    'r3d100014606',
+    'r3d100014607',
+    'r3d100014614',
+    'r3d100014617',
+    'r3d100014618',
+    'r3d100014619',
+    'r3d100014620',
+    'r3d100014621',
+    'r3d100014622',
+    'r3d100014624',
+    'r3d100014627',
+    'r3d100014628',
+    'r3d100014631',
+    'r3d100014632',
+    'r3d100014633',
+    'r3d100014634',
+    'r3d100014643',
+    'r3d100014645',
+    'r3d100014646',
+    'r3d100014649',
+    'r3d100013890',
+    'r3d100014506',
+    'r3d100014507',
+    'r3d100014509',
+    'r3d100014511',
+    'r3d100014512',
+    'r3d100014513',
+    'r3d100014515',
+    'r3d100014516',
+    'r3d100014517',
+    'r3d100014518',
+    'r3d100014519',
+    'r3d100014520',
+    'r3d100014521',
+    'r3d100014522',
+    'r3d100014637',
+    'r3d100014638',
+    'r3d100014640',
+    'r3d100014641',
+
     'r3d100011532',
     'r3d100012053',
     'r3d100012228',
@@ -60,7 +158,7 @@ BLACKLIST = [
 
 async def download_and_store_raw():
     database = get_database_client()
-    raw_drepo_collection = database['raw_drepo']
+    raw_drepo_collection = database['raw_drepo_2']
     repo_ids = list_repositories()
     async with httpx.AsyncClient() as client:
         counter = 0
@@ -79,11 +177,11 @@ async def download_and_store_raw():
 async def raw_and_store_refined():
     schema = load_schema()
     database = get_database_client_async()
-    raw_drepo_collection = database['raw_drepo']
+    raw_drepo_collection = database['raw_drepo_2']
     instances = raw_drepo_collection.find({})
     instances = [x async for x in instances]
 
-    drepo_collection = database['drepo']
+    drepo_collection = database['drepo_2']
     # ids = {instance['idd'] for instance in drepo_collection.find({}, {'idd': 1})}
 
     async def refine_and_insert(instance):

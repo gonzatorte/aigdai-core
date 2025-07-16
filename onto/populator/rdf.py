@@ -11,6 +11,8 @@ Locacion = URIRef("locacion", my_ns)
 
 Organizacion = URIRef("organizacion", my_ns)
 Repositorio = URIRef("repositorio", my_ns)
+Rdd = URIRef("rdd", my_ns)
+Agregador = URIRef("agregador", my_ns)
 TipoDeIdDeOrganizacion = URIRef("tipo_de_id_de_organizacion", my_ns)
 Disciplina = URIRef("disciplina", my_ns)
 es_sub_disciplina_de = URIRef("es_sub_disciplina_de", my_ns)

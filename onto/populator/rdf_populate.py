@@ -88,6 +88,10 @@ def refine_and_insert_on_rdf():
         g_repos.set((repositorio, rdf_types.tiene_nombre_repositorio, Literal(repository_info['repositoryName']['text'], lang=repository_info['repositoryName']['lang'])))
         g_repos.set((repositorio, rdf_types.tiene_descripcion_repositorio, Literal(repository_info['description']['text'], lang=repository_info['description']['lang'])))
         g_repos.set((repositorio, rdf_types.tiene_url_repositorio, Literal(repository_info['repositoryURL'])))
+        if repository_info['isDataProvider']:
+            g_repos.set((repositorio, RDF.type, rdf_types.Rdd))
+        if repository_info['isServiceProvider']:
+            g_repos.set((repositorio, RDF.type, rdf_types.Agregador))
 
         for db_instance in repository_info['institutions']:
             id_org = db_instance['id'].replace(' ', '')

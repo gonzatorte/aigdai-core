@@ -835,6 +835,46 @@ def re3data_cs_soc():
     [(x[0], x[2]) for x in dfg_subjects]
 
 
+def re3data_relatec():
+    database = get_database_client()
+    re3data = database['drepo_2']
+    # subject = re.compile('^121')
+    subject = re.compile('^109')
+    qq = {
+        'subjects': subject,
+        # 'isDataProvider': True,
+        # 'endDate': None,
+        'dataUpload.type': {'$ne': 'closed'},
+        'databaseAccess.type': {'$ne': 'closed'},
+        'dataAccess.type': {'$ne': 'closed'},
+        # '$and': [
+        #     {'dataUpload.type': {'$ne': 'closed'}},
+        #     {'dataUpload.type': {'$ne': 'restricted'}},
+        #     {'databaseAccess.type': {'$ne': 'closed'}},
+        #     {'databaseAccess.type': {'$ne': 'restricted'}},
+        #     {'dataAccess.type': {'$ne': 'closed'}},
+        #     {'dataAccess.type': {'$ne': 'restricted'}},
+        #     {'dataAccess.type': {'$ne': 'embargoed'}},
+        # ],
+        # 'dataUpload.type': {'$eq': 'open'},
+        # 'databaseAccess.type': {'$eq': 'open'},
+        # 'dataAccess.type': {'$eq': 'open'},
+    }
+    whole = re3data.count_documents(qq)
+    disciplinar = re3data.count_documents({**qq, 'isDisciplinar': True})
+    certified = re3data.count_documents({**qq, 'certificates.0': {'$exists': True}})
+    disciplinar_certified = re3data.count_documents({**qq, 'isDisciplinar': True, 'certificates.0': {'$exists': True}})
+    w_doi = re3data.count_documents({**qq, 'pidSystems': {'$ne': 'doi'}})
+
+    print((
+        whole,
+        disciplinar,
+        certified,
+        disciplinar_certified,
+        w_doi,
+    ))
+
+
 def overlap_re3data_fairsharing():
     database = get_database_client()
     fairsharing = database['fairsharing']

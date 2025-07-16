@@ -3,6 +3,7 @@ import requests
 import asyncio
 from urllib.parse import urlparse, parse_qs
 from config import FAIRSHARING_USERNAME, FAIRSHARING_PASSWORD
+import httpx
 
 from lib.no_relational_database import get_database_client
 from doi import fetch_multiple_doi
@@ -34,6 +35,174 @@ def process_record(
         if key in record:
             del record[key]
     return record
+
+
+FAIRSHARING_GRAPHQL_ENDPOINT = 'https://api.fairsharing.org/graphql'
+X_CLIENT_ID = '3154b8ec21a2e46c935d25484378ca0a75ba14dc99b3e047dec46045f052b147701340182ed5cbe1b06abeaf52250a31b5a2a6718bf2c9966405aa236fa1aabf'
+
+
+RELATIONS_G_QUERY = '''
+query relations($page: Int, $perPage: Int) {
+  # searchFairsharingRecords(page: 0,perPage: 0,q: "",searchAnd: "",status: "",fairsharingRegistry: "",recordType: "",id: "",ids: "",excludeId: "",countries: "",subjects: "",domains: "",taxonomies: "",userDefinedTags: "",objectTypes: "",licences: "",organisations: "",grants: "",journals: "",orderBy: "",isRecommended: "",isApproved: "",isMaintained: "",hasPublication: "",isImplemented: "",usesPersistentIdentifier: "",dataPreservationPolicy: "",resourceSustainability: "",dataAccessCondition: "",dataCuration: "",dataDepositionCondition: "",citationToRelatedPublications: "",dataAccessForPrePublicationReview: "",dataContactInformation: "",dataVersioning: "") {
+  fairsharingRecords(page: $page, perPage: $perPage) {
+    records {
+      # metadata
+      id
+      name
+      organisationLinks {
+        id
+        grant {
+          id
+          name
+        }
+        organisation {
+          id
+          name
+          rorLink
+        }
+        relation
+      }
+      objectTypes {
+        definitions
+        id
+        iri
+        label
+      }
+      recordAssociations {
+        id
+        fairsharingRecord {
+          id
+          doi
+          registry
+        }
+        linkedRecord {
+          id
+          doi
+          registry
+        }
+        recordAssocLabel
+      }
+      licenceLinks {
+        id
+        fairsharingRecord {
+          id
+          doi
+          registry
+        }
+        licence {
+          id
+          name
+          url
+        }
+        relation
+      }
+    }
+    lastPage
+    firstPage
+    totalCount
+  }
+}
+'''
+
+
+ORGS_G_QUERY = '''
+query orgs($page: Int, $perPage: Int) {
+  organisations(page: $page, perPage: $perPage) {
+    records {
+      id
+      # homepage
+      # alternativeNames
+      # organisationLinks
+      # fairsharingRecords
+      # organisationTypes {
+      #   id
+      #   name
+      # }
+      # types
+      # parentOrganisations {
+      #   id
+      #   name
+      # }
+      rorLink
+    }
+    lastPage
+    firstPage
+    totalCount
+  }
+}
+'''
+
+
+async def query_graphql_orgs(http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
+    repository_metadata_response = await http_client.post(FAIRSHARING_GRAPHQL_ENDPOINT, json={
+        "query": ORGS_G_QUERY,
+        "variables": {'page': page, 'perPage': per_page},
+    }, timeout=60, headers={
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+        'x-client-id': X_CLIENT_ID,
+    })
+    if repository_metadata_response.status_code != 200:
+        raise Exception('bad status code')
+    json_data = repository_metadata_response.json()
+    if 'errors' in json_data:
+        raise Exception(json_data['errors'])
+    if 'error' in json_data:
+        raise Exception(json_data['error'])
+    data = json_data['data']['fairsharingRecords']
+    is_last_page = data['lastPage']
+    records = data['records']
+    return not is_last_page, records
+
+
+async def walk_graphql_orgs(chunk_size: int, sleep: float, from_page: int=None):
+    has_next_page = True
+    page = from_page
+    async with httpx.AsyncClient() as httpClient:
+        while has_next_page:
+            (has_next_page, records) = await query_graphql_orgs(httpClient, page, chunk_size)
+            page += 1
+            if has_next_page:
+                for record in records:
+                    yield record
+                await asyncio.sleep(sleep)
+
+
+async def query_graphql_relations(http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
+    repository_metadata_response = await http_client.post(FAIRSHARING_GRAPHQL_ENDPOINT, json={
+        "query": RELATIONS_G_QUERY,
+        "variables": {'page': page, 'perPage': per_page},
+    }, timeout=60, headers={
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+        'x-client-id': X_CLIENT_ID,
+    })
+    if repository_metadata_response.status_code != 200:
+        raise Exception('bad status code')
+    json_data = repository_metadata_response.json()
+    if 'errors' in json_data:
+        raise Exception(json_data['errors'])
+    if 'error' in json_data:
+        raise Exception(json_data['error'])
+    data = json_data['data']['fairsharingRecords']
+    is_last_page = data['lastPage']
+    records = data['records']
+    return not is_last_page, records
+
+
+async def walk_graphql_relations(chunk_size: int, sleep: float, from_page: int=None):
+    has_next_page = True
+    page = from_page
+    async with httpx.AsyncClient() as httpClient:
+        while has_next_page:
+            (has_next_page, records) = await query_graphql_relations(httpClient, page, chunk_size)
+            page += 1
+            if has_next_page:
+                for record in records:
+                    yield record
+                await asyncio.sleep(sleep)
 
 
 class FairsharingClient:
@@ -168,6 +337,15 @@ async def extract_and_store(username: str, password: str):
             upsert=True,
         )
 
+    fs_relations = database['fs_relations']
+    fs_relations.create_index('id', unique=True)
+    async for rr in walk_graphql_relations(20, 2, 1):
+        fs_relations.update_one(
+            {'_id': rr['id']},
+            {'$set': rr},
+            upsert=True,
+        )
+
 
 if __name__ == "__main__":
     # ToDo: Tambien puedo extraer las organizaciones de fairsharing
@@ -196,7 +374,7 @@ if __name__ == "__main__":
         # "Research institute"
         # "Undefined"
         # "University"
-    # asyncio.run(extract_and_store(username=FAIRSHARING_USERNAME, password=FAIRSHARING_PASSWORD))
-    asyncio.run(add_doi_data('fairsharing'))
+    asyncio.run(extract_and_store(username=FAIRSHARING_USERNAME, password=FAIRSHARING_PASSWORD))
+    # asyncio.run(add_doi_data('fairsharing'))
     # asyncio.run(add_doi_data('standards'))
     # asyncio.run(add_doi_data('policies'))

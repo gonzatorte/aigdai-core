@@ -16,4 +16,10 @@
     <Declaration>
         <AnnotationProperty IRI="sinonimo"/>
     </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="descripcion"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="basado_en"/>
+    </Declaration>
 </Ontology>

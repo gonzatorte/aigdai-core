@@ -137,9 +137,17 @@ def refine_repository_info(
                     error.invalid_child.getparent().remove(error.invalid_child)
                     break
     if len(errors) > 0:
-        # print('\n'.join(['>>>>>>>>>>' + error.msg + etree.tostring(error.elem).decode('utf-8') + '<<<<<<<<<<' for error in errors]))
-        # print('-------------\n'.join([error.msg for error in errors]))
-        # print(','.join([error.invalid_tag for error in errors]))
+        accepted_error = ['Unexpected child with tag \'{http://www.re3data.org/schema/2-2}missionStatementURL', 'Unexpected child with tag \'{http://www.re3data.org/schema/2-2}providerType']
+        err_msg = '\n'.join(['>>>>>>>>>>' + error.msg + etree.tostring(error.elem).decode('utf-8') + '<<<<<<<<<<' for error in errors])
+        if any([err_msg.find(x) != -1 for x in accepted_error]):
+            match = re.match('.*<r3d:re3data\.orgIdentifier>(.*)</r3d:re3data.orgIdentifier>.*', err_msg, re.MULTILINE|re.DOTALL)
+            idd = match.groups()[0]
+            print("blacklist as wrong data:")
+            print(idd)
+        else:
+            print(err_msg)
+            print('-------------\n'.join([error.msg for error in errors]))
+            print(','.join([error.invalid_tag for error in errors]))
         raise TransformError(errors)
     decoded = decoded[0]['r3d:repository'][0]
 
