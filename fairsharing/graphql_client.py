@@ -1,0 +1,348 @@
+import asyncio
+import typing
+import httpx
+
+
+FAIRSHARING_GRAPHQL_ENDPOINT = 'https://api.fairsharing.org/graphql'
+X_CLIENT_ID = '3154b8ec21a2e46c935d25484378ca0a75ba14dc99b3e047dec46045f052b147701340182ed5cbe1b06abeaf52250a31b5a2a6718bf2c9966405aa236fa1aabf'
+
+
+def get_relations_query(full: bool):
+    return '''
+query relations($page: Int, $perPage: Int) {
+  # searchFairsharingRecords(page: 0,perPage: 0,q: "",searchAnd: "",status: "",fairsharingRegistry: "",recordType: "",id: "",ids: "",excludeId: "",countries: "",subjects: "",domains: "",taxonomies: "",userDefinedTags: "",objectTypes: "",licences: "",organisations: "",grants: "",journals: "",orderBy: "",isRecommended: "",isApproved: "",isMaintained: "",hasPublication: "",isImplemented: "",usesPersistentIdentifier: "",dataPreservationPolicy: "",resourceSustainability: "",dataAccessCondition: "",dataCuration: "",dataDepositionCondition: "",citationToRelatedPublications: "",dataAccessForPrePublicationReview: "",dataContactInformation: "",dataVersioning: "") {
+  fairsharingRecords(page: $page, perPage: $perPage) {
+    records {
+      id
+      %s
+      grants {
+        id
+      }
+      objectTypes {
+        id
+      }
+      domains {
+        id
+      }
+      subjects {
+        id
+      }
+      taxonomies {
+        id
+      }
+      userDefinedTags {
+        id
+      }
+      countries {
+        id
+      }
+      organisationLinks {
+        id
+        grant {
+          id
+        }
+        organisation {
+          id
+        }
+        relation
+      }
+      recordAssociations {
+        id
+        fairsharingRecord {
+          id
+        }
+        linkedRecord {
+          id
+        }
+        recordAssocLabel
+      }
+      licenceLinks {
+        id
+        fairsharingRecord {
+          id
+        }
+        licence {
+          id
+        }
+        relation
+      }
+    }
+    lastPage
+    firstPage
+    totalCount
+  }
+}
+''' % (('\n'.join([
+        "doi",
+        "name",
+        "description",
+        "abbreviation",
+        "type",
+        "registry",
+        "status",
+        "homepage",
+        "exhaustiveLicences",
+        "deprecationReason",
+        "lastEdited",
+        "lastReviewed",
+        "updatedAt",
+        "metadata",
+    ]), ) if full else ('',))
+
+
+ORGS_RELATIONS_G_QUERY = '''
+query org_relations($page: Int, $perPage: Int) {
+  organisations(page: $page, perPage: $perPage) {
+    records {
+      id
+    }
+    lastPage
+    firstPage
+    totalCount
+  }
+}
+'''
+
+
+ORGS_G_QUERY = '''
+query org_relations($page: Int, $perPage: Int) {
+  organisations(page: $page, perPage: $perPage) {
+    records {
+      id
+      homepage
+      alternativeNames
+      organisationTypes {
+        id
+        name
+      }
+      types
+      parentOrganisations {
+        id
+      }
+      rorLink
+    }
+    lastPage
+    firstPage
+    totalCount
+  }
+}
+'''
+
+
+async def query_graphql(query: str, http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
+    repository_metadata_response = await http_client.post(FAIRSHARING_GRAPHQL_ENDPOINT, json={
+        "query": query,
+        "variables": {'page': page, 'perPage': per_page},
+    }, timeout=60, headers={
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+        'x-client-id': X_CLIENT_ID,
+    })
+    if repository_metadata_response.status_code != 200:
+        raise Exception('bad status code')
+    json_data = repository_metadata_response.json()
+    if 'errors' in json_data:
+        raise Exception(json_data['errors'])
+    if 'error' in json_data:
+        raise Exception(json_data['error'])
+    return json_data['data']
+
+
+async def query_graphql_orgs(http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
+    res = await query_graphql(ORGS_G_QUERY, http_client, page, per_page)
+    data = res['organisations']
+    is_last_page = data['lastPage']
+    records = data['records']
+    return not is_last_page, records
+
+
+async def query_graphql_relations(http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
+    res = await query_graphql(get_relations_query(False), http_client, page, per_page)
+    data = res['fairsharingRecords']
+    is_last_page = data['lastPage']
+    records = data['records']
+    return not is_last_page, records
+
+
+async def query_graphql_full(http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
+    res = await query_graphql(get_relations_query(True), http_client, page, per_page)
+    data = res['fairsharingRecords']
+    is_last_page = data['lastPage']
+    records = data['records']
+    return not is_last_page, records
+
+
+async def query_graphql_countries(http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
+    res = await query_graphql('''
+query get_countries($page: Int, $perPage: Int) {
+  countries(page: $page, perPage: $perPage) {
+    records {
+      alternativeNames
+      code
+      id
+      name
+    }
+    lastPage
+    firstPage
+    currentPage
+    perPage
+    totalCount
+  }
+    ''', http_client, page, per_page)
+    data = res['countries']
+    is_last_page = data['lastPage']
+    records = data['records']
+    return not is_last_page, records
+
+
+async def query_graphql_object_type(http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
+    res = await query_graphql('''
+query ooo {
+  objectTypes(page: 1, perPage: 2) {
+    records {
+      definitions
+      iri
+      id
+      label
+    }
+    lastPage
+    firstPage
+    currentPage
+    perPage
+    totalCount
+  }
+}
+    ''', http_client, page, per_page)
+    data = res['objectTypes']
+    is_last_page = data['lastPage']
+    records = data['records']
+    return not is_last_page, records
+
+
+async def walk_pages(method: typing.Callable[[httpx.AsyncClient, int | None, int | None], typing.Coroutine[typing.Any, typing.Any, tuple[bool, typing.Any]]], chunk_size: int, sleep: float, from_page: int=None):
+    has_next_page = True
+    page = from_page
+    async with httpx.AsyncClient() as httpClient:
+        while has_next_page:
+            (has_next_page, records) = await method(httpClient, page, chunk_size)
+            page += 1
+            if has_next_page:
+                for record in records:
+                    yield record
+                await asyncio.sleep(sleep)
+
+
+def walk_graphql_orgs(chunk_size: int, sleep: float, from_page: int=None):
+    return walk_pages(query_graphql_orgs, chunk_size, sleep, from_page)
+
+
+def walk_graphql_relations(chunk_size: int, sleep: float, from_page: int=None):
+    return walk_pages(query_graphql_relations, chunk_size, sleep, from_page)
+
+
+def walk_graphql_all(chunk_size: int, sleep: float, from_page: int=None):
+    return walk_pages(query_graphql_full, chunk_size, sleep, from_page)
+
+
+# ToDo: Tengo que hacer metodos para listar Subjects, Domains, UserDefinedTag, Taxonomies y Organizations? Licencias? Country? ObjectType? Grants?
+# query sss {
+#   subjects(page: 1, perPage: 2) {
+#     records {
+#       definitions
+#       expandedNames
+#       id
+#       iri
+#       label
+#       synonyms
+#       parents {
+#         id
+#       }
+#     }
+#     lastPage
+#     firstPage
+#     currentPage
+#     perPage
+#     totalCount
+#   }
+# }
+# query dddd {
+#   domains(page: 1, perPage: 2) {
+#     records {
+#       definitions
+#       expandedNames
+#       id
+#       iri
+#       label
+#       synonyms
+#       parents {
+#         id
+#       }
+#     }
+#     lastPage
+#     firstPage
+#     currentPage
+#     perPage
+#     totalCount
+#   }
+# }
+# query tttt {
+#   taxonomies(page: 1, perPage: 2) {
+#     records {
+#       definitions
+#       expandedNames
+#       id
+#       iri
+#       label
+#       synonyms
+#     }
+#     lastPage
+#     firstPage
+#     currentPage
+#     perPage
+#     totalCount
+#   }
+# }
+# query uuuu {
+#   userDefinedTags(page: 1, perPage: 2) {
+#     records {
+#       definitions
+#       id
+#       label
+#       synonyms
+#     }
+#     lastPage
+#     firstPage
+#     currentPage
+#     perPage
+#     totalCount
+#   }
+# }
+# query ggg {
+#   grants(page: 1, perPage: 2) {
+#     records {
+#       description
+#       id
+#       name
+#     }
+#     lastPage
+#     firstPage
+#     currentPage
+#     perPage
+#     totalCount
+#   }
+# }
+# query lll {
+#   licences(page: 1, perPage: 2) {
+#     records {
+#       url
+#       id
+#       name
+#     }
+#     lastPage
+#     firstPage
+#     currentPage
+#     perPage
+#     totalCount
+#   }
+# }

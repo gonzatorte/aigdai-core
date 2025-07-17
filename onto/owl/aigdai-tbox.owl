@@ -832,18 +832,6 @@
     </FunctionalDataProperty>
 
     <Declaration>
-        <ObjectProperty IRI="usa_politica"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="usa_politica"/>
-        <Class IRI="relacion_repositorio_y_organizacion"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="usa_politica"/>
-        <Class IRI="politica"/>
-    </ObjectPropertyRange>
-
-    <Declaration>
         <Class IRI="locacion"/>
     </Declaration>
     <SubClassOf>
@@ -969,6 +957,68 @@
     </AnnotationAssertion>
 
     <Declaration>
+        <Class IRI="palabra_clave"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="palabra_clave"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio</IRI>
+        <Literal xml:lang="es">palabra clave</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio</IRI>
+        <Literal xml:lang="en">keyword</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <DataProperty IRI="tiene_sinonimo_palabra_clave"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_sinonimo_palabra_clave"/>
+        <Class IRI="palabra_clave"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_sinonimo_palabra_clave"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+
+    <Declaration>
+        <ObjectProperty IRI="tiene_palabra_clave_repositorio"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="tiene_palabra_clave_repositorio"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="tiene_palabra_clave_repositorio"/>
+        <Class IRI="palabra_clave"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>tiene_palabra_clave_repositorio</IRI>
+        <Literal xml:lang="en">repository has keyword</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>tiene_palabra_clave_repositorio</IRI>
+        <Literal xml:lang="es">tiene palabra clave repositorio</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:basado_en"/>
+        <IRI>tiene_palabra_clave_repositorio</IRI>
+        <Literal>http://doi.org/10.2312/re3.006</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:basado_en"/>
+        <IRI>tiene_palabra_clave_repositorio</IRI>
+        <Literal>https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/general-information/taxonomic-range-research-subjects-domains-and-user-defined-tags</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
         <DataProperty IRI="tiene_nombre_repositorio"/>
     </Declaration>
     <DataPropertyDomain>
@@ -1065,33 +1115,6 @@
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:basado_en"/>
         <IRI>tiene_observaciones_repositorio</IRI>
-        <Literal>http://doi.org/10.2312/re3.006</Literal>
-    </AnnotationAssertion>
-
-    <Declaration>
-        <DataProperty IRI="tiene_palabra_clave_repositorio"/>
-    </Declaration>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_palabra_clave_repositorio"/>
-        <Class IRI="repositorio"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_palabra_clave_repositorio"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>tiene_palabra_clave_repositorio</IRI>
-        <Literal xml:lang="en">repository has keyword</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>tiene_palabra_clave_repositorio</IRI>
-        <Literal xml:lang="es">tiene palabra clave repositorio</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:basado_en"/>
-        <IRI>tiene_palabra_clave_repositorio</IRI>
         <Literal>http://doi.org/10.2312/re3.006</Literal>
     </AnnotationAssertion>
 
@@ -1438,74 +1461,6 @@
     </TransitiveObjectProperty>
 
     <Declaration>
-        <ObjectProperty IRI="soporta_nivel_de_curaduria"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="soporta_nivel_de_curaduria"/>
-        <Class IRI="rdd"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="soporta_nivel_de_curaduria"/>
-        <Class IRI="nivel_de_curaduria"/>
-    </ObjectPropertyRange>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>soporta_nivel_de_curaduria</IRI>
-        <Literal xml:lang="en">supports curation level</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>soporta_nivel_de_curaduria</IRI>
-        <Literal xml:lang="es">soporta nivel de curaduría</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:basado_en"/>
-        <IRI>soporta_nivel_de_curaduria</IRI>
-        <Literal>http://doi.org/10.2312/re3.006</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:basado_en"/>
-        <IRI>soporta_nivel_de_curaduria</IRI>
-        <Literal>https://doi.org/10.15497/RDA00103</Literal>
-    </AnnotationAssertion>
-
-    <Declaration>
-        <DataProperty IRI="soporta_versionado_repositorio"/>
-    </Declaration>
-    <DataPropertyDomain>
-        <DataProperty IRI="soporta_versionado_repositorio"/>
-        <Class IRI="rdd"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="soporta_versionado_repositorio"/>
-        <!-- ToDo: En realidad, mas que false se puede decir que se supo que se cumplia (o no) eso a tal fecha -->
-        <Datatype abbreviatedIRI="xsd:boolean"/>
-    </DataPropertyRange>
-    <FunctionalDataProperty>
-        <DataProperty IRI="soporta_versionado_repositorio"/>
-    </FunctionalDataProperty>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>soporta_versionado_repositorio</IRI>
-        <Literal xml:lang="es">soporta versionado repositorio</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>soporta_versionado_repositorio</IRI>
-        <Literal xml:lang="en">repository supports versioning</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:basado_en"/>
-        <IRI>soporta_versionado_repositorio</IRI>
-        <Literal>http://doi.org/10.2312/re3.006</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:basado_en"/>
-        <IRI>soporta_versionado_repositorio</IRI>
-        <Literal>https://fairsharing.gitbook.io/fairsharing/additional-information/database-conditions#data-versioning</Literal>
-    </AnnotationAssertion>
-
-    <Declaration>
         <ObjectProperty IRI="repositorio_acepta_tipo_de_contenido"/>
     </Declaration>
     <ObjectPropertyDomain>
@@ -1634,75 +1589,6 @@
     </HasKey>
 
     <Declaration>
-        <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
-    </Declaration>
-    <DataPropertyDomain>
-        <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
-        <Class IRI="repositorio_de_investigacion"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
-        <Datatype abbreviatedIRI="duration"/>
-    </DataPropertyRange>
-    <FunctionalDataProperty>
-        <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
-    </FunctionalDataProperty>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>maxima_duracion_periodo_de_embargo</IRI>
-        <Literal xml:lang="en">max duration for embargo period</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>maxima_duracion_periodo_de_embargo</IRI>
-        <Literal xml:lang="es">máxima duración para período de embargo</Literal>
-    </AnnotationAssertion>
-<!--  ToDo: Mas que politica es un plan de preservacion  -->
-    <Declaration>
-        <ObjectProperty IRI="repositorio_tiene_politica_de_preservacion"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="repositorio_tiene_politica_de_preservacion"/>
-        <Class IRI="rdd"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="repositorio_tiene_politica_de_preservacion"/>
-        <Class IRI="politica"/>
-    </ObjectPropertyRange>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>repositorio_tiene_politica_de_preservacion</IRI>
-        <Literal xml:lang="en">repository has preservation policy</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>repositorio_tiene_politica_de_preservacion</IRI>
-        <Literal xml:lang="es">repositorio tiene politica de preservación</Literal>
-    </AnnotationAssertion>
-
-    <Declaration>
-        <DataProperty IRI="repositorio_tiene_documentacion"/>
-    </Declaration>
-    <DataPropertyDomain>
-        <DataProperty IRI="repositorio_tiene_documentacion"/>
-        <Class IRI="repositorio"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="repositorio_tiene_documentacion"/>
-        <Datatype abbreviatedIRI="xsd:anyURI"/>
-    </DataPropertyRange>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>repositorio_tiene_documentacion</IRI>
-        <Literal xml:lang="en">repository has documentation</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>repositorio_tiene_documentacion</IRI>
-        <Literal xml:lang="es">repositorio tiene documentación</Literal>
-    </AnnotationAssertion>
-
-    <Declaration>
         <Class IRI="autor"/>
     </Declaration>
     <SubClassOf>
@@ -1805,53 +1691,6 @@
         <DataProperty IRI="id_de_autor_tiene_literal"/>
     </HasKey>
 
-    <Declaration>
-        <Class IRI="politica"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="politica"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>politica</IRI>
-        <Literal xml:lang="en">policy</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>politica</IRI>
-        <Literal xml:lang="es">política</Literal>
-    </AnnotationAssertion>
-    <Declaration>
-        <DataProperty IRI="tiene_nombre_politica"/>
-    </Declaration>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_nombre_politica"/>
-        <Class IRI="politica"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_nombre_politica"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <Declaration>
-        <DataProperty IRI="tiene_url_politica"/>
-    </Declaration>
-    <DataPropertyDomain>
-        <DataProperty IRI="tiene_url_politica"/>
-        <Class IRI="politica"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="tiene_url_politica"/>
-        <Datatype IRI="url"/>
-    </DataPropertyRange>
-    <FunctionalDataProperty>
-        <DataProperty IRI="tiene_url_politica"/>
-    </FunctionalDataProperty>
-    <HasKey>
-        <Class IRI="politica"/>
-        <ObjectProperty IRI="tiene_url_politica"/>
-    </HasKey>
-
     <!-- START Cosas relacionadas a las cualidades de los datasets -->
     <Declaration>
         <Class IRI="caracteristica_de_cdd"/>
@@ -1859,13 +1698,6 @@
     <SubClassOf>
         <Class IRI="caracteristica_de_cdd"/>
         <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="licencia"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="licencia"/>
-        <Class IRI="politica"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="licencia"/>
@@ -1991,35 +1823,6 @@
     </AnnotationAssertion>
 
     <Declaration>
-        <ObjectProperty IRI="extiende_de_estandar"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="extiende_de_estandar"/>
-        <Class IRI="estandar"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="extiende_de_estandar"/>
-        <Class IRI="estandar"/>
-    </ObjectPropertyRange>
-    <TransitiveObjectProperty>
-        <ObjectProperty IRI="extiende_de_estandar"/>
-    </TransitiveObjectProperty>
-    <SubObjectPropertyOf>
-        <ObjectProperty IRI="extiende_de_estandar"/>
-        <ObjectProperty IRI="estandar_relacionado_con_estandar"/>
-    </SubObjectPropertyOf>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>extiende_de_estandar</IRI>
-        <Literal xml:lang="en">extends from standard</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>extiende_de_estandar</IRI>
-        <Literal xml:lang="es">extiende de estándar</Literal>
-    </AnnotationAssertion>
-
-    <Declaration>
         <ObjectProperty IRI="estandar_relacionado_con_estandar"/>
     </Declaration>
     <ObjectPropertyDomain>
@@ -2030,6 +1833,9 @@
         <ObjectProperty IRI="estandar_relacionado_con_estandar"/>
         <Class IRI="estandar"/>
     </ObjectPropertyRange>
+    <SymmetricObjectProperty>
+        <ObjectProperty IRI="estandar_relacionado_con_estandar"/>
+    </SymmetricObjectProperty>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
         <IRI>estandar_relacionado_con_estandar</IRI>
@@ -2042,11 +1848,53 @@
     </AnnotationAssertion>
 
     <Declaration>
+        <ObjectProperty IRI="extiende_de_estandar"/>
+    </Declaration>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="extiende_de_estandar"/>
+        <ObjectProperty IRI="estandar_relacionado_con_estandar"/>
+    </SubObjectPropertyOf>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="extiende_de_estandar"/>
+    </TransitiveObjectProperty>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>extiende_de_estandar</IRI>
+        <Literal xml:lang="en">extends from standard</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>extiende_de_estandar</IRI>
+        <Literal xml:lang="es">extiende de estándar</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="perfila_estandar"/>
+    </Declaration>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="perfila_estandar"/>
+        <ObjectProperty IRI="estandar_relacionado_con_estandar"/>
+    </SubObjectPropertyOf>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="perfila_estandar"/>
+    </TransitiveObjectProperty>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>perfila_estandar</IRI>
+        <Literal xml:lang="en">profiles standard</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>perfila_estandar</IRI>
+        <Literal xml:lang="es">perfila estándar</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
         <Class IRI="formato_de_sindicacion"/>
     </Declaration>
     <SubClassOf>
         <Class IRI="formato_de_sindicacion"/>
-        <Class abbreviatedIRI="estandar"/>
+        <Class IRI="estandar"/>
     </SubClassOf>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
@@ -2064,7 +1912,7 @@
     </Declaration>
     <SubClassOf>
         <Class IRI="protocolo_de_cosecha"/>
-        <Class abbreviatedIRI="estandar"/>
+        <Class IRI="estandar"/>
     </SubClassOf>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
@@ -2082,7 +1930,7 @@
     </Declaration>
     <SubClassOf>
         <Class IRI="protocolo_de_metricas"/>
-        <Class abbreviatedIRI="estandar"/>
+        <Class IRI="estandar"/>
     </SubClassOf>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
@@ -2100,7 +1948,7 @@
     </Declaration>
     <SubClassOf>
         <Class IRI="formato_de_exportacion_de_citas"/>
-        <Class abbreviatedIRI="estandar"/>
+        <Class IRI="estandar"/>
     </SubClassOf>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
@@ -2416,6 +2264,289 @@
         <AnnotationProperty abbreviatedIRI="base:basado_en"/>
         <IRI>soporta_enlace_con_articulo</IRI>
         <Literal>https://fairsharing.gitbook.io/fairsharing/additional-information/database-conditions#citation-to-related-publications</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="repositorio_usa_politica"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="repositorio_usa_politica"/>
+        <Class IRI="repositorio_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="repositorio_usa_politica"/>
+        <Class IRI="politica"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_usa_politica</IRI>
+        <Literal xml:lang="en">repository uses policy</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_usa_politica</IRI>
+        <Literal xml:lang="es">repositorio usa política</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="politica"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="politica"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>política</IRI>
+        <Literal xml:lang="en">policy</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>política</IRI>
+        <Literal xml:lang="es">política</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="tiene_nombre_politica"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_nombre_politica"/>
+        <Class IRI="politica"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_nombre_politica"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+
+    <Declaration>
+        <DataProperty IRI="tiene_url_politica"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_url_politica"/>
+        <Class IRI="politica"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_url_politica"/>
+        <Datatype IRI="url"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="tiene_url_politica"/>
+    </FunctionalDataProperty>
+    <HasKey>
+        <Class IRI="politica"/>
+        <ObjectProperty IRI="tiene_url_politica"/>
+    </HasKey>
+
+    <Declaration>
+        <ObjectProperty IRI="politica_relacionada_con_politica"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="politica_relacionada_con_politica"/>
+        <Class IRI="politica"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="politica_relacionada_con_politica"/>
+        <Class IRI="politica"/>
+    </ObjectPropertyRange>
+    <SymmetricObjectProperty>
+        <ObjectProperty IRI="politica_relacionada_con_politica"/>
+    </SymmetricObjectProperty>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>política_relacionada_con_politica</IRI>
+        <Literal xml:lang="en">policy related to policy</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>política_relacionada_con_politica</IRI>
+        <Literal xml:lang="es">política relacionada con politica</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="politica_extiende_a_politica"/>
+    </Declaration>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="politica_extiende_a_politica"/>
+        <ObjectProperty IRI="politica_relacionada_con_politica"/>
+    </SubObjectPropertyOf>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="politica_extiende_a_politica"/>
+    </TransitiveObjectProperty>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>política_extiende_a_politica</IRI>
+        <Literal xml:lang="en">policy extends policy</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>política_extiende_a_politica</IRI>
+        <Literal xml:lang="es">política extiende a politica</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="politica_recomienda_estandar"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="politica_recomienda_estandar"/>
+        <Class IRI="politica"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="politica_recomienda_estandar"/>
+        <Class IRI="estandar"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>política_recomienda_estandar</IRI>
+        <Literal xml:lang="en">policy recommends standard</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>política_recomienda_estandar</IRI>
+        <Literal xml:lang="es">política recomienda estándar</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
+        <Class IRI="repositorio_de_investigacion"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
+        <Datatype IRI="duration"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
+    </FunctionalDataProperty>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>maxima_duracion_periodo_de_embargo</IRI>
+        <Literal xml:lang="en">max duration for embargo period</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>maxima_duracion_periodo_de_embargo</IRI>
+        <Literal xml:lang="es">máxima duración para período de embargo</Literal>
+    </AnnotationAssertion>
+<!--  ToDo: Mas que politica es un plan de preservacion  -->
+    <Declaration>
+        <ObjectProperty IRI="repositorio_tiene_politica_de_preservacion"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="repositorio_tiene_politica_de_preservacion"/>
+        <Class IRI="rdd"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="repositorio_tiene_politica_de_preservacion"/>
+        <Class IRI="politica"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_tiene_politica_de_preservacion</IRI>
+        <Literal xml:lang="en">repository has preservation policy</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_tiene_politica_de_preservacion</IRI>
+        <Literal xml:lang="es">repositorio tiene politica de preservación</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <DataProperty IRI="repositorio_tiene_documentacion"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="repositorio_tiene_documentacion"/>
+        <Class IRI="repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="repositorio_tiene_documentacion"/>
+        <Datatype abbreviatedIRI="xsd:anyURI"/>
+    </DataPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_tiene_documentacion</IRI>
+        <Literal xml:lang="en">repository has documentation</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_tiene_documentacion</IRI>
+        <Literal xml:lang="es">repositorio tiene documentación</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="licencia"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="licencia"/>
+        <Class IRI="politica"/>
+    </SubClassOf>
+
+    <Declaration>
+        <ObjectProperty IRI="soporta_nivel_de_curaduria"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="soporta_nivel_de_curaduria"/>
+        <Class IRI="rdd"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="soporta_nivel_de_curaduria"/>
+        <Class IRI="nivel_de_curaduria"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>soporta_nivel_de_curaduria</IRI>
+        <Literal xml:lang="en">supports curation level</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>soporta_nivel_de_curaduria</IRI>
+        <Literal xml:lang="es">soporta nivel de curaduría</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:basado_en"/>
+        <IRI>soporta_nivel_de_curaduria</IRI>
+        <Literal>http://doi.org/10.2312/re3.006</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:basado_en"/>
+        <IRI>soporta_nivel_de_curaduria</IRI>
+        <Literal>https://doi.org/10.15497/RDA00103</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <DataProperty IRI="soporta_versionado_repositorio"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="soporta_versionado_repositorio"/>
+        <Class IRI="rdd"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="soporta_versionado_repositorio"/>
+        <!-- ToDo: En realidad, mas que false se puede decir que se supo que se cumplia (o no) eso a tal fecha -->
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="soporta_versionado_repositorio"/>
+    </FunctionalDataProperty>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>soporta_versionado_repositorio</IRI>
+        <Literal xml:lang="es">soporta versionado repositorio</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>soporta_versionado_repositorio</IRI>
+        <Literal xml:lang="en">repository supports versioning</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:basado_en"/>
+        <IRI>soporta_versionado_repositorio</IRI>
+        <Literal>http://doi.org/10.2312/re3.006</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:basado_en"/>
+        <IRI>soporta_versionado_repositorio</IRI>
+        <Literal>https://fairsharing.gitbook.io/fairsharing/additional-information/database-conditions#data-versioning</Literal>
     </AnnotationAssertion>
 
 <!--  ToDo: Ver todas las clases disjuntas  -->
