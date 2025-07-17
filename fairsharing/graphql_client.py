@@ -198,8 +198,8 @@ query get_countries($page: Int, $perPage: Int) {
 
 async def query_graphql_object_type(http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
     res = await query_graphql('''
-query ooo {
-  objectTypes(page: 1, perPage: 2) {
+query get_objectTypes($page: Int, $perPage: Int) {
+  objectTypes(page: $page, perPage: $perPage) {
     records {
       definitions
       iri
@@ -215,6 +215,82 @@ query ooo {
 }
     ''', http_client, page, per_page)
     data = res['objectTypes']
+    is_last_page = data['lastPage']
+    records = data['records']
+    return not is_last_page, records
+
+
+async def query_graphql_licence(http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
+    res = await query_graphql('''
+query get_licences($page: Int, $perPage: Int) {
+  licences(page: $page, perPage: $perPage) {
+    records {
+      url
+      id
+      name
+    }
+    lastPage
+    firstPage
+    currentPage
+    perPage
+    totalCount
+  }
+}
+    ''', http_client, page, per_page)
+    data = res['licences']
+    is_last_page = data['lastPage']
+    records = data['records']
+    return not is_last_page, records
+
+
+async def query_graphql_keywords(http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
+    res = await query_graphql('''
+query get_keywords($page: Int, $perPage: Int) {
+  userDefinedTags(page: $page, perPage: $perPage) {
+    records {
+      definitions
+      id
+      label
+      synonyms
+    }
+    lastPage
+    firstPage
+    currentPage
+    perPage
+    totalCount
+  }
+}
+    ''', http_client, page, per_page)
+    data = res['userDefinedTags']
+    is_last_page = data['lastPage']
+    records = data['records']
+    return not is_last_page, records
+
+
+async def query_graphql_subjects(http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
+    res = await query_graphql('''
+query get_subjects($page: Int, $perPage: Int) {
+  subjects(page: $page, perPage: $perPage) {
+    records {
+      definitions
+      expandedNames
+      id
+      iri
+      label
+      synonyms
+      parents {
+        id
+      }
+    }
+    lastPage
+    firstPage
+    currentPage
+    perPage
+    totalCount
+  }
+}
+    ''', http_client, page, per_page)
+    data = res['subjects']
     is_last_page = data['lastPage']
     records = data['records']
     return not is_last_page, records
@@ -245,27 +321,7 @@ def walk_graphql_all(chunk_size: int, sleep: float, from_page: int=None):
     return walk_pages(query_graphql_full, chunk_size, sleep, from_page)
 
 
-# ToDo: Tengo que hacer metodos para listar Subjects, Domains, UserDefinedTag, Taxonomies y Organizations? Licencias? Country? ObjectType? Grants?
-# query sss {
-#   subjects(page: 1, perPage: 2) {
-#     records {
-#       definitions
-#       expandedNames
-#       id
-#       iri
-#       label
-#       synonyms
-#       parents {
-#         id
-#       }
-#     }
-#     lastPage
-#     firstPage
-#     currentPage
-#     perPage
-#     totalCount
-#   }
-# }
+# ToDo: Tengo que hacer metodos para listar Domains, Taxonomies y Organizations? Grants?
 # query dddd {
 #   domains(page: 1, perPage: 2) {
 #     records {
@@ -303,21 +359,6 @@ def walk_graphql_all(chunk_size: int, sleep: float, from_page: int=None):
 #     totalCount
 #   }
 # }
-# query uuuu {
-#   userDefinedTags(page: 1, perPage: 2) {
-#     records {
-#       definitions
-#       id
-#       label
-#       synonyms
-#     }
-#     lastPage
-#     firstPage
-#     currentPage
-#     perPage
-#     totalCount
-#   }
-# }
 # query ggg {
 #   grants(page: 1, perPage: 2) {
 #     records {
@@ -332,17 +373,4 @@ def walk_graphql_all(chunk_size: int, sleep: float, from_page: int=None):
 #     totalCount
 #   }
 # }
-# query lll {
-#   licences(page: 1, perPage: 2) {
-#     records {
-#       url
-#       id
-#       name
-#     }
-#     lastPage
-#     firstPage
-#     currentPage
-#     perPage
-#     totalCount
-#   }
-# }
+

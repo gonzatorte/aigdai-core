@@ -467,6 +467,7 @@
     <FunctionalDataProperty>
         <DataProperty IRI="nombre_de_disciplina"/>
     </FunctionalDataProperty>
+
     <Declaration>
         <ObjectProperty IRI="es_sub_disciplina_de"/>
     </Declaration>
@@ -481,6 +482,7 @@
     <TransitiveObjectProperty>
         <ObjectProperty IRI="es_sub_disciplina_de"/>
     </TransitiveObjectProperty>
+
     <Declaration>
         <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
     </Declaration>
@@ -2054,20 +2056,6 @@
     <!-- END Cosas relativas a los estándares -->
 
     <Declaration>
-        <Class IRI="control_de_acceso"/>
-    </Declaration>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>control_de_acceso</IRI>
-        <Literal xml:lang="en">access control</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>control_de_acceso</IRI>
-        <Literal xml:lang="es">control de acceso</Literal>
-    </AnnotationAssertion>
-
-    <Declaration>
         <ObjectProperty IRI="repositorio_se_ubica_en"/>
     </Declaration>
     <ObjectPropertyDomain>
@@ -2452,34 +2440,107 @@
     </AnnotationAssertion>
 
     <Declaration>
-        <DataProperty IRI="repositorio_tiene_documentacion"/>
+        <Class IRI="control_de_acceso"/>
     </Declaration>
-    <DataPropertyDomain>
-        <DataProperty IRI="repositorio_tiene_documentacion"/>
-        <Class IRI="repositorio"/>
-    </DataPropertyDomain>
-    <DataPropertyRange>
-        <DataProperty IRI="repositorio_tiene_documentacion"/>
-        <Datatype abbreviatedIRI="xsd:anyURI"/>
-    </DataPropertyRange>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>repositorio_tiene_documentacion</IRI>
-        <Literal xml:lang="en">repository has documentation</Literal>
+        <IRI>control_de_acceso</IRI>
+        <Literal xml:lang="en">access control</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>repositorio_tiene_documentacion</IRI>
-        <Literal xml:lang="es">repositorio tiene documentación</Literal>
+        <IRI>control_de_acceso</IRI>
+        <Literal xml:lang="es">control de acceso</Literal>
     </AnnotationAssertion>
 
     <Declaration>
-        <Class IRI="licencia"/>
+        <Class IRI="condicion_de_acceso"/>
     </Declaration>
     <SubClassOf>
-        <Class IRI="licencia"/>
-        <Class IRI="politica"/>
+        <Class IRI="condicion_de_acceso"/>
+        <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>condicion_de_acceso</IRI>
+        <Literal xml:lang="en">access condition</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>condicion_de_acceso</IRI>
+        <Literal xml:lang="es">condición de acceso</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="es_condicion_mas_restrictiva_que"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="es_condicion_mas_restrictiva_que"/>
+        <Class IRI="condicion_de_acceso"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="es_condicion_mas_restrictiva_que"/>
+        <Class IRI="condicion_de_acceso"/>
+    </ObjectPropertyRange>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="es_condicion_mas_restrictiva_que"/>
+    </TransitiveObjectProperty>
+
+    <Declaration>
+        <Class IRI="condicionamiento_de_acceso_de_repositorio"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="condicionamiento_de_acceso_de_repositorio"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+
+    <Declaration>
+        <ObjectProperty IRI="condicionamiento_de_acceso_de_repositorio_tiene_repositorio"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="condicionamiento_de_acceso_de_repositorio_tiene_repositorio"/>
+        <Class IRI="condicionamiento_de_acceso_de_repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="condicionamiento_de_acceso_de_repositorio_tiene_repositorio"/>
+        <Class IRI="rdd"/>
+    </ObjectPropertyRange>
+
+    <Declaration>
+        <ObjectProperty IRI="condicionamiento_de_acceso_de_repositorio_tiene_condicion_de_acceso"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="condicionamiento_de_acceso_de_repositorio_tiene_condicion_de_acceso"/>
+        <Class IRI="condicionamiento_de_acceso_de_repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="condicionamiento_de_acceso_de_repositorio_tiene_condicion_de_acceso"/>
+        <Class IRI="condicion_de_acceso"/>
+    </ObjectPropertyRange>
+
+    <Declaration>
+        <DataProperty IRI="condicionamiento_de_acceso_de_repositorio_tiene_nota"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="condicionamiento_de_acceso_de_repositorio_tiene_nota"/>
+        <Class IRI="condicionamiento_de_acceso_de_repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="condicionamiento_de_acceso_de_repositorio_tiene_nota"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+
+    <Declaration>
+        <DataProperty IRI="condicionamiento_de_acceso_de_repositorio_tiene_url"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="condicionamiento_de_acceso_de_repositorio_tiene_url"/>
+        <Class IRI="condicionamiento_de_acceso_de_repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="condicionamiento_de_acceso_de_repositorio_tiene_url"/>
+        <Datatype abbreviatedIRI="xsd:anyURI"/>
+    </DataPropertyRange>
 
     <Declaration>
         <ObjectProperty IRI="soporta_nivel_de_curaduria"/>
@@ -2512,6 +2573,37 @@
         <IRI>soporta_nivel_de_curaduria</IRI>
         <Literal>https://doi.org/10.15497/RDA00103</Literal>
     </AnnotationAssertion>
+
+    <Declaration>
+        <DataProperty IRI="repositorio_tiene_documentacion"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="repositorio_tiene_documentacion"/>
+        <Class IRI="repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="repositorio_tiene_documentacion"/>
+        <Datatype abbreviatedIRI="xsd:anyURI"/>
+    </DataPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_tiene_documentacion</IRI>
+        <Literal xml:lang="en">repository has documentation</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_tiene_documentacion</IRI>
+        <Literal xml:lang="es">repositorio tiene documentación</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <Class IRI="licencia"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="licencia"/>
+        <!-- ToDo: no se si es subclase de politica -->
+        <Class IRI="politica"/>
+    </SubClassOf>
 
     <Declaration>
         <DataProperty IRI="soporta_versionado_repositorio"/>
