@@ -164,6 +164,32 @@ async def query_graphql_relations(http_client: httpx.AsyncClient, page: int=None
     records = data['records']
     return not is_last_page, records
 
+# ToDo: Algunos campos dependen de su validez del registry type o del record type
+METADATA_FIELDS = [
+    'homepage', # string
+    'doi', # string, not with url
+    'status', # enum
+    'description', # string
+    'abbreviation', # string
+    'year_creation', # int
+    'contacts', # array of contact_name, contact_email, contact_orcid
+    'identifier', # int, same as fairsharing record id
+    'data_versioning', # enum yes/no
+    'associated_tools', # array of url, name
+    'cross_references', # array of url, name, portal
+    'support_links',  # array of url, name, type
+    'data_access_condition', # url, type, notes
+    'data_curation', # url, type, notes
+    'data_preservation_policy', # url, type, notes
+    'resource_sustainability', # url, type, notes
+    'data_contact_information', # enum yes/no
+    'data_processes_and_conditions', # array of url, name, type, access_method and documentation_url
+    'citation_to_related_publications', # enum yes/no
+    'data_access_for_pre_publication_review', # enum yes/no
+]
+def normalize_metadata_field(metadata_field):
+    pass
+
 
 async def query_graphql_full(http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
     res = await query_graphql(get_relations_query(True), http_client, page, per_page)
