@@ -16,6 +16,7 @@
     <Prefix name="lang" IRI="http://lenguajes.owl#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Prefix name="principle" IRI="http://criterios.owl#"/>
+    <Prefix name="coar_types" IRI="http://aigdai-tbox.owl/coar_types#"/>
     <Prefix name="skos" IRI="http://www.w3.org/2004/02/skos/core#"/>
     <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/base.owl</Import>
     <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/criterios.owl</Import>
@@ -693,24 +694,24 @@
     </FunctionalObjectProperty>
 
     <Declaration>
-        <ObjectProperty IRI="se_ubica_en"/>
+        <ObjectProperty IRI="organizacion_se_ubica_en"/>
     </Declaration>
     <ObjectPropertyDomain>
-        <ObjectProperty IRI="se_ubica_en"/>
+        <ObjectProperty IRI="organizacion_se_ubica_en"/>
         <Class IRI="organizacion"/>
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
-        <ObjectProperty IRI="se_ubica_en"/>
+        <ObjectProperty IRI="organizacion_se_ubica_en"/>
         <Class IRI="locacion"/>
     </ObjectPropertyRange>
     <SubObjectPropertyOf>
         <ObjectPropertyChain>
-            <ObjectProperty IRI="se_ubica_en"/>
+            <ObjectProperty IRI="organizacion_se_ubica_en"/>
             <ObjectInverseOf>
-                <ObjectProperty IRI="incluido_en"/>
+                <ObjectProperty IRI="locacion_incluida_en"/>
             </ObjectInverseOf>
         </ObjectPropertyChain>
-        <ObjectProperty IRI="se_ubica_en"/>
+        <ObjectProperty IRI="organizacion_se_ubica_en"/>
     </SubObjectPropertyOf>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
@@ -843,18 +844,18 @@
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
     <Declaration>
-        <ObjectProperty IRI="incluido_en"/>
+        <ObjectProperty IRI="locacion_incluida_en"/>
     </Declaration>
     <ObjectPropertyDomain>
-        <ObjectProperty IRI="incluido_en"/>
+        <ObjectProperty IRI="locacion_incluida_en"/>
         <Class IRI="locacion"/>
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
-        <ObjectProperty IRI="incluido_en"/>
+        <ObjectProperty IRI="locacion_incluida_en"/>
         <Class IRI="locacion"/>
     </ObjectPropertyRange>
     <TransitiveObjectProperty>
-        <ObjectProperty IRI="incluido_en"/>
+        <ObjectProperty IRI="locacion_incluida_en"/>
     </TransitiveObjectProperty>
 
     <Declaration>
@@ -890,7 +891,7 @@
     </FunctionalDataProperty>
     <HasKey>
         <Class IRI="pais"/>
-        <ObjectProperty IRI="alfa_3_de_pais"/>
+        <DataProperty IRI="alfa_3_de_pais"/>
     </HasKey>
 
     <Declaration>
@@ -2053,13 +2054,13 @@
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
         <ObjectProperty IRI="repositorio_se_ubica_en"/>
-        <Class IRI="location"/>
+        <Class IRI="locacion"/>
     </ObjectPropertyRange>
     <SubObjectPropertyOf>
         <ObjectPropertyChain>
             <ObjectProperty IRI="repositorio_se_ubica_en"/>
             <ObjectInverseOf>
-                <ObjectProperty IRI="incluido_en"/>
+                <ObjectProperty IRI="locacion_incluida_en"/>
             </ObjectInverseOf>
         </ObjectPropertyChain>
         <ObjectProperty IRI="repositorio_se_ubica_en"/>
@@ -2131,24 +2132,24 @@
     <!-- ToDo: Revisar si siguen siendo instancias los Criterios de calidad -->
     <!-- ToDo: Ojo que con la relacion con certificacion fue reificada, y ademas apunta a cualquier repositorio_de_investigacion no solo a los rdd -->
     <Declaration>
-        <ObjectProperty IRI="satisface_criterio"/>
+        <ObjectProperty IRI="repositorio_satisface_criterio"/>
     </Declaration>
     <ObjectPropertyDomain>
-        <ObjectProperty IRI="satisface_criterio"/>
+        <ObjectProperty IRI="repositorio_satisface_criterio"/>
         <Class IRI="rdd"/>
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
-        <ObjectProperty IRI="satisface_criterio"/>
+        <ObjectProperty IRI="repositorio_satisface_criterio"/>
         <Class abbreviatedIRI="principle:criterio_de_calidad"/>
     </ObjectPropertyRange>
     <SubObjectPropertyOf>
         <ObjectPropertyChain>
-            <ObjectProperty IRI="satisface_criterio"/>
+            <ObjectProperty IRI="repositorio_satisface_criterio"/>
             <ObjectInverseOf>
                 <ObjectProperty abbreviatedIRI="principle:extiende_de_criterio"/>
             </ObjectInverseOf>
         </ObjectPropertyChain>
-        <ObjectProperty IRI="satisface_criterio"/>
+        <ObjectProperty IRI="repositorio_satisface_criterio"/>
     </SubObjectPropertyOf>
 
     <Declaration>
@@ -2360,7 +2361,7 @@
     </FunctionalDataProperty>
     <HasKey>
         <Class IRI="politica"/>
-        <ObjectProperty IRI="tiene_url_politica"/>
+        <DataProperty IRI="tiene_url_politica"/>
     </HasKey>
 
     <Declaration>
@@ -2944,41 +2945,41 @@
     </ObjectPropertyRange>
 
     <Declaration>
-        <DataProperty IRI="servicio_de_acceso_tiene_documentacion"/>
+        <DataProperty IRI="servicio_de_acceso_a_datos_tiene_documentacion"/>
     </Declaration>
     <DataPropertyDomain>
-        <DataProperty IRI="servicio_de_acceso_tiene_documentacion"/>
-        <Class IRI="servicio_de_acceso"/>
+        <DataProperty IRI="servicio_de_acceso_a_datos_tiene_documentacion"/>
+        <Class IRI="servicio_de_acceso_a_datos"/>
     </DataPropertyDomain>
     <DataPropertyRange>
-        <DataProperty IRI="servicio_de_acceso_tiene_documentacion"/>
+        <DataProperty IRI="servicio_de_acceso_a_datos_tiene_documentacion"/>
         <Datatype IRI="url"/>
     </DataPropertyRange>
 
     <Declaration>
-        <DataProperty IRI="servicio_de_acceso_tiene_direccion_de_entrada"/>
+        <DataProperty IRI="servicio_de_acceso_a_datos_tiene_direccion_de_entrada"/>
     </Declaration>
     <DataPropertyDomain>
-        <DataProperty IRI="servicio_de_acceso_tiene_direccion_de_entrada"/>
-        <Class IRI="servicio_de_acceso"/>
+        <DataProperty IRI="servicio_de_acceso_a_datos_tiene_direccion_de_entrada"/>
+        <Class IRI="servicio_de_acceso_a_datos"/>
     </DataPropertyDomain>
     <DataPropertyRange>
-        <DataProperty IRI="servicio_de_acceso_tiene_direccion_de_entrada"/>
+        <DataProperty IRI="servicio_de_acceso_a_datos_tiene_direccion_de_entrada"/>
         <Datatype IRI="url"/>
     </DataPropertyRange>
     <FunctionalDataProperty>
-        <DataProperty IRI="servicio_de_acceso_tiene_direccion_de_entrada"/>
+        <DataProperty IRI="servicio_de_acceso_a_datos_tiene_direccion_de_entrada"/>
     </FunctionalDataProperty>
 
     <Declaration>
-        <DataProperty IRI="servicio_de_acceso_tiene_nombre"/>
+        <DataProperty IRI="servicio_de_acceso_a_datos_tiene_nombre"/>
     </Declaration>
     <DataPropertyDomain>
-        <DataProperty IRI="servicio_de_acceso_tiene_nombre"/>
-        <Class IRI="servicio_de_acceso"/>
+        <DataProperty IRI="servicio_de_acceso_a_datos_tiene_nombre"/>
+        <Class IRI="servicio_de_acceso_a_datos"/>
     </DataPropertyDomain>
     <DataPropertyRange>
-        <DataProperty IRI="servicio_de_acceso_tiene_nombre"/>
+        <DataProperty IRI="servicio_de_acceso_a_datos_tiene_nombre"/>
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
 
