@@ -53,6 +53,9 @@
         <DataUnionOf>
             <Datatype abbreviatedIRI="xsd:string"/>
         </DataUnionOf>
+<!--         <DataUnionOf> -->
+<!--             <Datatype abbreviatedIRI="xsd:anyURI"/> -->
+<!--         </DataUnionOf> -->
     </DatatypeDefinition>
 
     <Declaration>
@@ -396,28 +399,6 @@
         <IRI>cdd</IRI>
         <Literal xml:lang="es">conjunto de datos</Literal>
     </AnnotationAssertion>
-
-    <Declaration>
-        <Class IRI="motor_de_repositorio"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="motor_de_repositorio"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <Declaration>
-        <ObjectProperty IRI="utiliza_motor"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="utiliza_motor"/>
-        <Class IRI="repositorio"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="utiliza_motor"/>
-        <Class IRI="motor_de_repositorio"/>
-    </ObjectPropertyRange>
-    <FunctionalObjectProperty>
-        <ObjectProperty IRI="utiliza_motor"/>
-    </FunctionalObjectProperty>
 
     <Declaration>
         <Class IRI="disciplina"/>
@@ -785,7 +766,7 @@
         <DataOneOf>
             <Literal>general</Literal>
             <Literal>financiamiento</Literal>
-            <Literal>técnica</Literal>
+            <Literal>tecnica</Literal>
             <Literal>patrocinio</Literal>
         </DataOneOf>
     </DatatypeDefinition>
@@ -1525,7 +1506,6 @@
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
         <IRI>catalogo_de_repositorios</IRI>
-<!-- ToDo: Typo catálogo con tilde -->
         <Literal xml:lang="es">catalogo de repositorios</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
@@ -2149,6 +2129,7 @@
 
     <!-- START cosas relativas a criterios de calidad -->
     <!-- ToDo: Revisar si siguen siendo instancias los Criterios de calidad -->
+    <!-- ToDo: Ojo que con la relacion con certificacion fue reificada, y ademas apunta a cualquier repositorio_de_investigacion no solo a los rdd -->
     <Declaration>
         <ObjectProperty IRI="satisface_criterio"/>
     </Declaration>
@@ -2204,27 +2185,75 @@
         <DataProperty IRI="tiene_nombre_certificacion"/>
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
+
     <Declaration>
-        <ObjectProperty IRI="repositorio_certificado_por"/>
+        <Class IRI="aplicacion_de_certificacion_a_repositorio"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="aplicacion_de_certificacion_a_repositorio"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+
+    <Declaration>
+        <ObjectProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_repositorio"/>
     </Declaration>
     <ObjectPropertyDomain>
-        <ObjectProperty IRI="repositorio_certificado_por"/>
-        <Class IRI="repositorio"/>
+        <ObjectProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_repositorio"/>
+        <Class IRI="aplicacion_de_certificacion_a_repositorio"/>
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
-        <ObjectProperty IRI="repositorio_certificado_por"/>
+        <ObjectProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_repositorio"/>
+        <Class IRI="repositorio_de_investigacion"/>
+    </ObjectPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_repositorio"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <ObjectProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_certificacion"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_certificacion"/>
+        <Class IRI="aplicacion_de_certificacion_a_repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_certificacion"/>
         <Class IRI="certificacion"/>
     </ObjectPropertyRange>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>repositorio_certificado_por</IRI>
-        <Literal xml:lang="es">repositorio certificado por</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>repositorio_certificado_por</IRI>
-        <Literal xml:lang="en">repository certified by</Literal>
-    </AnnotationAssertion>
+    <FunctionalDataProperty>
+        <DataProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_certificacion"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <DataProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_inicio_periodo"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_inicio_periodo"/>
+        <Class IRI="aplicacion_de_certificacion_a_repositorio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_inicio_periodo"/>
+        <Datatype IRI="gross_date"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_inicio_periodo"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <DataProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_fin_periodo"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_fin_periodo"/>
+        <Class IRI="aplicacion_de_certificacion_a_repositorio"/>
+    </DataPropertyDomain>
+    <!-- ToDo: Tendria que ser gross_date o null -->
+    <DataPropertyRange>
+        <DataProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_fin_periodo"/>
+        <Datatype IRI="gross_date"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_fin_periodo"/>
+    </FunctionalDataProperty>
     <!-- END cosas relativas a criterios de calidad -->
 
     <Declaration>
@@ -2294,12 +2323,12 @@
     </SubClassOf>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>política</IRI>
+        <IRI>politica</IRI>
         <Literal xml:lang="en">policy</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>política</IRI>
+        <IRI>politica</IRI>
         <Literal xml:lang="es">política</Literal>
     </AnnotationAssertion>
 
@@ -2332,6 +2361,204 @@
     <HasKey>
         <Class IRI="politica"/>
         <ObjectProperty IRI="tiene_url_politica"/>
+    </HasKey>
+
+    <Declaration>
+        <Class IRI="resumen_de_politica"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="resumen_de_politica"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+
+    <Declaration>
+        <ObjectProperty IRI="resumen_de_politica_tiene_politica"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="resumen_de_politica_tiene_politica"/>
+        <Class IRI="resumen_de_politica"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="resumen_de_politica_tiene_politica"/>
+        <Class IRI="politica"/>
+    </ObjectPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="resumen_de_politica_tiene_politica"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <DataProperty IRI="resumen_de_politica_tiene_nota"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="resumen_de_politica_tiene_nota"/>
+        <Class IRI="resumen_de_politica"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="resumen_de_politica_tiene_nota"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+
+    <Declaration>
+        <Class IRI="resumen_de_politica_sobre_intercambio"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="resumen_de_politica_sobre_intercambio"/>
+        <Class IRI="resumen_de_politica"/>
+    </SubClassOf>
+
+    <Declaration>
+        <Datatype IRI="nivel_de_obligatoriedad"/>
+    </Declaration>
+    <DatatypeDefinition>
+        <Datatype IRI="nivel_de_obligatoriedad"/>
+        <DataOneOf>
+            <Literal>requerido</Literal>
+            <Literal>sugerido</Literal>
+            <Literal>no_cubierto</Literal>
+            <Literal>other</Literal>
+        </DataOneOf>
+    </DatatypeDefinition>
+
+    <Declaration>
+        <DataProperty IRI="resumen_de_politica_sobre_intercambio_tiene_nivel_de_obligatoriedad"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="resumen_de_politica_sobre_intercambio_tiene_nivel_de_obligatoriedad"/>
+        <Class IRI="resumen_de_politica_sobre_intercambio"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="resumen_de_politica_sobre_intercambio_tiene_nivel_de_obligatoriedad"/>
+        <Datatype IRI="nivel_de_obligatoriedad"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="resumen_de_politica_sobre_intercambio_tiene_nivel_de_obligatoriedad"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <Class IRI="resumen_de_politica_sobre_intercambio_de_metadatos"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="resumen_de_politica_sobre_intercambio_de_metadatos"/>
+        <Class IRI="resumen_de_politica_sobre_intercambio"/>
+    </SubClassOf>
+    <HasKey>
+        <Class IRI="resumen_de_politica_sobre_intercambio_de_metadatos"/>
+        <ObjectProperty IRI="resumen_de_politica_tiene_politica"/>
+        <DataProperty IRI="resumen_de_politica_sobre_intercambio_tiene_nivel_de_obligatoriedad"/>
+    </HasKey>
+
+    <Declaration>
+        <Class IRI="resumen_de_politica_sobre_intercambio_de_datos"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="resumen_de_politica_sobre_intercambio_de_datos"/>
+        <Class IRI="resumen_de_politica_sobre_intercambio"/>
+    </SubClassOf>
+    <HasKey>
+        <Class IRI="resumen_de_politica_sobre_intercambio_de_datos"/>
+        <ObjectProperty IRI="resumen_de_politica_tiene_politica"/>
+        <DataProperty IRI="resumen_de_politica_sobre_intercambio_tiene_nivel_de_obligatoriedad"/>
+    </HasKey>
+
+    <Declaration>
+        <Class IRI="resumen_de_politica_sobre_intercambio_de_software"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="resumen_de_politica_sobre_intercambio_de_software"/>
+        <Class IRI="resumen_de_politica_sobre_intercambio"/>
+    </SubClassOf>
+    <HasKey>
+        <Class IRI="resumen_de_politica_sobre_intercambio_de_software"/>
+        <ObjectProperty IRI="resumen_de_politica_tiene_politica"/>
+        <DataProperty IRI="resumen_de_politica_sobre_intercambio_tiene_nivel_de_obligatoriedad"/>
+    </HasKey>
+
+    <Declaration>
+        <Class IRI="resumen_de_politica_sobre_misc"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="resumen_de_politica_sobre_misc"/>
+        <Class IRI="resumen_de_politica"/>
+    </SubClassOf>
+
+    <Declaration>
+        <DataProperty IRI="resumen_de_politica_sobre_misc_cumple"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="resumen_de_politica_sobre_misc_cumple"/>
+        <Class IRI="resumen_de_politica_sobre_misc"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="resumen_de_politica_sobre_misc_cumple"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="resumen_de_politica_sobre_misc_cumple"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <Class IRI="resumen_de_politica_sobre_licenciamiento_de_datos"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="resumen_de_politica_sobre_licenciamiento_de_datos"/>
+        <Class IRI="resumen_de_politica_sobre_misc"/>
+    </SubClassOf>
+    <HasKey>
+        <Class IRI="resumen_de_politica_sobre_licenciamiento_de_datos"/>
+        <ObjectProperty IRI="resumen_de_politica_tiene_politica"/>
+        <DataProperty IRI="resumen_de_politica_sobre_misc_cumple"/>
+    </HasKey>
+
+    <Declaration>
+        <Class IRI="resumen_de_politica_sobre_proteccion_de_datos"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="resumen_de_politica_sobre_proteccion_de_datos"/>
+        <Class IRI="resumen_de_politica_sobre_misc"/>
+    </SubClassOf>
+    <HasKey>
+        <Class IRI="resumen_de_politica_sobre_proteccion_de_datos"/>
+        <ObjectProperty IRI="resumen_de_politica_tiene_politica"/>
+        <DataProperty IRI="resumen_de_politica_sobre_misc_cumple"/>
+    </HasKey>
+
+    <Declaration>
+        <Class IRI="resumen_de_politica_sobre_preservacion_de_datos"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="resumen_de_politica_sobre_preservacion_de_datos"/>
+        <Class IRI="resumen_de_politica_sobre_misc"/>
+    </SubClassOf>
+    <HasKey>
+        <Class IRI="resumen_de_politica_sobre_preservacion_de_datos"/>
+        <ObjectProperty IRI="resumen_de_politica_tiene_politica"/>
+        <DataProperty IRI="resumen_de_politica_sobre_misc_cumple"/>
+    </HasKey>
+
+    <Declaration>
+        <Class IRI="resumen_de_politica_sobre_disponibilidad_de_datos"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="resumen_de_politica_sobre_disponibilidad_de_datos"/>
+        <Class IRI="resumen_de_politica_sobre_misc"/>
+    </SubClassOf>
+    <HasKey>
+        <Class IRI="resumen_de_politica_sobre_disponibilidad_de_datos"/>
+        <ObjectProperty IRI="resumen_de_politica_tiene_politica"/>
+        <DataProperty IRI="resumen_de_politica_sobre_misc_cumple"/>
+    </HasKey>
+
+    <Declaration>
+        <Class IRI="resumen_de_politica_sobre_citado_de_datos"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="resumen_de_politica_sobre_citado_de_datos"/>
+        <Class IRI="resumen_de_politica_sobre_misc"/>
+    </SubClassOf>
+    <HasKey>
+        <Class IRI="resumen_de_politica_sobre_citado_de_datos"/>
+        <ObjectProperty IRI="resumen_de_politica_tiene_politica"/>
+        <DataProperty IRI="resumen_de_politica_sobre_misc_cumple"/>
     </HasKey>
 
     <Declaration>
@@ -2371,12 +2598,12 @@
     </TransitiveObjectProperty>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>política_extiende_a_politica</IRI>
+        <IRI>politica_extiende_a_politica</IRI>
         <Literal xml:lang="en">policy extends policy</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>política_extiende_a_politica</IRI>
+        <IRI>politica_extiende_a_politica</IRI>
         <Literal xml:lang="es">política extiende a politica</Literal>
     </AnnotationAssertion>
 
@@ -2393,15 +2620,38 @@
     </ObjectPropertyRange>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>política_recomienda_estandar</IRI>
+        <IRI>politica_recomienda_estandar</IRI>
         <Literal xml:lang="en">policy recommends standard</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>política_recomienda_estandar</IRI>
+        <IRI>politica_recomienda_estandar</IRI>
         <Literal xml:lang="es">política recomienda estándar</Literal>
     </AnnotationAssertion>
 
+    <Declaration>
+        <ObjectProperty IRI="politica_recomienda_repositorio"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="politica_recomienda_repositorio"/>
+        <Class IRI="politica"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="politica_recomienda_repositorio"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>politica_recomienda_repositorio</IRI>
+        <Literal xml:lang="en">policy recommends repository</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>politica_recomienda_repositorio</IRI>
+        <Literal xml:lang="es">política recomienda repositorio</Literal>
+    </AnnotationAssertion>
+
+    <!-- ToDo: Ver si el embargo tiene que ver con el control, nivel o politica de acceso -->
     <Declaration>
         <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
     </Declaration>
@@ -2427,21 +2677,6 @@
         <Literal xml:lang="es">máxima duración para período de embargo</Literal>
     </AnnotationAssertion>
 
-<!-- ToDo: No tengo esta info de ningun lado... aunque puede ser util por ser mencionado por criterios de calidad -->
-<!--     <Declaration> -->
-<!--         <Class IRI="control_de_acceso"/> -->
-<!--     </Declaration> -->
-<!--     <AnnotationAssertion> -->
-<!--         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/> -->
-<!--         <IRI>control_de_acceso</IRI> -->
-<!--         <Literal xml:lang="en">access control</Literal> -->
-<!--     </AnnotationAssertion> -->
-<!--     <AnnotationAssertion> -->
-<!--         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/> -->
-<!--         <IRI>control_de_acceso</IRI> -->
-<!--         <Literal xml:lang="es">control de acceso</Literal> -->
-<!--     </AnnotationAssertion> -->
-
     <Declaration>
         <Class IRI="nivel_de_apertura"/>
     </Declaration>
@@ -2459,6 +2694,23 @@
         <IRI>nivel_de_apertura</IRI>
         <Literal xml:lang="es">nivel de apertura</Literal>
     </AnnotationAssertion>
+
+    <!-- Individuos: abierto_para_escritura, cerrado_para_escritura, restringido_para_escritura -->
+    <Declaration>
+        <Class IRI="nivel_de_apertura_para_escritura"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="nivel_de_apertura_para_escritura"/>
+        <Class IRI="nivel_de_apertura"/>
+    </SubClassOf>
+    <!-- Individuos: abierto_para_lectura, cerrado_para_lectura, restringido_para_lectura -->
+    <Declaration>
+        <Class IRI="nivel_de_apertura_para_lectura"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="nivel_de_apertura_para_lectura"/>
+        <Class IRI="nivel_de_apertura"/>
+    </SubClassOf>
 
     <Declaration>
         <ObjectProperty IRI="es_nivel_mas_abierto"/>
@@ -2494,9 +2746,9 @@
         <ObjectProperty IRI="evaluacion_de_repositorio_tiene_repositorio"/>
         <Class IRI="rdd"/>
     </ObjectPropertyRange>
-    <FunctionalDataProperty>
-        <DataProperty IRI="evaluacion_de_repositorio_tiene_repositorio"/>
-    </FunctionalDataProperty>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="evaluacion_de_repositorio_tiene_repositorio"/>
+    </FunctionalObjectProperty>
 
     <Declaration>
         <DataProperty IRI="evaluacion_de_repositorio_tiene_nota"/>
@@ -2519,7 +2771,7 @@
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="evaluacion_de_repositorio_tiene_url"/>
-        <Datatype abbreviatedIRI="xsd:anyURI"/>
+        <Datatype IRI="url"/>
     </DataPropertyRange>
 
     <Declaration>
@@ -2528,20 +2780,6 @@
     <SubClassOf>
         <Class IRI="apertura_de_repositorio"/>
         <Class IRI="evaluacion_de_repositorio"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="apertura_de_acceso_al_repositorio"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="apertura_de_acceso_al_repositorio"/>
-        <Class IRI="apertura_de_repositorio"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="apertura_de_deposito_al_repositorio"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="apertura_de_acceso_al_repositorio"/>
-        <Class IRI="apertura_de_repositorio"/>
     </SubClassOf>
 
     <Declaration>
@@ -2555,32 +2793,9 @@
         <ObjectProperty IRI="apertura_de_repositorio_tiene_nivel_de_apertura"/>
         <Class IRI="nivel_de_apertura"/>
     </ObjectPropertyRange>
-    <FunctionalDataProperty>
-        <DataProperty IRI="apertura_de_repositorio_tiene_nivel_de_apertura"/>
-    </FunctionalDataProperty>
-
-    <Declaration>
-        <Class IRI="aplicacion_de_curaduria_en_repositorio"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="aplicacion_de_curaduria_en_repositorio"/>
-        <Class IRI="evaluacion_de_repositorio"/>
-    </SubClassOf>
-
-    <Declaration>
-        <ObjectProperty IRI="aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria"/>
-        <Class IRI="aplicacion_de_curaduria_en_repositorio"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria"/>
-        <Class IRI="nivel_de_curaduria"/>
-    </ObjectPropertyRange>
-    <FunctionalDataProperty>
-        <DataProperty IRI="aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria"/>
-    </FunctionalDataProperty>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="apertura_de_repositorio_tiene_nivel_de_apertura"/>
+    </FunctionalObjectProperty>
 
     <Declaration>
         <Class IRI="sustentabilidad_en_repositorio"/>
@@ -2609,9 +2824,207 @@
         <ObjectProperty IRI="aplicacion_de_politica_de_preservacion_en_repositorio_tiene_politica"/>
         <Class IRI="politica"/>
     </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="aplicacion_de_politica_de_preservacion_en_repositorio_tiene_politica"/>
+    </FunctionalObjectProperty>
+
+    <!-- ToDo: la curaduria podria estar asociado a un servicio. En ese caso -->
+    <Declaration>
+        <Class IRI="aplicacion_de_curaduria_en_repositorio"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="aplicacion_de_curaduria_en_repositorio"/>
+        <Class IRI="evaluacion_de_repositorio"/>
+    </SubClassOf>
+
+    <Declaration>
+        <ObjectProperty IRI="aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria"/>
+        <Class IRI="aplicacion_de_curaduria_en_repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria"/>
+        <Class IRI="nivel_de_curaduria"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria"/>
+    </FunctionalObjectProperty>
+
+    <!-- Individuos: lectura, escritura, lectura_y_escritura -->
+    <Declaration>
+        <Class IRI="nivel_de_acceso"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="nivel_de_acceso"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>nivel_de_acceso</IRI>
+        <Literal xml:lang="en">access level</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>nivel_de_acceso</IRI>
+        <Literal xml:lang="es">nivel de acceso</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
+        <ObjectProperty IRI="es_acceso_mas_amplio"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="es_acceso_mas_amplio"/>
+        <Class IRI="nivel_de_acceso"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="es_acceso_mas_amplio"/>
+        <Class IRI="nivel_de_acceso"/>
+    </ObjectPropertyRange>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="es_acceso_mas_amplio"/>
+    </TransitiveObjectProperty>
+
+<!--
+    ToDo: Tambien hay que considerar a otros agregadores que ofrecen acceso. Alli hay otro punto de contacto
+    ¿otro nombre como metodo o mecanismo de acceso quizas?
+
+    ToDo: Seria bueno enganchar con los software y las herramientas tb
+-->
+    <Declaration>
+        <Class IRI="servicio_de_acceso_a_datos"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="servicio_de_acceso_a_datos"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+
+    <Declaration>
+        <ObjectProperty IRI="servicio_de_acceso_a_datos_tiene_repositorio"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="servicio_de_acceso_a_datos_tiene_repositorio"/>
+        <Class IRI="servicio_de_acceso_a_datos"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="servicio_de_acceso_a_datos_tiene_repositorio"/>
+        <Class IRI="rdd"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="servicio_de_acceso_a_datos_tiene_repositorio"/>
+    </FunctionalObjectProperty>
+
+    <Declaration>
+        <ObjectProperty IRI="servicio_de_acceso_a_datos_tiene_nivel_de_acceso"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="servicio_de_acceso_a_datos_tiene_nivel_de_acceso"/>
+        <Class IRI="servicio_de_acceso_a_datos"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="servicio_de_acceso_a_datos_tiene_nivel_de_acceso"/>
+        <Class IRI="nivel_de_acceso"/>
+    </ObjectPropertyRange>
+
+    <Declaration>
+        <ObjectProperty IRI="servicio_de_acceso_a_datos_tiene_metodo_de_acceso"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="servicio_de_acceso_a_datos_tiene_metodo_de_acceso"/>
+        <Class IRI="servicio_de_acceso_a_datos"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="servicio_de_acceso_a_datos_tiene_metodo_de_acceso"/>
+        <!--
+            ToDo: Aca seria bueno enganchar con protocolos de acceso... estandar o protocolo_de_cosecha?
+             ojo que no quede por fuera los accesos "humanos" o "manuales"/"no automáticos"
+        -->
+        <Class IRI="estandar"/>
+    </ObjectPropertyRange>
+
+    <Declaration>
+        <DataProperty IRI="servicio_de_acceso_tiene_documentacion"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="servicio_de_acceso_tiene_documentacion"/>
+        <Class IRI="servicio_de_acceso"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="servicio_de_acceso_tiene_documentacion"/>
+        <Datatype IRI="url"/>
+    </DataPropertyRange>
+
+    <Declaration>
+        <DataProperty IRI="servicio_de_acceso_tiene_direccion_de_entrada"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="servicio_de_acceso_tiene_direccion_de_entrada"/>
+        <Class IRI="servicio_de_acceso"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="servicio_de_acceso_tiene_direccion_de_entrada"/>
+        <Datatype IRI="url"/>
+    </DataPropertyRange>
     <FunctionalDataProperty>
-        <DataProperty IRI="aplicacion_de_politica_de_preservacion_en_repositorio_tiene_politica"/>
+        <DataProperty IRI="servicio_de_acceso_tiene_direccion_de_entrada"/>
     </FunctionalDataProperty>
+
+    <Declaration>
+        <DataProperty IRI="servicio_de_acceso_tiene_nombre"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="servicio_de_acceso_tiene_nombre"/>
+        <Class IRI="servicio_de_acceso"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="servicio_de_acceso_tiene_nombre"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+
+<!--
+ ToDo: Todo el tema de metodo/servicio de acceso, permiso de acceso y politica de acceso esta bastante correlacionado
+  se podria crear el concepto de proceso o actividad que modele la lectura, depósito, cosecha (de datos o metadatos)
+  asi como tambien otras actividad de gestion como compartición, curaduria, revision
+  u otras actividad disciplinares (recoleccion, etc) a definir
+-->
+
+<!-- ToDo: No tengo esta info de ningun lado... aunque puede ser util por ser mencionado por criterios de calidad -->
+<!--     <Declaration> -->
+<!--         <Class IRI="control_de_acceso"/> -->
+<!--     </Declaration> -->
+<!--     <AnnotationAssertion> -->
+<!--         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/> -->
+<!--         <IRI>control_de_acceso</IRI> -->
+<!--         <Literal xml:lang="en">access control</Literal> -->
+<!--     </AnnotationAssertion> -->
+<!--     <AnnotationAssertion> -->
+<!--         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/> -->
+<!--         <IRI>control_de_acceso</IRI> -->
+<!--         <Literal xml:lang="es">control de acceso</Literal> -->
+<!--     </AnnotationAssertion> -->
+
+<!--     <Declaration> -->
+<!--         <Class IRI="apertura_de_lectura_al_repositorio"/> -->
+<!--     </Declaration> -->
+<!--     <Declaration> -->
+<!--         <Class IRI="apertura_de_deposito_al_repositorio"/> -->
+<!--     </Declaration> -->
+
+    <Declaration>
+        <ObjectProperty IRI="aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria"/>
+        <Class IRI="aplicacion_de_curaduria_en_repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria"/>
+        <Class IRI="nivel_de_curaduria"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria"/>
+    </FunctionalObjectProperty>
 
     <Declaration>
         <DataProperty IRI="repositorio_tiene_documentacion"/>
@@ -2622,7 +3035,7 @@
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="repositorio_tiene_documentacion"/>
-        <Datatype abbreviatedIRI="xsd:anyURI"/>
+        <Datatype IRI="url"/>
     </DataPropertyRange>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
@@ -2667,7 +3080,7 @@
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="tiene_url_licencia"/>
-        <Datatype abbreviatedIRI="xsd:anyURI"/>
+        <Datatype IRI="url"/>
     </DataPropertyRange>
     <FunctionalDataProperty>
         <DataProperty IRI="tiene_url_licencia"/>
@@ -2774,11 +3187,63 @@
         <Literal>https://fairsharing.gitbook.io/fairsharing/additional-information/database-conditions#data-versioning</Literal>
     </AnnotationAssertion>
 
-<!--  ToDo: Ver todas las clases disjuntas  -->
+    <Declaration>
+        <Class IRI="software"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="software"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+
+    <Declaration>
+        <DataProperty IRI="tiene_nombre_software"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_nombre_software"/>
+        <Class IRI="software"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_nombre_software"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="tiene_nombre_software"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <DataProperty IRI="tiene_url_software"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_url_software"/>
+        <Class IRI="software"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_url_software"/>
+        <Datatype IRI="url"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="tiene_url_software"/>
+    </FunctionalDataProperty>
+
+    <!-- ToDo: Tambien puede estar asociado a un agregador... aunque no se si vale la pena decirlo -->
+    <!-- ToDo: Ojo que todo agregador es repositorio_de_investigacion -->
+    <Declaration>
+        <ObjectProperty IRI="repositorio_asociado_a_software"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="repositorio_asociado_a_software"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="repositorio_asociado_a_software"/>
+        <Class IRI="software"/>
+    </ObjectPropertyRange>
+
+    <!--  ToDo: Ver todas las clases disjuntas  -->
     <DisjointClasses>
         <Class IRI="cdd"/>
         <Class IRI="autor"/>
-        <Class IRI="motor_de_repositorio"/>
+        <Class IRI="software"/>
         <Class IRI="disciplina"/>
         <Class IRI="repositorio"/>
         <Class IRI="agregador"/>

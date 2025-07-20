@@ -186,6 +186,7 @@ METADATA_FIELDS = [
     'data_processes_and_conditions', # array of url, name, type, access_method and documentation_url
     'citation_to_related_publications', # enum yes/no
     'data_access_for_pre_publication_review', # enum yes/no
+    'certifications_and_community_badges', # array of url, name
 ]
 def normalize_metadata_field(metadata_field):
     pass
