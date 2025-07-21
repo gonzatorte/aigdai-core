@@ -18,10 +18,10 @@
     <Prefix name="principle" IRI="http://criterios.owl#"/>
     <Prefix name="coar_types" IRI="http://aigdai-tbox.owl/coar_types#"/>
     <Prefix name="skos" IRI="http://www.w3.org/2004/02/skos/core#"/>
-    <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/base.owl</Import>
-    <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/criterios.owl</Import>
-    <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/lenguajes.owl</Import>
-    <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/imported/coar-repositories/resource_types.owl</Import>
+<!--     <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/base.owl</Import> -->
+<!--     <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/criterios.owl</Import> -->
+<!--     <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/lenguajes.owl</Import> -->
+<!--     <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/imported/coar-repositories/resource_types.owl</Import> -->
 
     <Declaration>
         <Datatype IRI="escala"/>
@@ -1367,8 +1367,10 @@
         <Literal xml:lang="es">admite formato de exportación de citas</Literal>
     </AnnotationAssertion>
 
-<!-- ToDo: Quizas es mejor hacer un admite_estandar y que luego se vea para que se usa ese formato? -->
-<!--  Quizas no, puesto que esto representa usar el formato pero en un sentido particular -->
+<!--
+    ToDo: Quizas es mejor hacer un admite_estandar y que luego se vea para que se usa ese formato?
+      Quizas no, puesto que esto representa usar el formato pero en un sentido particular
+-->
     <Declaration>
         <ObjectProperty IRI="admite_formato_de_sindicacion"/>
     </Declaration>
@@ -2109,6 +2111,7 @@
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
 
+    <!-- ToDo: esto o la desreificacion de esto puede ser una subobjectproperty de repositorio_satisface_criterio -->
     <Declaration>
         <Class IRI="aplicacion_de_certificacion_a_repositorio"/>
     </Declaration>
@@ -3191,6 +3194,7 @@
         <Class IRI="resumen_de_politica_sobre_preservacion_de_datos"/>
         <Class IRI="resumen_de_politica_sobre_proteccion_de_datos"/>
 	</DisjointClasses>
+	<DisjointClasses>
 		<ObjectUnionOf>
             <Class IRI="nivel_de_acceso"/>
             <Class IRI="nivel_de_apertura"/>
@@ -3258,7 +3262,6 @@
             <Class IRI="politica"/>
 		</ObjectUnionOf>
 	</DisjointClasses>
-    <!-- Disjuntos por ser objetos artificiales o no -->
 	<DisjointClasses>
 		<ObjectUnionOf>
             <Class IRI="id_de_autor"/>
@@ -3280,7 +3283,6 @@
 			<Class IRI="autor"/>
 		</ObjectUnionOf>
 	</DisjointClasses>
-    <!-- Disjuntos por ser objetos materiales distintos -->
 	<DisjointClasses>
 		<Class IRI="locacion"/>
 		<ObjectUnionOf>
@@ -3292,7 +3294,6 @@
 			<Class IRI="autor"/>
 		</ObjectUnionOf>
 	</DisjointClasses>
-    <!-- Disjuntos ad-hoc -->
 	<DisjointClasses>
 		<Class IRI="organizacion"/>
 		<ObjectUnionOf>
@@ -3302,7 +3303,6 @@
 			<Class IRI="catalogo_de_repositorios"/>
 		</ObjectUnionOf>
 	</DisjointClasses>
-    <!-- Disjuntos ad-hoc -->
 	<DisjointClasses>
         <Class IRI="software"/>
 		<ObjectUnionOf>
