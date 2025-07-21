@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <Ontology xmlns="http://www.w3.org/2002/07/owl#"
-     xml:base="http://estadisticos.owl#"
+     xml:base="http://cdd.owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     ontologyIRI="http://estadisticos.owl"
-     versionIRI="http://estadisticos.owl/v0.1">
+     ontologyIRI="http://cdd.owl"
+     versionIRI="http://cdd.owl/v0.1">
     <Prefix name="" IRI="http://cdd.owl#"/>
     <Prefix name="base" IRI="http://base.owl#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
@@ -14,7 +14,7 @@
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
     <Prefix name="lang" IRI="http://lenguajes.owl#"/>
-    <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/base.owl</Import>
+    <Import>http://base.owl/v0.1</Import>
 
     <!-- START Cosas relacionadas a las cualidades de los datasets -->
     <Declaration>
