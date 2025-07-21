@@ -7,7 +7,7 @@ from typing import Any, Tuple, List, AsyncIterable, Coroutine, Callable
 
 from rdflib.namespace import RDF
 from rdflib import Graph, Literal, URIRef
-import onto.populator.rdf as rdf_types
+import onto.populator.rdf_types as rdf_types
 # import json
 
 ItemsResponse = Tuple[List[Any], int]

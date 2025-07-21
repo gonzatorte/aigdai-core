@@ -1683,85 +1683,6 @@
         <DataProperty IRI="id_de_autor_tiene_literal"/>
     </HasKey>
 
-    <!-- START Cosas relacionadas a las cualidades de los datasets -->
-    <Declaration>
-        <Class IRI="caracteristica_de_cdd"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="caracteristica_de_cdd"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="licencia"/>
-        <Class IRI="caracteristica_de_cdd"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="utiliza_tipo_de_dato"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="utiliza_tipo_de_dato"/>
-        <Class IRI="caracteristica_de_cdd"/>
-    </SubClassOf>
-    <!-- ToDo: No se como relacionarlo con la disciplina de los repositorios -->
-    <Declaration>
-        <Class IRI="utiliza_disciplina"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="utiliza_disciplina"/>
-        <Class IRI="caracteristica_de_cdd"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="fecha_de_publicacion"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="fecha_de_publicacion"/>
-        <Class IRI="caracteristica_de_cdd"/>
-    </SubClassOf>
-
-    <Declaration>
-        <Class IRI="caracteristica_de_dcdd"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="caracteristica_de_dcdd"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="tamanio"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="tamanio"/>
-        <Class IRI="caracteristica_de_dcdd"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="cantidad_de_contenedores"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="cantidad_de_contenedores"/>
-        <Class IRI="tamanio"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="cantidad_de_elementos"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="cantidad_de_elementos"/>
-        <Class IRI="tamanio"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="tamanio_en_disco"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="tamanio_en_disco"/>
-        <Class IRI="tamanio"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="utiliza_formato_de_archivo"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="utiliza_formato_de_archivo"/>
-        <Class IRI="caracteristica_de_dcdd"/>
-    </SubClassOf>
-    <!-- END cosas relacionaddas a los datasets -->
-
     <Declaration>
         <Class IRI="estadistico"/>
     </Declaration>
@@ -2115,6 +2036,7 @@
         <IRI>repositorio_aporta_funcionalidad</IRI>
         <Literal xml:lang="es">repositorio aporta funcionalidad</Literal>
     </AnnotationAssertion>
+
     <Declaration>
         <ObjectProperty IRI="evalua_funcionalidad"/>
     </Declaration>
@@ -3240,24 +3162,153 @@
         <Class IRI="software"/>
     </ObjectPropertyRange>
 
-    <!--  ToDo: Ver todas las clases disjuntas  -->
-    <DisjointClasses>
-        <Class IRI="cdd"/>
-        <Class IRI="autor"/>
-        <Class IRI="software"/>
-        <Class IRI="disciplina"/>
-        <Class IRI="repositorio"/>
-        <Class IRI="agregador"/>
-        <Class IRI="organizacion"/>
-        <Class IRI="politica"/>
-        <Class IRI="caracteristica_de_cdd"/>
-        <Class IRI="esquema_de_id_persistente"/>
-        <Class IRI="esquema_de_metadatos"/>
+	<DisjointClasses>
+        <Class IRI="sustentabilidad_en_repositorio"/>
+        <Class IRI="aplicacion_de_politica_de_preservacion_en_repositorio"/>
+        <Class IRI="aplicacion_de_curaduria_en_repositorio"/>
+	</DisjointClasses>
+	<DisjointClasses>
+        <Class IRI="apertura_de_repositorio"/>
+        <Class IRI="aplicacion_de_certificacion_a_repositorio"/>
+        <Class IRI="evaluacion_de_repositorio"/>
         <Class IRI="relacion_repositorio_y_organizacion"/>
-        <Class IRI="id_de_resultado_de_investigacion"/>
-        <Class IRI="id_de_repositorio"/>
-        <Class IRI="id_de_autor"/>
-        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
-        <Class abbreviatedIRI="principle:grupo_de_criterio"/>
-    </DisjointClasses>
+        <Class IRI="servicio_de_acceso_a_datos"/>
+        <Class IRI="resumen_de_politica"/>
+	</DisjointClasses>
+	<DisjointClasses>
+        <Class IRI="resumen_de_politica_sobre_citado_de_datos"/>
+        <Class IRI="resumen_de_politica_sobre_disponibilidad_de_datos"/>
+        <Class IRI="resumen_de_politica_sobre_intercambio"/>
+        <Class IRI="resumen_de_politica_sobre_misc"/>
+	</DisjointClasses>
+	<DisjointClasses>
+        <Class IRI="resumen_de_politica_sobre_intercambio_de_datos"/>
+        <Class IRI="resumen_de_politica_sobre_intercambio_de_metadatos"/>
+        <Class IRI="resumen_de_politica_sobre_intercambio_de_software"/>
+        <Class IRI="resumen_de_politica_sobre_licenciamiento_de_datos"/>
+	</DisjointClasses>
+	<DisjointClasses>
+        <Class IRI="resumen_de_politica_sobre_preservacion_de_datos"/>
+        <Class IRI="resumen_de_politica_sobre_proteccion_de_datos"/>
+	</DisjointClasses>
+		<ObjectUnionOf>
+            <Class IRI="nivel_de_acceso"/>
+            <Class IRI="nivel_de_apertura"/>
+		</ObjectUnionOf>
+		<ObjectUnionOf>
+            <Class IRI="apertura_de_repositorio"/>
+            <Class IRI="aplicacion_de_certificacion_a_repositorio"/>
+            <Class IRI="evaluacion_de_repositorio"/>
+            <Class IRI="relacion_repositorio_y_organizacion"/>
+            <Class IRI="servicio_de_acceso_a_datos"/>
+            <Class IRI="resumen_de_politica"/>
+		</ObjectUnionOf>
+	</DisjointClasses>
+	<DisjointClasses>
+		<ObjectUnionOf>
+            <Class IRI="nivel_de_acceso"/>
+            <Class IRI="nivel_de_apertura"/>
+		</ObjectUnionOf>
+        <Class IRI="nivel_de_curaduria"/>
+        <Class IRI="red_social"/>
+		<ObjectUnionOf>
+            <Class IRI="tipo_de_dato"/>
+            <Class IRI="formato_de_exportacion_de_citas"/>
+            <Class IRI="formato_de_sindicacion"/>
+            <Class IRI="tipo_de_id_de_organizacion"/>
+            <Class IRI="esquema_de_id_de_autor"/>
+            <Class IRI="esquema_de_id_persistente"/>
+            <Class IRI="esquema_de_metadatos"/>
+            <Class IRI="protocolo_de_cosecha"/>
+            <Class IRI="protocolo_de_metricas"/>
+            <Class IRI="estandar"/>
+            <Class IRI="licencia"/>
+            <Class IRI="politica"/>
+		</ObjectUnionOf>
+		<ObjectUnionOf>
+            <Class IRI="id_de_autor"/>
+            <Class IRI="id_de_organizacion"/>
+            <Class IRI="id_de_repositorio"/>
+            <Class IRI="id_de_resultado_de_investigacion"/>
+            <Class IRI="disciplina"/>
+            <Class IRI="palabra_clave"/>
+    		<Class IRI="locacion"/>
+			<Class IRI="organizacion"/>
+			<Class IRI="software"/>
+			<Class IRI="repositorio_de_investigacion"/>
+			<Class IRI="resultado_de_investigacion"/>
+			<Class IRI="catalogo_de_repositorios"/>
+			<Class IRI="autor"/>
+		</ObjectUnionOf>
+	</DisjointClasses>
+	<DisjointClasses>
+		<ObjectUnionOf>
+            <Class IRI="tipo_de_dato"/>
+            <Class IRI="formato_de_exportacion_de_citas"/>
+            <Class IRI="formato_de_sindicacion"/>
+            <Class IRI="tipo_de_id_de_organizacion"/>
+            <Class IRI="esquema_de_id_de_autor"/>
+            <Class IRI="esquema_de_id_persistente"/>
+            <Class IRI="esquema_de_metadatos"/>
+            <Class IRI="protocolo_de_cosecha"/>
+            <Class IRI="protocolo_de_metricas"/>
+		</ObjectUnionOf>
+		<ObjectUnionOf>
+            <Class IRI="licencia"/>
+            <Class IRI="politica"/>
+		</ObjectUnionOf>
+	</DisjointClasses>
+    <!-- Disjuntos por ser objetos artificiales o no -->
+	<DisjointClasses>
+		<ObjectUnionOf>
+            <Class IRI="id_de_autor"/>
+            <Class IRI="id_de_organizacion"/>
+            <Class IRI="id_de_repositorio"/>
+            <Class IRI="id_de_resultado_de_investigacion"/>
+		</ObjectUnionOf>
+		<ObjectUnionOf>
+            <Class IRI="disciplina"/>
+            <Class IRI="palabra_clave"/>
+		</ObjectUnionOf>
+		<ObjectUnionOf>
+    		<Class IRI="locacion"/>
+			<Class IRI="organizacion"/>
+			<Class IRI="software"/>
+			<Class IRI="repositorio_de_investigacion"/>
+			<Class IRI="resultado_de_investigacion"/>
+			<Class IRI="catalogo_de_repositorios"/>
+			<Class IRI="autor"/>
+		</ObjectUnionOf>
+	</DisjointClasses>
+    <!-- Disjuntos por ser objetos materiales distintos -->
+	<DisjointClasses>
+		<Class IRI="locacion"/>
+		<ObjectUnionOf>
+			<Class IRI="organizacion"/>
+			<Class IRI="software"/>
+			<Class IRI="repositorio_de_investigacion"/>
+			<Class IRI="resultado_de_investigacion"/>
+			<Class IRI="catalogo_de_repositorios"/>
+			<Class IRI="autor"/>
+		</ObjectUnionOf>
+	</DisjointClasses>
+    <!-- Disjuntos ad-hoc -->
+	<DisjointClasses>
+		<Class IRI="organizacion"/>
+		<ObjectUnionOf>
+			<Class IRI="software"/>
+			<Class IRI="repositorio_de_investigacion"/>
+			<Class IRI="resultado_de_investigacion"/>
+			<Class IRI="catalogo_de_repositorios"/>
+		</ObjectUnionOf>
+	</DisjointClasses>
+    <!-- Disjuntos ad-hoc -->
+	<DisjointClasses>
+        <Class IRI="software"/>
+		<ObjectUnionOf>
+			<Class IRI="repositorio_de_investigacion"/>
+			<Class IRI="resultado_de_investigacion"/>
+			<Class IRI="catalogo_de_repositorios"/>
+		</ObjectUnionOf>
+	</DisjointClasses>
 </Ontology>

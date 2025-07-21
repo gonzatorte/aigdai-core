@@ -9,6 +9,7 @@ ns:Person       owl:unionOf     (ns:Man ns:Woman) .
 ns:Man          rdf:type        owl:Class .
 ns:Woman        rdf:type        owl:Class .
 ns:knows        rdf:type        owl:SymmetricProperty .
+ns:knows        rdf:type        owl:TransitiveProperty .
 ns:knows        rdfs:domain     ns:Person .
 ns:knows        rdfs:range      ns:Person .
 ns:Horse        rdf:type        owl:Class .

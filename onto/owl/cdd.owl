@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://estadisticos.owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://estadisticos.owl"
+     versionIRI="http://estadisticos.owl/v0.1">
+    <Prefix name="" IRI="http://cdd.owl#"/>
+    <Prefix name="base" IRI="http://base.owl#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="lang" IRI="http://lenguajes.owl#"/>
+    <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/base.owl</Import>
+
+    <!-- START Cosas relacionadas a las cualidades de los datasets -->
+    <Declaration>
+        <Class IRI="caracteristica_de_cdd"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="caracteristica_de_cdd"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="licencia"/>
+        <Class IRI="caracteristica_de_cdd"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="utiliza_tipo_de_dato"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="utiliza_tipo_de_dato"/>
+        <Class IRI="caracteristica_de_cdd"/>
+    </SubClassOf>
+    <!-- ToDo: No se como relacionarlo con la disciplina de los repositorios -->
+    <Declaration>
+        <Class IRI="utiliza_disciplina"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="utiliza_disciplina"/>
+        <Class IRI="caracteristica_de_cdd"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="fecha_de_publicacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="fecha_de_publicacion"/>
+        <Class IRI="caracteristica_de_cdd"/>
+    </SubClassOf>
+
+    <Declaration>
+        <Class IRI="caracteristica_de_dcdd"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="caracteristica_de_dcdd"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="tamanio"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="tamanio"/>
+        <Class IRI="caracteristica_de_dcdd"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="cantidad_de_contenedores"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="cantidad_de_contenedores"/>
+        <Class IRI="tamanio"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="cantidad_de_elementos"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="cantidad_de_elementos"/>
+        <Class IRI="tamanio"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="tamanio_en_disco"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="tamanio_en_disco"/>
+        <Class IRI="tamanio"/>
+    </SubClassOf>
+    <Declaration>
+        <Class IRI="utiliza_formato_de_archivo"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="utiliza_formato_de_archivo"/>
+        <Class IRI="caracteristica_de_dcdd"/>
+    </SubClassOf>
+    <!-- END cosas relacionaddas a los datasets -->
+
+</Ontology>

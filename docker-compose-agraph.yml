@@ -1,0 +1,16 @@
+
+services:
+  agraph:
+    image: franzinc/agraph:v8.4.1
+    container_name: st_agraph
+    restart: always
+    shm_size: 2g
+#    user: gonzalo
+    environment:
+      AGRAPH_SUPER_USER: user123
+      AGRAPH_SUPER_PASSWORD: pw123
+    volumes:
+      - ./agraph-data:/agraph/data
+      - ./agraph-config:/agraph/etc
+    ports:
+      - "10000-10035:10000-10035"

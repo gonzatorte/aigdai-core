@@ -2,11 +2,13 @@
 
 ## Fuseki Server configuration file.
 
-@prefix :        <#> .
-@prefix fuseki:  <http://jena.apache.org/fuseki#> .
-@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix :       <#> .
+@prefix fuseki: <http://jena.apache.org/fuseki#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ja:     <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix tdb2:   <http://jena.apache.org/2016/tdb#> .
+@prefix tdb:    <http://jena.hpl.hp.com/2008/tdb#> .
 
 [] rdf:type fuseki:Server ;
    # Example::
@@ -27,40 +29,90 @@
    # ja:loadClass "your.code.Class" ;   
 
    # End triples.
-   .
+.
 
-:dataset
+:tbox_graph
+    rdfs:label "tbox" ;
+    a ja:InfModel ;
+    ja:content [ja:externalContent <file://fuseki/model.ttl> ] ;
+    ja:content [ja:externalContent <file://fuseki/data.ttl> ] ;
+    # value from https://github.com/apache/jena/blob/main/jena-core/src/main/java/org/apache/jena/reasoner/rulesys/OWLFBRuleReasonerFactory.java#L49C39-L49C84
+    ja:reasoner [ja:reasonerURL <http://jena.hpl.hp.com/2003/OWLFBRuleReasoner>] ;
+    #Enable Jena Rules-based reasoner and we point the location of myrules.rules file
+#    ja:reasoner [
+#        ja:reasonerURL <http://jena.hpl.hp.com/2003/GenericRuleReasoner> ;
+#        ja:rulesFrom <file://fuseki/myrules.rules> ;
+#    ] ;
+.
+
+:data_dataset
+    rdf:type       tdb2:DatasetTDB2;
+    tdb2:location  "/fuseki/databases/with_data" ;
+    tdb2:unionDefaultGraph true ;
+.
+
+:data_graph
+    a tdb2:GraphTDB ;
+    tdb2:dataset :data_dataset ;
+#    tdb2:graphName <urn:x-arq:UnionGraph> ;
+.
+
+#:all_graph
+#    a ja:UnionModel ;
+#    ja:rootModel :tbox_graph ;
+#    ja:subModel :data_graph ;
+#.
+
+:schema_dataset
     rdf:type 	ja:RDFDataset ;
-    rdfs:label "ElQuijote" ;
-    ja:defaultGraph
-      [ rdfs:label "ElQuijote" ;
-        a ja:InfModel ;
+    ja:defaultGraph :tbox_graph ;
+    rdfs:label "schemadataset" ;
+.
 
-        #Reference to model.ttl file
-        ja:content [ja:externalContent <file://fuseki/model.ttl> ] ;
-
-        #Reference to data.ttl file
-        ja:content [ja:externalContent <file://fuseki/data.ttl> ] ;
-
-        #Disable OWL-based reasoner
-        #ja:reasoner [ja:reasonerURL <http://jena.hpl.hp.com/2003/OWLFBRuleReasoner>] ;
-
-        #Disable RDFS-based reasoner
-        #ja:reasoner [ja:reasonerURL <http://jena.hpl.hp.com/2003/RDFSExptRuleReasoner>] ;
-
-        #Enable Jena Rules-based reasoner and we point the location of myrules.rules file
-        ja:reasoner [
-            ja:reasonerURL <http://jena.hpl.hp.com/2003/GenericRuleReasoner> ;
-            ja:rulesFrom <file://fuseki/myrules.rules> ;
+:all_dataset
+    rdf:type 	ja:RDFDataset ;
+#    ja:namedGraph
+#        [
+#            ja:graphName      <http://example.org/data> ;
+#            ja:graph          :data_graph
+#        ] ;
+    ja:defaultGraph :data_graph ;
+#    ja:graph :tbox_graph ;
+    ja:namedGraph
+        [
+            ja:graphName      <http://example.org/tbox> ;
+            ja:graph          :tbox_graph
         ] ;
-      ] ;
-     .
+#    ja:defaultGraph :tbox_graph ;
+    rdfs:label "alldataset" ;
+.
 
 :service1	a                         fuseki:Service ;
-        fuseki:dataset                    :dataset ;
-        fuseki:name                       "ElQuijote" ;
-        fuseki:serviceQuery               "query" , "sparql" ;
-        fuseki:serviceReadGraphStore      "get" ;
-        fuseki:serviceReadWriteGraphStore "data" ;
-        fuseki:serviceUpdate              "update" ;
-        fuseki:serviceUpload              "upload" .
+    fuseki:dataset                    :all_dataset ;
+    fuseki:name                       "allservice" ;
+    fuseki:serviceQuery               "query" , "sparql" ;
+    fuseki:serviceReadGraphStore      "get" ;
+    fuseki:serviceReadWriteGraphStore "data" ;
+    fuseki:serviceUpdate              "update" ;
+    fuseki:serviceUpload              "upload" ;
+.
+
+:service2	a                         fuseki:Service ;
+    fuseki:dataset                    :data_dataset ;
+    fuseki:name                       "dataservice" ;
+    fuseki:serviceQuery               "query" , "sparql" ;
+    fuseki:serviceReadGraphStore      "get" ;
+    fuseki:serviceReadWriteGraphStore "data" ;
+    fuseki:serviceUpdate              "update" ;
+    fuseki:serviceUpload              "upload" ;
+.
+
+:service3	a                         fuseki:Service ;
+    fuseki:dataset                    :schema_dataset ;
+    fuseki:name                       "schemaservice" ;
+    fuseki:serviceQuery               "query" , "sparql" ;
+    fuseki:serviceReadGraphStore      "get" ;
+    fuseki:serviceReadWriteGraphStore "data" ;
+    fuseki:serviceUpdate              "update" ;
+    fuseki:serviceUpload              "upload" ;
+.

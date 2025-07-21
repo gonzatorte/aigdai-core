@@ -9,3 +9,5 @@ ns:Don_Quijote  rdf:type        ns:Man .
 ns:Don_Quijote  ns:knows        ns:Sancho .
 ns:Rocinante    rdf:type        ns:Horse .
 ns:Dulcinea     rdf:type        ns:Woman .
+ns:Lucia     rdf:type        ns:Woman .
+ns:Sancho  ns:knows        ns:Lucia .
