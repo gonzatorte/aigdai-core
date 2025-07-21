@@ -851,14 +851,14 @@ countries = [
     ('ZWE', 'Zimbabwe'),
 ]
 
-motores = [
+softwares = [
     'ckan',
     'dataverse',
     'dspace',
     'invenio',
 ]
 
-motor_2_feature = [
+software_2_feature = [
     (
         'dataverse',
         [

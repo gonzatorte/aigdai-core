@@ -1,29 +1,15 @@
-from onto.populator.re3data import process as process_re3data
-from re3data.extract_from_repo import BLACKLIST
+from onto.populator.common import seed_commons
+from onto.populator.sources.re3data import process as process_re3data, seed_disciplinas, refine_iterator
+from onto.populator.utils import owl_all_different
 import onto.cts as cts
 import onto.populator.rdf_types as rdf_types
 from lib.no_relational_database import get_database_client
-from re3data.xsd_transform import refine_repository_info, load_schema
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import RDF, OWL
+from rdflib.namespace import RDF
 import config
 from rdflib.plugins.sparql import prepareQuery
 from ror.extractor import insert_on_rdf
-
-
-def refine_iterator(iterator, white_list: [str], allow_whitelist: bool):
-    schema = load_schema()
-    refined = []
-    for x in iterator:
-        if x['idd'] in BLACKLIST:
-            continue
-        # if allow_whitelist:
-        #     if x['idd'] not in white_list:
-        #         continue
-        rrr = refine_repository_info(schema, x['bin'])
-        refined.append(rrr)
-    return refined
-
+import onto.populator.common as common
 
 def refine_and_insert_on_rdf():
     g_repos = Graph()
@@ -35,7 +21,9 @@ def refine_and_insert_on_rdf():
 
     (g_criterios, ) = seed_criterios()
     (g_disciplinas, ) = seed_disciplinas()
-    (g_commons, ) = seed_commons()
+    g_commons = Graph()
+    g_commons.bind('', rdf_types.my_ns)
+    seed_commons(g_commons)
     (g_locaciones, ) = seed_locaciones()
 
     # database = get_database_async()
@@ -64,68 +52,6 @@ def refine_and_insert_on_rdf():
             print("ready %s out of %s" % (counter, total))
     return g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones
 
-CERTIFICACIONES = []
-ORG_ID_SCHEMAS = [
-    ('FUNDREF', ['FUNDREF', 'CrossrefFunderID']),
-    ('GRID', ['GRID']),
-    ('ISNI', ['ISNI']),
-    ('WIKIDATA', ['WIKIDATA']),
-    ('LOCAL', ['LOCAL']),
-]
-ORG_ID_SCHEMA_NAMES = [x[0] for x in ORG_ID_SCHEMAS]
-
-
-def seed_commons():
-    g = Graph()
-    g.bind('', rdf_types.my_ns)
-
-    for (org_id_name, prefixes) in ORG_ID_SCHEMAS:
-        tipo_de_id_de_organizacion = URIRef("tipo_de_id_de_organizacion/%s" % (org_id_name,), rdf_types.my_ns)
-        g.set((tipo_de_id_de_organizacion, RDF.type, rdf_types.TipoDeIdDeOrganizacion))
-        # for prefix in prefixes:
-        #     pass
-
-    for (my_type, name, items) in [
-        (rdf_types.MotorDeRepositorio, 'motor_de_repositorio', cts.motores),
-        (rdf_types.EsquemaDeIdDeAutor, 'esquema_de_id_de_autor', cts.esquemas_de_id_de_autor),
-        (rdf_types.EsquemaDeIdPersistente, 'esquema_de_id_persistente', cts.esquemas_de_id_persistente),
-        (rdf_types.EsquemaDeMetadatos, 'esquema_de_metadatos', cts.esquemas_de_metadatos),
-        (rdf_types.Licencia, 'licencia', cts.licencias),
-        (rdf_types.TipoDeDato, 'tipo_de_dato', cts.tipos_de_dato),
-        (rdf_types.ApiParaCosecha, 'api_para_cosecha', cts.apis_para_cosecha),
-        (rdf_types.RedSocial, 'red_social', cts.red_social),
-        (rdf_types.ExportacionDeCitas, 'exportacion_de_citas', cts.formatos_de_exportacion_de_citas),
-    ]:
-        items_g = []
-        for item_id in items:
-            old_id = item_id
-            if type(item_id) is tuple:
-                item_id = item_id[0]
-            item = URIRef("%s/%s" % (name, item_id), rdf_types.my_ns)
-            items_g.append(item)
-            g.set((item, RDF.type, my_type))
-        owl_all_different(g, items_g)
-
-    for (esquema_de_metadatos, esquema_hijos) in cts.esquemas_de_metadatos:
-        item = URIRef("esquema_de_metadatos/%s" % (esquema_de_metadatos, ), rdf_types.my_ns)
-        for esquema_hijo in esquema_hijos:
-            item_hijo = URIRef("esquema_de_metadatos/%s" % (esquema_hijo, ), rdf_types.my_ns)
-            g.set((item, rdf_types.extiende_a_esquema_de_metadatos, item_hijo))
-
-    formatos = []
-    formato_de_archivo = URIRef('formato_de_archivo', rdf_types.my_ns)
-    formato_de_archivo_abierto = URIRef('formato_de_archivo_abierto', rdf_types.my_ns)
-    for formato in cts.formatos_de_archivo:
-        item = URIRef("formato_de_archivo/%s" % (formato,), rdf_types.my_ns)
-        formatos.append(item)
-        g.set((item, RDF.type, formato_de_archivo))
-    for (formato, _) in cts.formatos_de_archivo_abierto:
-        item = URIRef("formato_de_archivo/%s" % (formato.lower(),), rdf_types.my_ns)
-        formatos.append(item)
-        g.set((item, RDF.type, formato_de_archivo_abierto))
-    owl_all_different(g, formatos)
-
-    return (g,)
 
 def seed_criterios():
     g = Graph()
@@ -140,79 +66,79 @@ def seed_criterios():
     # ])
 
     for (target_id, name, url) in cts.criterios_de_calidad:
-        target = URIRef("criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+        target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
         g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
 
     for (target_criterio_id, criterios_extends_to, criterios_considered) in cts.criterio_de_calidad_extiende_de:
-        target_criterio = URIRef("criterio_de_calidad/%s" % (target_criterio_id,), rdf_types.principles_ns)
+        target_criterio = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_criterio_id,), rdf_types.principles_ns)
         g.set((target_criterio, RDF.type, rdf_types.CriterioDeCalidad))
         for criterio_extends_to_id in criterios_extends_to:
-            criterio_extends_to = URIRef("criterio_de_calidad/%s" % (criterio_extends_to_id,), rdf_types.principles_ns)
+            criterio_extends_to = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), criterio_extends_to_id,), rdf_types.principles_ns)
             g.set((criterio_extends_to, RDF.type, rdf_types.CriterioDeCalidad))
             g.set((target_criterio, rdf_types.extiende_de_criterio, criterio_extends_to))
 
         for criterio_considered_id in criterios_considered:
-            criterio_considered = URIRef("criterio_de_calidad/%s" % (criterio_considered_id,), rdf_types.principles_ns)
+            criterio_considered = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), criterio_considered_id,), rdf_types.principles_ns)
             g.set((criterio_considered, RDF.type, rdf_types.CriterioDeCalidad))
             g.set((target_criterio, rdf_types.considera_criterio, criterio_considered))
 
     # ToDo: same_individuals
 
-    trust = URIRef("criterio_de_calidad/trust", rdf_types.principles_ns)
+    trust = URIRef("%s/trust" % (rdf_types.CriterioDeCalidad.toPython(),), rdf_types.principles_ns)
     # ToDo: Map related_with_funcionalidad
     for (target_id, category, description, related_with_funcionalidad) in cts.metricas_trust:
-        target = URIRef("criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+        target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
         g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
         g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
         g.set((target, rdf_types.extiende_de_criterio, trust))
 
-        grupo_de_criterio = URIRef("grupo_de_criterio/%s" % (category,), rdf_types.principles_ns)
+        grupo_de_criterio = URIRef("%s/%s" % (rdf_types.GrupoDeCriterio.toPython(), category,), rdf_types.principles_ns)
         g.set((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
         # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
 
-    plan_s = URIRef("criterio_de_calidad/plan_s", rdf_types.principles_ns)
+    plan_s = URIRef("%s/plan_s" % (rdf_types.CriterioDeCalidad.toPython(), ), rdf_types.principles_ns)
     # ToDo: Map importance to model
     for (target_id, _, description, importance, related_with_funcionalidad) in cts.metricas_plan_s:
-        target = URIRef("criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+        target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
         g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
         g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
         g.set((target, rdf_types.extiende_de_criterio, plan_s))
 
-    cts_2022 = URIRef("criterio_de_calidad/cts_2022", rdf_types.principles_ns)
+    cts_2022 = URIRef("%s/cts_2022" % (rdf_types.CriterioDeCalidad.toPython(), ), rdf_types.principles_ns)
     for (target_id, category, name, description) in cts.metricas_cts_2022:
-        target = URIRef("criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+        target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
         g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
         g.set((target, rdf_types.criterio_tiene_descripcion, Literal("%s - %s" % (name, description))))
         g.set((target, rdf_types.extiende_de_criterio, cts_2022))
 
-        grupo_de_criterio = URIRef("grupo_de_criterio/%s" % (category,), rdf_types.principles_ns)
+        grupo_de_criterio = URIRef("%s/%s" % (rdf_types.GrupoDeCriterio.toPython(), category,), rdf_types.principles_ns)
         g.set((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
         # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
 
-    criterio_de_calidad_coar = URIRef("criterio_de_calidad/coar_v1", rdf_types.principles_ns)
+    criterio_de_calidad_coar = URIRef("%s/coar_v1" % (rdf_types.CriterioDeCalidad.toPython(), ), rdf_types.principles_ns)
     # ToDo: Map importance to model
     for (target_id, category, description, importance, related_with_criterios) in cts.metricas_coar:
-        target = URIRef("criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+        target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
         g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
         g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
         g.set((target, rdf_types.extiende_de_criterio, criterio_de_calidad_coar))
 
-        grupo_de_criterio = URIRef("grupo_de_criterio/%s" % (category,), rdf_types.principles_ns)
+        grupo_de_criterio = URIRef("%s/%s" % (rdf_types.GrupoDeCriterio.toPython(), category,), rdf_types.principles_ns)
         g.set((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
         # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
 
-    fair = URIRef("criterio_de_calidad/fair", rdf_types.principles_ns)
+    fair = URIRef("%s/fair" % (rdf_types.CriterioDeCalidad.toPython(),), rdf_types.principles_ns)
     # for (target_id, _) in cts.metricas_fair:
     #     # ToDo: Tengo que relacionar con (same as) con https://w3id.org/fair/principles/terms/ de https://peta-pico.github.io/FAIR-nanopubs/principles/ontology.xml
     #     pass
     for (target_id, _) in cts.fair_maturity_models:
-        target = URIRef("criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+        target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
         g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
         g.set((target, rdf_types.extiende_de_criterio, fair))
-    rda_fair_maturity_model = URIRef("criterio_de_calidad/rda_fair_maturity_model", rdf_types.principles_ns)
-    fsf_fair_maturity_model = URIRef("criterio_de_calidad/fsf_fair_maturity_model", rdf_types.principles_ns)
+    rda_fair_maturity_model = URIRef("%s/rda_fair_maturity_model" % (rdf_types.CriterioDeCalidad.toPython(),), rdf_types.principles_ns)
+    fsf_fair_maturity_model = URIRef("%s/fsf_fair_maturity_model" % (rdf_types.CriterioDeCalidad.toPython(),), rdf_types.principles_ns)
     # ToDo: Hacer el DSM
-    # dsm_fair_maturity_model = URIRef("criterio_de_calidad/dsm_fair_maturity_model", rdf_types.principles_ns)
+    # dsm_fair_maturity_model = URIRef("%s/dsm_fair_maturity_model" % (rdf_types.CriterioDeCalidad.toPython(),), rdf_types.principles_ns)
     for (parent_maturity_model, statements) in [
         (rda_fair_maturity_model, cts.rda_fair_maturity_model_statements),
         (fsf_fair_maturity_model, cts.fsf_fair_maturity_model_statements),
@@ -226,50 +152,25 @@ def seed_criterios():
                 description = "%s - %s" % (name, description)
             else:
                 raise Exception()
-            target = URIRef("criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+            target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
             g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
-            parent = URIRef("criterio_de_calidad/%s" % (parent_id,), rdf_types.principles_ns)
+            parent = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), parent_id,), rdf_types.principles_ns)
             g.set((parent, RDF.type, rdf_types.CriterioDeCalidad))
             g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
             g.set((target, rdf_types.extiende_de_criterio, parent))
             g.set((target, rdf_types.extiende_de_criterio, parent_maturity_model))
 
-    posi = URIRef("criterio_de_calidad/posi", rdf_types.principles_ns)
+    posi = URIRef("%s/posi" % (rdf_types.CriterioDeCalidad.toPython(), ), rdf_types.principles_ns)
     for (target_id, category, description, importance, parents) in cts.metricas_posi:
-        target = URIRef("criterio_de_calidad/%s" % (target_id,), rdf_types.principles_ns)
+        target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
         g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
 
         # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
-        grupo_de_criterio = URIRef("grupo_de_criterio/%s" % (category,), rdf_types.principles_ns)
+        grupo_de_criterio = URIRef("%s/%s" % (rdf_types.GrupoDeCriterio.toPython(), category,), rdf_types.principles_ns)
         g.set((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
 
         g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
         g.set((target, rdf_types.extiende_de_criterio, posi))
-
-    return (g,)
-
-def seed_disciplinas():
-    g = Graph()
-    g.bind('', rdf_types.my_ns)
-
-    # ToDo: DFG disciplina es una clase definida por todas las disciplinas DFG?
-    all_dfg_disciplinas = []
-    def tree_walk_disciplina(forest, parent):
-        for tr in forest:
-            disciplina = URIRef("disciplina/%s" % (tr[0],), rdf_types.my_ns)
-            all_dfg_disciplinas.append(disciplina)
-            g.set((disciplina, RDF.type, rdf_types.Disciplina))
-            g.set((disciplina, rdf_types.nombre_de_disciplina, Literal(tr[1])))
-            g.set((disciplina, rdf_types.esquema_de_disciplina, Literal('dfg')))
-
-            if parent is not None:
-                parent_g = URIRef("disciplina/%s" % (parent,), rdf_types.my_ns)
-                g.set((disciplina, rdf_types.es_sub_disciplina_de, parent_g))
-            if len(tr) >= 3:
-                children = tr[2]
-                tree_walk_disciplina(children, tr[0])
-    tree_walk_disciplina(cts.dfg_subjects, None)
-    owl_all_different(g, all_dfg_disciplinas)
 
     return (g,)
 
@@ -278,25 +179,25 @@ def seed_locaciones():
     g.bind('', rdf_types.my_ns)
 
     cys = []
-    internacional = URIRef("locacion/global", rdf_types.my_ns)
+    internacional = common.locacion_internacional
     cys.append(internacional)
     g.set((internacional, RDF.type, rdf_types.Locacion))
     for country_or_block in cts.countries:
         if len(country_or_block) >= 3:
-            bl = URIRef("locacion/%s" % (country_or_block[0],), rdf_types.my_ns)
+            bl = URIRef("%s/%s" % (rdf_types.Locacion.toPython(), country_or_block[0],), rdf_types.my_ns)
             cys.append(bl)
             g.set((bl, RDF.type, rdf_types.Locacion))
             g.set((bl, rdf_types.nombre_de_locacion, Literal(country_or_block[1])))
             g.set((bl, rdf_types.incluido_en, internacional))
             for country in country_or_block[2]:
-                cy = URIRef("pais/%s" % (country[0],), rdf_types.my_ns)
+                cy = URIRef("%s/%s" % (rdf_types.Pais.toPython(), country[0],), rdf_types.my_ns)
                 cys.append(cy)
                 g.set((cy, RDF.type, rdf_types.Pais))
                 g.set((cy, rdf_types.incluido_en, bl))
                 g.set((cy, rdf_types.alfa_3_de_pais, Literal(country[0])))
                 g.set((cy, rdf_types.nombre_de_locacion, Literal(country[1])))
         else:
-            cy = URIRef("pais/%s" % (country_or_block[0],), rdf_types.my_ns)
+            cy = URIRef("%s/%s" % (rdf_types.Pais.toPython(), country_or_block[0],), rdf_types.my_ns)
             cys.append(cy)
             g.set((cy, RDF.type, rdf_types.Pais))
             g.set((cy, rdf_types.incluido_en, internacional))

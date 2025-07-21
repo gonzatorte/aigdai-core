@@ -4,7 +4,6 @@ Integration of the RDA Metadata Standards Catalog (https://rdamsc.bath.ac.uk/) t
 
 Permite conocer los crosswalks entre diferentes Metadata Schemas y provee la documentación sobre como implementar ese crosswalk.
 
-
 Schemas
 ```commandline
 {
@@ -68,46 +67,6 @@ Schemas
         "start": "2003-02-01"
       }
     }
-  ]
-}
-```
-
-Mappings
-```commandline
-{
-  "description": "<p>This XML Stylesheet transforms FGDC CSDGM Extensions for Remote Sensing metadata to ISO 19115. This is one of a set of <a href=\"http://www.ncddc.noaa.gov/metadata-standards/metadata-xml/\">FGDC XML transformations</a> produced by NOAA (National Oceanic and Atmospheric Administration).</p>",
-  "locations": [
-    {
-      "type": "library (XML)",
-      "url": "https://service.ncddc.noaa.gov/rdn/www/metadata-standards/metadata-xml/documents/fgdcrse2iso19115-2.xslt"
-    }
-  ],
-  "mscid": "msc:c2",
-  "relatedEntities": [
-    {
-      "id": "msc:m53",
-      "role": "input scheme"
-    },
-    {
-      "id": "msc:m22",
-      "role": "output scheme"
-    }
-  ],
-  "slug": "csdgm-extensions-for_TO_iso-19115",
-  "uri": "https://rdamsc.bath.ac.uk/api2/c2"
-}
-```
-
-Relations (only m (schemas) and c (mappings) care. Not t (tools))
-```commandline
-{
-  "@id": "msc:m2",
-  "maintainers": [
-    "msc:g131"
-  ],
-  "uri": "https://rdamsc.bath.ac.uk/api2/rel/m2",
-  "users": [
-    "msc:g2"
   ]
 }
 ```

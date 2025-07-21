@@ -91,5 +91,12 @@ def reason_on_memory():
     # print(list(tbox.graph.triples((None, None, None))))
 
 
+def find_or_fail(ll, searcher, error_factory):
+    try:
+        return next(filter(searcher, ll))
+    except StopIteration:
+        raise error_factory()
+
+
 if __name__ == '__main__':
     reason_on_memory()
