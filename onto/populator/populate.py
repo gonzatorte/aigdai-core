@@ -1,35 +1,37 @@
-from onto.populator.common import seed_commons
+from lib import chunks
+import asyncio
+from onto.populator.common import seed_commons, seed_locaciones
+from onto.populator.jena_client import JenaClient
+from onto.populator.sources.fairsharing import process_repo as process_repo_fairsharing
 from onto.populator.sources.re3data import process as process_re3data, seed_disciplinas, refine_iterator
-from onto.populator.utils import owl_all_different
 import onto.cts as cts
 import onto.populator.rdf_types as rdf_types
 from lib.no_relational_database import get_database_client
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF
-import config
 from rdflib.plugins.sparql import prepareQuery
-from ror.extractor import insert_on_rdf
-import onto.populator.common as common
+from ror.extractor import insert_on_rdf as ror_insert_on_rdf
 
-def refine_and_insert_on_rdf():
-    g_repos = Graph()
-    # g = Graph(store="BerkeleyDB")
-    # g.open("/some/folder/location")
-    # g.close()
-    # g.parse("....")
-    g_repos.bind('', rdf_types.my_ns)
 
-    (g_criterios, ) = seed_criterios()
-    (g_disciplinas, ) = seed_disciplinas()
-    g_commons = Graph()
-    g_commons.bind('', rdf_types.my_ns)
-    seed_commons(g_commons)
-    (g_locaciones, ) = seed_locaciones()
+def walk_fairsharing(g_repos: Graph):
+    database = get_database_client()
+    db_collection = database['fs_registry']
+    skip_count = 0
+    limit_count = 10
+    instances = db_collection.find({}).sort({'_id': -1}).skip(skip_count).limit(limit_count)
+    total = len(instances)
+    print("To process %s" % (total, ))
+    for idx, r_info in enumerate(instances):
+        process_repo_fairsharing(g_repos, r_info)
+        if idx % 20 == 0:
+            print("ready %s out of %s" % (idx, total))
 
+
+def walk_re3data(g_repos: Graph):
     # database = get_database_async()
     database = get_database_client()
     # drepo_collection = database['drepo']
-    raw_drepo_collection = database['raw_drepo']
+    raw_drepo_collection = database['raw_drepo_2']
     skip_count = 0
     limit_count = 0
     instances = raw_drepo_collection.find({}).sort({'idd': -1}).skip(skip_count).limit(limit_count)
@@ -37,6 +39,7 @@ def refine_and_insert_on_rdf():
     instance_ids = raw_drepo_collection.find({}, {'idd': True}).sort({'idd': -1}).skip(skip_count).limit(limit_count)
     instance_ids = [x['idd'] for x in instance_ids]
 
+    # ToDo: Ver si volver a habilitar la carga progresiva
     # rdf_ids = {x: URIRef("repositorio/%s" % (x,), my_ns) for x in instance_ids}
     # not_repeated_ids = [x for x in instance_ids if rdf_ids[x] not in g[rdf_ids[x]]]
     not_repeated_ids = instance_ids
@@ -48,8 +51,29 @@ def refine_and_insert_on_rdf():
     for r_info in repository_infos:
         process_re3data(g_repos, r_info)
         counter += 1
-        if counter % 10 == 0:
+        if counter % 20 == 0:
             print("ready %s out of %s" % (counter, total))
+
+
+def refine_and_insert_on_rdf():
+    # g = Graph(store="BerkeleyDB")
+    # g.open("/some/folder/location")
+    # g.close()
+    # g.parse("....")
+    (g_criterios, ) = seed_criterios()
+    (g_disciplinas, ) = seed_disciplinas()
+    g_commons = Graph()
+    g_commons.bind('', rdf_types.my_ns)
+    seed_commons(g_commons)
+    g_locaciones = Graph()
+    g_locaciones.bind('', rdf_types.my_ns)
+    seed_locaciones(g_locaciones)
+
+    g_repos = Graph()
+    g_repos.bind('', rdf_types.my_ns)
+    walk_re3data(g_repos)
+    walk_fairsharing(g_repos)
+
     return g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones
 
 
@@ -174,40 +198,8 @@ def seed_criterios():
 
     return (g,)
 
-def seed_locaciones():
-    g = Graph()
-    g.bind('', rdf_types.my_ns)
 
-    cys = []
-    internacional = common.locacion_internacional
-    cys.append(internacional)
-    g.set((internacional, RDF.type, rdf_types.Locacion))
-    for country_or_block in cts.countries:
-        if len(country_or_block) >= 3:
-            bl = URIRef("%s/%s" % (rdf_types.Locacion.toPython(), country_or_block[0],), rdf_types.my_ns)
-            cys.append(bl)
-            g.set((bl, RDF.type, rdf_types.Locacion))
-            g.set((bl, rdf_types.nombre_de_locacion, Literal(country_or_block[1])))
-            g.set((bl, rdf_types.incluido_en, internacional))
-            for country in country_or_block[2]:
-                cy = URIRef("%s/%s" % (rdf_types.Pais.toPython(), country[0],), rdf_types.my_ns)
-                cys.append(cy)
-                g.set((cy, RDF.type, rdf_types.Pais))
-                g.set((cy, rdf_types.incluido_en, bl))
-                g.set((cy, rdf_types.alfa_3_de_pais, Literal(country[0])))
-                g.set((cy, rdf_types.nombre_de_locacion, Literal(country[1])))
-        else:
-            cy = URIRef("%s/%s" % (rdf_types.Pais.toPython(), country_or_block[0],), rdf_types.my_ns)
-            cys.append(cy)
-            g.set((cy, RDF.type, rdf_types.Pais))
-            g.set((cy, rdf_types.incluido_en, internacional))
-            g.set((cy, rdf_types.alfa_3_de_pais, Literal(country_or_block[0])))
-            g.set((cy, rdf_types.nombre_de_locacion, Literal(country_or_block[1])))
-    owl_all_different(g, cys)
-    return (g,)
-
-
-def serialize_all():
+def serialize_file():
     g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones = refine_and_insert_on_rdf()
     # print(g.serialize(destination='../owl/repositorios.xml', format="pretty-xml"))
     # g_repos.objects(subject=None, predicate=None, unique=True)
@@ -222,18 +214,7 @@ def serialize_all():
     }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'})
     orgs_types_literals = {"%s:%s" % (tt, ll.value) for (_, tt, ll) in g_repos.query(orgs_types_literals_query)}
 
-    g_orgs = insert_on_rdf(orgs_types_literals)
-    # g_orgs.remove((bob, None, None))
-    # ToDo: alternativa es mandarlo todo a fuseki usando cosas como
-    # curl 'http://localhost:3030/ElQuijote/' \
-    # -H 'Accept: text/plain,*/*;q=0.9' \
-    # -H 'Content-Type: application/x-www-form-urlencoded' \
-    # --data-raw 'update=encodeURIComponent(
-    # INSERT DATA {
-    #	ns:Pepe ns:knows  ns:Don_Quijote .
-    # }
-    # )'
-
+    g_orgs = ror_insert_on_rdf(orgs_types_literals)
     g_repos.serialize(destination='../owl/repositorios.xml', format="xml")
     g_criterios.serialize(destination='../owl/criterios.xml', format="xml")
     g_disciplinas.serialize(destination='../owl/disciplinas.xml', format="xml")
@@ -242,46 +223,49 @@ def serialize_all():
     g_orgs.serialize(destination='../owl/organizaciones.xml', format="xml")
 
 
-def reason_on_memory():
-    # g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones = refine_and_insert_on_rdf()
-    # g_orgs = insert_on_rdf()
-    import owlready2 as ow
+async def serialize_jena():
+    g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones = refine_and_insert_on_rdf()
+    gg = Graph()
+    gg.bind('', rdf_types.my_ns)
+    gg += g_commons
+    gg += g_locaciones
+    gg += g_criterios
+    gg += g_disciplinas
+    gg += g_repos
 
-    ow.JAVA_EXE = config.JAVA_EXE_PATH
-    ow.onto_path.append('../owl/')
+    orgs_types_literals_query = prepareQuery("""
+    SELECT DISTINCT ?o ?t ?l
+    WHERE {
+      ?i rdf:type :id_de_organizacion .
+      ?i :id_de_organizacion_tiene_tipo ?t .
+      ?i :id_de_organizacion_tiene_literal ?l .
+      ?i :id_de_organizacion_tiene_organizacion ?o
+    }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'})
+    orgs_types_literals = {"%s:%s" % (tt, ll.value) for (_, tt, ll) in gg.query(orgs_types_literals_query)}
+    g_orgs = ror_insert_on_rdf(orgs_types_literals)
+    gg += g_orgs
 
-    # from io import BytesIO
-    # my_str_as_bytes = str.encode(my_str)  # convert to binary
-    # fobj = BytesIO(my_str_as_bytes)
-    # abox = ow.get_ontology("some-random-path").load(fileobj=fobj)
-
-    tbox = ow.get_ontology('file://../owl/aigdai-tbox.owl').load(only_local=True)
-
-    for data_file_path in [
-        'repositorios.xml',
-        'criterios.xml',
-        'disciplinas.xml',
-        'commons.xml',
-        'localizaciones.xml',
-        'organizaciones.xml',
-    ]:
-        # ow.get_ontology('file://%s' % (data_file_path,)).load(only_local=True)
-        # tbox.imported_ontologies.append(ow.get_ontology('file://../owl/%s' % (data_file_path,)))
-        tbox.imported_ontologies.append(ow.get_ontology('file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/%s' % (data_file_path,)))
-        # tbox.imported_ontologies.append('file://%s' % (data_file_path,))
-
-    ow.sync_reasoner([tbox], ignore_unsupported_datatypes=True, infer_property_values=True)
-    # ow.sync_reasoner_pellet([tbox], infer_data_property_values=True, infer_property_values=True, debug=2)
-    # with tbox:
-    #     ow.sync_reasoner()
-
-    if len(list(ow.default_world.inconsistent_classes())) != 0:
-        raise Exception('Inconsistent ontology')
-
-    print(list(tbox.individuals()))
-    # print(list(tbox.graph.triples((None, None, None))))
+    orgs_types_literals_query = prepareQuery("""
+        SELECT DISTINCT ?s ?p ?o
+        WHERE {
+          ?s ?p ?o
+        } ORDER BY DESC(?s) DESC(?p) DESC(?o)""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'})
+    items_generator = gg.query(orgs_types_literals_query)
+    items_count = gg.query(prepareQuery("""
+        SELECT (COUNT(DISTINCT *) AS ?count)
+        WHERE {
+            ?s ?p ?o .
+        }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'}))
+    items_count = items_count.result[0][0].value
+    CHUNKS_SIZE = 50
+    chunk_generator = chunks(iter(items_generator), CHUNKS_SIZE)
+    async with JenaClient('dataservice', {'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'}) as client:
+        for (idx, ch) in enumerate(chunk_generator):
+            await client.insert_many(ch)
+            if (idx + 1) % 10 == 0:
+                print("%s out of %s" % (CHUNKS_SIZE * (idx + 1), items_count))
 
 
 if __name__ == '__main__':
-    serialize_all()
-    # reason_on_memory()
+    # serialize_file()
+    asyncio.run(serialize_jena())

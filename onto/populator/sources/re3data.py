@@ -88,16 +88,24 @@ def process(g_repos, repository_info):
 
         for raw_idd_org in db_instance['ids']:
             idd_org = raw_idd_org.replace(' ', '')
+            idd_type_is_other = re.match('^other:.*$', idd_org, re.IGNORECASE)
+            if idd_type_is_other:
+                print(idd_org, raw_idd_org)
+                continue
+            # idd_match = re.match('^(?<!other)(?P<type>.+(?=[:;.])|CrossrefFunderID)(?P<idd>.+)$', idd_org, re.IGNORECASE)
             idd_match = re.match('^(?P<type>.+(?=[:;.])|CrossrefFunderID)(?P<idd>.+)$', idd_org, re.IGNORECASE)
             if not idd_match:
                 print(idd_org, raw_idd_org)
                 continue
             tipo_de_id_de_organizacion_str = idd_match.groupdict().get('type').upper()
-            tipo_de_id_de_organizacion = find_or_fail(
-                lambda x: x[0] == tipo_de_id_de_organizacion_str,
-                common.ORG_ID_SCHEMAS,
-                lambda x: Exception("Unrecognized %s org id schema" % (tipo_de_id_de_organizacion_str,))
-            )[2]
+            try:
+                tipo_de_id_de_organizacion = find_or_fail(
+                    common.ORG_ID_SCHEMAS,
+                    lambda x: tipo_de_id_de_organizacion_str in [tt.upper() for tt in x[1]]
+                )[2]
+            except KeyError:
+                print("Unrecognized %s org id schema for %s" % (tipo_de_id_de_organizacion_str, idd_org))
+                continue
             idd_org_wo_schema = idd_match.groupdict().get('idd').replace(' ', '')
             id_de_organizacion = URIRef("%s/%s" % (rdf_types.IdDeOrganizacion.toPython(), idd_org,), rdf_types.my_ns)
             g_repos.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))

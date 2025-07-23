@@ -90,8 +90,7 @@ def insert_on_rdf(only_org_ids: set[str] | None = None):
         tipo_de_id_de_organizacion_ror = URIRef("tipo_de_id_de_organizacion/ROR", rdf_types.my_ns)
         g_orgs.set((tipo_de_id_de_organizacion_ror, RDF.type, rdf_types.TipoDeIdDeOrganizacion))
 
-        # ToDo: Quitar esta limitacion de los 1eros 10
-        for (idx, registry) in enumerate(registries[:10]):
+        for (idx, registry) in enumerate(registries):
             if idx % 50 == 0:
                 print('idx', idx, 'out of', len(registries))
             # if registry['admin']['last_modified']['schema_version'] != '2.0':

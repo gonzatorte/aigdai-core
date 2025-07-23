@@ -3,6 +3,7 @@ from lib.no_relational_database import get_database_client
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF, OWL
 import config
+import typing
 
 
 def owl_all_different(g, instances):
@@ -91,11 +92,18 @@ def reason_on_memory():
     # print(list(tbox.graph.triples((None, None, None))))
 
 
-def find_or_fail(ll, searcher, error_factory):
+T = typing.TypeVar('T')
+def find_or_fail(ll: typing.List[T], searcher: typing.Callable[[T], bool]):
     try:
         return next(filter(searcher, ll))
     except StopIteration:
-        raise error_factory()
+        raise KeyError()
+
+
+def buckets(n: int, ll: typing.Iterator[typing.Any]):
+    bulk = []
+    for xx in ll:
+        bulk.append(xx)
 
 
 if __name__ == '__main__':

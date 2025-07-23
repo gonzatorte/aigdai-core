@@ -1,4 +1,4 @@
-from rdflib import URIRef, Namespace, Graph, RDF
+from rdflib import URIRef, Literal, RDF, Graph
 import onto.populator.rdf_types as rdf_types
 import onto.cts as cts
 from onto.populator.utils import owl_all_different
@@ -12,13 +12,49 @@ ORG_ID_SCHEMAS = [
         x[1],
         URIRef("%s/%s" % (rdf_types.TipoDeIdDeOrganizacion.toPython(), x[0],), rdf_types.my_ns)
     ) for x in [
+        ('DOI', ['other:doi']),
+        ('FAIRSHARING', ['other:FAIRsharing_doi']),
+        ('GND', ['GND']),
+        ('VIAF', ['VIAF']),
+        ('RRID', ['RRID', 'ROR:RRID', 'RRID:RRID']),
+        ('ROR', ['ROR', 'ROR:ROR']),
         ('FUNDREF', ['FUNDREF', 'CrossrefFunderID']),
-        ('GRID', ['GRID']),
+        ('GRID', ['GRID', 'GRID:GRID']),
         ('ISNI', ['ISNI']),
         ('WIKIDATA', ['WIKIDATA']),
         ('LOCAL', ['LOCAL']),
     ]
 ]
+
+def seed_locaciones(g: Graph):
+    cys = []
+    internacional = locacion_internacional
+    cys.append(internacional)
+    g.set((internacional, RDF.type, rdf_types.Locacion))
+    for country_or_block in cts.countries:
+        if len(country_or_block) >= 3:
+            bl = URIRef("%s/%s" % (rdf_types.Locacion.toPython(), country_or_block[0],), rdf_types.my_ns)
+            cys.append(bl)
+            g.set((bl, RDF.type, rdf_types.Locacion))
+            g.set((bl, rdf_types.nombre_de_locacion, Literal(country_or_block[1])))
+            g.set((bl, rdf_types.incluido_en, internacional))
+            for country in country_or_block[2]:
+                cy = URIRef("%s/%s" % (rdf_types.Pais.toPython(), country[0],), rdf_types.my_ns)
+                cys.append(cy)
+                g.set((cy, RDF.type, rdf_types.Pais))
+                g.set((cy, rdf_types.incluido_en, bl))
+                g.set((cy, rdf_types.alfa_3_de_pais, Literal(country[0])))
+                g.set((cy, rdf_types.nombre_de_locacion, Literal(country[1])))
+        else:
+            cy = URIRef("%s/%s" % (rdf_types.Pais.toPython(), country_or_block[0],), rdf_types.my_ns)
+            cys.append(cy)
+            g.set((cy, RDF.type, rdf_types.Pais))
+            g.set((cy, rdf_types.incluido_en, internacional))
+            g.set((cy, rdf_types.alfa_3_de_pais, Literal(country_or_block[0])))
+            g.set((cy, rdf_types.nombre_de_locacion, Literal(country_or_block[1])))
+    owl_all_different(g, cys)
+    return (g,)
+
 
 def seed_commons(g: Graph):
     g.bind('', rdf_types.my_ns)
