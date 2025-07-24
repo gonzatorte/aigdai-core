@@ -79,37 +79,37 @@ async def extract_and_store(username: str, password: str):
     #         upsert=True,
     #     )
 
-    fs_licence = database['fs_licence']
-    fs_licence.create_index('id', unique=True)
-    await store_entity(fs_licence, walk_graphql_licence(20, 2, 1))
-
-    fs_keyword = database['fs_keyword']
-    fs_keyword.create_index('id', unique=True)
-    await store_entity(fs_keyword, walk_graphql_keywords(20, 2, 1))
+    # fs_licence = database['fs_licence']
+    # fs_licence.create_index('id', unique=True)
+    # await store_entity(fs_licence, walk_graphql_licence(20, 2, 1))
+    #
+    # fs_keyword = database['fs_keyword']
+    # fs_keyword.create_index('id', unique=True)
+    # await store_entity(fs_keyword, walk_graphql_keywords(20, 2, 1))
 
     fs_orgs = database['fs_orgs']
     fs_orgs.create_index('id', unique=True)
-    await store_entity(fs_orgs, walk_graphql_orgs(20, 2, 1))
+    await store_entity(fs_orgs, walk_graphql_orgs(100, 2, 1))
 
-    fs_grants = database['fs_grants']
-    fs_grants.create_index('id', unique=True)
-    await store_entity(fs_grants, walk_graphql_grants(20, 2, 1))
-
-    fs_subjects = database['fs_subjects']
-    fs_subjects.create_index('id', unique=True)
-    await store_entity(fs_subjects, walk_graphql_subjects(20, 2, 1))
-
-    fs_object_types = database['fs_object_types']
-    fs_object_types.create_index('id', unique=True)
-    await store_entity(fs_object_types, walk_graphql_object_types(20, 2, 1))
-
-    fs_registry = database['fs_registry']
-    fs_registry.create_index('id', unique=True)
-    await store_entity(fs_registry, walk_graphql_registry(10, 3, 1))
-
-    fs_country = database['fs_country']
-    fs_country.create_index('id', unique=True)
-    await store_entity(fs_country, walk_graphql_countries(20, 2, 1))
+    # fs_grants = database['fs_grants']
+    # fs_grants.create_index('id', unique=True)
+    # await store_entity(fs_grants, walk_graphql_grants(20, 2, 1))
+    #
+    # fs_subjects = database['fs_subjects']
+    # fs_subjects.create_index('id', unique=True)
+    # await store_entity(fs_subjects, walk_graphql_subjects(20, 2, 1))
+    #
+    # fs_object_types = database['fs_object_types']
+    # fs_object_types.create_index('id', unique=True)
+    # await store_entity(fs_object_types, walk_graphql_object_types(20, 2, 1))
+    #
+    # fs_registry = database['fs_registry']
+    # fs_registry.create_index('id', unique=True)
+    # await store_entity(fs_registry, walk_graphql_registry(10, 3, 1))
+    #
+    # fs_country = database['fs_country']
+    # fs_country.create_index('id', unique=True)
+    # await store_entity(fs_country, walk_graphql_countries(20, 2, 1))
 
     # fs_relations = database['fs_relations']
     # fs_relations.create_index('id', unique=True)

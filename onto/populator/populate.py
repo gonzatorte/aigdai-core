@@ -2,8 +2,8 @@ from lib import chunks
 import asyncio
 from onto.populator.common import seed_commons, seed_locaciones
 from onto.populator.jena_client import JenaClient
-from onto.populator.sources.fairsharing import process_repo as process_repo_fairsharing
-from onto.populator.sources.re3data import process as process_re3data, seed_disciplinas, refine_iterator
+from onto.populator.sources.fairsharing import FairSharingSource
+from onto.populator.sources.re3data import seed_disciplinas, Re3DataSource
 import onto.cts as cts
 import onto.populator.rdf_types as rdf_types
 from lib.no_relational_database import get_database_client
@@ -13,16 +13,34 @@ from rdflib.plugins.sparql import prepareQuery
 from ror.extractor import insert_on_rdf as ror_insert_on_rdf
 
 
-def walk_fairsharing(g_repos: Graph):
+def walk_fairsharing(gg: Graph):
     database = get_database_client()
-    db_collection = database['fs_registry']
+
+    source = FairSharingSource(gg)
+
+    col_subjects = database['fs_subjects']
+    subjects = col_subjects.find({}).sort({'_id': -1})
+    source.process_subjects(list(subjects))
+
+    col_orgs = database['fs_orgs']
+    orgs = col_orgs.find({}).sort({'_id': -1})
+    source.process_orgs(list(orgs))
+
+    col_licence = database['fs_licence']
+    licences = col_licence.find({}).sort({'_id': -1})
+    source.process_licencia(list(licences))
+
+    col_keyword = database['fs_keyword']
+    keywords = col_keyword.find({}).sort({'_id': -1})
+    source.process_keywords(list(keywords))
+
+    col_registry = database['fs_registry']
     skip_count = 0
     limit_count = 10
-    instances = db_collection.find({}).sort({'_id': -1}).skip(skip_count).limit(limit_count)
-    total = len(instances)
-    print("To process %s" % (total, ))
+    instances = col_registry.find({}).sort({'_id': -1}).skip(skip_count).limit(limit_count)
+    total = col_registry.count_documents({})
     for idx, r_info in enumerate(instances):
-        process_repo_fairsharing(g_repos, r_info)
+        source.process_registry(r_info)
         if idx % 20 == 0:
             print("ready %s out of %s" % (idx, total))
 
@@ -44,12 +62,12 @@ def walk_re3data(g_repos: Graph):
     # not_repeated_ids = [x for x in instance_ids if rdf_ids[x] not in g[rdf_ids[x]]]
     not_repeated_ids = instance_ids
 
-    repository_infos = refine_iterator(instances, not_repeated_ids, True)
+    source = Re3DataSource(g_repos)
+    repository_infos = source.refine_iterator(instances, not_repeated_ids, True)
     total = len(repository_infos)
-    print("To process %s" % (total, ))
     counter = 0
     for r_info in repository_infos:
-        process_re3data(g_repos, r_info)
+        source.process(r_info)
         counter += 1
         if counter % 20 == 0:
             print("ready %s out of %s" % (counter, total))
@@ -71,7 +89,7 @@ def refine_and_insert_on_rdf():
 
     g_repos = Graph()
     g_repos.bind('', rdf_types.my_ns)
-    walk_re3data(g_repos)
+    # walk_re3data(g_repos)
     walk_fairsharing(g_repos)
 
     return g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones
@@ -201,8 +219,6 @@ def seed_criterios():
 
 def serialize_file():
     g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones = refine_and_insert_on_rdf()
-    # print(g.serialize(destination='../owl/repositorios.xml', format="pretty-xml"))
-    # g_repos.objects(subject=None, predicate=None, unique=True)
 
     orgs_types_literals_query = prepareQuery("""
     SELECT DISTINCT ?o ?t ?l
@@ -242,8 +258,8 @@ async def serialize_jena():
       ?i :id_de_organizacion_tiene_organizacion ?o
     }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'})
     orgs_types_literals = {"%s:%s" % (tt, ll.value) for (_, tt, ll) in gg.query(orgs_types_literals_query)}
-    g_orgs = ror_insert_on_rdf(orgs_types_literals)
-    gg += g_orgs
+    # g_orgs = ror_insert_on_rdf(orgs_types_literals)
+    # gg += g_orgs
 
     orgs_types_literals_query = prepareQuery("""
         SELECT DISTINCT ?s ?p ?o

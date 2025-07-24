@@ -5,6 +5,19 @@ from onto.populator.utils import owl_all_different
 
 locacion_internacional = URIRef("locacion/global", rdf_types.my_ns)
 
+CatalogoFAIRSharing = URIRef("%s/%s" % (rdf_types.CatalogoDeRepositorios.toPython(), 'FAIRSharing',), rdf_types.my_ns)
+CatalogoRe3Data = URIRef("%s/%s" % (rdf_types.CatalogoDeRepositorios.toPython(), 'Re3Data',), rdf_types.my_ns)
+CatalogoDoi = URIRef("%s/%s" % (rdf_types.CatalogoDeRepositorios.toPython(), 'DOI',), rdf_types.my_ns)
+CatalogoSciCrunch = URIRef("%s/%s" % (rdf_types.CatalogoDeRepositorios.toPython(), 'SciCrunch',), rdf_types.my_ns)
+catalogos = [CatalogoFAIRSharing, CatalogoRe3Data, CatalogoDoi, CatalogoSciCrunch]
+
+
+def seed_catalogos(gg: Graph):
+    for catalogo in catalogos:
+        gg.set((catalogo, RDF.type, rdf_types.CatalogoDeRepositorios))
+    owl_all_different(gg, catalogos)
+
+
 CERTIFICACIONES = []
 ORG_ID_SCHEMAS = [
     (
@@ -12,12 +25,12 @@ ORG_ID_SCHEMAS = [
         x[1],
         URIRef("%s/%s" % (rdf_types.TipoDeIdDeOrganizacion.toPython(), x[0],), rdf_types.my_ns)
     ) for x in [
+        ('ROR', ['ROR', 'ROR:ROR']),
         ('DOI', ['other:doi']),
         ('FAIRSHARING', ['other:FAIRsharing_doi']),
         ('GND', ['GND']),
         ('VIAF', ['VIAF']),
         ('RRID', ['RRID', 'ROR:RRID', 'RRID:RRID']),
-        ('ROR', ['ROR', 'ROR:ROR']),
         ('FUNDREF', ['FUNDREF', 'CrossrefFunderID']),
         ('GRID', ['GRID', 'GRID:GRID']),
         ('ISNI', ['ISNI']),
@@ -25,6 +38,7 @@ ORG_ID_SCHEMAS = [
         ('LOCAL', ['LOCAL']),
     ]
 ]
+ror_id_schema = ORG_ID_SCHEMAS[0][2]
 
 def seed_locaciones(g: Graph):
     cys = []
@@ -101,5 +115,7 @@ def seed_commons(g: Graph):
         formatos.append(item)
         g.set((item, RDF.type, rdf_types.FormatoDeArchivoAbierto))
     owl_all_different(g, formatos)
+
+    seed_catalogos(g)
 
     return (g,)

@@ -592,6 +592,8 @@
             <Literal>healthcare</Literal>
             <Literal>no-comercial</Literal>
             <Literal>nonprofit</Literal>
+            <Literal>consortium</Literal>
+            <Literal>publisher</Literal>
             <Literal>other</Literal>
         </DataOneOf>
     </DatatypeDefinition>
@@ -769,6 +771,7 @@
             <Literal>financiamiento</Literal>
             <Literal>tecnica</Literal>
             <Literal>patrocinio</Literal>
+            <Literal>other</Literal>
         </DataOneOf>
     </DatatypeDefinition>
     <Declaration>

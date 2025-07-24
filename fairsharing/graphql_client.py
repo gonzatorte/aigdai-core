@@ -179,6 +179,7 @@ query org_relations($page: Int, $perPage: Int) {
   organisations(page: $page, perPage: $perPage) {
     records {
       id
+      name
       homepage
       alternativeNames
       organisationTypes {
