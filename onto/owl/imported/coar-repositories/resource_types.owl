@@ -4,8 +4,10 @@
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-    <Prefix name="" IRI="http://aigdai-tbox.owl/coar_types#"/>
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://aigdai-tbox.owl/coar_types"
+     versionIRI="http://aigdai-tbox.owl/coar_types/v0.1">
+    <Prefix name="" IRI="http://aigdai-tbox.owl/coar_types/#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="skoss" IRI="http://www.w3.org/2004/02/skos/core#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>

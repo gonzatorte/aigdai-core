@@ -30,7 +30,6 @@ async def query_graphql(query: str, http_client: httpx.AsyncClient, page: int=No
     return json_data
 
 
-# ToDo: Algunos campos dependen de su validez del registry type o del record type
 METADATA_FIELDS = [
     'homepage', # string
     'doi', # string, not with url
@@ -55,7 +54,9 @@ METADATA_FIELDS = [
     'certifications_and_community_badges', # array of url, name
 ]
 def normalize_metadata_field(metadata_field):
-    pass
+    # ToDo: Algunos campos dependen de su validez del registry type o del record type
+    # ToDo: Normalizar a arrays vacios todos los campos array
+    return metadata_field
 
 
 async def page_query(query: str, results_keys: str, http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
@@ -323,6 +324,53 @@ query get_subjects($page: Int, $perPage: Int) {
     ''', 'subjects', http_client, page, per_page)
 
 
+def query_graphql_domains(http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
+    return page_query('''
+query get_domains($page: Int, $perPage: Int) {
+  domains(page: $page, perPage: $perPage) {
+    records {
+      definitions
+      expandedNames
+      id
+      iri
+      label
+      synonyms
+      parents {
+        id
+      }
+    }
+    lastPage
+    firstPage
+    currentPage
+    perPage
+    totalCount
+  }
+}
+    ''', 'subjects', http_client, page, per_page)
+
+
+def query_graphql_taxonomies(http_client: httpx.AsyncClient, page: int=None, per_page: int=None):
+    return page_query('''
+query get_taxonomies($page: Int, $perPage: Int) {
+  taxonomies(page: $page, perPage: $perPage) {
+    records {
+      definitions
+      expandedNames
+      id
+      iri
+      label
+      synonyms
+    }
+    lastPage
+    firstPage
+    currentPage
+    perPage
+    totalCount
+  }
+}
+    ''', 'subjects', http_client, page, per_page)
+
+
 async def walk_pages(method: typing.Callable[[httpx.AsyncClient, int | None, int | None], typing.Coroutine[typing.Any, typing.Any, tuple[bool, int, typing.Any]]], chunk_size: int, sleep: float, from_page: int=None):
     has_next_page = True
     page = from_page
@@ -334,10 +382,6 @@ async def walk_pages(method: typing.Callable[[httpx.AsyncClient, int | None, int
                 for record in records:
                     yield record, total_count
                 await asyncio.sleep(sleep)
-
-
-def walk_graphql_relations(chunk_size: int, sleep: float, from_page: int=None):
-    return walk_pages(query_graphql_relations, chunk_size, sleep, from_page)
 
 
 def walk_graphql_registry(chunk_size: int, sleep: float, from_page: int=None):
@@ -372,41 +416,9 @@ def walk_graphql_countries(chunk_size: int, sleep: float, from_page: int = None)
     return walk_pages(query_graphql_countries, chunk_size, sleep, from_page)
 
 
-# ToDo: Tengo que hacer metodos para listar Domains? Taxonomies?
-# query dddd {
-#   domains(page: 1, perPage: 2) {
-#     records {
-#       definitions
-#       expandedNames
-#       id
-#       iri
-#       label
-#       synonyms
-#       parents {
-#         id
-#       }
-#     }
-#     lastPage
-#     firstPage
-#     currentPage
-#     perPage
-#     totalCount
-#   }
-# }
-# query tttt {
-#   taxonomies(page: 1, perPage: 2) {
-#     records {
-#       definitions
-#       expandedNames
-#       id
-#       iri
-#       label
-#       synonyms
-#     }
-#     lastPage
-#     firstPage
-#     currentPage
-#     perPage
-#     totalCount
-#   }
-# }
+def walk_graphql_domains(chunk_size: int, sleep: float, from_page: int = None):
+    return walk_pages(query_graphql_domains, chunk_size, sleep, from_page)
+
+
+def walk_graphql_taxonomies(chunk_size: int, sleep: float, from_page: int = None):
+    return walk_pages(query_graphql_taxonomies, chunk_size, sleep, from_page)

@@ -1,10 +1,8 @@
-import typing
 import re
-from rdflib import Graph, URIRef, Literal
+from rdflib import Graph, Literal
 from rdflib.namespace import RDF
 import onto.populator.common as common
-from onto.populator.utils import owl_all_different, find_or_fail
-import onto.cts as cts
+from onto.populator.utils import owl_all_different
 import onto.populator.rdf_types as rdf_types
 
 
@@ -55,9 +53,7 @@ class FairSharingSource:
     def process_licencia(self, licencias: list):
         all_items = []
         for licencia in licencias:
-            licence = URIRef(
-                "%s/%s" % (rdf_types.Licencia.toPython(), licencia['id'],),
-                rdf_types.my_ns)
+            licence = rdf_types.Licencia.child_uri_ref(licencia['id'])
             all_items.append(licence)
             self.gg.set((licence, rdf_types.tiene_nombre_licencia, Literal(licencia['name'])))
             self.gg.set((licence, rdf_types.tiene_url_licencia, Literal(licencia['url'])))
@@ -66,10 +62,7 @@ class FairSharingSource:
     def process_keywords(self, user_defined_tags: list):
         all_items = []
         for user_defined_tag in user_defined_tags:
-            # ToDo: Hay que reemplzar caracateres raros para que quede una uri valida
-            palabra_clave = URIRef(
-                "%s/fs-%s" % (rdf_types.PalabraClave.toPython(), user_defined_tag['id'],),
-                rdf_types.my_ns)
+            palabra_clave = rdf_types.PalabraClave.child_uri_ref(user_defined_tag['id'])
             all_items.append(palabra_clave)
             self.gg.set((palabra_clave, rdf_types.tiene_sinonimo_palabra_clave, Literal(user_defined_tag['label'])))
             # ToDo: No esta capturando el atributo definitions
@@ -86,18 +79,18 @@ class FairSharingSource:
         all_disciplinas = []
         for info in infos:
             # ToDo: Ponerle un id bueno, quizás el mismo atributo iri?
-            disciplina = URIRef("%s/%s" % (rdf_types.Disciplina.toPython(), info['id'],), rdf_types.my_ns)
+            disciplina = rdf_types.Disciplina.child_uri_ref(info['id'])
             all_disciplinas.append(disciplina)
             gg.set((disciplina, RDF.type, rdf_types.Disciplina))
 
             gg.set((disciplina, rdf_types.nombre_de_disciplina, Literal(info['label'])))
             # ToDo: Usar el campo "definitions" que es un array de str
             # ToDo: Ponerle el esquema que corresponda
-            gg.set((disciplina, rdf_types.esquema_de_disciplina, Literal('dfg')))
+            gg.set((disciplina, rdf_types.disciplina_tiene_esquema, Literal('dfg')))
             for synonym in info['synonyms']:
                 gg.set((disciplina, rdf_types.nombre_de_disciplina, Literal(synonym)))
             for parent in info['parents']:
-                parent_g = URIRef("%s/%s" % (rdf_types.Disciplina.toPython(), parent['id'],), rdf_types.my_ns)
+                parent_g = rdf_types.Disciplina.child_uri_ref(parent['id'])
                 gg.set((disciplina, rdf_types.es_sub_disciplina_de, parent_g))
         owl_all_different(gg, all_disciplinas)
 
@@ -105,7 +98,7 @@ class FairSharingSource:
         gg = self.gg
         all_orgs = []
         for info in orgs:
-            org = URIRef("%s/%s" % (rdf_types.Organizacion.toPython(), info['id'],), rdf_types.my_ns)
+            org = rdf_types.Organizacion.child_uri_ref(info['id'])
             gg.set((org, RDF.type, rdf_types.Organizacion))
 
             gg.set((org, rdf_types.tiene_nombre_organizacion, Literal(info['name'], lang=ENG_LNG_CODE)))
@@ -122,7 +115,7 @@ class FairSharingSource:
                     raise Exception()
                 idd_org = idd_match.groupdict()['idd']
                 # ToDo: Hacer bien el espacio de nombres de ror, usar algun prefijo y asegurar que no pueda ser usado por otro IdDeOrganizacion
-                id_de_organizacion = URIRef("%s/ror-%s" % (rdf_types.IdDeOrganizacion.toPython(), idd_org,), rdf_types.my_ns)
+                id_de_organizacion = rdf_types.IdDeOrganizacion.child_uri_ref("ror-%s" % (idd_org,))
                 gg.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
                 gg.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, common.ror_id_schema))
                 gg.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(idd_org)))
@@ -131,7 +124,7 @@ class FairSharingSource:
 
     def process_repository(self, info):
         gg = self.gg
-        repositorio = URIRef("%s/%s" % (rdf_types.Repositorio.toPython(), info['_id'],), rdf_types.my_ns)
+        repositorio = rdf_types.Repositorio.child_uri_ref(info['_id'])
         repository_metadata = info['metadata']
         gg.set((repositorio, RDF.type, rdf_types.Repositorio))
         gg.set(
@@ -154,15 +147,12 @@ class FairSharingSource:
         # info['countries']
         for subject in info['subjects']:
             # ToDo: Ponerle un id bueno, quizás el mismo atributo iri?
-            disciplina = URIRef("%s/%s" % (rdf_types.Disciplina.toPython(), subject['id'],), rdf_types.my_ns)
+            disciplina = rdf_types.Disciplina.child_uri_ref(subject['id'])
             gg.add((repositorio, rdf_types.repositorio_afin_a_disciplina, disciplina))
         for organisationLink in info['organisationLinks']:
-            org = URIRef("%s/%s" % (rdf_types.Organizacion.toPython(), organisationLink['organisation']['id'],),
-                         rdf_types.my_ns)
+            org = rdf_types.Organizacion.child_uri_ref(organisationLink['organisation']['id'])
             responsibility_type = self.remap_institution_relation_type(organisationLink['relation'])
-            relacion_repositorio_y_organizacion = URIRef("%s/%s-%s-%s" % (
-            rdf_types.RelacionRepositorioYOrganizacion.toPython(), organisationLink['organisation']['id'], info['id'],
-            responsibility_type), rdf_types.my_ns)
+            relacion_repositorio_y_organizacion = rdf_types.RelacionRepositorioYOrganizacion.child_uri_ref("%s-%s-%s" % (organisationLink['organisation']['id'], info['id'],responsibility_type))
             gg.set((relacion_repositorio_y_organizacion, RDF.type, rdf_types.RelacionRepositorioYOrganizacion))
             gg.set((
                    relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_repositorio,
@@ -178,19 +168,15 @@ class FairSharingSource:
             # ToDo: Manejar other, ponerle other_id
             # ToDo: Unificar enumerados o declarar same-as
             normal_content_type = self.remap_tipo_de_datos(object_type['id'])
-            tipo_de_dato = URIRef(
-                "%s/%s" % (rdf_types.TipoDeDato.toPython(), normal_content_type,),
-                rdf_types.my_ns)
+            tipo_de_dato = rdf_types.TipoDeDato.child_uri_ref(normal_content_type)
             gg.set((tipo_de_dato, RDF.type, rdf_types.TipoDeDato))
             gg.set((tipo_de_dato, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
         for user_defined_tag in info['userDefinedTags']:
-            palabra_clave = URIRef(
-                "%s/%s" % (rdf_types.PalabraClave.toPython(), user_defined_tag['id'],),
-                rdf_types.my_ns)
+            palabra_clave = rdf_types.PalabraClave.child_uri_ref(user_defined_tag['id'])
             gg.set((repositorio, rdf_types.tiene_palabra_clave_repositorio, palabra_clave))
 
-        id_repo = URIRef("%s/fairsharing-%s" % (rdf_types.IdDeRepositorio.toPython(), info['id'],), rdf_types.my_ns)
+        id_repo = rdf_types.IdDeRepositorio.child_uri_ref(info['id'])
         gg.set((id_repo, RDF.type, rdf_types.IdDeRepositorio))
         gg.set((id_repo, rdf_types.id_de_repositorio_tiene_repositorio, repositorio))
         gg.set((id_repo, rdf_types.id_de_repositorio_tiene_literal, Literal(info['id'])))
@@ -211,14 +197,14 @@ class FairSharingSource:
                 id_de_repo = re.match('^https://scicrunch\.org/resolver/RRID:(.+)$', cross_reference['url']).groups()[0]
             else:
                 raise Exception()
-            id_repo = URIRef("%s/%s-%s" % (rdf_types.IdDeRepositorio.toPython(), prefix, id_de_repo,), rdf_types.my_ns)
+            id_repo = rdf_types.IdDeRepositorio.child_uri_ref("%s-%s" % (prefix, id_de_repo,))
             gg.set((id_repo, RDF.type, rdf_types.IdDeRepositorio))
             gg.set((id_repo, rdf_types.id_de_repositorio_tiene_repositorio, repositorio))
             gg.set((id_repo, rdf_types.id_de_repositorio_tiene_literal, Literal(id_de_repo)))
             gg.set((id_repo, rdf_types.id_de_repositorio_tiene_catalogo, catalog))
 
         if info['doi']:
-            id_repo = URIRef("%s/doi-%s" % (rdf_types.IdDeRepositorio.toPython(), info['doi'],), rdf_types.my_ns)
+            id_repo = rdf_types.IdDeRepositorio.child_uri_ref("doi-%s" % (info['doi'],))
             gg.set((id_repo, RDF.type, rdf_types.IdDeRepositorio))
             gg.set((id_repo, rdf_types.id_de_repositorio_tiene_repositorio, repositorio))
             gg.set((id_repo, rdf_types.id_de_repositorio_tiene_literal, Literal(info['doi'])))
@@ -242,9 +228,7 @@ class FairSharingSource:
                 raise Exception()
 
         for licence_link in info['licenceLinks']:
-            licence = URIRef(
-                "%s/%s" % (rdf_types.Licencia.toPython(), licence_link['licence']['id'],),
-                rdf_types.my_ns)
+            licence = rdf_types.Licencia.child_uri_ref(licence_link['licence']['id'])
             if licence_link['relation'] == 'applies_to_content':
                 gg.set((repositorio, rdf_types.repositorio_permite_licencia, licence))
             else:

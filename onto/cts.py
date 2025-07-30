@@ -596,8 +596,6 @@ languages = [
 ]
 
 countries = [
-    # ('AAA', 'International'), # ToDo: Ojo con ésto que codifica varios países
-    # ('EEC', 'European Union'), # ToDo: repetido
     ('EU', 'European Union', [
         ('BEL', 'Belgium'),
         ('BGR', 'Bulgaria'),
@@ -856,81 +854,6 @@ softwares = [
     'dataverse',
     'dspace',
     'invenio',
-]
-
-software_2_feature = [
-    (
-        'dataverse',
-        [
-            'lenguaje/es',
-            'lenguaje/en',
-            'api_cosecha/oai-pmh',
-            'control_de_acceso/si',
-            'soporte_para_periodo_de_embargo/no',
-
-            # From https://dataverse.org/software-features
-            ('Support for FAIR Data Principles', 'Findable, Accessible, Interoperable, Reusable.'),
-            ('Data citation for datasets and files', 'EndNote XML, RIS, or BibTeX format at the dataset or file level.'),
-            ('OAI-PMH (Harvesting)', 'Gather and expose metadata from and to other systems using standardized metadata formats: Dublin Core, Data Document Initiative (DDI), OpenAIRE, etc.'),
-            ('APIs for interoperability and custom integrations', 'Search API, Data Deposit (SWORD) API, Data Access API, Metrics API, Migration API, etc.'),
-            ('API client libraries', 'Interact with Dataverse APIs from Python, R, Javascript, Java, and Ruby'),
-            ('DataCite integration', 'DOIs are reserved, and when datasets are published, their metadata is published to DataCite.'),
-            ('Login via Shibboleth', 'Single Sign On (SSO) using your institution\'s credentials.'),
-            ('Login via ORCID, Google, GitHub, or Microsoft', 'Log in using popular OAuth2 providers.'),
-            ('Login via OpenID Connect (OIDC)', 'Log in using your institution\'s identity provider or a third party.'),
-            ('Internationalization', 'The Dataverse software has been translated into multiple languages.'),
-            ('Versioning', 'History of changes to datasets and files are preserved.'),
-            ('Restricted files', 'Control who can download files and choose whether or not to enable a "Request Access" button.'),
-            ('Embargo', 'Make content inaccessible until an embargo end date.'),
-            ('Custom licenses', 'CC0 by default but add as many standard licenses as you like or create your own.'),
-            ('Custom terms of use', 'Custom terms of use can be used in place of a license or disabled by an administrator.'),
-            ('Publishing workflow support', 'Datasets start as drafts and can be submitted for review before publication.'),
-            ('File hierarchy', 'Users are able to control dataset file hierarchy and directory structure.'),
-            ('File previews', 'A preview is available for text, tabular, image, audio, video, and geospatial files.'),
-            ('Preview and analysis of tabular files', 'Data Explorer allows for searching, charting and cross tabulation analysis'),
-            ('Usage statistics and metrics', 'Download counters, support for Make Data Count.'),
-            ('Guestbook', 'Optionally collect data about who is downloading the files from your datasets.'),
-            ('Fixity checks for files', 'MD5, SHA-1, SHA-256, SHA-512, UNF.'),
-            ('File download in R and TSV format', 'Proprietary tabular formats are converted into RData and TSV.'),
-            ('Faceted search', 'Facets are data driven and customizable per collection.'),
-            ('Customization of collections', 'Each personal or organizational collection can be customized and branded.'),
-            ('Private URL', 'Create a URL for reviewers to view an unpublished (and optionally anonymized) dataset.'),
-            ('Widgets', 'Embed listings of data in external websites.'),
-            ('Notifications', 'In app and email notifications for access requests, requests for review, etc.'),
-            ('Schema.org JSON-LD', 'Used by Google Dataset Search and other services for discoverability.'),
-            ('External tools', 'Enable additional features not built in to the Dataverse software.'),
-            ('External vocabulary', 'Let users pick from external vocabularies (provided via API/SKOSMOS) when filling in metadata.'),
-            ('Dropbox integration', 'Upload files stored on Dropbox.'),
-            ('GitHub integration', 'A GitHub Action is available to upload files from GitHub to a dataset.'),
-            ('Integration with Jupyter notebooks', 'Datasets can be opened in Binder to run code in Jupyter notebooks, RStudio, and other computation environments.'),
-            ('User management', 'Dashboard for common user-related tasks.'),
-            ('Curation status labels', 'Let curators mark datasets with a status label customized to your needs.'),
-            ('Branding', 'Your installation can be branded with a custom homepage, header, footer, CSS, etc.'),
-            ('Backend storage on S3 or Swift', 'Choose between filesystem or object storage, configurable per collection and per dataset.'),
-            ('Direct upload and download for S3', 'After a permission check, files can pass freely and directly between a client computer and S3.'),
-            ('Export data in BagIt format', 'For preservation, bags can be sent to the local filesystem, Duraclound, and Google Cloud.'),
-            ('Post-publication automation (workflows)', 'Allow publication of a dataset to kick off external processes and integrations.'),
-            ('Pull header metadata from Astronomy (FITS) files', 'Dataset metadata prepopulated from FITS file metadata.'),
-            ('Provenance', 'Upload standard W3C provenance files or enter free text instead.'),
-            ('Auxiliary files for data files', 'Each data file can have any number of auxiliary files for documentation or other purposes (experimental).'),
-        ],
-    ),
-    ('dspace', [
-        'integracion_con_red_social/research_gate',
-        'foros/si',
-        'servicio_de_curaduria/si',
-# Free open source software
-# Completely customizable to fit user needs
-# Manage and preserve all format of digital content (PDF, Word, JPEG, MPEG, TIFF files)
-# Apache SOLR based search for metadata and full text contents
-# UTF-8 Support
-# Interface available in 22 languages[12]
-# Granular group based access control, allowing setting permissions down to the level of individual files
-# Optimized for Google Scholar indexing
-# Integration with BASE, CORE, OpenAIRE, Unpaywall and WorldCat[13]
-    ], 'https://dspace.org/features/'),
-    ('ckan', [], 'https://ckan.org/features'),
-    ('invenio', [], 'https://inveniosoftware.org/products/rdm/', 'https://inveniosoftware.org/products/rdm/roadmap/')
 ]
 
 # ToDo: Enlazar con comunidades y organizaciones

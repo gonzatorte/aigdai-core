@@ -4,6 +4,9 @@ from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF, OWL
 import config
 import typing
+import re
+
+from onto.populator.ontology import onto_elements
 
 
 def owl_all_different(g, instances):
@@ -104,6 +107,27 @@ def buckets(n: int, ll: typing.Iterator[typing.Any]):
     bulk = []
     for xx in ll:
         bulk.append(xx)
+
+
+class ParentURIRef(URIRef):
+    # def __init__(self, onto):
+    #     self.onto = onto
+
+    def child_uri_ref(self, idd: str):
+        pass
+        # return URIRef("%s/%s" % (self.toPython(), idd), self.onto.base_iri)
+
+def get_ref_from_ontology(name: str) -> ParentURIRef:
+    (node, onto) = onto_elements["/%s" % (name,)]
+    uri_ref = URIRef(name, onto.base_iri)
+    def child_uri_ref(idd: str | int):
+        # ToDo: Pensar en asignar un id autoincremental si no se asigna uno explícito
+        if isinstance(idd, int):
+            idd = str(idd)
+        idd_n = re.sub('[ |]', '_', idd).lower()
+        return URIRef("%s/%s" % (uri_ref.toPython(), idd_n), onto.base_iri)
+    uri_ref.child_uri_ref = child_uri_ref
+    return typing.cast(ParentURIRef, uri_ref)
 
 
 if __name__ == '__main__':

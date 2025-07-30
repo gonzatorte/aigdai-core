@@ -2,6 +2,9 @@ from lib import chunks
 import asyncio
 from onto.populator.common import seed_commons, seed_locaciones
 from onto.populator.jena_client import JenaClient
+from onto.populator.ontology import ontology_graph
+from onto.populator.sources.datacite import DataCiteSource
+from onto.populator.sources.dummy import DummySource
 from onto.populator.sources.fairsharing import FairSharingSource
 from onto.populator.sources.re3data import seed_disciplinas, Re3DataSource
 import onto.cts as cts
@@ -11,6 +14,25 @@ from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF
 from rdflib.plugins.sparql import prepareQuery
 from ror.extractor import insert_on_rdf as ror_insert_on_rdf
+
+def walk_dummy(gg: Graph):
+    source = DummySource(gg)
+    source.process()
+
+def walk_datacite(gg: Graph):
+    database = get_database_client()
+
+    source = DataCiteSource(gg)
+
+    col_datacite = database['datacite']
+    skip_count = 0
+    limit_count = 0
+    instances = col_datacite.find({}).sort({'_id': -1}).skip(skip_count).limit(limit_count)
+    total = col_datacite.count_documents({})
+    for idx, r_info in enumerate(instances):
+        source.process(r_info)
+        if idx % 20 == 0:
+            print("ready %s out of %s" % (idx, total))
 
 
 def walk_fairsharing(gg: Graph):
@@ -78,21 +100,25 @@ def refine_and_insert_on_rdf():
     # g.open("/some/folder/location")
     # g.close()
     # g.parse("....")
-    (g_criterios, ) = seed_criterios()
-    (g_disciplinas, ) = seed_disciplinas()
-    g_commons = Graph()
-    g_commons.bind('', rdf_types.my_ns)
-    seed_commons(g_commons)
-    g_locaciones = Graph()
-    g_locaciones.bind('', rdf_types.my_ns)
-    seed_locaciones(g_locaciones)
+    # (g_criterios, ) = seed_criterios()
+    # (g_disciplinas, ) = seed_disciplinas()
+    # g_commons = Graph()
+    # g_commons.bind('', rdf_types.my_ns)
+    # seed_commons(g_commons)
+    # g_locaciones = Graph()
+    # g_locaciones.bind('', rdf_types.my_ns)
+    # seed_locaciones(g_locaciones)
 
     g_repos = Graph()
     g_repos.bind('', rdf_types.my_ns)
+    walk_dummy(g_repos)
     # walk_re3data(g_repos)
-    walk_fairsharing(g_repos)
+    # walk_fairsharing(g_repos)
+    # walk_datacite(g_repos)
 
-    return g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones
+    return (g_repos,
+            # g_commons, g_criterios, g_disciplinas, g_locaciones
+    )
 
 
 def seed_criterios():
@@ -108,19 +134,19 @@ def seed_criterios():
     # ])
 
     for (target_id, name, url) in cts.criterios_de_calidad:
-        target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
+        target = rdf_types.CriterioDeCalidad.child_uri_ref(target_id)
         g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
 
     for (target_criterio_id, criterios_extends_to, criterios_considered) in cts.criterio_de_calidad_extiende_de:
-        target_criterio = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_criterio_id,), rdf_types.principles_ns)
+        target_criterio = rdf_types.CriterioDeCalidad.child_uri_ref(target_criterio_id)
         g.set((target_criterio, RDF.type, rdf_types.CriterioDeCalidad))
         for criterio_extends_to_id in criterios_extends_to:
-            criterio_extends_to = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), criterio_extends_to_id,), rdf_types.principles_ns)
+            criterio_extends_to = rdf_types.CriterioDeCalidad.child_uri_ref(criterio_extends_to_id)
             g.set((criterio_extends_to, RDF.type, rdf_types.CriterioDeCalidad))
             g.set((target_criterio, rdf_types.extiende_de_criterio, criterio_extends_to))
 
         for criterio_considered_id in criterios_considered:
-            criterio_considered = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), criterio_considered_id,), rdf_types.principles_ns)
+            criterio_considered = rdf_types.CriterioDeCalidad.child_uri_ref(criterio_considered_id)
             g.set((criterio_considered, RDF.type, rdf_types.CriterioDeCalidad))
             g.set((target_criterio, rdf_types.considera_criterio, criterio_considered))
 
@@ -261,19 +287,19 @@ async def serialize_jena():
     # g_orgs = ror_insert_on_rdf(orgs_types_literals)
     # gg += g_orgs
 
-    orgs_types_literals_query = prepareQuery("""
+    items_query = prepareQuery("""
         SELECT DISTINCT ?s ?p ?o
         WHERE {
           ?s ?p ?o
         } ORDER BY DESC(?s) DESC(?p) DESC(?o)""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'})
-    items_generator = gg.query(orgs_types_literals_query)
+    items_generator = gg.query(items_query)
     items_count = gg.query(prepareQuery("""
         SELECT (COUNT(DISTINCT *) AS ?count)
         WHERE {
             ?s ?p ?o .
         }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'}))
     items_count = items_count.result[0][0].value
-    CHUNKS_SIZE = 50
+    CHUNKS_SIZE = 80
     chunk_generator = chunks(iter(items_generator), CHUNKS_SIZE)
     async with JenaClient('dataservice', {'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'}) as client:
         for (idx, ch) in enumerate(chunk_generator):
@@ -282,6 +308,29 @@ async def serialize_jena():
                 print("%s out of %s" % (CHUNKS_SIZE * (idx + 1), items_count))
 
 
+async def serialize_schema_jena():
+    schema_items_query = prepareQuery("""
+        SELECT DISTINCT ?s ?p ?o
+        WHERE {
+          ?s ?p ?o
+        } ORDER BY DESC(?s) DESC(?p) DESC(?o)""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'})
+    schema_items_generator = ontology_graph.query(schema_items_query)
+    schema_items_count = ontology_graph.query(prepareQuery("""
+        SELECT (COUNT(DISTINCT *) AS ?count)
+        WHERE {
+            ?s ?p ?o .
+        }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'}))
+    schema_items_count = schema_items_count.result[0][0].value
+    CHUNKS_SIZE = 80
+    schema_chunk_generator = chunks(iter(schema_items_generator), CHUNKS_SIZE)
+    async with JenaClient('dataservice', {'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'}) as client:
+        for (idx, ch) in enumerate(schema_chunk_generator):
+            await client.insert_many(ch)
+            if (idx + 1) % 10 == 0:
+                print("%s out of %s" % (CHUNKS_SIZE * (idx + 1), schema_items_count))
+
+
 if __name__ == '__main__':
     # serialize_file()
+    # asyncio.run(serialize_schema_jena())
     asyncio.run(serialize_jena())

@@ -7,21 +7,20 @@
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      ontologyIRI="http://aigdai-tbox.owl"
      versionIRI="http://aigdai-tbox.owl/v0.1">
-    <Prefix name="" IRI="http://aigdai-tbox.owl#"/>
+    <Prefix name="" IRI="http://aigdai-tbox.owl/#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
     <Prefix name="base" IRI="http://base.owl#"/>
-    <Prefix name="lang" IRI="http://lenguajes.owl#"/>
+    <Prefix name="lang" IRI="http://lenguajes.owl/#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Prefix name="skos" IRI="http://www.w3.org/2004/02/skos/core#"/>
-    <Prefix name="principle" IRI="http://criterios.owl#"/>
-    <Prefix name="coar_types" IRI="http://aigdai-tbox.owl/coar_types#"/>
-    <Import>http://base.owl/v0.1</Import>
-    <Import>http://criterios.owl/v0.1</Import>
-    <Import>http://lenguajes.owl/v0.1</Import>
-    <Import>http://www.w3.org/2002/07/owl#</Import>
+    <Prefix name="principle" IRI="http://criterios.owl/#"/>
+    <Prefix name="coar_types" IRI="http://aigdai-tbox.owl/coar_types/#"/>
+    <Import>http://base.owl</Import>
+    <Import>http://criterios.owl</Import>
+    <Import>http://lenguajes.owl</Import>
 
     <Declaration>
         <Datatype IRI="escala"/>
@@ -418,22 +417,22 @@
         <IRI>disciplina</IRI>
         <Literal xml:lang="en">subject</Literal>
     </AnnotationAssertion>
-<!--  ToDo: Renombrar a disciplina_tiene_esquema  -->
+
     <Declaration>
-        <DataProperty IRI="esquema_de_disciplina"/>
+        <DataProperty IRI="disciplina_tiene_esquema"/>
     </Declaration>
     <DataPropertyDomain>
-        <DataProperty IRI="esquema_de_disciplina"/>
+        <DataProperty IRI="disciplina_tiene_esquema"/>
         <Class IRI="disciplina"/>
     </DataPropertyDomain>
     <DataPropertyRange>
-        <DataProperty IRI="esquema_de_disciplina"/>
+        <DataProperty IRI="disciplina_tiene_esquema"/>
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
-<!--  ToDo: Not sure if functional  -->
     <FunctionalDataProperty>
-        <DataProperty IRI="esquema_de_disciplina"/>
+        <DataProperty IRI="disciplina_tiene_esquema"/>
     </FunctionalDataProperty>
+
     <Declaration>
         <DataProperty IRI="nombre_de_disciplina"/>
     </Declaration>
@@ -445,10 +444,6 @@
         <DataProperty IRI="nombre_de_disciplina"/>
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
-<!--  ToDo: Not sure if functional  -->
-    <FunctionalDataProperty>
-        <DataProperty IRI="nombre_de_disciplina"/>
-    </FunctionalDataProperty>
 
     <Declaration>
         <ObjectProperty IRI="es_sub_disciplina_de"/>
@@ -661,6 +656,7 @@
     <FunctionalDataProperty>
         <DataProperty IRI="id_de_organizacion_tiene_literal"/>
     </FunctionalDataProperty>
+
     <Declaration>
         <ObjectProperty IRI="id_de_organizacion_tiene_tipo"/>
     </Declaration>

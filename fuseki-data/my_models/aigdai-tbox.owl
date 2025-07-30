@@ -1126,9 +1126,9 @@
     
 
 
-    <!-- http://aigdai-tbox.owl#esquema_de_disciplina -->
+    <!-- http://aigdai-tbox.owl#disciplina_tiene_esquema -->
 
-    <owl:DatatypeProperty rdf:about="http://aigdai-tbox.owl#esquema_de_disciplina">
+    <owl:DatatypeProperty rdf:about="http://aigdai-tbox.owl#disciplina_tiene_esquema">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://aigdai-tbox.owl#disciplina"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>

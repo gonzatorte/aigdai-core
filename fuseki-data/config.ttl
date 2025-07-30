@@ -35,11 +35,11 @@
     rdfs:label "tbox" ;
     a ja:InfModel ;
 #    ja:content [ja:externalContent <file://fuseki/model.owl> ] ;
-    ja:content [ja:externalContent <file://fuseki/my_models/aigdai-tbox.owl> ] ;
-    ja:content [ja:externalContent <file://fuseki/my_models/base.owl> ] ;
-    ja:content [ja:externalContent <file://fuseki/my_models/criterios.owl> ] ;
-    ja:content [ja:externalContent <file://fuseki/my_models/lenguajes.owl> ] ;
-    ja:content [ja:externalContent <file://fuseki/my_models/resource_types.owl> ] ;
+#    ja:content [ja:externalContent <file://fuseki/my_models/aigdai-tbox.owl> ] ;
+#    ja:content [ja:externalContent <file://fuseki/my_models/base.owl> ] ;
+#    ja:content [ja:externalContent <file://fuseki/my_models/criterios.owl> ] ;
+#    ja:content [ja:externalContent <file://fuseki/my_models/lenguajes.owl> ] ;
+#    ja:content [ja:externalContent <file://fuseki/my_models/resource_types.owl> ] ;
 
     # value from https://github.com/apache/jena/blob/main/jena-core/src/main/java/org/apache/jena/reasoner/rulesys/OWLFBRuleReasonerFactory.java#L49C39-L49C84
     ja:reasoner [ja:reasonerURL <http://jena.hpl.hp.com/2003/OWLFBRuleReasoner>] ;

@@ -6,7 +6,7 @@ from typing import Any, Tuple, List, AsyncIterable, Coroutine, Callable
 # T = typing.TypeVar('S')
 
 from rdflib.namespace import RDF
-from rdflib import Graph, Literal, URIRef
+from rdflib import Graph
 import onto.populator.rdf_types as rdf_types
 # import json
 
@@ -87,10 +87,10 @@ async def extract_and_store():
 
     for schema in schemas:
         related_schemas = [(x['id'], x['role'] == 'child scheme') for x in schema['relatedEntities'] if x['role'] in ['parent scheme', 'child scheme']]
-        esquema_de_metadatos = URIRef("esquema_de_metadatos/%s" % (schema['mscid'],), rdf_types.my_ns)
+        esquema_de_metadatos = rdf_types.EsquemaDeMetadatos.child_uri_ref(schema['mscid'])
         g_meta.set((esquema_de_metadatos, RDF.type, rdf_types.EsquemaDeMetadatos))
         for related_schema, is_parent in related_schemas:
-            extendido_esquema_de_metadatos = URIRef("esquema_de_metadatos/%s" % (related_schema,), rdf_types.my_ns)
+            extendido_esquema_de_metadatos = rdf_types.EsquemaDeMetadatos.child_uri_ref(related_schema)
             if is_parent:
                 g_meta.set((esquema_de_metadatos, rdf_types.extiende_a_esquema_de_metadatos, extendido_esquema_de_metadatos))
 

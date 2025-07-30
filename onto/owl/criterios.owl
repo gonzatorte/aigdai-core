@@ -7,8 +7,8 @@
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      ontologyIRI="http://criterios.owl"
      versionIRI="http://criterios.owl/v0.1">
-    <Prefix name="" IRI="http://criterios.owl#"/>
-    <Prefix name="base" IRI="http://base.owl#"/>
+    <Prefix name="" IRI="http://criterios.owl/#"/>
+    <Prefix name="base" IRI="http://base.owl/#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
@@ -16,7 +16,7 @@
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Prefix name="dcterms" IRI="http://purl.org/dc/terms/"/>
     <Prefix name="fairvoc" IRI="https://w3id.org/fair/principles/terms/"/>
-    <Import>http://base.owl/v0.1</Import>
+    <Import>http://base.owl</Import>
 
     <Declaration>
         <Class IRI="criterio_de_calidad"/>

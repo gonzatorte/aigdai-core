@@ -7,7 +7,7 @@
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      ontologyIRI="http://base.owl"
      versionIRI="http://base.owl/v0.1">
-    <Prefix name="" IRI="http://base.owl#"/>
+    <Prefix name="" IRI="http://base.owl/#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
 
     <Declaration>

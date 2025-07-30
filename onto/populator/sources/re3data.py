@@ -5,7 +5,7 @@ from re3data.extract_from_repo import BLACKLIST
 import onto.cts as cts
 import onto.populator.rdf_types as rdf_types
 from re3data.xsd_transform import refine_repository_info, load_schema
-from rdflib import Graph, Literal, URIRef
+from rdflib import Graph, Literal
 from rdflib.namespace import RDF
 import hashlib
 
@@ -20,7 +20,7 @@ class Re3DataSource:
     def remap_institution_type(self, institution_type: str):
         if institution_type == '':
             return 'archive'
-        if institution_type == 'comercial':
+        if institution_type == 'commercial':
             return 'comercial'
         if institution_type == '':
             return 'company'
@@ -68,7 +68,7 @@ class Re3DataSource:
 
     def process(self, repository_info):
         g_repos = self.gg
-        repositorio = URIRef("%s/%s" % (rdf_types.Repositorio.toPython(), repository_info['id'], ), rdf_types.my_ns)
+        repositorio = rdf_types.Repositorio.child_uri_ref(repository_info['id'])
         g_repos.set((repositorio, RDF.type, rdf_types.Repositorio))
         g_repos.set((repositorio, rdf_types.tiene_nombre_repositorio, Literal(repository_info['repositoryName']['text'], lang=repository_info['repositoryName']['lang'])))
         g_repos.set((repositorio, rdf_types.tiene_descripcion_repositorio, Literal(repository_info['description']['text'], lang=repository_info['description']['lang'])))
@@ -80,7 +80,7 @@ class Re3DataSource:
 
         for db_instance in repository_info['institutions']:
             id_org = db_instance['id'].replace(' ', '')
-            r_instance = URIRef("%s/%s" % (rdf_types.Organizacion.toPython(), id_org,), rdf_types.my_ns)
+            r_instance = rdf_types.Organizacion.child_uri_ref(id_org)
             g_repos.set((r_instance, RDF.type, rdf_types.Organizacion))
 
             g_repos.set((r_instance, rdf_types.tiene_nombre_organizacion, Literal(db_instance['institutionName']['text'], lang=db_instance['institutionName']['lang'])))
@@ -88,15 +88,16 @@ class Re3DataSource:
                 g_repos.set((r_instance, rdf_types.tiene_nombre_organizacion, Literal(instName['text'], lang=instName['lang'])))
 
             if db_instance['institutionCountry'] == 'EEC':
-                location = URIRef("%s/%s" % (rdf_types.Locacion, 'UE',), rdf_types.my_ns)
+                # ToDo: Usar de commons
+                location = rdf_types.Locacion.child_uri_ref('UE')
                 g_repos.set((location, RDF.type, rdf_types.Locacion))
             elif db_instance['institutionCountry'] == 'AAA':
                 location = common.locacion_internacional
                 g_repos.set((location, RDF.type, rdf_types.Locacion))
             else:
-                location = URIRef("%s/%s" % (rdf_types.Pais.toPython(), db_instance['institutionCountry'],), rdf_types.my_ns)
+                location = rdf_types.Pais.child_uri_ref(db_instance['institutionCountry'])
                 g_repos.set((location, RDF.type, rdf_types.Pais))
-            g_repos.set((r_instance, rdf_types.se_ubica_en, location))
+            g_repos.set((r_instance, rdf_types.organizacion_se_ubica_en, location))
 
             g_repos.add((r_instance, rdf_types.tiene_tipo_de_organizacion, Literal(
                 self.remap_institution_type(db_instance['institutionType'])
@@ -123,7 +124,7 @@ class Re3DataSource:
                     print("Unrecognized %s org id schema for %s" % (tipo_de_id_de_organizacion_str, idd_org))
                     continue
                 idd_org_wo_schema = idd_match.groupdict().get('idd').replace(' ', '')
-                id_de_organizacion = URIRef("%s/%s" % (rdf_types.IdDeOrganizacion.toPython(), idd_org,), rdf_types.my_ns)
+                id_de_organizacion = rdf_types.IdDeOrganizacion.child_uri_ref(idd_org)
                 g_repos.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
                 # ToDo: tipo_de_id_de_organizacion puede ser ROR, RRID, LOCAL y que otro?
                 #  new Set(db.drepo.aggregate([{$project: {'institutions': 1}}, {$unwind: '$institutions'},{$project: {'institutions.id': 1}}]).toArray().map(a => a.institutions.id.replace(' ', ':').split(/[:.;]/)[0]))
@@ -134,7 +135,7 @@ class Re3DataSource:
             inicio_periodo_de_relacion_con_organizacion = db_instance.get('responsibilityTypes', None)
             fin_periodo_de_relacion_con_organizacion = db_instance.get('responsibilityTypes', None)
             for responsibilityType in db_instance.get('responsibilityTypes', []):
-                relacion_repositorio_y_organizacion = URIRef("%s/%s-%s-%s" % (rdf_types.RelacionRepositorioYOrganizacion.toPython(), id_org, repository_info['id'], responsibilityType), rdf_types.my_ns)
+                relacion_repositorio_y_organizacion = rdf_types.RelacionRepositorioYOrganizacion.child_uri_ref("%s-%s-%s" % (id_org, repository_info['id'], responsibilityType))
                 g_repos.set((relacion_repositorio_y_organizacion, RDF.type, rdf_types.RelacionRepositorioYOrganizacion))
                 g_repos.set((relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_repositorio, repositorio))
                 g_repos.set((relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_organizacion, r_instance))
@@ -152,7 +153,7 @@ class Re3DataSource:
         if software_name == 'other':
             software_name = "other_%s" % (repository_info['id'],)
         if software_name is not None:
-            software = URIRef("%s/%s" % (rdf_types.Software.toPython(), software_name, ), rdf_types.my_ns)
+            software = rdf_types.Software.child_uri_ref(software_name)
             g_repos.set((software, RDF.type, rdf_types.Software))
             # ToDo: Tendria que decir que todos los motores recabados por re3data con nombres diferentes son diferentes efectivamente?
             #  justo con other_algo no pasa eso. other_1 es diferente a ckan, a dataverse, etc... pero no es diferente a other_2...
@@ -162,16 +163,18 @@ class Re3DataSource:
             api_type = api['type']
             if api_type == 'other':
                 api_type = "other_%s" % (repository_info['id'],)
-            api_para_cosecha = URIRef("%s/%s" % (rdf_types.ApiParaCosecha.toPython(), api_type, ), rdf_types.my_ns)
-            g_repos.set((api_para_cosecha, RDF.type, rdf_types.ApiParaCosecha))
-            # Should be inferred
+            # ToDo: Unificar con commons
+            api_para_cosecha = rdf_types.ProtocoloDeCosecha.child_uri_ref(api_type)
+            g_repos.set((api_para_cosecha, RDF.type, rdf_types.ProtocoloDeCosecha))
+            # ToDo: Should be inferred
             # g_repos.set((api_para_cosecha, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
-            api_para_cosecha_con_url = URIRef("%s/%s" % (rdf_types.ApiParaCosechaConUrl.toPython(), api['url'], ), rdf_types.my_ns)
-            g_repos.set((api_para_cosecha_con_url, RDF.type, rdf_types.ApiParaCosechaConUrl))
-            g_repos.set((api_para_cosecha_con_url, rdf_types.api_para_cosecha_con_url_tiene_url, Literal(api['url'])))
-            g_repos.set((api_para_cosecha_con_url, rdf_types.api_para_cosecha_con_url_tiene_api_para_cosecha, api_para_cosecha))
-            g_repos.set((api_para_cosecha_con_url, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+            # ToDo: Habilitar de nuevo
+            # api_para_cosecha_con_url = URIRef("%s/%s" % (rdf_types.ApiParaCosechaConUrl.toPython(), api['url'], ), rdf_types.my_ns)
+            # g_repos.set((api_para_cosecha_con_url, RDF.type, rdf_types.ApiParaCosechaConUrl))
+            # g_repos.set((api_para_cosecha_con_url, rdf_types.api_para_cosecha_con_url_tiene_url, Literal(api['url'])))
+            # g_repos.set((api_para_cosecha_con_url, rdf_types.api_para_cosecha_con_url_tiene_api_para_cosecha, api_para_cosecha))
+            # g_repos.set((api_para_cosecha_con_url, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
         for metadata_standard in repository_info['metadataStandards']:
             # ToDo: Poner modelo intermedio con evidencia
@@ -179,7 +182,7 @@ class Re3DataSource:
             if metadata_standard_name == 'other':
                 metadata_standard_name = "other_%s" % (repository_info['id'],)
             # ToDo: Unificar enumerados o declarar same-as
-            esquema_de_metadatos = URIRef("%s/%s" % (rdf_types.EsquemaDeMetadatos.toPython(), metadata_standard_name.lower().replace(' ', '_'), ), rdf_types.my_ns)
+            esquema_de_metadatos = rdf_types.EsquemaDeMetadatos.child_uri_ref(metadata_standard_name)
             g_repos.set((esquema_de_metadatos, RDF.type, rdf_types.EsquemaDeMetadatos))
             g_repos.set((esquema_de_metadatos, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
@@ -187,7 +190,7 @@ class Re3DataSource:
             if aid_system == 'other':
                 aid_system = "other_%s" % (repository_info['id'],)
             # ToDo: Unificar enumerados o declarar same-as
-            esquema_de_id_de_autor = URIRef("%s/%s" % (rdf_types.EsquemaDeIdDeAutor.toPython(), aid_system, ), rdf_types.my_ns)
+            esquema_de_id_de_autor = rdf_types.EsquemaDeIdDeAutor.child_uri_ref(aid_system)
             g_repos.set((esquema_de_id_de_autor, RDF.type, rdf_types.EsquemaDeIdDeAutor))
             g_repos.set((esquema_de_id_de_autor, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
@@ -195,7 +198,7 @@ class Re3DataSource:
             if pid_system == 'other':
                 pid_system = "other_%s" % (repository_info['id'],)
             # ToDo: Unificar enumerados o declarar same-as
-            esquema_de_id_persistente = URIRef("%s/%s" % (rdf_types.EsquemaDeIdPersistente.toPython(), pid_system, ), rdf_types.my_ns)
+            esquema_de_id_persistente = rdf_types.EsquemaDeIdPersistente.child_uri_ref(pid_system)
             g_repos.set((esquema_de_id_persistente, RDF.type, rdf_types.EsquemaDeIdPersistente))
             g_repos.set((esquema_de_id_persistente, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
@@ -203,7 +206,7 @@ class Re3DataSource:
             # ToDo: Manejar other, ponerle other_id
             # ToDo: Unificar enumerados o declarar same-as
             normal_content_type = self.remap_tipo_de_datos(content_type)
-            tipo_de_dato = URIRef("%s/%s" % (rdf_types.TipoDeDato.toPython(), normal_content_type, ), rdf_types.my_ns)
+            tipo_de_dato = rdf_types.TipoDeDato.child_uri_ref(normal_content_type)
             g_repos.set((tipo_de_dato, RDF.type, rdf_types.TipoDeDato))
             g_repos.set((tipo_de_dato, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
@@ -222,7 +225,7 @@ class Re3DataSource:
 
         for policy in repository_info['policies']:
             local_id_politica = hashlib.md5(policy['url'].encode('utf-8')).hexdigest()
-            politica = URIRef("%s/%s" % (rdf_types.Politica.toPython(), local_id_politica, ), rdf_types.my_ns)
+            politica = rdf_types.Politica.child_uri_ref(local_id_politica)
             # ToDo: Revisar si es un ObjectProperty
             g_repos.set((politica, RDF.type, rdf_types.Politica))
             g_repos.set((politica, rdf_types.repositorio_aporta_funcionalidad, repositorio))
@@ -231,7 +234,8 @@ class Re3DataSource:
 
         for data_license in repository_info['dataLicenses']:
             local_id_data_license = hashlib.md5(data_license['url'].encode('utf-8')).hexdigest()
-            licencia_data = URIRef("%s/%s" % (rdf_types.Licencia.toPython(), local_id_data_license, ), rdf_types.my_ns)
+            # ToDo: Unificar
+            licencia_data = rdf_types.Licencia.child_uri_ref(local_id_data_license)
             # ToDo: Revisar si es un ObjectProperty
             g_repos.set((licencia_data, RDF.type, rdf_types.Licencia))
             g_repos.set((licencia_data, rdf_types.repositorio_aporta_funcionalidad, repositorio))
@@ -245,7 +249,7 @@ class Re3DataSource:
         # is_closed_access_supported = 'closed' in data_access_types
 
         for subject in repository_info['subjects']:
-            disciplina = URIRef("%s/%s" % (rdf_types.Disciplina.toPython(), subject,), rdf_types.my_ns)
+            disciplina = rdf_types.Disciplina.child_uri_ref(subject)
             g_repos.add((repositorio, rdf_types.repositorio_afin_a_disciplina, disciplina))
 
 
@@ -257,14 +261,14 @@ def seed_disciplinas():
     all_dfg_disciplinas = []
     def tree_walk_disciplina(forest, parent):
         for tr in forest:
-            disciplina = URIRef("%s/%s" % (rdf_types.Disciplina.toPython(), tr[0],), rdf_types.my_ns)
+            disciplina = rdf_types.Disciplina.child_uri_ref(tr[0])
             all_dfg_disciplinas.append(disciplina)
             g.set((disciplina, RDF.type, rdf_types.Disciplina))
             g.set((disciplina, rdf_types.nombre_de_disciplina, Literal(tr[1])))
-            g.set((disciplina, rdf_types.esquema_de_disciplina, Literal('dfg')))
+            g.set((disciplina, rdf_types.disciplina_tiene_esquema, Literal('dfg')))
 
             if parent is not None:
-                parent_g = URIRef("%s/%s" % (rdf_types.Disciplina.toPython(), parent,), rdf_types.my_ns)
+                parent_g = rdf_types.Disciplina.child_uri_ref(parent)
                 g.set((disciplina, rdf_types.es_sub_disciplina_de, parent_g))
             if len(tr) >= 3:
                 children = tr[2]
