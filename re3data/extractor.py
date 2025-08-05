@@ -24,10 +24,6 @@ async def raw_extract(this_repo_id: str, client: httpx.AsyncClient):
 async def extract(this_repo_id: str, client: httpx.AsyncClient):
     schema = load_schema()
     repository_metadata_response_content = await raw_extract(this_repo_id, client)
-    # ToDo: No estoy seguro si es correcto filtrar este caso
-    # filter out repositories with no information on APIs
-    # if len(repository_info["api"]) > 0:
-    #     return None
     return refine_repository_info(schema, repository_metadata_response_content)
 
 

@@ -814,6 +814,16 @@
         <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
     </FunctionalDataProperty>
 
+    <SubObjectPropertyOf>
+        <ObjectPropertyChain>
+            <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_repositorio"/>
+            <ObjectInverseOf>
+                <ObjectProperty IRI="relacion_repositorio_y_organizacion_tiene_organizacion"/>
+            </ObjectInverseOf>
+        </ObjectPropertyChain>
+        <ObjectProperty IRI="repositorio_relacionado_con_organizacion"/>
+    </SubObjectPropertyOf>
+
     <Declaration>
         <Class IRI="locacion"/>
     </Declaration>

@@ -68,24 +68,15 @@ def walk_fairsharing(gg: Graph):
 
 
 def walk_re3data(g_repos: Graph):
-    # database = get_database_async()
     database = get_database_client()
-    # drepo_collection = database['drepo']
     raw_drepo_collection = database['raw_drepo_2']
     skip_count = 0
     limit_count = 0
     instances = raw_drepo_collection.find({}).sort({'idd': -1}).skip(skip_count).limit(limit_count)
     # instances_count = raw_drepo_collection.count_documents({})
-    instance_ids = raw_drepo_collection.find({}, {'idd': True}).sort({'idd': -1}).skip(skip_count).limit(limit_count)
-    instance_ids = [x['idd'] for x in instance_ids]
-
-    # ToDo: Ver si volver a habilitar la carga progresiva
-    # rdf_ids = {x: URIRef("repositorio/%s" % (x,), my_ns) for x in instance_ids}
-    # not_repeated_ids = [x for x in instance_ids if rdf_ids[x] not in g[rdf_ids[x]]]
-    not_repeated_ids = instance_ids
 
     source = Re3DataSource(g_repos)
-    repository_infos = source.refine_iterator(instances, not_repeated_ids, True)
+    repository_infos = source.refine_iterator(instances)
     total = len(repository_infos)
     counter = 0
     for r_info in repository_infos:
@@ -332,5 +323,5 @@ async def serialize_schema_jena():
 
 if __name__ == '__main__':
     # serialize_file()
-    # asyncio.run(serialize_schema_jena())
-    asyncio.run(serialize_jena())
+    asyncio.run(serialize_schema_jena())
+    # asyncio.run(serialize_jena())

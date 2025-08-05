@@ -53,15 +53,12 @@ class Re3DataSource:
             return 'tecnica'
         raise Exception()
 
-    def refine_iterator(self, iterator, white_list: [str], allow_whitelist: bool):
+    def refine_iterator(self, iterator):
         schema = load_schema()
         refined = []
         for x in iterator:
             if x['idd'] in BLACKLIST:
                 continue
-            # if allow_whitelist:
-            #     if x['idd'] not in white_list:
-            #         continue
             rrr = refine_repository_info(schema, x['bin'])
             refined.append(rrr)
         return refined

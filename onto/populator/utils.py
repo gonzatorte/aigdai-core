@@ -117,11 +117,16 @@ class ParentURIRef(URIRef):
         pass
         # return URIRef("%s/%s" % (self.toPython(), idd), self.onto.base_iri)
 
+AUTO_ID_COUNTER = 0
+
 def get_ref_from_ontology(name: str) -> ParentURIRef:
     (node, onto) = onto_elements["/%s" % (name,)]
     uri_ref = URIRef(name, onto.base_iri)
-    def child_uri_ref(idd: str | int):
-        # ToDo: Pensar en asignar un id autoincremental si no se asigna uno explícito
+    def child_uri_ref(idd: typing.Optional[str | int]):
+        if idd is None:
+            global AUTO_ID_COUNTER
+            AUTO_ID_COUNTER += 1
+            idd = AUTO_ID_COUNTER
         if isinstance(idd, int):
             idd = str(idd)
         idd_n = re.sub('[ |]', '_', idd).lower()
