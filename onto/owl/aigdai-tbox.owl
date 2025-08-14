@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
 <Ontology xmlns="http://www.w3.org/2002/07/owl#"
-     xml:base="http://aigdai-tbox.owl#"
+     xml:base="http://aigdai.tbox.owl/"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     ontologyIRI="http://aigdai-tbox.owl"
-     versionIRI="http://aigdai-tbox.owl/v0.1">
-    <Prefix name="" IRI="http://aigdai-tbox.owl/#"/>
+     ontologyIRI="http://aigdai.tbox.owl"
+     versionIRI="http://aigdai.tbox.owl/v0.1">
+    <Prefix name="" IRI="http://aigdai.tbox.owl/"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
-    <Prefix name="base" IRI="http://base.owl#"/>
-    <Prefix name="lang" IRI="http://lenguajes.owl/#"/>
+    <Prefix name="base" IRI="http://aigdai.base.owl/"/>
+    <Prefix name="lang" IRI="http://aigdai.lenguajes.owl/"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Prefix name="skos" IRI="http://www.w3.org/2004/02/skos/core#"/>
-    <Prefix name="principle" IRI="http://criterios.owl/#"/>
-    <Prefix name="coar_types" IRI="http://aigdai-tbox.owl/coar_types/#"/>
-    <Import>http://base.owl</Import>
-    <Import>http://criterios.owl</Import>
-    <Import>http://lenguajes.owl</Import>
+    <Prefix name="principle" IRI="http://aigdai.criterios.owl/"/>
+    <Prefix name="coar_types" IRI="http://aigdai.tbox.owl/coar_types/"/>
+    <Import>http://aigdai.base.owl</Import>
+    <Import>http://aigdai.criterios.owl</Import>
+    <Import>http://aigdai.lenguajes.owl</Import>
 
     <Declaration>
         <Datatype IRI="escala"/>
@@ -304,6 +304,7 @@
         <Class IRI="esquema_de_id_persistente"/>
     </Declaration>
     <SubClassOf>
+        <!-- ToDo: Puede extender de estandar -->
         <Class IRI="esquema_de_id_persistente"/>
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
@@ -1745,6 +1746,18 @@
         <IRI>estandar</IRI>
         <Literal xml:lang="en">estándar</Literal>
     </AnnotationAssertion>
+
+    <Declaration>
+        <DataProperty IRI="tiene_nombre_estandar"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="tiene_nombre_estandar"/>
+        <Class IRI="estandar"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="tiene_nombre_estandar"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
 
     <Declaration>
         <ObjectProperty IRI="estandar_relacionado_con_estandar"/>

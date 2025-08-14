@@ -129,6 +129,7 @@ class Re3DataSource:
                 g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(idd_org_wo_schema)))
                 g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, r_instance))
 
+            # ToDo: Aca esta buscando la clave equivocada, responsibilityTypes en vez de inicio de periodo
             inicio_periodo_de_relacion_con_organizacion = db_instance.get('responsibilityTypes', None)
             fin_periodo_de_relacion_con_organizacion = db_instance.get('responsibilityTypes', None)
             for responsibilityType in db_instance.get('responsibilityTypes', []):

@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <Ontology xmlns="http://www.w3.org/2002/07/owl#"
-     xml:base="http://lenguajes.owl#"
+     xml:base="http://aigdai.lenguajes.owl/"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     ontologyIRI="http://lenguajes.owl"
-     versionIRI="http://lenguajes.owl/v0.1">
-    <Prefix name="" IRI="http://lenguajes.owl/#"/>
+     ontologyIRI="http://aigdai.lenguajes.owl"
+     versionIRI="http://aigdai.lenguajes.owl/v0.1">
+    <Prefix name="" IRI="http://aigdai.lenguajes.owl/"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>

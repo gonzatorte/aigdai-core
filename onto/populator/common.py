@@ -9,7 +9,8 @@ CatalogoFAIRSharing = rdf_types.CatalogoDeRepositorios.child_uri_ref('FAIRSharin
 CatalogoRe3Data = rdf_types.CatalogoDeRepositorios.child_uri_ref('Re3Data')
 CatalogoDoi = rdf_types.CatalogoDeRepositorios.child_uri_ref('DOI')
 CatalogoSciCrunch = rdf_types.CatalogoDeRepositorios.child_uri_ref('SciCrunch')
-catalogos = [CatalogoFAIRSharing, CatalogoRe3Data, CatalogoDoi, CatalogoSciCrunch]
+CatalogoDummy = rdf_types.CatalogoDeRepositorios.child_uri_ref('dummy')
+catalogos = [CatalogoFAIRSharing, CatalogoRe3Data, CatalogoDoi, CatalogoSciCrunch, CatalogoDummy]
 
 
 def seed_catalogos(gg: Graph):

@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <Ontology xmlns="http://www.w3.org/2002/07/owl#"
-     xml:base="http://criterios.owl#"
+     xml:base="http://aigdai.criterios.owl/"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     ontologyIRI="http://criterios.owl"
-     versionIRI="http://criterios.owl/v0.1">
-    <Prefix name="" IRI="http://criterios.owl/#"/>
-    <Prefix name="base" IRI="http://base.owl/#"/>
+     ontologyIRI="http://aigdai.criterios.owl"
+     versionIRI="http://aigdai.criterios.owl/v0.1">
+    <Prefix name="" IRI="http://aigdai.criterios.owl/"/>
+    <Prefix name="base" IRI="http://aigdai.base.owl/"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
@@ -16,7 +16,7 @@
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Prefix name="dcterms" IRI="http://purl.org/dc/terms/"/>
     <Prefix name="fairvoc" IRI="https://w3id.org/fair/principles/terms/"/>
-    <Import>http://base.owl</Import>
+    <Import>http://aigdai.base.owl</Import>
 
     <Declaration>
         <Class IRI="criterio_de_calidad"/>

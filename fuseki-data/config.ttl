@@ -34,6 +34,7 @@
 :tbox_graph
     rdfs:label "tbox" ;
     a ja:InfModel ;
+    ja:baseModel :data_graph ;
 #    ja:content [ja:externalContent <file://fuseki/model.owl> ] ;
 #    ja:content [ja:externalContent <file://fuseki/my_models/aigdai-tbox.owl> ] ;
 #    ja:content [ja:externalContent <file://fuseki/my_models/base.owl> ] ;
@@ -53,7 +54,7 @@
 :data_dataset
     rdf:type       tdb2:DatasetTDB2;
     tdb2:location  "/fuseki/databases/with_data" ;
-    tdb2:unionDefaultGraph true ;
+#    tdb2:unionDefaultGraph true ;
 .
 
 :data_graph
@@ -68,11 +69,11 @@
 #    ja:subModel :data_graph ;
 #.
 
-:schema_dataset
-    rdf:type 	ja:RDFDataset ;
-    ja:defaultGraph :tbox_graph ;
-    rdfs:label "schemadataset" ;
-.
+#:schema_dataset
+#    rdf:type 	ja:RDFDataset ;
+#    ja:defaultGraph :tbox_graph ;
+#    rdfs:label "schemadataset" ;
+#.
 
 :all_dataset
     rdf:type 	ja:RDFDataset ;
@@ -81,13 +82,14 @@
 #            ja:graphName      <http://example.org/data> ;
 #            ja:graph          :data_graph
 #        ] ;
-    ja:defaultGraph :data_graph ;
-#    ja:graph :tbox_graph ;
-    ja:namedGraph
-        [
-            ja:graphName      <http://example.org/tbox> ;
-            ja:graph          :tbox_graph
-        ] ;
+    ja:defaultGraph :tbox_graph ;
+#    ja:defaultGraph :data_graph ;
+##    ja:graph :tbox_graph ;
+#    ja:namedGraph
+#        [
+#            ja:graphName      <http://example.org/tbox> ;
+#            ja:graph          :tbox_graph
+#        ] ;
 #    ja:defaultGraph :tbox_graph ;
     rdfs:label "alldataset" ;
 .
@@ -102,22 +104,22 @@
     fuseki:serviceUpload              "upload" ;
 .
 
-:service2	a                         fuseki:Service ;
-    fuseki:dataset                    :data_dataset ;
-    fuseki:name                       "dataservice" ;
-    fuseki:serviceQuery               "query" , "sparql" ;
-    fuseki:serviceReadGraphStore      "get" ;
-    fuseki:serviceReadWriteGraphStore "data" ;
-    fuseki:serviceUpdate              "update" ;
-    fuseki:serviceUpload              "upload" ;
-.
+#:service2	a                         fuseki:Service ;
+#    fuseki:dataset                    :data_dataset ;
+#    fuseki:name                       "dataservice" ;
+#    fuseki:serviceQuery               "query" , "sparql" ;
+#    fuseki:serviceReadGraphStore      "get" ;
+#    fuseki:serviceReadWriteGraphStore "data" ;
+#    fuseki:serviceUpdate              "update" ;
+#    fuseki:serviceUpload              "upload" ;
+#.
 
-:service3	a                         fuseki:Service ;
-    fuseki:dataset                    :schema_dataset ;
-    fuseki:name                       "schemaservice" ;
-    fuseki:serviceQuery               "query" , "sparql" ;
-    fuseki:serviceReadGraphStore      "get" ;
-    fuseki:serviceReadWriteGraphStore "data" ;
-    fuseki:serviceUpdate              "update" ;
-    fuseki:serviceUpload              "upload" ;
-.
+#:service3	a                         fuseki:Service ;
+#    fuseki:dataset                    :schema_dataset ;
+#    fuseki:name                       "schemaservice" ;
+#    fuseki:serviceQuery               "query" , "sparql" ;
+#    fuseki:serviceReadGraphStore      "get" ;
+#    fuseki:serviceReadWriteGraphStore "data" ;
+#    fuseki:serviceUpdate              "update" ;
+#    fuseki:serviceUpload              "upload" ;
+#.

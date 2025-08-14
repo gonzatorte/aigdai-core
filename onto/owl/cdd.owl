@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <Ontology xmlns="http://www.w3.org/2002/07/owl#"
-     xml:base="http://cdd.owl#"
+     xml:base="http://aigdai.cdd.owl/"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     ontologyIRI="http://cdd.owl"
-     versionIRI="http://cdd.owl/v0.1">
-    <Prefix name="" IRI="http://cdd.owl#"/>
-    <Prefix name="base" IRI="http://base.owl#"/>
+     ontologyIRI="http://aigdai.cdd.owl"
+     versionIRI="http://aigdai.cdd.owl/v0.1">
+    <Prefix name="" IRI="http://aigdai.cdd.owl/"/>
+    <Prefix name="base" IRI="http://aigdai.base.owl/"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
-    <Prefix name="lang" IRI="http://lenguajes.owl#"/>
-    <Import>http://base.owl/v0.1</Import>
+    <Prefix name="lang" IRI="http://aigdai.lenguajes.owl/"/>
+    <Import>http://aigdai.base.owl</Import>
 
     <!-- START Cosas relacionadas a las cualidades de los datasets -->
     <Declaration>

@@ -1,7 +1,5 @@
-import onto.populator.rdf_types as rdf_types
-from lib.no_relational_database import get_database_client
-from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import RDF, OWL
+from rdflib import URIRef
+from rdflib.namespace import RDF, RDFS, OWL
 import config
 import typing
 import re
@@ -13,46 +11,6 @@ def owl_all_different(g, instances):
     for (idx, instance1) in enumerate(instances):
         for instance2 in instances[idx+1:]:
             g.add((instance1, OWL.differentFrom, instance2))
-
-
-def refine_and_insert_on_rdf():
-    g_repos = Graph()
-    # g = Graph(store="BerkeleyDB")
-    # g.open("/some/folder/location")
-    # g.close()
-    # g.parse("....")
-    g_repos.bind('', rdf_types.my_ns)
-
-    (g_criterios, ) = seed_criterios()
-    (g_disciplinas, ) = seed_disciplinas()
-    (g_commons, ) = seed_commons()
-    (g_locaciones, ) = seed_locaciones()
-
-    # database = get_database_async()
-    database = get_database_client()
-    # drepo_collection = database['drepo']
-    raw_drepo_collection = database['raw_drepo']
-    skip_count = 0
-    limit_count = 0
-    instances = raw_drepo_collection.find({}).sort({'idd': -1}).skip(skip_count).limit(limit_count)
-    # instances_count = raw_drepo_collection.count_documents({})
-    instance_ids = raw_drepo_collection.find({}, {'idd': True}).sort({'idd': -1}).skip(skip_count).limit(limit_count)
-    instance_ids = [x['idd'] for x in instance_ids]
-
-    # rdf_ids = {x: URIRef("repositorio/%s" % (x,), my_ns) for x in instance_ids}
-    # not_repeated_ids = [x for x in instance_ids if rdf_ids[x] not in g[rdf_ids[x]]]
-    not_repeated_ids = instance_ids
-
-    repository_infos = refine_iterator(instances, not_repeated_ids, True)
-    total = len(repository_infos)
-    print("To process %s" % (total, ))
-    counter = 0
-    for r_info in repository_infos:
-        process(r_info)
-        counter += 1
-        if counter % 10 == 0:
-            print("ready %s out of %s" % (counter, total))
-    return g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones
 
 
 def reason_on_memory():
@@ -110,6 +68,7 @@ def buckets(n: int, ll: typing.Iterator[typing.Any]):
 
 
 class ParentURIRef(URIRef):
+    local_uri = ""
     # def __init__(self, onto):
     #     self.onto = onto
 
@@ -117,10 +76,13 @@ class ParentURIRef(URIRef):
         pass
         # return URIRef("%s/%s" % (self.toPython(), idd), self.onto.base_iri)
 
+    def get_local_uri(self):
+        pass
+
 AUTO_ID_COUNTER = 0
 
 def get_ref_from_ontology(name: str) -> ParentURIRef:
-    (node, onto) = onto_elements["/%s" % (name,)]
+    (node, onto) = onto_elements[name]
     uri_ref = URIRef(name, onto.base_iri)
     def child_uri_ref(idd: typing.Optional[str | int]):
         if idd is None:
@@ -130,7 +92,9 @@ def get_ref_from_ontology(name: str) -> ParentURIRef:
         if isinstance(idd, int):
             idd = str(idd)
         idd_n = re.sub('[ |]', '_', idd).lower()
-        return URIRef("%s/%s" % (uri_ref.toPython(), idd_n), onto.base_iri)
+        uu = URIRef("%s/%s" % (uri_ref.toPython(), idd_n), onto.base_iri)
+        uu.local_uri = idd_n
+        return uu
     uri_ref.child_uri_ref = child_uri_ref
     return typing.cast(ParentURIRef, uri_ref)
 

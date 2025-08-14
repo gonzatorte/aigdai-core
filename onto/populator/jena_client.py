@@ -1,7 +1,8 @@
-from urllib.parse import quote
 import typing
 import httpx
 import rdflib
+from config import JENA_BASE_PATH
+
 # from rdflib.plugins.sparql import prepareUpdate
 
 NodeT = rdflib.term.URIRef | rdflib.term.Literal
@@ -46,8 +47,9 @@ INSERT DATA {
         #     initNs=self.initNs,
         # )
         # qqt = quote(qq)
+        endpoint = "%s%s" % (JENA_BASE_PATH, self.dataset,)
         response = await self.http_client.post(
-            "http://localhost:3030/%s/" % (self.dataset,),
+            endpoint,
             timeout=20,
             headers={
                 'Content-Type': 'application/x-www-form-urlencoded',

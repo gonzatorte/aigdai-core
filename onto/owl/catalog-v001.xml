@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-    <uri id="Imports Wizard Entry" name="http://criterios.owl/v0.1" uri="criterios.owl"/>
+    <uri id="Imports Wizard Entry" name="http://aigdai.criterios.owl" uri="criterios.owl"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1753927698845" name="http://aigdai-tbox.owl#" uri="aigdai-tbox.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1753927698845" name="http://aigdai.tbox.owl" uri="aigdai-tbox.owl"/>
         <uri id="Automatically generated entry, Timestamp=1753927698845" name="http://aigdai.owx/#" uri="aigdai.owx"/>
-        <uri id="Automatically generated entry, Timestamp=1753927698845" name="http://base.owl" uri="base.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1753927698845" name="http://cdd.owl/#" uri="cdd.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1753927698845" name="http://criterios.owl" uri="criterios.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1753927698845" name="http://estadisticos.owl/#" uri="estadisticos.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1753927698845" name="http://lenguajes.owl" uri="lenguajes.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1753927698845" name="http://aigdai.base.owl" uri="base.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1753927698845" name="http://aigdai.cdd.owl" uri="cdd.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1753927698845" name="http://aigdai.criterios.owl" uri="criterios.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1753927698845" name="http://aigdai.estadisticos.owl" uri="estadisticos.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1753927698845" name="http://aigdai.lenguajes.owl" uri="lenguajes.owl"/>
         <uri id="Automatically generated entry, Timestamp=1753927698845" name="http://www.w3.org/2002/07/owl#" uri="imported/coar-repositories/resource_types.owl"/>
     </group>
 </catalog>

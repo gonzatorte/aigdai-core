@@ -1,3 +1,4 @@
+from config import JENA_DATASET
 from lib import chunks
 import asyncio
 from onto.populator.common import seed_commons, seed_locaciones
@@ -10,7 +11,7 @@ from onto.populator.sources.re3data import seed_disciplinas, Re3DataSource
 import onto.cts as cts
 import onto.populator.rdf_types as rdf_types
 from lib.no_relational_database import get_database_client
-from rdflib import Graph, Literal, URIRef
+from rdflib import Graph, Literal
 from rdflib.namespace import RDF
 from rdflib.plugins.sparql import prepareQuery
 from ror.extractor import insert_on_rdf as ror_insert_on_rdf
@@ -87,18 +88,14 @@ def walk_re3data(g_repos: Graph):
 
 
 def refine_and_insert_on_rdf():
-    # g = Graph(store="BerkeleyDB")
-    # g.open("/some/folder/location")
-    # g.close()
-    # g.parse("....")
-    # (g_criterios, ) = seed_criterios()
-    # (g_disciplinas, ) = seed_disciplinas()
-    # g_commons = Graph()
-    # g_commons.bind('', rdf_types.my_ns)
-    # seed_commons(g_commons)
-    # g_locaciones = Graph()
-    # g_locaciones.bind('', rdf_types.my_ns)
-    # seed_locaciones(g_locaciones)
+    (g_criterios, ) = seed_criterios()
+    (g_disciplinas, ) = seed_disciplinas()
+    g_commons = Graph()
+    g_commons.bind('', rdf_types.my_ns)
+    seed_commons(g_commons)
+    g_locaciones = Graph()
+    g_locaciones.bind('', rdf_types.my_ns)
+    seed_locaciones(g_locaciones)
 
     g_repos = Graph()
     g_repos.bind('', rdf_types.my_ns)
@@ -108,7 +105,7 @@ def refine_and_insert_on_rdf():
     # walk_datacite(g_repos)
 
     return (g_repos,
-            # g_commons, g_criterios, g_disciplinas, g_locaciones
+            g_commons, g_criterios, g_disciplinas, g_locaciones
     )
 
 
@@ -143,61 +140,61 @@ def seed_criterios():
 
     # ToDo: same_individuals
 
-    trust = URIRef("%s/trust" % (rdf_types.CriterioDeCalidad.toPython(),), rdf_types.principles_ns)
+    trust = rdf_types.CriterioDeCalidad.child_uri_ref('trust')
     # ToDo: Map related_with_funcionalidad
     for (target_id, category, description, related_with_funcionalidad) in cts.metricas_trust:
-        target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
+        target = rdf_types.CriterioDeCalidad.child_uri_ref(target_id)
         g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
         g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
         g.set((target, rdf_types.extiende_de_criterio, trust))
 
-        grupo_de_criterio = URIRef("%s/%s" % (rdf_types.GrupoDeCriterio.toPython(), category,), rdf_types.principles_ns)
+        grupo_de_criterio = rdf_types.CriterioDeCalidad.child_uri_ref(category)
         g.set((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
         # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
 
-    plan_s = URIRef("%s/plan_s" % (rdf_types.CriterioDeCalidad.toPython(), ), rdf_types.principles_ns)
+    plan_s = rdf_types.CriterioDeCalidad.child_uri_ref("plan_s")
     # ToDo: Map importance to model
     for (target_id, _, description, importance, related_with_funcionalidad) in cts.metricas_plan_s:
-        target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
+        target = rdf_types.CriterioDeCalidad.child_uri_ref(target_id)
         g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
         g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
         g.set((target, rdf_types.extiende_de_criterio, plan_s))
 
-    cts_2022 = URIRef("%s/cts_2022" % (rdf_types.CriterioDeCalidad.toPython(), ), rdf_types.principles_ns)
+    cts_2022 = rdf_types.CriterioDeCalidad.child_uri_ref("cts_2022")
     for (target_id, category, name, description) in cts.metricas_cts_2022:
-        target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
+        target = rdf_types.CriterioDeCalidad.child_uri_ref(target_id)
         g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
         g.set((target, rdf_types.criterio_tiene_descripcion, Literal("%s - %s" % (name, description))))
         g.set((target, rdf_types.extiende_de_criterio, cts_2022))
 
-        grupo_de_criterio = URIRef("%s/%s" % (rdf_types.GrupoDeCriterio.toPython(), category,), rdf_types.principles_ns)
+        grupo_de_criterio = rdf_types.GrupoDeCriterio.child_uri_ref(category)
         g.set((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
         # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
 
-    criterio_de_calidad_coar = URIRef("%s/coar_v1" % (rdf_types.CriterioDeCalidad.toPython(), ), rdf_types.principles_ns)
+    criterio_de_calidad_coar = rdf_types.CriterioDeCalidad.child_uri_ref("coar_v1")
     # ToDo: Map importance to model
     for (target_id, category, description, importance, related_with_criterios) in cts.metricas_coar:
-        target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
+        target = rdf_types.CriterioDeCalidad.child_uri_ref(target_id)
         g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
         g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
         g.set((target, rdf_types.extiende_de_criterio, criterio_de_calidad_coar))
 
-        grupo_de_criterio = URIRef("%s/%s" % (rdf_types.GrupoDeCriterio.toPython(), category,), rdf_types.principles_ns)
+        grupo_de_criterio = rdf_types.GrupoDeCriterio.child_uri_ref(category)
         g.set((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
         # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
 
-    fair = URIRef("%s/fair" % (rdf_types.CriterioDeCalidad.toPython(),), rdf_types.principles_ns)
+    fair = rdf_types.CriterioDeCalidad.child_uri_ref("fair")
     # for (target_id, _) in cts.metricas_fair:
     #     # ToDo: Tengo que relacionar con (same as) con https://w3id.org/fair/principles/terms/ de https://peta-pico.github.io/FAIR-nanopubs/principles/ontology.xml
     #     pass
     for (target_id, _) in cts.fair_maturity_models:
-        target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
+        target = rdf_types.CriterioDeCalidad.child_uri_ref(target_id)
         g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
         g.set((target, rdf_types.extiende_de_criterio, fair))
-    rda_fair_maturity_model = URIRef("%s/rda_fair_maturity_model" % (rdf_types.CriterioDeCalidad.toPython(),), rdf_types.principles_ns)
-    fsf_fair_maturity_model = URIRef("%s/fsf_fair_maturity_model" % (rdf_types.CriterioDeCalidad.toPython(),), rdf_types.principles_ns)
+    rda_fair_maturity_model = rdf_types.CriterioDeCalidad.child_uri_ref("rda_fair_maturity_model")
+    fsf_fair_maturity_model = rdf_types.CriterioDeCalidad.child_uri_ref("fsf_fair_maturity_model")
     # ToDo: Hacer el DSM
-    # dsm_fair_maturity_model = URIRef("%s/dsm_fair_maturity_model" % (rdf_types.CriterioDeCalidad.toPython(),), rdf_types.principles_ns)
+    # dsm_fair_maturity_model = rdf_types.CriterioDeCalidad.child_uri_ref("dsm_fair_maturity_model")
     for (parent_maturity_model, statements) in [
         (rda_fair_maturity_model, cts.rda_fair_maturity_model_statements),
         (fsf_fair_maturity_model, cts.fsf_fair_maturity_model_statements),
@@ -211,21 +208,21 @@ def seed_criterios():
                 description = "%s - %s" % (name, description)
             else:
                 raise Exception()
-            target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
+            target = rdf_types.CriterioDeCalidad.child_uri_ref(target_id)
             g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
-            parent = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), parent_id,), rdf_types.principles_ns)
+            parent = rdf_types.CriterioDeCalidad.child_uri_ref(parent_id)
             g.set((parent, RDF.type, rdf_types.CriterioDeCalidad))
             g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
             g.set((target, rdf_types.extiende_de_criterio, parent))
             g.set((target, rdf_types.extiende_de_criterio, parent_maturity_model))
 
-    posi = URIRef("%s/posi" % (rdf_types.CriterioDeCalidad.toPython(), ), rdf_types.principles_ns)
+    posi = rdf_types.CriterioDeCalidad.child_uri_ref("posi")
     for (target_id, category, description, importance, parents) in cts.metricas_posi:
-        target = URIRef("%s/%s" % (rdf_types.CriterioDeCalidad.toPython(), target_id,), rdf_types.principles_ns)
+        target = rdf_types.CriterioDeCalidad.child_uri_ref(target_id)
         g.set((target, RDF.type, rdf_types.CriterioDeCalidad))
 
         # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
-        grupo_de_criterio = URIRef("%s/%s" % (rdf_types.GrupoDeCriterio.toPython(), category,), rdf_types.principles_ns)
+        grupo_de_criterio = rdf_types.GrupoDeCriterio.child_uri_ref(category)
         g.set((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
 
         g.set((target, rdf_types.criterio_tiene_descripcion, Literal(description)))
@@ -244,7 +241,7 @@ def serialize_file():
       ?i :id_de_organizacion_tiene_tipo ?t .
       ?i :id_de_organizacion_tiene_literal ?l .
       ?i :id_de_organizacion_tiene_organizacion ?o
-    }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'})
+    }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'})
     orgs_types_literals = {"%s:%s" % (tt, ll.value) for (_, tt, ll) in g_repos.query(orgs_types_literals_query)}
 
     g_orgs = ror_insert_on_rdf(orgs_types_literals)
@@ -266,33 +263,34 @@ async def serialize_jena():
     gg += g_disciplinas
     gg += g_repos
 
-    orgs_types_literals_query = prepareQuery("""
-    SELECT DISTINCT ?o ?t ?l
-    WHERE {
-      ?i rdf:type :id_de_organizacion .
-      ?i :id_de_organizacion_tiene_tipo ?t .
-      ?i :id_de_organizacion_tiene_literal ?l .
-      ?i :id_de_organizacion_tiene_organizacion ?o
-    }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'})
-    orgs_types_literals = {"%s:%s" % (tt, ll.value) for (_, tt, ll) in gg.query(orgs_types_literals_query)}
+    # orgs_types_literals_query = prepareQuery("""
+    # SELECT DISTINCT ?o ?t ?l
+    # WHERE {
+    #   ?i rdf:type :id_de_organizacion .
+    #   ?i :id_de_organizacion_tiene_tipo ?t .
+    #   ?i :id_de_organizacion_tiene_literal ?l .
+    #   ?i :id_de_organizacion_tiene_organizacion ?o
+    # }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'})
+    # orgs_types_literals = {"%s:%s" % (tt, ll.value) for (_, tt, ll) in gg.query(orgs_types_literals_query)}
     # g_orgs = ror_insert_on_rdf(orgs_types_literals)
     # gg += g_orgs
 
-    items_query = prepareQuery("""
+    offset = 0
+    items_query = prepareQuery(f"""
         SELECT DISTINCT ?s ?p ?o
-        WHERE {
+        WHERE {{
           ?s ?p ?o
-        } ORDER BY DESC(?s) DESC(?p) DESC(?o)""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'})
+        }} ORDER BY DESC(?s) DESC(?p) DESC(?o) OFFSET {offset}""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'})
     items_generator = gg.query(items_query)
     items_count = gg.query(prepareQuery("""
         SELECT (COUNT(DISTINCT *) AS ?count)
         WHERE {
             ?s ?p ?o .
-        }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'}))
-    items_count = items_count.result[0][0].value
+        }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'}))
+    items_count = int(items_count.result[0][0].value) - offset
     CHUNKS_SIZE = 80
     chunk_generator = chunks(iter(items_generator), CHUNKS_SIZE)
-    async with JenaClient('dataservice', {'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'}) as client:
+    async with JenaClient(JENA_DATASET, {'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'}) as client:
         for (idx, ch) in enumerate(chunk_generator):
             await client.insert_many(ch)
             if (idx + 1) % 10 == 0:
@@ -304,24 +302,30 @@ async def serialize_schema_jena():
         SELECT DISTINCT ?s ?p ?o
         WHERE {
           ?s ?p ?o
-        } ORDER BY DESC(?s) DESC(?p) DESC(?o)""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'})
+        } ORDER BY DESC(?s) DESC(?p) DESC(?o)""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'})
     schema_items_generator = ontology_graph.query(schema_items_query)
     schema_items_count = ontology_graph.query(prepareQuery("""
         SELECT (COUNT(DISTINCT *) AS ?count)
         WHERE {
             ?s ?p ?o .
-        }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'}))
+        }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'}))
     schema_items_count = schema_items_count.result[0][0].value
     CHUNKS_SIZE = 80
     schema_chunk_generator = chunks(iter(schema_items_generator), CHUNKS_SIZE)
-    async with JenaClient('dataservice', {'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai-tbox.owl/'}) as client:
+    async with JenaClient(JENA_DATASET, {'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'}) as client:
         for (idx, ch) in enumerate(schema_chunk_generator):
             await client.insert_many(ch)
             if (idx + 1) % 10 == 0:
                 print("%s out of %s" % (CHUNKS_SIZE * (idx + 1), schema_items_count))
 
 
+async def serialize_all():
+    await serialize_schema_jena()
+    await serialize_jena()
+
+
 if __name__ == '__main__':
     # serialize_file()
-    asyncio.run(serialize_schema_jena())
+    # asyncio.run(serialize_schema_jena())
     # asyncio.run(serialize_jena())
+    asyncio.run(serialize_all())

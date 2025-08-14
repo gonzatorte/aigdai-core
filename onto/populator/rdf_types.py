@@ -56,6 +56,8 @@ repositorio_aporta_funcionalidad = get_ref_from_ontology('repositorio_aporta_fun
 tiene_sinonimo_palabra_clave = get_ref_from_ontology('tiene_sinonimo_palabra_clave')
 tiene_palabra_clave_repositorio = get_ref_from_ontology('tiene_palabra_clave_repositorio')
 
+Estandar = get_ref_from_ontology('estandar')
+tiene_nombre_estandar = get_ref_from_ontology('tiene_nombre_estandar')
 EsquemaDeMetadatos = get_ref_from_ontology('esquema_de_metadatos')
 EsquemaDeIdDeAutor = get_ref_from_ontology('esquema_de_id_de_autor')
 EsquemaDeIdPersistente = get_ref_from_ontology('esquema_de_id_persistente')
