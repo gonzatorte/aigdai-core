@@ -24,6 +24,7 @@ def walk_datacite(gg: Graph):
     database = get_database_client()
 
     source = DataCiteSource(gg)
+    source.mappings()
 
     col_datacite = database['datacite']
     skip_count = 0
@@ -91,17 +92,17 @@ def refine_and_insert_on_rdf():
     (g_criterios, ) = seed_criterios()
     (g_disciplinas, ) = seed_disciplinas()
     g_commons = Graph()
-    # g_commons.bind('', rdf_types.my_ns)
-    # seed_commons(g_commons)
+    g_commons.bind('', rdf_types.my_ns)
+    seed_commons(g_commons)
     g_locaciones = Graph()
-    # g_locaciones.bind('', rdf_types.my_ns)
-    # seed_locaciones(g_locaciones)
+    g_locaciones.bind('', rdf_types.my_ns)
+    seed_locaciones(g_locaciones)
 
     g_repos = Graph()
     g_repos.bind('', rdf_types.my_ns)
     # walk_dummy(g_repos)
-    # walk_re3data(g_repos)
-    # walk_fairsharing(g_repos)
+    walk_re3data(g_repos)
+    walk_fairsharing(g_repos)
     walk_datacite(g_repos)
 
     return (

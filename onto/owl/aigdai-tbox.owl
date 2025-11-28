@@ -1858,7 +1858,29 @@
         <Class IRI="organizacion"/>
     </ObjectPropertyRange>
     <FunctionalObjectProperty>
-        <ObjectProperty IRI="estadistico_sobre_afiliacion_tiene_licencia"/>
+        <ObjectProperty IRI="estadistico_sobre_afiliacion_tiene_organizacion"/>
+    </FunctionalObjectProperty>
+
+    <Declaration>
+        <Class IRI="estadistico_sobre_tipo_de_dato"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="estadistico_sobre_tipo_de_dato"/>
+        <Class IRI="estadistico"/>
+    </SubClassOf>
+    <Declaration>
+        <ObjectProperty IRI="estadistico_sobre_tipo_de_dato_tiene_tipo_de_dato"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="estadistico_sobre_tipo_de_dato_tiene_tipo_de_dato"/>
+        <Class IRI="estadistico_sobre_tipo_de_dato"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="estadistico_sobre_tipo_de_dato_tiene_tipo_de_dato"/>
+        <Class IRI="tipo_de_dato"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="estadistico_sobre_tipo_de_dato_tiene_tipo_de_dato"/>
     </FunctionalObjectProperty>
 
     <Declaration>

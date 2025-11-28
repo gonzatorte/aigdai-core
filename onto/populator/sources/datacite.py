@@ -35,11 +35,19 @@ class DataCiteSource:
         "CLARIN": 'clarin',
     }
 
+    TIPOS_DE_DATOS = [
+        'dataset'
+    ]
+
     def mappings(self):
+        for tipo_de_dato in self.TIPOS_DE_DATOS:
+            obj = rdf_types.TipoDeDato.child_uri_ref(tipo_de_dato)
+            self.gg.set((obj, RDF.type, rdf_types.TipoDeDato))
+
         # ToDo: Implement mapping with commons
         for a, b in self.CERT_NAME_MAP.items():
-            certificacion = rdf_types.Certificacion.child_uri_ref(cert)
-            certificacion_normal = rdf_types.Certificacion.child_uri_ref(cert)
+            certificacion = rdf_types.Certificacion.child_uri_ref(a)
+            certificacion_normal = rdf_types.Certificacion.child_uri_ref(b)
             self.gg.set((certificacion, OWL.sameAs, certificacion_normal))
 
     def process(self, info):
@@ -214,5 +222,15 @@ class DataCiteSource:
         if 'openLicenseResourceTypes' in estadisticos:
             for itm in estadisticos['openLicenseResourceTypes']:
                 # ojo con __missing__
-                if itm['id'] == 'dataset':
+                if itm['id'] == '__missing__':
                     pass
+                elif itm['id'] == '__other__':
+                    pass
+                elif itm['id'] not in self.TIPOS_DE_DATOS:
+                    raise Exception()
+                tipo_de_dato = rdf_types.TipoDeDato.child_uri_ref(itm['id'])
+                estadistico_itm = rdf_types.EstadisticoSobreTipoDeDato.child_uri_ref("%s-%s" % (uid, itm['id']))
+                gg.set((estadistico_itm, RDF.type, rdf_types.EstadisticoSobreTipoDeDato))
+                gg.set((estadistico_itm, rdf_types.estadistico_tiene_valor, Literal(itm['count'])))
+                gg.set((estadistico_itm, rdf_types.estadistico_tiene_repositorio, repositorio))
+                gg.set((estadistico_itm, rdf_types.estadistico_sobre_tipo_de_dato_tiene_tipo_de_dato, tipo_de_dato))
