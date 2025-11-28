@@ -158,8 +158,7 @@ class DummySource:
                 esquema_de_id_persistente = rdf_types.EsquemaDeIdPersistente.child_uri_ref(pid_system)
                 all_items.append(esquema_de_id_persistente)
                 gg.set((esquema_de_id_persistente, RDF.type, rdf_types.EsquemaDeIdPersistente))
-                # ToDo: Dejar de usar repositorio_aporta_funcionalidad y poner algo mas especifico
-                gg.set((esquema_de_id_persistente, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+                gg.set((repositorio, rdf_types.acepta_esquema_de_identificadores_persistentes, esquema_de_id_persistente))
             owl_all_different(gg, all_items)
 
             all_items = []

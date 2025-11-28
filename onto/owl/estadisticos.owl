@@ -50,42 +50,6 @@
     </FunctionalDataProperty>
 
     <Declaration>
-        <Class IRI="filtro"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="filtro"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>filtro</IRI>
-        <Literal xml:lang="en">filter</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>filtro</IRI>
-        <Literal xml:lang="es">filtro</Literal>
-    </AnnotationAssertion>
-
-    <Declaration>
-        <Class IRI="reductor"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="reductor"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>reductor</IRI>
-        <Literal xml:lang="en">reducer</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>reductor</IRI>
-        <Literal xml:lang="es">reductor</Literal>
-    </AnnotationAssertion>
-
-    <Declaration>
         <Class IRI="facetado"/>
     </Declaration>
     <SubClassOf>
@@ -102,36 +66,6 @@
         <IRI>facetado</IRI>
         <Literal xml:lang="es">facetado</Literal>
     </AnnotationAssertion>
-
-    <Declaration>
-        <Class IRI="dimension"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="dimension"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>dimension</IRI>
-        <Literal xml:lang="en">dimension</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>dimension</IRI>
-        <Literal xml:lang="es">dimensión</Literal>
-    </AnnotationAssertion>
-
-    <Declaration>
-        <ObjectProperty IRI="mide"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="mide"/>
-        <Class IRI="repositorio"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="mide"/>
-        <Class IRI="agregador"/>
-    </ObjectPropertyRange>
 
 <!-- ToDo: Pensar si vale la pena el concepto de fecha_de_computo o heredar los mismos que tiene un registro normal de PROV-O -->
     <Declaration>

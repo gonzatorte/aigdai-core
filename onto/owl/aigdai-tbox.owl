@@ -178,8 +178,34 @@
     </AnnotationAssertion>
 
     <Declaration>
+        <ObjectProperty IRI="repositorio_soporta_estandar"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="repositorio_soporta_estandar"/>
+        <Class IRI="repositorio_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="repositorio_soporta_estandar"/>
+        <Class IRI="estandar"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_soporta_estandar</IRI>
+        <Literal xml:lang="en">repository supports standard</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_soporta_estandar</IRI>
+        <Literal xml:lang="es">repositorio soporta estandar</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
         <ObjectProperty IRI="consume_protocolo_de_cosecha"/>
     </Declaration>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="consume_protocolo_de_cosecha"/>
+        <ObjectProperty IRI="repositorio_soporta_estandar"/>
+    </SubObjectPropertyOf>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="consume_protocolo_de_cosecha"/>
         <Class IRI="repositorio_de_investigacion"/>
@@ -202,6 +228,10 @@
     <Declaration>
         <ObjectProperty IRI="acepta_esquema_de_identificadores_persistentes"/>
     </Declaration>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="acepta_esquema_de_identificadores_persistentes"/>
+        <ObjectProperty IRI="repositorio_soporta_estandar"/>
+    </SubObjectPropertyOf>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="acepta_esquema_de_identificadores_persistentes"/>
         <Class IRI="repositorio_de_investigacion"/>
@@ -234,6 +264,10 @@
     <Declaration>
         <ObjectProperty IRI="acepta_esquema_de_id_de_autor"/>
     </Declaration>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="acepta_esquema_de_id_de_autor"/>
+        <ObjectProperty IRI="repositorio_soporta_estandar"/>
+    </SubObjectPropertyOf>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="acepta_esquema_de_id_de_autor"/>
         <Class IRI="repositorio_de_investigacion"/>
@@ -256,6 +290,10 @@
     <Declaration>
         <ObjectProperty IRI="consume_protocolo_de_metricas"/>
     </Declaration>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="consume_protocolo_de_metricas"/>
+        <ObjectProperty IRI="repositorio_soporta_estandar"/>
+    </SubObjectPropertyOf>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="consume_protocolo_de_metricas"/>
         <Class IRI="repositorio_de_investigacion"/>
@@ -304,9 +342,8 @@
         <Class IRI="esquema_de_id_persistente"/>
     </Declaration>
     <SubClassOf>
-        <!-- ToDo: Puede extender de estandar -->
         <Class IRI="esquema_de_id_persistente"/>
-        <Class abbreviatedIRI="owl:Thing"/>
+        <Class IRI="estandar"/>
     </SubClassOf>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
@@ -1658,7 +1695,7 @@
     </Declaration>
     <SubClassOf>
         <Class IRI="esquema_de_id_de_autor"/>
-        <Class abbreviatedIRI="owl:Thing"/>
+        <Class IRI="estandar"/>
     </SubClassOf>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
@@ -1726,6 +1763,124 @@
     </DataPropertyRange>
     <FunctionalDataProperty>
         <DataProperty IRI="fecha_de_generacion_estadistico"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <DataProperty IRI="estadistico_tiene_valor"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="estadistico_tiene_valor"/>
+        <Class IRI="estadistico"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="estadistico_tiene_valor"/>
+        <Datatype abbreviatedIRI="xsd:decimal"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="estadistico_tiene_valor"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <ObjectProperty IRI="estadistico_tiene_repositorio"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="estadistico_tiene_repositorio"/>
+        <Class IRI="estadistico"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="estadistico_tiene_repositorio"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="estadistico_tiene_repositorio"/>
+    </FunctionalObjectProperty>
+
+    <Declaration>
+        <Class IRI="estadistico_sobre_disciplina"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="estadistico_sobre_disciplina"/>
+        <Class IRI="estadistico"/>
+    </SubClassOf>
+    <Declaration>
+        <ObjectProperty IRI="estadistico_sobre_disciplina_tiene_disciplina"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="estadistico_sobre_disciplina_tiene_disciplina"/>
+        <Class IRI="estadistico_sobre_disciplina"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="estadistico_sobre_disciplina_tiene_disciplina"/>
+        <Class IRI="disciplina"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="estadistico_sobre_disciplina_tiene_disciplina"/>
+    </FunctionalObjectProperty>
+
+    <Declaration>
+        <Class IRI="estadistico_sobre_licencia"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="estadistico_sobre_licencia"/>
+        <Class IRI="estadistico"/>
+    </SubClassOf>
+    <Declaration>
+        <ObjectProperty IRI="estadistico_sobre_licencia_tiene_licencia"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="estadistico_sobre_licencia_tiene_licencia"/>
+        <Class IRI="estadistico_sobre_licencia"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="estadistico_sobre_licencia_tiene_licencia"/>
+        <Class IRI="licencia"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="estadistico_sobre_licencia_tiene_licencia"/>
+    </FunctionalObjectProperty>
+
+    <Declaration>
+        <Class IRI="estadistico_sobre_afiliacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="estadistico_sobre_afiliacion"/>
+        <Class IRI="estadistico"/>
+    </SubClassOf>
+    <Declaration>
+        <ObjectProperty IRI="estadistico_sobre_afiliacion_tiene_organizacion"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="estadistico_sobre_afiliacion_tiene_organizacion"/>
+        <Class IRI="estadistico_sobre_afiliacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="estadistico_sobre_afiliacion_tiene_organizacion"/>
+        <Class IRI="organizacion"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="estadistico_sobre_afiliacion_tiene_licencia"/>
+    </FunctionalObjectProperty>
+
+    <Declaration>
+        <Class IRI="estadistico_sobre_publicacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="estadistico_sobre_publicacion"/>
+        <Class IRI="estadistico"/>
+    </SubClassOf>
+    <Declaration>
+        <DataProperty IRI="estadistico_sobre_publicacion_tiene_fecha"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="estadistico_sobre_publicacion_tiene_fecha"/>
+        <Class IRI="estadistico_sobre_publicacion"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="estadistico_sobre_publicacion_tiene_fecha"/>
+        <Datatype IRI="date"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="estadistico_sobre_publicacion_tiene_fecha"/>
     </FunctionalDataProperty>
 
     <!-- START Cosas relativas a los estándares -->
@@ -2030,49 +2185,6 @@
         <IRI>repositorio_se_ubica_en</IRI>
         <Literal>http://doi.org/10.2312/re3.006</Literal>
     </AnnotationAssertion>
-
-    <!-- START cosas relativas a funcionalidades de repositorio -->
-    <Declaration>
-        <Class IRI="funcionalidad_de_repositorio"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="funcionalidad_de_repositorio"/>
-        <Class abbreviatedIRI="owl:Thing"/>
-    </SubClassOf>
-    <Declaration>
-        <ObjectProperty IRI="repositorio_aporta_funcionalidad"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="repositorio_aporta_funcionalidad"/>
-        <Class IRI="repositorio"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="repositorio_aporta_funcionalidad"/>
-        <Class IRI="funcionalidad_de_repositorio"/>
-    </ObjectPropertyRange>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>repositorio_aporta_funcionalidad</IRI>
-        <Literal xml:lang="en">repository has feature</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
-        <IRI>repositorio_aporta_funcionalidad</IRI>
-        <Literal xml:lang="es">repositorio aporta funcionalidad</Literal>
-    </AnnotationAssertion>
-
-    <Declaration>
-        <ObjectProperty IRI="evalua_funcionalidad"/>
-    </Declaration>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="evalua_funcionalidad"/>
-        <Class abbreviatedIRI="principle:criterio_de_calidad"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="evalua_funcionalidad"/>
-        <Class IRI="repositorio"/>
-    </ObjectPropertyRange>
-    <!-- END cosas relativas a funcionalidades de repositorio -->
 
     <!-- START cosas relativas a criterios de calidad -->
     <!-- ToDo: Revisar si siguen siendo instancias los Criterios de calidad -->

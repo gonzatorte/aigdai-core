@@ -1394,3 +1394,14 @@ formatos_de_exportacion_de_citas = [
     'vancouver',
     'chicago',
 ]
+
+formatos_de_sindicacion = [
+    'rss',
+    'atom',
+    'web_sub',
+]
+
+protocolo_de_metricas = [
+    'counter_5_crd',
+    'make_data_count',
+]

@@ -66,14 +66,6 @@
     <TransitiveObjectProperty>
         <ObjectProperty IRI="extiende_de_criterio"/>
     </TransitiveObjectProperty>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="extiende_de_criterio"/>
-        <Class IRI="criterio_de_calidad"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="extiende_de_criterio"/>
-        <Class IRI="criterio_de_calidad"/>
-    </ObjectPropertyRange>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
         <IRI>extiende_de_criterio</IRI>

@@ -170,7 +170,7 @@ class FairSharingSource:
             normal_content_type = self.remap_tipo_de_datos(object_type['id'])
             tipo_de_dato = rdf_types.TipoDeDato.child_uri_ref(normal_content_type)
             gg.set((tipo_de_dato, RDF.type, rdf_types.TipoDeDato))
-            gg.set((tipo_de_dato, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+            gg.add((repositorio, rdf_types.repositorio_acepta_tipo_de_contenido, tipo_de_dato))
 
         for user_defined_tag in info['userDefinedTags']:
             palabra_clave = rdf_types.PalabraClave.child_uri_ref(user_defined_tag['id'])

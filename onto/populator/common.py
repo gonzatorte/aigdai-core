@@ -79,26 +79,29 @@ def seed_commons(g: Graph):
         # for prefix in prefixes:
         #     pass
 
-    for (my_type, items) in [
-        (rdf_types.Software, cts.softwares),
-        (rdf_types.EsquemaDeIdDeAutor, cts.esquemas_de_id_de_autor),
-        (rdf_types.EsquemaDeIdPersistente, cts.esquemas_de_id_persistente),
-        (rdf_types.EsquemaDeMetadatos, cts.esquemas_de_metadatos),
-        (rdf_types.Licencia, cts.licencias),
-        (rdf_types.TipoDeDato, cts.tipos_de_dato),
-        (rdf_types.ProtocoloDeCosecha, cts.apis_para_cosecha),
-        (rdf_types.RedSocial, cts.red_social),
-        (rdf_types.FormatoDeExportacionDeCitas, cts.formatos_de_exportacion_de_citas),
+    for (my_type, items, name_data_prop) in [
+        (rdf_types.Licencia, cts.licencias, None),
+        (rdf_types.RedSocial, cts.red_social, None),
+        (rdf_types.Software, cts.softwares, None),
+        (rdf_types.ProtocoloDeCosecha, cts.apis_para_cosecha, None),
+        (rdf_types.EsquemaDeIdDeAutor, cts.esquemas_de_id_de_autor, rdf_types.tiene_nombre_estandar),
+        (rdf_types.EsquemaDeIdPersistente, cts.esquemas_de_id_persistente, rdf_types.tiene_nombre_estandar),
+        (rdf_types.EsquemaDeMetadatos, cts.esquemas_de_metadatos, rdf_types.tiene_nombre_estandar),
+        (rdf_types.TipoDeDato, cts.tipos_de_dato, None),
+        (rdf_types.FormatoDeExportacionDeCitas, cts.formatos_de_exportacion_de_citas, rdf_types.tiene_nombre_estandar),
+        (rdf_types.FormatoDeSindicacion, cts.formatos_de_sindicacion, rdf_types.tiene_nombre_estandar),
+        (rdf_types.ProtocoloDeMetricas, cts.protocolo_de_metricas, rdf_types.tiene_nombre_estandar),
     ]:
         items_g = []
         for item_id in items:
             old_id = item_id
             if type(item_id) is tuple:
                 item_id = item_id[0]
-            # ToDo: No esta cargando los nombres de estos protocolos o cosas en gral
             item = my_type.child_uri_ref(item_id)
             items_g.append(item)
             g.set((item, RDF.type, my_type))
+            if name_data_prop is not None:
+                g.set((item, name_data_prop, Literal(item_id)))
         owl_all_different(g, items_g)
 
     for (esquema_de_metadatos, esquema_hijos) in cts.esquemas_de_metadatos:

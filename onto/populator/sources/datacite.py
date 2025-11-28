@@ -122,8 +122,7 @@ class DataCiteSource:
             #     "_id" : "ark",
             esquema_de_id_persistente = rdf_types.EsquemaDeIdPersistente.child_uri_ref(pid_system)
             gg.set((esquema_de_id_persistente, RDF.type, rdf_types.EsquemaDeIdPersistente))
-            # ToDo: Dejar de usar repositorio_aporta_funcionalidad y poner algo mas especifico
-            gg.set((esquema_de_id_persistente, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+            gg.set((repositorio, rdf_types.acepta_esquema_de_identificadores_persistentes, esquema_de_id_persistente))
 
         for cert_d in graphql_data['certificate']:
             if cert_d == 'none':
@@ -166,17 +165,54 @@ class DataCiteSource:
             gg.add((repositorio, rdf_types.repositorio_afin_a_disciplina, disciplina))
         owl_all_different(gg, all_items)
 
-        # graphql_data
-        #   repositoryType disciplinary o institutional
-        #   citationCount: int
-        #   downloadCount: int
-        #   viewCount: int
-        #   datasets: son todos arrays of facetado (id:str, count: int, title: str) donde el id es algo especial. Max length = 10
-        #     affiliations: id es un ror url (ror.org/00pggkr55). Ojo con id = __missing__ y el __other__
-        #     openLicenseResourceTypes: is parece un enumerado que no se que es
-        #     licenses: id son strings custom. ojo con __missing__
-        #     openLicenseResourceTypes: is parece un enumerado que no se que es
-        #     fieldsOfScience, fieldsOfScienceRepository y fieldsOfScienceCombined
-        #     funders: el id es un doi url o un ror url
-        #     languages: el id es un lang code. Ojo que aveces aprarece codigo corto (en) otros codigo largo (eng) y otros con dialecto (en-us)
-        #     published: cantidad de publicados año a año
+        if 'viewCount' in graphql_data:
+            pass
+        if 'downloadCount' in graphql_data:
+            pass
+
+        estadisticos = graphql_data['datasets']
+        if 'totalCount' in estadisticos:
+            pass
+        if 'published' in estadisticos:
+            for itm in estadisticos['published']:
+                year = int(itm['id'])
+                estadistico_itm = rdf_types.EstadisticoSobrePublicacion.child_uri_ref("%s-%s" % (uid, year))
+                gg.set((estadistico_itm, RDF.type, rdf_types.EstadisticoSobrePublicacion))
+                gg.set((estadistico_itm, rdf_types.estadistico_tiene_valor, Literal(itm['count'])))
+                gg.set((estadistico_itm, rdf_types.estadistico_tiene_repositorio, repositorio))
+                gg.set((estadistico_itm, rdf_types.estadistico_sobre_publicacion_tiene_fecha, Literal(year)))
+        if 'fieldsOfScienceCombined' in estadisticos:
+            for itm in estadisticos['fieldsOfScienceCombined']:
+                pass
+        if 'funders' in estadisticos:
+            for itm in estadisticos['funders']:
+                if itm['id'] == '__missing__':
+                    pass
+                if itm['id'] == '__other__':
+                    pass
+        if 'affiliations' in estadisticos:
+            for itm in estadisticos['affiliations']:
+                if itm['id'] == '__missing__':
+                    pass
+                if itm['id'] == '__other__':
+                    pass
+        if 'licenses' in estadisticos:
+            for itm in estadisticos['licenses']:
+                # ojo con __missing__
+                if itm['id'] == '__missing__':
+                    pass
+                if itm['id'] == 'cc-by-3.0':
+                    pass
+                if itm['id'] == 'cc-by-4.0':
+                    pass
+                if itm['id'] == 'cc-by-nc-4.0':
+                    pass
+                if itm['id'] == 'cc-by-nc-3.0':
+                    pass
+                if itm['id'] == 'cc-by-nc-nd-3.0':
+                    pass
+        if 'openLicenseResourceTypes' in estadisticos:
+            for itm in estadisticos['openLicenseResourceTypes']:
+                # ojo con __missing__
+                if itm['id'] == 'dataset':
+                    pass

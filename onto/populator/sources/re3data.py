@@ -182,7 +182,7 @@ class Re3DataSource:
             # ToDo: Unificar enumerados o declarar same-as
             esquema_de_metadatos = rdf_types.EsquemaDeMetadatos.child_uri_ref(metadata_standard_name)
             g_repos.set((esquema_de_metadatos, RDF.type, rdf_types.EsquemaDeMetadatos))
-            g_repos.set((esquema_de_metadatos, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+            g_repos.set((repositorio, rdf_types.repositorio_soporta_estandar, esquema_de_metadatos))
 
         for aid_system in repository_info['aidSystems']:
             if aid_system == 'other':
@@ -190,7 +190,7 @@ class Re3DataSource:
             # ToDo: Unificar enumerados o declarar same-as
             esquema_de_id_de_autor = rdf_types.EsquemaDeIdDeAutor.child_uri_ref(aid_system)
             g_repos.set((esquema_de_id_de_autor, RDF.type, rdf_types.EsquemaDeIdDeAutor))
-            g_repos.set((esquema_de_id_de_autor, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+            g_repos.set((repositorio, rdf_types.repositorio_soporta_estandar, esquema_de_id_de_autor))
 
         for pid_system in repository_info['pidSystems']:
             if pid_system == 'other':
@@ -198,7 +198,7 @@ class Re3DataSource:
             # ToDo: Unificar enumerados o declarar same-as
             esquema_de_id_persistente = rdf_types.EsquemaDeIdPersistente.child_uri_ref(pid_system)
             g_repos.set((esquema_de_id_persistente, RDF.type, rdf_types.EsquemaDeIdPersistente))
-            g_repos.set((esquema_de_id_persistente, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+            g_repos.set((repositorio, rdf_types.acepta_esquema_de_identificadores_persistentes, esquema_de_id_persistente))
 
         for content_type in repository_info['contentType']:
             # ToDo: Manejar other, ponerle other_id
@@ -206,7 +206,7 @@ class Re3DataSource:
             normal_content_type = self.remap_tipo_de_datos(content_type)
             tipo_de_dato = rdf_types.TipoDeDato.child_uri_ref(normal_content_type)
             g_repos.set((tipo_de_dato, RDF.type, rdf_types.TipoDeDato))
-            g_repos.set((tipo_de_dato, rdf_types.repositorio_aporta_funcionalidad, repositorio))
+            g_repos.add((repositorio, rdf_types.repositorio_acepta_tipo_de_contenido, tipo_de_dato))
 
         # for quality_management in repository_info['qualityManagement']:
         #     # ToDo: Revisar si es un ObjectProperty, y si modelarlo como bool
@@ -224,21 +224,19 @@ class Re3DataSource:
         for policy in repository_info['policies']:
             local_id_politica = hashlib.md5(policy['url'].encode('utf-8')).hexdigest()
             politica = rdf_types.Politica.child_uri_ref(local_id_politica)
-            # ToDo: Revisar si es un ObjectProperty
             g_repos.set((politica, RDF.type, rdf_types.Politica))
-            g_repos.set((politica, rdf_types.repositorio_aporta_funcionalidad, repositorio))
             g_repos.set((politica, rdf_types.tiene_nombre_politica, Literal(policy['name'])))
             g_repos.set((politica, rdf_types.tiene_url_politica, Literal(policy['url'])))
+            g_repos.add((repositorio, rdf_types.repositorio_usa_politica, politica))
 
         for data_license in repository_info['dataLicenses']:
             local_id_data_license = hashlib.md5(data_license['url'].encode('utf-8')).hexdigest()
             # ToDo: Unificar
             licencia_data = rdf_types.Licencia.child_uri_ref(local_id_data_license)
-            # ToDo: Revisar si es un ObjectProperty
             g_repos.set((licencia_data, RDF.type, rdf_types.Licencia))
-            g_repos.set((licencia_data, rdf_types.repositorio_aporta_funcionalidad, repositorio))
             g_repos.set((licencia_data, rdf_types.tiene_nombre_politica, Literal(data_license['name'])))
             g_repos.set((licencia_data, rdf_types.tiene_url_politica, Literal(data_license['url'])))
+            g_repos.add((repositorio, rdf_types.repositorio_permite_licencia, licencia_data))
 
         # data_access_types = [x['type'] for x in repository_info['dataAccess']]
         # is_open_access_supported = 'open' in data_access_types
