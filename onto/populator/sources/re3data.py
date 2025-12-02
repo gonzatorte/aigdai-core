@@ -120,7 +120,7 @@ class Re3DataSource:
                 except KeyError:
                     print("Unrecognized %s org id schema for %s" % (tipo_de_id_de_organizacion_str, idd_org))
                     continue
-                idd_org_wo_schema = idd_match.groupdict().get('idd').replace(' ', '')
+                idd_org_wo_schema = idd_match.groupdict().get('idd').replace(' ', '').replace(':', '')
                 id_de_organizacion = rdf_types.IdDeOrganizacion.child_uri_ref(idd_org)
                 g_repos.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
                 # ToDo: tipo_de_id_de_organizacion puede ser ROR, RRID, LOCAL y que otro?

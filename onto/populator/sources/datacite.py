@@ -4,6 +4,7 @@ from onto.populator.utils import owl_all_different
 import onto.populator.rdf_types as rdf_types
 from rdflib import Graph, Literal
 from rdflib.namespace import RDF, OWL
+import datetime
 
 ENG_LNG_CODE = 'eng'
 
@@ -35,6 +36,11 @@ class DataCiteSource:
         "CLARIN": 'clarin',
     }
 
+    DISC_NAME_MAP = {
+        "animal_and_dairy_science": None,
+        "other_agricultural_sciences": None,
+    }
+
     TIPOS_DE_DATOS = [
         'dataset'
     ]
@@ -49,6 +55,14 @@ class DataCiteSource:
             certificacion = rdf_types.Certificacion.child_uri_ref(a)
             certificacion_normal = rdf_types.Certificacion.child_uri_ref(b)
             self.gg.set((certificacion, OWL.sameAs, certificacion_normal))
+
+        for a, b in self.DISC_NAME_MAP.items():
+            disciplina = rdf_types.Disciplina.child_uri_ref(a)
+            if not b:
+                self.gg.set((disciplina, RDF.type, rdf_types.Disciplina))
+            else:
+                disciplina_normal = rdf_types.Disciplina.child_uri_ref(b)
+                self.gg.set((disciplina, OWL.sameAs, disciplina_normal))
 
     def process(self, info):
         gg = self.gg
@@ -179,8 +193,8 @@ class DataCiteSource:
             pass
 
         estadisticos = graphql_data['datasets']
-        if 'totalCount' in estadisticos:
-            pass
+        generado_en = datetime.datetime.now()
+        total_count = estadisticos['totalCount']
         if 'published' in estadisticos:
             for itm in estadisticos['published']:
                 year = int(itm['id'])
@@ -188,27 +202,43 @@ class DataCiteSource:
                 gg.set((estadistico_itm, RDF.type, rdf_types.EstadisticoSobrePublicacion))
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_valor, Literal(itm['count'])))
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_repositorio, repositorio))
-                gg.set((estadistico_itm, rdf_types.estadistico_sobre_publicacion_tiene_fecha, Literal(year)))
+                gg.set((estadistico_itm, rdf_types.estadistico_sobre_publicacion_tiene_fecha, Literal(year, datatype='gross_date')))
+                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha, Literal(generado_en.isoformat(), datatype='date')))
+                gg.set((estadistico_itm, rdf_types.estadistico_tiene_total, Literal(total_count)))
         if 'fieldsOfScienceCombined' in estadisticos:
             for itm in estadisticos['fieldsOfScienceCombined']:
-                pass
+                if itm['id'] == '__missing__':
+                    continue
+                elif itm['id'] == '__other__':
+                    continue
+                # elif itm['id'] not in self.DISC_NAME_MAP:
+                #     raise Exception()
+                disciplina_norm = itm['id']
+                disciplina = rdf_types.Disciplina.child_uri_ref(disciplina_norm)
+                estadistico_itm = rdf_types.EstadisticoSobreDisciplina.child_uri_ref("%s-%s" % (uid, disciplina_norm))
+                gg.set((estadistico_itm, RDF.type, rdf_types.EstadisticoSobreDisciplina))
+                gg.set((estadistico_itm, rdf_types.estadistico_tiene_valor, Literal(itm['count'])))
+                gg.set((estadistico_itm, rdf_types.estadistico_tiene_repositorio, repositorio))
+                gg.set((estadistico_itm, rdf_types.estadistico_sobre_disciplina_tiene_disciplina, disciplina))
+                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha, Literal(generado_en.isoformat(), datatype='date')))
+                gg.set((estadistico_itm, rdf_types.estadistico_tiene_total, Literal(total_count)))
         if 'funders' in estadisticos:
             for itm in estadisticos['funders']:
                 if itm['id'] == '__missing__':
-                    pass
+                    continue
                 if itm['id'] == '__other__':
-                    pass
+                    continue
         if 'affiliations' in estadisticos:
             for itm in estadisticos['affiliations']:
                 if itm['id'] == '__missing__':
-                    pass
+                    continue
                 if itm['id'] == '__other__':
-                    pass
+                    continue
         if 'licenses' in estadisticos:
             for itm in estadisticos['licenses']:
                 # ojo con __missing__
                 if itm['id'] == '__missing__':
-                    pass
+                    continue
                 if itm['id'] == 'cc-by-3.0':
                     pass
                 if itm['id'] == 'cc-by-4.0':
@@ -221,11 +251,10 @@ class DataCiteSource:
                     pass
         if 'openLicenseResourceTypes' in estadisticos:
             for itm in estadisticos['openLicenseResourceTypes']:
-                # ojo con __missing__
                 if itm['id'] == '__missing__':
-                    pass
+                    continue
                 elif itm['id'] == '__other__':
-                    pass
+                    continue
                 elif itm['id'] not in self.TIPOS_DE_DATOS:
                     raise Exception()
                 tipo_de_dato = rdf_types.TipoDeDato.child_uri_ref(itm['id'])
@@ -234,3 +263,6 @@ class DataCiteSource:
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_valor, Literal(itm['count'])))
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_repositorio, repositorio))
                 gg.set((estadistico_itm, rdf_types.estadistico_sobre_tipo_de_dato_tiene_tipo_de_dato, tipo_de_dato))
+                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha, Literal(generado_en.isoformat(), datatype='date')))
+                gg.set((estadistico_itm, rdf_types.estadistico_tiene_total, Literal(total_count)))
+

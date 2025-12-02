@@ -16,83 +16,178 @@
     <Prefix name="lang" IRI="http://aigdai.lenguajes.owl/"/>
     <Import>http://aigdai.base.owl</Import>
 
-    <!-- START Cosas relacionadas a las cualidades de los datasets -->
     <Declaration>
-        <Class IRI="caracteristica_de_cdd"/>
+        <Class IRI="autor"/>
     </Declaration>
     <SubClassOf>
-        <Class IRI="caracteristica_de_cdd"/>
+        <Class IRI="autor"/>
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
+    <Declaration>
+        <Class IRI="productor_de_datos"/>
+    </Declaration>
     <SubClassOf>
+        <Class IRI="productor_de_datos"/>
+        <Class IRI="autor"/>
+    </SubClassOf>
+
+    <Declaration>
+        <Class IRI="resultado_de_investigacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="resultado_de_investigacion"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+
+    <Declaration>
+        <Class IRI="cdd"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="cdd"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+
+    <Declaration>
+        <ObjectProperty IRI="resultado_de_investigacion_tiene_licencia"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="resultado_de_investigacion_tiene_licencia"/>
+        <Class IRI="resultado_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="resultado_de_investigacion_tiene_licencia"/>
         <Class IRI="licencia"/>
-        <Class IRI="caracteristica_de_cdd"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="utiliza_tipo_de_dato"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="utiliza_tipo_de_dato"/>
-        <Class IRI="caracteristica_de_cdd"/>
-    </SubClassOf>
-    <!-- ToDo: No se como relacionarlo con la disciplina de los repositorios -->
-    <Declaration>
-        <Class IRI="utiliza_disciplina"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="utiliza_disciplina"/>
-        <Class IRI="caracteristica_de_cdd"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="fecha_de_publicacion"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="fecha_de_publicacion"/>
-        <Class IRI="caracteristica_de_cdd"/>
-    </SubClassOf>
+    </ObjectPropertyRange>
 
     <Declaration>
-        <Class IRI="caracteristica_de_dcdd"/>
+        <ObjectProperty IRI="resultado_de_investigacion_tiene_disciplina"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="resultado_de_investigacion_tiene_disciplina"/>
+        <Class IRI="resultado_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="resultado_de_investigacion_tiene_disciplina"/>
+        <Class IRI="disciplina"/>
+    </ObjectPropertyRange>
+
+    <Declaration>
+        <ObjectProperty IRI="resultado_de_investigacion_tiene_autor"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="resultado_de_investigacion_tiene_autor"/>
+        <Class IRI="resultado_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="resultado_de_investigacion_tiene_autor"/>
+        <Class IRI="autor"/>
+    </ObjectPropertyRange>
+
+    <Declaration>
+        <ObjectProperty IRI="cdd_es_producido_por_productor_de_datos"/>
+    </Declaration>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="cdd_es_producido_por_productor_de_datos"/>
+        <ObjectProperty IRI="resultado_de_investigacion_tiene_autor"/>
+    </SubObjectPropertyOf>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="cdd_es_producido_por_productor_de_datos"/>
+        <Class IRI="cdd"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="cdd_es_producido_por_productor_de_datos"/>
+        <Class IRI="productor_de_datos"/>
+    </ObjectPropertyRange>
+
+    <Declaration>
+        <DataProperty IRI="resultado_de_investigacion_fecha_de_publicacion"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="resultado_de_investigacion_fecha_de_publicacion"/>
+        <Class IRI="resultado_de_investigacion"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="resultado_de_investigacion_fecha_de_publicacion"/>
+        <Datatype abbreviatedIRI="xsd:date"/>
+    </DataPropertyRange>
+
+    <Declaration>
+        <Class IRI="dcdd"/>
     </Declaration>
     <SubClassOf>
-        <Class IRI="caracteristica_de_dcdd"/>
+        <Class IRI="dcdd"/>
         <Class abbreviatedIRI="owl:Thing"/>
     </SubClassOf>
-    <Declaration>
-        <Class IRI="tamanio"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="tamanio"/>
-        <Class IRI="caracteristica_de_dcdd"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="cantidad_de_contenedores"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="cantidad_de_contenedores"/>
-        <Class IRI="tamanio"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="cantidad_de_elementos"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="cantidad_de_elementos"/>
-        <Class IRI="tamanio"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="tamanio_en_disco"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="tamanio_en_disco"/>
-        <Class IRI="tamanio"/>
-    </SubClassOf>
-    <Declaration>
-        <Class IRI="utiliza_formato_de_archivo"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="utiliza_formato_de_archivo"/>
-        <Class IRI="caracteristica_de_dcdd"/>
-    </SubClassOf>
-    <!-- END cosas relacionaddas a los datasets -->
 
+    <Declaration>
+        <ObjectProperty IRI="dcdd_tiene_cdd"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="dcdd_tiene_cdd"/>
+        <Class IRI="dcdd"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="dcdd_tiene_cdd"/>
+        <Class IRI="cdd"/>
+    </ObjectPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="dcdd_tiene_cdd"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <ObjectProperty IRI="dcdd_tiene_formato_de_archivo"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="dcdd_tiene_formato_de_archivo"/>
+        <Class IRI="dcdd"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="dcdd_tiene_formato_de_archivo"/>
+        <Class IRI="formato_de_archivo"/>
+    </ObjectPropertyRange>
+
+    <Declaration>
+        <DataProperty IRI="dcdd_tiene_tamanio"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="dcdd_tiene_tamanio"/>
+        <Class IRI="dcdd"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="dcdd_tiene_tamanio"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+
+    <Declaration>
+        <DataProperty IRI="dcdd_tiene_tamanio_en_disco"/>
+    </Declaration>
+    <SubDataPropertyOf>
+        <DataProperty IRI="dcdd_tiene_tamanio_en_disco"/>
+        <DataProperty IRI="dcdd_tiene_tamanio"/>
+    </SubDataPropertyOf>
+    <FunctionalDataProperty>
+        <DataProperty IRI="dcdd_tiene_tamanio_en_disco"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <DataProperty IRI="dcdd_tiene_cantidad_de_elementos"/>
+    </Declaration>
+    <SubDataPropertyOf>
+        <DataProperty IRI="dcdd_tiene_cantidad_de_elementos"/>
+        <DataProperty IRI="dcdd_tiene_tamanio"/>
+    </SubDataPropertyOf>
+    <FunctionalDataProperty>
+        <DataProperty IRI="dcdd_tiene_cantidad_de_elementos"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <DataProperty IRI="dcdd_tiene_cantidad_de_contenedores"/>
+    </Declaration>
+    <SubDataPropertyOf>
+        <DataProperty IRI="dcdd_tiene_cantidad_de_contenedores"/>
+        <DataProperty IRI="dcdd_tiene_tamanio"/>
+    </SubDataPropertyOf>
+    <FunctionalDataProperty>
+        <DataProperty IRI="dcdd_tiene_cantidad_de_contenedores"/>
+    </FunctionalDataProperty>
 </Ontology>

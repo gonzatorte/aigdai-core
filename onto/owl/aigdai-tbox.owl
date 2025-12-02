@@ -1441,6 +1441,24 @@
     </AnnotationAssertion>
 
     <Declaration>
+        <Class IRI="repositorio_de_artículos_de_investigacion"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="repositorio_de_artículos_de_investigacion"/>
+        <Class IRI="repositorio_de_investigacion"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_de_artículos_de_investigacion</IRI>
+        <Literal xml:lang="en">research papers repository</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>repositorio_de_artículos_de_investigacion</IRI>
+        <Literal xml:lang="es">repositorio de artículos</Literal>
+    </AnnotationAssertion>
+
+    <Declaration>
         <Class IRI="rdd"/>
     </Declaration>
     <SubClassOf>
@@ -1644,14 +1662,14 @@
         <Class IRI="autor"/>
     </SubClassOf>
     <Declaration>
-        <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
+        <ObjectProperty IRI="cdd_es_producido_por_productor_de_datos"/>
     </Declaration>
     <ObjectPropertyDomain>
-        <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
+        <ObjectProperty IRI="cdd_es_producido_por_productor_de_datos"/>
         <Class IRI="cdd"/>
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
-        <ObjectProperty IRI="es_producido_por_productor_de_datos"/>
+        <ObjectProperty IRI="cdd_es_producido_por_productor_de_datos"/>
         <Class IRI="productor_de_datos"/>
     </ObjectPropertyRange>
 
@@ -1751,18 +1769,18 @@
     </AnnotationAssertion>
 
     <Declaration>
-        <DataProperty IRI="fecha_de_generacion_estadistico"/>
+        <DataProperty IRI="estadistico_generado_en_fecha"/>
     </Declaration>
     <DataPropertyDomain>
-        <DataProperty IRI="fecha_de_generacion_estadistico"/>
+        <DataProperty IRI="estadistico_generado_en_fecha"/>
         <Class IRI="estadistico"/>
     </DataPropertyDomain>
     <DataPropertyRange>
-        <DataProperty IRI="fecha_de_generacion_estadistico"/>
+        <DataProperty IRI="estadistico_generado_en_fecha"/>
         <Datatype IRI="date"/>
     </DataPropertyRange>
     <FunctionalDataProperty>
-        <DataProperty IRI="fecha_de_generacion_estadistico"/>
+        <DataProperty IRI="estadistico_generado_en_fecha"/>
     </FunctionalDataProperty>
 
     <Declaration>
@@ -1778,6 +1796,21 @@
     </DataPropertyRange>
     <FunctionalDataProperty>
         <DataProperty IRI="estadistico_tiene_valor"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <DataProperty IRI="estadistico_tiene_total"/>
+    </Declaration>
+    <DataPropertyDomain>
+        <DataProperty IRI="estadistico_tiene_total"/>
+        <Class IRI="estadistico"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="estadistico_tiene_total"/>
+        <Datatype abbreviatedIRI="xsd:decimal"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="estadistico_tiene_total"/>
     </FunctionalDataProperty>
 
     <Declaration>
@@ -1899,7 +1932,7 @@
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="estadistico_sobre_publicacion_tiene_fecha"/>
-        <Datatype IRI="date"/>
+        <Datatype IRI="gross_date"/>
     </DataPropertyRange>
     <FunctionalDataProperty>
         <DataProperty IRI="estadistico_sobre_publicacion_tiene_fecha"/>

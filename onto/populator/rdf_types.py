@@ -72,8 +72,9 @@ EstadisticoSobrePublicacion = get_ref_from_ontology('estadistico_sobre_publicaci
 estadistico_sobre_publicacion_tiene_fecha = get_ref_from_ontology('estadistico_sobre_publicacion_tiene_fecha')
 
 Estadistico = get_ref_from_ontology('estadistico')
-fecha_de_generacion_estadistico = get_ref_from_ontology('fecha_de_generacion_estadistico')
+estadistico_generado_en_fecha = get_ref_from_ontology('estadistico_generado_en_fecha')
 estadistico_tiene_valor = get_ref_from_ontology('estadistico_tiene_valor')
+estadistico_tiene_total = get_ref_from_ontology('estadistico_tiene_total')
 estadistico_tiene_repositorio = get_ref_from_ontology('estadistico_tiene_repositorio')
 
 Estandar = get_ref_from_ontology('estandar')

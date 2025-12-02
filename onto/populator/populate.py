@@ -93,17 +93,17 @@ def refine_and_insert_on_rdf():
     (g_disciplinas, ) = seed_disciplinas()
     g_commons = Graph()
     g_commons.bind('', rdf_types.my_ns)
-    seed_commons(g_commons)
+    # seed_commons(g_commons)
     g_locaciones = Graph()
     g_locaciones.bind('', rdf_types.my_ns)
-    seed_locaciones(g_locaciones)
+    # seed_locaciones(g_locaciones)
 
     g_repos = Graph()
     g_repos.bind('', rdf_types.my_ns)
     # walk_dummy(g_repos)
     walk_re3data(g_repos)
-    walk_fairsharing(g_repos)
-    walk_datacite(g_repos)
+    # walk_fairsharing(g_repos)
+    # walk_datacite(g_repos)
 
     return (
         g_repos,
@@ -268,19 +268,19 @@ async def serialize_jena():
     gg += g_disciplinas
     gg += g_repos
 
-    # orgs_types_literals_query = prepareQuery("""
-    # SELECT DISTINCT ?o ?t ?l
-    # WHERE {
-    #   ?i rdf:type :id_de_organizacion .
-    #   ?i :id_de_organizacion_tiene_tipo ?t .
-    #   ?i :id_de_organizacion_tiene_literal ?l .
-    #   ?i :id_de_organizacion_tiene_organizacion ?o
-    # }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'})
-    # orgs_types_literals = {"%s:%s" % (tt, ll.value) for (_, tt, ll) in gg.query(orgs_types_literals_query)}
-    # g_orgs = ror_insert_on_rdf(orgs_types_literals)
-    # gg += g_orgs
+    orgs_types_literals_query = prepareQuery("""
+    SELECT DISTINCT ?o ?t ?l
+    WHERE {
+      ?i rdf:type :id_de_organizacion .
+      ?i :id_de_organizacion_tiene_tipo ?t .
+      ?i :id_de_organizacion_tiene_literal ?l .
+      ?i :id_de_organizacion_tiene_organizacion ?o
+    }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'})
+    orgs_types_literals = {"%s:%s" % (tt.replace('http://aigdai.tbox.owl/tipo_de_id_de_organizacion/', '').upper(), ll.value) for (_, tt, ll) in gg.query(orgs_types_literals_query)}
+    g_orgs = ror_insert_on_rdf(orgs_types_literals)
+    gg += g_orgs
 
-    offset = 0
+    offset = 70000
     items_query = prepareQuery(f"""
         SELECT DISTINCT ?s ?p ?o
         WHERE {{
