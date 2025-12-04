@@ -122,7 +122,7 @@ class FairSharingSource:
                 gg.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, org))
         owl_all_different(gg, all_orgs)
 
-    def process_repository(self, info):
+    def process_repository(self, info, reduced: bool=False):
         gg = self.gg
         repositorio = rdf_types.Repositorio.child_uri_ref(info['_id'])
         repository_metadata = info['metadata']
@@ -172,9 +172,10 @@ class FairSharingSource:
             gg.set((tipo_de_dato, RDF.type, rdf_types.TipoDeDato))
             gg.add((repositorio, rdf_types.repositorio_acepta_tipo_de_contenido, tipo_de_dato))
 
-        for user_defined_tag in info['userDefinedTags']:
-            palabra_clave = rdf_types.PalabraClave.child_uri_ref(user_defined_tag['id'])
-            gg.set((repositorio, rdf_types.tiene_palabra_clave_repositorio, palabra_clave))
+        if not reduced:
+            for user_defined_tag in info['userDefinedTags']:
+                palabra_clave = rdf_types.PalabraClave.child_uri_ref(user_defined_tag['id'])
+                gg.set((repositorio, rdf_types.tiene_palabra_clave_repositorio, palabra_clave))
 
         id_repo = rdf_types.IdDeRepositorio.child_uri_ref(info['id'])
         gg.set((id_repo, RDF.type, rdf_types.IdDeRepositorio))
@@ -190,11 +191,19 @@ class FairSharingSource:
             elif cross_reference['portal'] == 're3data':
                 catalog = common.CatalogoRe3Data
                 prefix = 're3data'
-                id_de_repo = re.match('^https://www\.re3data\.org/repository/(.+)$', cross_reference['url']).groups()[0]
+                id_match = re.match('^https://www\.re3data\.org/repository/(.+)$', cross_reference['url'])
+                if not id_match:
+                    print('warning: unrecognized id format', cross_reference['url'])
+                    continue
+                id_de_repo = id_match.groups()[0]
             elif cross_reference['portal'] == 'SciCrunch':
                 catalog = common.CatalogoSciCrunch
                 prefix = 'scicrunch'
-                id_de_repo = re.match('^https://scicrunch\.org/resolver/RRID:(.+)$', cross_reference['url']).groups()[0]
+                id_match = re.match('^https://scicrunch\.org/resolver/RRID:(.+)$', cross_reference['url'])
+                if not id_match:
+                    print('warning: unrecognized id format', cross_reference['url'])
+                    continue
+                id_de_repo = id_match.groups()[0]
             else:
                 raise Exception()
             id_repo = rdf_types.IdDeRepositorio.child_uri_ref("%s-%s" % (prefix, id_de_repo,))
@@ -241,8 +250,7 @@ class FairSharingSource:
         if info['status'] == 'ready':
             gg.set((repositorio, rdf_types.repositorio_esta_activo, Literal(True)))
 
-    def process_registry(self, info):
-        gg = self.gg
+    def process_registry(self, info, reduced: bool=False):
         if info['registry'] == "Standard":
             for record_association in info['recordAssociations']:
                 # "part_of" # to standard (principle -> principle)
@@ -285,7 +293,7 @@ class FairSharingSource:
             else:
                 raise Exception()
         elif info['registry'] == "Database":
-            self.process_repository(info)
+            self.process_repository(info, reduced)
         elif info['registry'] == "Collection":
             pass
         elif info['registry'] == "FAIRassist":

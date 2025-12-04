@@ -13,20 +13,11 @@ from org.semanticweb.HermiT import Configuration
 from org.semanticweb.HermiT.Reasoner import ReasonerFactory
 
 manager = OWLManager.createOWLOntologyManager()
-inputOntologyFile = java.io.File('../onto/owl/aigdai-tbox.owl')
-# inputOntologyFile = java.io.File('./pizza.owl')
+inputOntologyFile = java.io.File('./onto/owl/aigdai-tbox.owl')
 
 ontology = manager.loadOntologyFromOntologyDocument(inputOntologyFile)
 configuration = Configuration()
 
 factory = ReasonerFactory()
 reasoner = factory.createReasoner(ontology, configuration)
-
-dumpFile = File("./pizza-dump.owl")
-if not dumpFile.exists():
-   dumpFile.createNewFile()
-ww = PrintWriter(BufferedOutputStream(FileOutputStream(dumpFile)), True)
 reasoner.dumpHierarchies(ww, True, True, True)
-
-# jpype.JClass("org.semanticweb.HermiT.cli.CommandLine")
-# jpype.JClass("java.lang.Class").forName("org.semanticweb.HermiT.cli.CommandLine")

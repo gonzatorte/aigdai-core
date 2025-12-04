@@ -63,7 +63,7 @@ class Re3DataSource:
             refined.append(rrr)
         return refined
 
-    def process(self, repository_info):
+    def process(self, repository_info, reduced: bool=False):
         g_repos = self.gg
         repositorio = rdf_types.Repositorio.child_uri_ref(repository_info['id'])
         g_repos.set((repositorio, RDF.type, rdf_types.Repositorio))

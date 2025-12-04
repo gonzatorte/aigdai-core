@@ -12,7 +12,7 @@ import onto.cts as cts
 import onto.populator.rdf_types as rdf_types
 from lib.no_relational_database import get_database_client
 from rdflib import Graph, Literal
-from rdflib.namespace import RDF
+from rdflib.namespace import RDF, OWL
 from rdflib.plugins.sparql import prepareQuery
 from ror.extractor import insert_on_rdf as ror_insert_on_rdf
 
@@ -37,43 +37,46 @@ def walk_datacite(gg: Graph):
             print("ready %s out of %s" % (idx, total))
 
 
-def walk_fairsharing(gg: Graph):
+def walk_fairsharing(gg: Graph, reduced: bool=False):
     database = get_database_client()
 
     source = FairSharingSource(gg)
 
-    col_subjects = database['fs_subjects']
-    subjects = col_subjects.find({}).sort({'_id': -1})
-    source.process_subjects(list(subjects))
+    if not reduced:
+        col_subjects = database['fs_subjects']
+        subjects = col_subjects.find({}).sort({'_id': -1})
+        source.process_subjects(list(subjects))
 
     col_orgs = database['fs_orgs']
     orgs = col_orgs.find({}).sort({'_id': -1})
     source.process_orgs(list(orgs))
 
-    col_licence = database['fs_licence']
-    licences = col_licence.find({}).sort({'_id': -1})
-    source.process_licencia(list(licences))
+    if not reduced:
+        col_licence = database['fs_licence']
+        licences = col_licence.find({}).sort({'_id': -1})
+        source.process_licencia(list(licences))
 
-    col_keyword = database['fs_keyword']
-    keywords = col_keyword.find({}).sort({'_id': -1})
-    source.process_keywords(list(keywords))
+    if not reduced:
+        col_keyword = database['fs_keyword']
+        keywords = col_keyword.find({}).sort({'_id': -1})
+        source.process_keywords(list(keywords))
 
     col_registry = database['fs_registry']
     skip_count = 0
-    limit_count = 10
+    limit_count = -1 if not reduced else 1000
     instances = col_registry.find({}).sort({'_id': -1}).skip(skip_count).limit(limit_count)
     total = col_registry.count_documents({})
     for idx, r_info in enumerate(instances):
-        source.process_registry(r_info)
+        source.process_registry(r_info, reduced)
         if idx % 20 == 0:
             print("ready %s out of %s" % (idx, total))
 
 
-def walk_re3data(g_repos: Graph):
+def walk_re3data(g_repos: Graph, reduced: bool=False):
     database = get_database_client()
     raw_drepo_collection = database['raw_drepo_2']
     skip_count = 0
-    limit_count = 0
+    limit_count = -1 if not reduced else 1000
     instances = raw_drepo_collection.find({}).sort({'idd': -1}).skip(skip_count).limit(limit_count)
     # instances_count = raw_drepo_collection.count_documents({})
 
@@ -82,7 +85,7 @@ def walk_re3data(g_repos: Graph):
     total = len(repository_infos)
     counter = 0
     for r_info in repository_infos:
-        source.process(r_info)
+        source.process(r_info, reduced)
         counter += 1
         if counter % 20 == 0:
             print("ready %s out of %s" % (counter, total))
@@ -101,9 +104,37 @@ def refine_and_insert_on_rdf():
     g_repos = Graph()
     g_repos.bind('', rdf_types.my_ns)
     # walk_dummy(g_repos)
-    walk_re3data(g_repos)
-    # walk_fairsharing(g_repos)
+    # walk_re3data(g_repos)
+    walk_fairsharing(g_repos, True)
     # walk_datacite(g_repos)
+
+    id_repo_same_as_query = prepareQuery("""
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX dai: <http://aigdai.tbox.owl/>
+
+        SELECT DISTINCT ?id1 ?id2
+        WHERE {
+          ?id1 dai:id_de_repositorio_tiene_literal ?ll .
+          ?id2 dai:id_de_repositorio_tiene_literal ?ll .
+          ?id2 dai:id_de_repositorio_tiene_catalogo ?cat .
+          ?id2 dai:id_de_repositorio_tiene_catalogo ?cat .
+        } ORDER BY DESC(?id1) DESC(?id2)""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'})
+    id_repo_same_as_generator = ontology_graph.query(id_repo_same_as_query)
+    for id_repo_same in id_repo_same_as_generator:
+        g_repos.add((id_repo_same[0], OWL.sameAs, id_repo_same[1]))
+
+    repo_same_as_query = prepareQuery("""
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX dai: <http://aigdai.tbox.owl/>
+        
+        SELECT DISTINCT ?r1 ?r2
+        WHERE {
+          ?id1 dai:id_de_repositorio_tiene_repositorio ?r1 .
+          ?id1 dai:id_de_repositorio_tiene_repositorio ?r2 .
+        } ORDER BY DESC(?r1) DESC(?r2)""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'})
+    repo_same_as_generator = ontology_graph.query(repo_same_as_query)
+    for repo_same in repo_same_as_generator:
+        g_repos.add((repo_same[0], OWL.sameAs, repo_same[1]))
 
     return (
         g_repos,
@@ -236,9 +267,7 @@ def seed_criterios():
     return (g,)
 
 
-def serialize_file():
-    g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones = refine_and_insert_on_rdf()
-
+def extract_ror_involved_orgs(gg: Graph):
     orgs_types_literals_query = prepareQuery("""
     SELECT DISTINCT ?o ?t ?l
     WHERE {
@@ -247,15 +276,30 @@ def serialize_file():
       ?i :id_de_organizacion_tiene_literal ?l .
       ?i :id_de_organizacion_tiene_organizacion ?o
     }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'})
-    orgs_types_literals = {"%s:%s" % (tt, ll.value) for (_, tt, ll) in g_repos.query(orgs_types_literals_query)}
+    orgs_types_literals = {"%s:%s" % (tt.replace('http://aigdai.tbox.owl/tipo_de_id_de_organizacion/', '').upper(), ll.value) for (_, tt, ll) in gg.query(orgs_types_literals_query)}
+    return ror_insert_on_rdf(orgs_types_literals)
 
-    g_orgs = ror_insert_on_rdf(orgs_types_literals)
-    g_repos.serialize(destination='../owl/repositorios.xml', format="xml")
-    g_criterios.serialize(destination='../owl/criterios.xml', format="xml")
+
+def serialize_file():
+    g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones = refine_and_insert_on_rdf()
+    gg = Graph()
+    gg.bind('', rdf_types.my_ns)
+    gg += g_commons
+    gg += g_locaciones
+    gg += g_criterios
+    # gg += g_disciplinas
+    gg += g_repos
+
+    # g_orgs = extract_ror_involved_orgs(gg)
+    # gg += g_orgs
+
+    # g_repos.serialize(destination='../owl/repositorios.xml', format="xml")
+    # g_criterios.serialize(destination='../owl/criterios.xml', format="xml")
     g_disciplinas.serialize(destination='../owl/disciplinas.xml', format="xml")
-    g_commons.serialize(destination='../owl/commons.xml', format="xml")
-    g_locaciones.serialize(destination='../owl/localizaciones.xml', format="xml")
-    g_orgs.serialize(destination='../owl/organizaciones.xml', format="xml")
+    # g_commons.serialize(destination='../owl/commons.xml', format="xml")
+    # g_locaciones.serialize(destination='../owl/localizaciones.xml', format="xml")
+    # g_orgs.serialize(destination='../owl/organizaciones.xml', format="xml")
+    gg.serialize(destination='../owl/all.xml', format="xml")
 
 
 async def serialize_jena():
@@ -268,19 +312,10 @@ async def serialize_jena():
     gg += g_disciplinas
     gg += g_repos
 
-    orgs_types_literals_query = prepareQuery("""
-    SELECT DISTINCT ?o ?t ?l
-    WHERE {
-      ?i rdf:type :id_de_organizacion .
-      ?i :id_de_organizacion_tiene_tipo ?t .
-      ?i :id_de_organizacion_tiene_literal ?l .
-      ?i :id_de_organizacion_tiene_organizacion ?o
-    }""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'})
-    orgs_types_literals = {"%s:%s" % (tt.replace('http://aigdai.tbox.owl/tipo_de_id_de_organizacion/', '').upper(), ll.value) for (_, tt, ll) in gg.query(orgs_types_literals_query)}
-    g_orgs = ror_insert_on_rdf(orgs_types_literals)
+    g_orgs = extract_ror_involved_orgs(gg)
     gg += g_orgs
 
-    offset = 70000
+    offset = 0
     items_query = prepareQuery(f"""
         SELECT DISTINCT ?s ?p ?o
         WHERE {{
@@ -330,7 +365,7 @@ async def serialize_all():
 
 
 if __name__ == '__main__':
-    # serialize_file()
+    serialize_file()
     # asyncio.run(serialize_schema_jena())
     # asyncio.run(serialize_jena())
-    asyncio.run(serialize_all())
+    # asyncio.run(serialize_all())
