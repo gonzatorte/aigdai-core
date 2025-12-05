@@ -80,7 +80,7 @@ def walk_re3data(g_repos: Graph, reduced: bool=False):
     database = get_database_client()
     raw_drepo_collection = database['raw_drepo_2']
     skip_count = 0 if not reduced else 0
-    limit_count = -1 if not reduced else 200
+    limit_count = -1 if not reduced else 500
     instances = raw_drepo_collection.find({}).sort({'idd': -1}).skip(skip_count).limit(limit_count)
     # instances_count = raw_drepo_collection.count_documents({})
 
@@ -110,26 +110,26 @@ def refine_and_insert_on_rdf():
     # walk_dummy(g_repos)
     walk_re3data(g_repos, True)
     walk_fairsharing(g_repos, True)
-    # walk_datacite(g_repos)
+    walk_datacite(g_repos)
 
-    # id_repo_same_as_query = prepareQuery("""
-    #     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-    #     PREFIX dai: <http://aigdai.tbox.owl/>
-    #
-    #     SELECT DISTINCT ?id1 ?id2
-    #     WHERE {
-    #       ?id1 dai:id_de_repositorio_tiene_literal ?l1 .
-    #       ?id2 dai:id_de_repositorio_tiene_literal ?l2 .
-    #       ?id2 dai:id_de_repositorio_tiene_catalogo ?cat .
-    #       ?id2 dai:id_de_repositorio_tiene_catalogo ?cat .
-    #       ?id1 dai:id_de_repositorio_tiene_repositorio ?r1 .
-    #       ?id2 dai:id_de_repositorio_tiene_repositorio ?r2 .
-    #       FILTER (?r1 != ?r2) .
-    #       FILTER (?l1 = ?l2) .
-    #     } ORDER BY DESC(?id1) DESC(?id2) LIMIT 10""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'})
-    # id_repo_same_as_generator = g_repos.query(id_repo_same_as_query)
-    # for id_repo_same in id_repo_same_as_generator:
-    #     g_repos.add((id_repo_same[0], OWL.sameAs, id_repo_same[1]))
+    id_repo_same_as_query = prepareQuery("""
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX dai: <http://aigdai.tbox.owl/>
+
+        SELECT DISTINCT ?id1 ?id2
+        WHERE {
+          ?id1 dai:id_de_repositorio_tiene_literal ?l1 .
+          ?id2 dai:id_de_repositorio_tiene_literal ?l2 .
+          ?id2 dai:id_de_repositorio_tiene_catalogo ?cat .
+          ?id2 dai:id_de_repositorio_tiene_catalogo ?cat .
+          ?id1 dai:id_de_repositorio_tiene_repositorio ?r1 .
+          ?id2 dai:id_de_repositorio_tiene_repositorio ?r2 .
+          FILTER (?r1 != ?r2) .
+          FILTER (?l1 = ?l2) .
+        } ORDER BY DESC(?id1) DESC(?id2) LIMIT 10""", initNs={'my': rdf_types.my_ns, 'rdf': RDF, '': 'http://aigdai.tbox.owl/'})
+    id_repo_same_as_generator = g_repos.query(id_repo_same_as_query)
+    for id_repo_same in id_repo_same_as_generator:
+        g_repos.add((id_repo_same[0], OWL.sameAs, id_repo_same[1]))
 
     repo_same_as_query = prepareQuery("""
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -296,19 +296,19 @@ def serialize_file():
     gg += g_commons
     gg += g_locaciones
     gg += g_criterios
-    # gg += g_disciplinas
+    gg += g_disciplinas
     gg += g_repos
 
-    # g_orgs = extract_ror_involved_orgs(gg)
-    # gg += g_orgs
+    g_orgs = extract_ror_involved_orgs(gg)
+    gg += g_orgs
 
-    # g_repos.serialize(destination='../owl/repositorios.xml', format="xml")
-    # g_criterios.serialize(destination='../owl/criterios.xml', format="xml")
-    # g_disciplinas.serialize(destination='../owl/disciplinas.xml', format="xml")
-    # g_commons.serialize(destination='../owl/commons.xml', format="xml")
-    # g_locaciones.serialize(destination='../owl/localizaciones.xml', format="xml")
-    # g_orgs.serialize(destination='../owl/organizaciones.xml', format="xml")
-    gg.serialize(destination='../owl/all.xml', format="xml")
+    g_repos.serialize(destination='../owl/repositorios.xml', format="xml")
+    g_criterios.serialize(destination='../owl/criterios.xml', format="xml")
+    g_disciplinas.serialize(destination='../owl/disciplinas.xml', format="xml")
+    g_commons.serialize(destination='../owl/commons.xml', format="xml")
+    g_locaciones.serialize(destination='../owl/localizaciones.xml', format="xml")
+    g_orgs.serialize(destination='../owl/organizaciones.xml', format="xml")
+    gg.serialize(destination='../owl/all_2.xml', format="xml")
 
 
 async def serialize_jena():
@@ -374,7 +374,7 @@ async def serialize_all():
 
 
 if __name__ == '__main__':
-    serialize_file()
+    # serialize_file()
     # asyncio.run(serialize_schema_jena())
     # asyncio.run(serialize_jena())
-    # asyncio.run(serialize_all())
+    asyncio.run(serialize_all())
