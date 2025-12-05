@@ -1,4 +1,4 @@
-from rdflib import Literal, RDF, Graph
+from rdflib import Literal, RDF, Graph, XSD
 import onto.populator.rdf_types as rdf_types
 import onto.cts as cts
 from onto.populator.utils import owl_all_different
@@ -51,22 +51,22 @@ def seed_locaciones(g: Graph):
             bl = rdf_types.Locacion.child_uri_ref(country_or_block[0])
             cys.append(bl)
             g.set((bl, RDF.type, rdf_types.Locacion))
-            g.set((bl, rdf_types.nombre_de_locacion, Literal(country_or_block[1])))
+            g.set((bl, rdf_types.nombre_de_locacion, Literal(country_or_block[1], datatype=XSD.string)))
             g.set((bl, rdf_types.locacion_incluida_en, internacional))
             for country in country_or_block[2]:
                 cy = rdf_types.Locacion.child_uri_ref(country[0])
                 cys.append(cy)
                 g.set((cy, RDF.type, rdf_types.Pais))
                 g.set((cy, rdf_types.locacion_incluida_en, bl))
-                g.set((cy, rdf_types.alfa_3_de_pais, Literal(country[0])))
-                g.set((cy, rdf_types.nombre_de_locacion, Literal(country[1])))
+                g.set((cy, rdf_types.alfa_3_de_pais, Literal(country[0], datatype=XSD.string)))
+                g.set((cy, rdf_types.nombre_de_locacion, Literal(country[1], datatype=XSD.string)))
         else:
             cy = rdf_types.Locacion.child_uri_ref(country_or_block[0])
             cys.append(cy)
             g.set((cy, RDF.type, rdf_types.Pais))
             g.set((cy, rdf_types.locacion_incluida_en, internacional))
-            g.set((cy, rdf_types.alfa_3_de_pais, Literal(country_or_block[0])))
-            g.set((cy, rdf_types.nombre_de_locacion, Literal(country_or_block[1])))
+            g.set((cy, rdf_types.alfa_3_de_pais, Literal(country_or_block[0], datatype=XSD.string)))
+            g.set((cy, rdf_types.nombre_de_locacion, Literal(country_or_block[1], datatype=XSD.string)))
     owl_all_different(g, cys)
     return (g,)
 
@@ -101,7 +101,7 @@ def seed_commons(g: Graph):
             items_g.append(item)
             g.set((item, RDF.type, my_type))
             if name_data_prop is not None:
-                g.set((item, name_data_prop, Literal(item_id)))
+                g.set((item, name_data_prop, Literal(item_id, datatype=XSD.string)))
         owl_all_different(g, items_g)
 
     for (esquema_de_metadatos, esquema_hijos) in cts.esquemas_de_metadatos:

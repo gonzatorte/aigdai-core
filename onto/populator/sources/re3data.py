@@ -6,7 +6,7 @@ import onto.cts as cts
 import onto.populator.rdf_types as rdf_types
 from re3data.xsd_transform import refine_repository_info, load_schema
 from rdflib import Graph, Literal
-from rdflib.namespace import RDF
+from rdflib.namespace import RDF, XSD
 import hashlib
 
 
@@ -67,8 +67,8 @@ class Re3DataSource:
         g_repos = self.gg
         repositorio = rdf_types.Repositorio.child_uri_ref(repository_info['id'])
         g_repos.set((repositorio, RDF.type, rdf_types.Repositorio))
-        g_repos.set((repositorio, rdf_types.tiene_nombre_repositorio, Literal(repository_info['repositoryName']['text'], lang=repository_info['repositoryName']['lang'])))
-        g_repos.set((repositorio, rdf_types.tiene_descripcion_repositorio, Literal(repository_info['description']['text'], lang=repository_info['description']['lang'])))
+        g_repos.set((repositorio, rdf_types.tiene_nombre_repositorio, Literal(repository_info['repositoryName']['text'].replace('@', ''), lang=repository_info['repositoryName']['lang'])))
+        g_repos.set((repositorio, rdf_types.tiene_descripcion_repositorio, Literal(repository_info['description']['text'].replace('@', ''), lang=repository_info['description']['lang'])))
         g_repos.set((repositorio, rdf_types.tiene_url_repositorio, Literal(repository_info['repositoryURL'])))
         if repository_info['isDataProvider']:
             g_repos.set((repositorio, RDF.type, rdf_types.Rdd))
@@ -80,9 +80,9 @@ class Re3DataSource:
             r_instance = rdf_types.Organizacion.child_uri_ref(id_org)
             g_repos.set((r_instance, RDF.type, rdf_types.Organizacion))
 
-            g_repos.set((r_instance, rdf_types.tiene_nombre_organizacion, Literal(db_instance['institutionName']['text'], lang=db_instance['institutionName']['lang'])))
+            g_repos.set((r_instance, rdf_types.tiene_nombre_organizacion, Literal(db_instance['institutionName']['text'].replace('@', ''), lang=db_instance['institutionName']['lang'])))
             for instName in db_instance['institutionAdditionalNames']:
-                g_repos.set((r_instance, rdf_types.tiene_nombre_organizacion, Literal(instName['text'], lang=instName['lang'])))
+                g_repos.set((r_instance, rdf_types.tiene_nombre_organizacion, Literal(instName['text'].replace('@', ''), lang=instName['lang'])))
 
             if db_instance['institutionCountry'] == 'EEC':
                 # ToDo: Usar de commons
@@ -97,7 +97,8 @@ class Re3DataSource:
             g_repos.set((r_instance, rdf_types.organizacion_se_ubica_en, location))
 
             g_repos.add((r_instance, rdf_types.tiene_tipo_de_organizacion, Literal(
-                self.remap_institution_type(db_instance['institutionType'])
+                self.remap_institution_type(db_instance['institutionType']),
+                datatype=rdf_types.TipoDeOrganizacion
             )))
 
             for raw_idd_org in db_instance['ids']:
@@ -126,7 +127,7 @@ class Re3DataSource:
                 # ToDo: tipo_de_id_de_organizacion puede ser ROR, RRID, LOCAL y que otro?
                 #  new Set(db.drepo.aggregate([{$project: {'institutions': 1}}, {$unwind: '$institutions'},{$project: {'institutions.id': 1}}]).toArray().map(a => a.institutions.id.replace(' ', ':').split(/[:.;]/)[0]))
                 g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion))
-                g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(idd_org_wo_schema)))
+                g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(idd_org_wo_schema, datatype=XSD.string)))
                 g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, r_instance))
 
             # ToDo: Aca esta buscando la clave equivocada, responsibilityTypes en vez de inicio de periodo
@@ -143,7 +144,8 @@ class Re3DataSource:
                     g_repos.set((relacion_repositorio_y_organizacion, rdf_types.tiene_fin_periodo_de_relacion_con_organizacion, Literal(fin_periodo_de_relacion_con_organizacion)))
                 if responsibilityType:
                     g_repos.set((relacion_repositorio_y_organizacion, rdf_types.tiene_tipo_de_relacion_con_organizacion, Literal(
-                        self.remap_institution_relation_type(responsibilityType)
+                        self.remap_institution_relation_type(responsibilityType),
+                        datatype=rdf_types.TipoDeRelacionConOrganizacion
                     )))
 
         software_names = [x for x in repository_info['softwareNames'] if x != 'unknown']
@@ -225,7 +227,7 @@ class Re3DataSource:
             local_id_politica = hashlib.md5(policy['url'].encode('utf-8')).hexdigest()
             politica = rdf_types.Politica.child_uri_ref(local_id_politica)
             g_repos.set((politica, RDF.type, rdf_types.Politica))
-            g_repos.set((politica, rdf_types.tiene_nombre_politica, Literal(policy['name'])))
+            g_repos.set((politica, rdf_types.tiene_nombre_politica, Literal(policy['name'], datatype=XSD.string)))
             g_repos.set((politica, rdf_types.tiene_url_politica, Literal(policy['url'])))
             g_repos.add((repositorio, rdf_types.repositorio_usa_politica, politica))
 
@@ -234,7 +236,7 @@ class Re3DataSource:
             # ToDo: Unificar
             licencia_data = rdf_types.Licencia.child_uri_ref(local_id_data_license)
             g_repos.set((licencia_data, RDF.type, rdf_types.Licencia))
-            g_repos.set((licencia_data, rdf_types.tiene_nombre_politica, Literal(data_license['name'])))
+            g_repos.set((licencia_data, rdf_types.tiene_nombre_politica, Literal(data_license['name'], datatype=XSD.string)))
             g_repos.set((licencia_data, rdf_types.tiene_url_politica, Literal(data_license['url'])))
             g_repos.add((repositorio, rdf_types.repositorio_permite_licencia, licencia_data))
 
@@ -260,8 +262,8 @@ def seed_disciplinas():
             disciplina = rdf_types.Disciplina.child_uri_ref(tr[0])
             all_dfg_disciplinas.append(disciplina)
             g.set((disciplina, RDF.type, rdf_types.Disciplina))
-            g.set((disciplina, rdf_types.nombre_de_disciplina, Literal(tr[1])))
-            g.set((disciplina, rdf_types.disciplina_tiene_esquema, Literal('dfg')))
+            g.set((disciplina, rdf_types.nombre_de_disciplina, Literal(tr[1], datatype=XSD.string)))
+            g.set((disciplina, rdf_types.disciplina_tiene_esquema, Literal('dfg', datatype=XSD.string)))
 
             if parent is not None:
                 parent_g = rdf_types.Disciplina.child_uri_ref(parent)

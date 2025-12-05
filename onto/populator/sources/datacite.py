@@ -3,7 +3,7 @@ import onto.populator.common as common
 from onto.populator.utils import owl_all_different
 import onto.populator.rdf_types as rdf_types
 from rdflib import Graph, Literal
-from rdflib.namespace import RDF, OWL
+from rdflib.namespace import RDF, OWL, XSD
 import datetime
 
 ENG_LNG_CODE = 'eng'
@@ -90,11 +90,11 @@ class DataCiteSource:
             # for facetOverTime in doi_metadata['citationsOverTime']:
             #     print(int(facetOverTime["year"]), int(facetOverTime["total"]))
             for title in doi_metadata['titles']:
-                gg.set((repositorio, rdf_types.tiene_nombre_repositorio, Literal(title['title'], lang=normalize_lang_code(title['lang']))))
+                gg.set((repositorio, rdf_types.tiene_nombre_repositorio, Literal(title['title'], lang=normalize_lang_code(title['lang'].replace('@', '')))))
             for description in doi_metadata['descriptions']:
                 if description['descriptionType'] != 'Abstract':
                     raise Exception()
-                gg.set((repositorio, rdf_types.tiene_descripcion_repositorio, Literal(description['description'], lang=normalize_lang_code(description['lang']))))
+                gg.set((repositorio, rdf_types.tiene_descripcion_repositorio, Literal(description['description'].replace('@', ''), lang=normalize_lang_code(description['lang']))))
             if len(doi_metadata['dates']) > 1:
                 raise Exception('always only issue date until now. not implemented')
             gg.set((repositorio, rdf_types.repositorio_creado_en_anio, Literal(doi_metadata['publicationYear'])))
@@ -115,14 +115,14 @@ class DataCiteSource:
             gg.set((repositorio, RDF.type, rdf_types.Agregador))
 
         if graphql_data.get('name', None):
-            gg.set((repositorio, rdf_types.tiene_nombre_repositorio, Literal(graphql_data['name'])))
+            gg.set((repositorio, rdf_types.tiene_nombre_repositorio, Literal(graphql_data['name'].replace('@', ''), datatype=XSD.string)))
         for alternateName in graphql_data['alternateName']:
-            gg.set((repositorio, rdf_types.tiene_nombre_repositorio, Literal(alternateName)))
+            gg.set((repositorio, rdf_types.tiene_nombre_repositorio, Literal(alternateName.replace('@', ''), datatype=XSD.string)))
 
         id_repo = rdf_types.IdDeRepositorio.child_uri_ref("datacite-%s" % (uid,))
         gg.set((id_repo, RDF.type, rdf_types.IdDeRepositorio))
         gg.set((id_repo, rdf_types.id_de_repositorio_tiene_repositorio, repositorio))
-        gg.set((id_repo, rdf_types.id_de_repositorio_tiene_literal, Literal(graphql_data['re3dataDoi'])))
+        gg.set((id_repo, rdf_types.id_de_repositorio_tiene_literal, Literal(graphql_data['re3dataDoi'], datatype=XSD.string)))
         gg.set((id_repo, rdf_types.id_de_repositorio_tiene_catalogo, common.CatalogoDoi))
 
         if graphql_data['type'] != 'Repository':
@@ -166,13 +166,13 @@ class DataCiteSource:
             # gg.set((aplicacion_de_cert, rdf_types.aplicacion_de_certificacion_a_repositorio_tiene_fin_periodo, certificacion))
 
         for lang in graphql_data['language']:
-            gg.set((repositorio, rdf_types.usa_lenguaje_repositorio, Literal(normalize_lang_code(lang))))
+            gg.set((repositorio, rdf_types.usa_lenguaje_repositorio, Literal(normalize_lang_code(lang), datatype=XSD.string)))
 
         all_items = []
         for keyword in graphql_data['keyword']:
             palabra_clave = rdf_types.PalabraClave.child_uri_ref(keyword)
             all_items.append(palabra_clave)
-            gg.set((palabra_clave, rdf_types.tiene_sinonimo_palabra_clave, Literal(keyword)))
+            gg.set((palabra_clave, rdf_types.tiene_sinonimo_palabra_clave, Literal(keyword, datatype=XSD.string)))
             gg.set((repositorio, rdf_types.tiene_palabra_clave_repositorio, palabra_clave))
         owl_all_different(gg, all_items)
 
@@ -180,10 +180,10 @@ class DataCiteSource:
         for subject in graphql_data['subject']:
             disciplina = rdf_types.Disciplina.child_uri_ref(subject['termCode'])
             all_items.append(disciplina)
-            gg.set((disciplina, rdf_types.nombre_de_disciplina, Literal(subject['name'])))
-            gg.set((disciplina, rdf_types.disciplina_tiene_esquema, Literal('dfg')))
+            gg.set((disciplina, rdf_types.nombre_de_disciplina, Literal(subject['name'], datatype=XSD.string)))
+            gg.set((disciplina, rdf_types.disciplina_tiene_esquema, Literal('dfg', datatype=XSD.string)))
             # ToDo: Usar el campo "description" que es un array de str
-            # gg.set((disciplina, rdf_types.descripcion_de_disciplina, Literal(subject['description'])))
+            # gg.set((disciplina, rdf_types.descripcion_de_disciplina, Literal(subject['description'], datatype=XSD.string)))
             gg.add((repositorio, rdf_types.repositorio_afin_a_disciplina, disciplina))
         owl_all_different(gg, all_items)
 
@@ -202,8 +202,8 @@ class DataCiteSource:
                 gg.set((estadistico_itm, RDF.type, rdf_types.EstadisticoSobrePublicacion))
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_valor, Literal(itm['count'])))
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_repositorio, repositorio))
-                gg.set((estadistico_itm, rdf_types.estadistico_sobre_publicacion_tiene_fecha, Literal(year, datatype='gross_date')))
-                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha, Literal(generado_en.isoformat(), datatype='date')))
+                gg.set((estadistico_itm, rdf_types.estadistico_sobre_publicacion_tiene_fecha, Literal(year, datatype=rdf_types.GrossDate)))
+                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha, Literal(generado_en.isoformat(), datatype=rdf_types.CustomDate)))
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_total, Literal(total_count)))
         if 'fieldsOfScienceCombined' in estadisticos:
             for itm in estadisticos['fieldsOfScienceCombined']:
@@ -220,7 +220,7 @@ class DataCiteSource:
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_valor, Literal(itm['count'])))
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_repositorio, repositorio))
                 gg.set((estadistico_itm, rdf_types.estadistico_sobre_disciplina_tiene_disciplina, disciplina))
-                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha, Literal(generado_en.isoformat(), datatype='date')))
+                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha, Literal(generado_en.isoformat(), datatype=rdf_types.CustomDate)))
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_total, Literal(total_count)))
         if 'funders' in estadisticos:
             for itm in estadisticos['funders']:
@@ -263,6 +263,6 @@ class DataCiteSource:
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_valor, Literal(itm['count'])))
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_repositorio, repositorio))
                 gg.set((estadistico_itm, rdf_types.estadistico_sobre_tipo_de_dato_tiene_tipo_de_dato, tipo_de_dato))
-                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha, Literal(generado_en.isoformat(), datatype='date')))
+                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha, Literal(generado_en.isoformat(), datatype=rdf_types.CustomDate)))
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_total, Literal(total_count)))
 

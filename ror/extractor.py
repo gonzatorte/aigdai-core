@@ -1,4 +1,4 @@
-from rdflib.namespace import RDF
+from rdflib.namespace import RDF, XSD
 import onto.populator.rdf_types as rdf_types
 from rdflib import Graph, Literal
 import json
@@ -128,7 +128,7 @@ def insert_on_rdf(only_org_ids: set[str] | None = None):
             id_de_organizacion = rdf_types.IdDeOrganizacion.child_uri_ref(idd_w_schema)
             g_orgs.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
             g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion_ror))
-            g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(idd)))
+            g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(idd, datatype=XSD.string)))
             g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, organizacion))
 
             for (typee, external_id) in more_ids:
@@ -140,16 +140,16 @@ def insert_on_rdf(only_org_ids: set[str] | None = None):
                 id_de_organizacion = rdf_types.IdDeOrganizacion.child_uri_ref(external_idd)
                 g_orgs.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion))
-                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(external_id)))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(external_id, datatype=XSD.string)))
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, organizacion))
 
             is_active = status == 'active'
-            g_orgs.set((organizacion, rdf_types.organizacion_esta_activa, Literal(is_active)))
+            g_orgs.set((organizacion, rdf_types.organizacion_esta_activa, Literal(is_active, datatype=XSD.string)))
             if established:
-                g_orgs.set((organizacion, rdf_types.organizacion_fundada_en_anio, Literal(established)))
+                g_orgs.set((organizacion, rdf_types.organizacion_fundada_en_anio, Literal(established, datatype=XSD.positiveInteger)))
 
             for name in names:
-                g_orgs.add((organizacion, rdf_types.tiene_nombre_organizacion, Literal(name)))
+                g_orgs.add((organizacion, rdf_types.tiene_nombre_organizacion, Literal(name.replace('@', ''), datatype=XSD.string)))
 
             for location_alfa2 in countries:
                 if location_alfa2 not in alfa2_alfa3:
@@ -160,7 +160,7 @@ def insert_on_rdf(only_org_ids: set[str] | None = None):
                 g_orgs.add((organizacion, rdf_types.organizacion_se_ubica_en, location))
 
             for typee in types:
-                g_orgs.add((organizacion, rdf_types.tiene_tipo_de_organizacion, Literal(typee)))
+                g_orgs.add((organizacion, rdf_types.tiene_tipo_de_organizacion, Literal(typee, datatype=rdf_types.TipoDeOrganizacion)))
 
             #
             #  Relationships to inactive records
@@ -176,7 +176,7 @@ def insert_on_rdf(only_org_ids: set[str] | None = None):
                 id_de_organizacion = rdf_types.IdDeOrganizacion.child_uri_ref(other_org_id)
                 g_orgs.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion_ror))
-                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(other_org_id_raw)))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(other_org_id_raw, datatype=XSD.string)))
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, other_org))
 
             for other_org_id_raw in parents:
@@ -188,7 +188,7 @@ def insert_on_rdf(only_org_ids: set[str] | None = None):
                 id_de_organizacion = rdf_types.IdDeOrganizacion.child_uri_ref(other_org_id)
                 g_orgs.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion_ror))
-                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(other_org_id_raw)))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(other_org_id_raw, datatype=XSD.string)))
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, other_org))
 
             for other_org_id_raw in relateds:
@@ -200,7 +200,7 @@ def insert_on_rdf(only_org_ids: set[str] | None = None):
                 id_de_organizacion = rdf_types.IdDeOrganizacion.child_uri_ref(other_org_id)
                 g_orgs.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion_ror))
-                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(other_org_id_raw)))
+                g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(other_org_id_raw, datatype=XSD.string)))
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, other_org))
 
     # ToDo: Tendria que declarar que todas estas organizaciones son distintas entre si por ser verificadas por un mismo proveedor de datos?

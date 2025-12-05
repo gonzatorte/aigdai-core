@@ -196,7 +196,7 @@ class DummySource:
                 gg.set((org_instance, RDF.type, rdf_types.Organizacion))
 
                 for instName in organization.get('names', []):
-                    gg.set((org_instance, rdf_types.tiene_nombre_organizacion, Literal(instName)))
+                    gg.set((org_instance, rdf_types.tiene_nombre_organizacion, Literal(instName.replace('@', ''))))
 
                 for country in organization.get('countries', []):
                     if country == 'AAA':
@@ -208,7 +208,7 @@ class DummySource:
                     gg.set((org_instance, rdf_types.organizacion_se_ubica_en, location))
 
                 for org_type in organization.get('types', []):
-                    gg.add((org_instance, rdf_types.tiene_tipo_de_organizacion, Literal(org_type, datatype="tipo_de_organizacion")))
+                    gg.add((org_instance, rdf_types.tiene_tipo_de_organizacion, Literal(org_type, datatype=rdf_types.TipoDeOrganizacion)))
 
                 id_aliases_entities = []
                 for id_alias in id_aliases:
@@ -235,11 +235,11 @@ class DummySource:
                     # ToDo: Ver como funciona el casteo a date u otros datatypes cuando es un literal
                     inicio_periodo_de_relacion_con_organizacion = responsibility.get('startDate', None)
                     if inicio_periodo_de_relacion_con_organizacion:
-                        gg.set((relacion_repositorio_y_organizacion, rdf_types.tiene_inicio_periodo_de_relacion_con_organizacion, Literal(inicio_periodo_de_relacion_con_organizacion, datatype="gross_date")))
+                        gg.set((relacion_repositorio_y_organizacion, rdf_types.tiene_inicio_periodo_de_relacion_con_organizacion, Literal(inicio_periodo_de_relacion_con_organizacion, datatype=rdf_types.GrossDate)))
                     fin_periodo_de_relacion_con_organizacion = responsibility.get('endDate', None)
                     if fin_periodo_de_relacion_con_organizacion:
-                        gg.set((relacion_repositorio_y_organizacion, rdf_types.tiene_fin_periodo_de_relacion_con_organizacion, Literal(fin_periodo_de_relacion_con_organizacion, datatype="gross_date")))
-                    gg.set((relacion_repositorio_y_organizacion, rdf_types.tiene_tipo_de_relacion_con_organizacion, Literal(responsibility_type, datatype="tipo_de_relacion_con_organizacion")))
+                        gg.set((relacion_repositorio_y_organizacion, rdf_types.tiene_fin_periodo_de_relacion_con_organizacion, Literal(fin_periodo_de_relacion_con_organizacion, datatype=rdf_types.GrossDate)))
+                    gg.set((relacion_repositorio_y_organizacion, rdf_types.tiene_tipo_de_relacion_con_organizacion, Literal(responsibility_type, datatype=rdf_types.TipoDeRelacionConOrganizacion)))
                 owl_all_different(gg, responsibility_entities)
             owl_all_different(gg, all_items)
         owl_all_different(gg, repo_entities)

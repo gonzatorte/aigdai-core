@@ -91,12 +91,16 @@ def get_ref_from_ontology(name: str) -> ParentURIRef:
             idd = AUTO_ID_COUNTER
         if isinstance(idd, int):
             idd = str(idd)
-        idd_n = re.sub('[ |]', '_', idd).lower()
+        idd_n = re.sub('[ |@:]', '_', idd).lower()
         uu = URIRef("%s/%s" % (uri_ref.toPython(), idd_n), onto.base_iri)
         uu.local_uri = idd_n
         return uu
     uri_ref.child_uri_ref = child_uri_ref
     return typing.cast(ParentURIRef, uri_ref)
+
+
+def get_datatype_from_ontology(name: str) -> ParentURIRef:
+    return URIRef(name, 'http://aigdai.tbox.owl/')
 
 
 if __name__ == '__main__':

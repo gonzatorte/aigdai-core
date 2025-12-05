@@ -1,7 +1,7 @@
 from rdflib import Namespace
 
 from onto.populator.ontology import onto_lenguajes, onto_tbox, onto_criterios
-from onto.populator.utils import get_ref_from_ontology
+from onto.populator.utils import get_ref_from_ontology, get_datatype_from_ontology
 
 lang_ns = Namespace(onto_lenguajes.base_iri)
 my_ns = Namespace(onto_tbox.base_iri)
@@ -128,3 +128,8 @@ relacion_repositorio_y_organizacion_tiene_organizacion = get_ref_from_ontology('
 
 FormatoDeArchivo = get_ref_from_ontology('formato_de_archivo')
 FormatoDeArchivoAbierto = get_ref_from_ontology('formato_de_archivo_abierto')
+
+GrossDate = get_datatype_from_ontology("gross_date")
+CustomDate = get_datatype_from_ontology("date")
+TipoDeOrganizacion = get_datatype_from_ontology("tipo_de_organizacion")
+TipoDeRelacionConOrganizacion = get_datatype_from_ontology("tipo_de_relacion_con_organizacion")

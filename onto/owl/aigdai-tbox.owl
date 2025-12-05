@@ -21,7 +21,7 @@
     <Import>http://aigdai.base.owl</Import>
     <Import>http://aigdai.criterios.owl</Import>
     <Import>http://aigdai.lenguajes.owl</Import>
-    <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/disciplinas.xml</Import>
+<!--     <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/disciplinas.xml</Import> -->
     <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/all.xml</Import>
 
     <Declaration>
@@ -595,7 +595,7 @@
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="tiene_nombre_organizacion"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
+        <Datatype abbreviatedIRI="rdf:langString"/>
     </DataPropertyRange>
     <Declaration>
         <DataProperty IRI="organizacion_fundada_en_anio"/>
@@ -1066,7 +1066,7 @@
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="tiene_nombre_repositorio"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
+        <Datatype abbreviatedIRI="rdf:langString"/>
     </DataPropertyRange>
 
     <Declaration>
@@ -1117,7 +1117,7 @@
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="tiene_descripcion_repositorio"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
+        <Datatype abbreviatedIRI="rdf:langString"/>
     </DataPropertyRange>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
@@ -2239,7 +2239,7 @@
     </Declaration>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="repositorio_satisface_criterio"/>
-        <Class IRI="rdd"/>
+        <Class IRI="repositorio_de_investigacion"/>
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
         <ObjectProperty IRI="repositorio_satisface_criterio"/>
@@ -3353,24 +3353,23 @@
 
     <!-- Subtipos de resumen_de_politica / resumen_de_politica_sobre_misc / ... -->
     <DisjointClasses>
-        <Class IRI="resumen_de_politica_sobre_citado_de_datos"/>
-        <Class IRI="resumen_de_politica_sobre_disponibilidad_de_datos"/>
         <Class IRI="resumen_de_politica_sobre_intercambio"/>
         <Class IRI="resumen_de_politica_sobre_misc"/>
+    </DisjointClasses>
+
+    <DisjointClasses>
+        <Class IRI="resumen_de_politica_sobre_citado_de_datos"/>
+        <Class IRI="resumen_de_politica_sobre_disponibilidad_de_datos"/>
+        <Class IRI="resumen_de_politica_sobre_licenciamiento_de_datos"/>
+        <Class IRI="resumen_de_politica_sobre_preservacion_de_datos"/>
+        <Class IRI="resumen_de_politica_sobre_proteccion_de_datos"/>
     </DisjointClasses>
 
     <DisjointClasses>
         <Class IRI="resumen_de_politica_sobre_intercambio_de_datos"/>
         <Class IRI="resumen_de_politica_sobre_intercambio_de_metadatos"/>
         <Class IRI="resumen_de_politica_sobre_intercambio_de_software"/>
-        <Class IRI="resumen_de_politica_sobre_licenciamiento_de_datos"/>
     </DisjointClasses>
-
-    <DisjointClasses>
-        <Class IRI="resumen_de_politica_sobre_preservacion_de_datos"/>
-        <Class IRI="resumen_de_politica_sobre_proteccion_de_datos"/>
-    </DisjointClasses>
-
 
     <DisjointClasses>
         <!-- Niveles (configuración) -->
