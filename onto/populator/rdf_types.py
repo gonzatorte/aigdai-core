@@ -125,6 +125,18 @@ tiene_tipo_de_relacion_con_organizacion = get_ref_from_ontology('tiene_tipo_de_r
 RelacionRepositorioYOrganizacion = get_ref_from_ontology('relacion_repositorio_y_organizacion')
 relacion_repositorio_y_organizacion_tiene_repositorio = get_ref_from_ontology('relacion_repositorio_y_organizacion_tiene_repositorio')
 relacion_repositorio_y_organizacion_tiene_organizacion = get_ref_from_ontology('relacion_repositorio_y_organizacion_tiene_organizacion')
+repositorio_es_cosechado_por_agregador = get_ref_from_ontology('repositorio_es_cosechado_por_agregador')
+
+EvaluacionDeRepositorio = get_ref_from_ontology('evaluacion_de_repositorio')
+evaluacion_de_repositorio_tiene_repositorio = get_ref_from_ontology('evaluacion_de_repositorio_tiene_repositorio')
+evaluacion_de_repositorio_tiene_url = get_ref_from_ontology('evaluacion_de_repositorio_tiene_url')
+
+AplicacionDeCuraduriaEnRepositorio = get_ref_from_ontology('aplicacion_de_curaduria_en_repositorio')
+aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria = get_ref_from_ontology('aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria')
+
+NivelDeCuraduria = get_ref_from_ontology('nivel_de_curaduria')
+nivel_de_curaduria_es_mayor_a = get_ref_from_ontology('nivel_de_curaduria_es_mayor_a')
+
 
 FormatoDeArchivo = get_ref_from_ontology('formato_de_archivo')
 FormatoDeArchivoAbierto = get_ref_from_ontology('formato_de_archivo_abierto')

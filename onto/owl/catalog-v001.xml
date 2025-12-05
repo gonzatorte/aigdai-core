@@ -4,12 +4,12 @@
     <uri id="User Entered Import Resolution" name="http://aigdai.lenguajes.owl" uri="lenguajes.owl"/>
     <uri id="Imports Wizard Entry" name="http://aigdai.criterios.owl" uri="criterios.owl"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1764883922796" name="http://aigdai.base.owl/" uri="base.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1764883922796" name="http://aigdai.cdd.owl/" uri="cdd.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1764883922796" name="http://aigdai.criterios.owl/" uri="criterios.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1764883922796" name="http://aigdai.lenguajes.owl/" uri="lenguajes.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1764883922796" name="http://aigdai.owx/#" uri="aigdai.owx"/>
-        <uri id="Automatically generated entry, Timestamp=1764883922796" name="http://aigdai.tbox.owl/" uri="aigdai-tbox.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1764883922796" name="http://www.w3.org/2002/07/owl#" uri="imported/coar-repositories/resource_types.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1764902726044" name="http://aigdai.base.owl/" uri="base.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1764902726044" name="http://aigdai.cdd.owl/" uri="cdd.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1764902726044" name="http://aigdai.criterios.owl/" uri="criterios.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1764902726044" name="http://aigdai.lenguajes.owl/" uri="lenguajes.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1764902726044" name="http://aigdai.owx/#" uri="aigdai.owx"/>
+        <uri id="Automatically generated entry, Timestamp=1764902726044" name="http://aigdai.tbox.owl/" uri="aigdai-tbox.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1764902726044" name="http://www.w3.org/2002/07/owl#" uri="imported/coar-repositories/resource_types.owl"/>
     </group>
 </catalog>

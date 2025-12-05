@@ -233,7 +233,26 @@ class FairSharingSource:
             # "outputs" # to standard
             linked_to = record_association['linkedRecord']['id']
             if record_association['recordAssocLabel'] in ['extends', 'shares_data_with', 'shares_code_with', 'deprecates', 'related_to']:
-                pass
+                if record_association['recordAssocLabel'] == 'shares_data_with':
+                    linked_to_repo = rdf_types.Repositorio.child_uri_ref(linked_to)
+                    aggregator_2 = None
+                    aggregated_2 = None
+                    if info['type'] == "knowledgebase":
+                        aggregator = repositorio
+                        aggregated = linked_to_repo
+                    elif info['type'] == "repository":
+                        aggregator = linked_to_repo
+                        aggregated = repositorio
+                    elif info['type'] == "knowledgebase_and_repository":
+                        aggregator = linked_to_repo
+                        aggregated = repositorio
+                        aggregator_2 = repositorio
+                        aggregated_2 = linked_to_repo
+                    else:
+                        raise Exception()
+                    gg.add((aggregated, rdf_types.repositorio_es_cosechado_por_agregador, aggregator))
+                    if aggregator_2 and aggregated_2:
+                        gg.add((aggregated_2, rdf_types.repositorio_es_cosechado_por_agregador, aggregator_2))
             elif record_association['recordAssocLabel'] in ['accepts', 'implements', 'outputs']:
                 pass
             else:
