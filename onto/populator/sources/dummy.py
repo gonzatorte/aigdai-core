@@ -1,5 +1,5 @@
 import onto.populator.common as common
-from onto.populator.utils import owl_all_different, find_or_fail
+from onto.populator.utils import owl_all_different, find_or_fail, gross_date_bounds
 import onto.populator.rdf_types as rdf_types
 from rdflib import Graph, Literal
 from rdflib.namespace import RDF
@@ -236,9 +236,15 @@ class DummySource:
                     inicio_periodo_de_relacion_con_organizacion = responsibility.get('startDate', None)
                     if inicio_periodo_de_relacion_con_organizacion:
                         gg.set((relacion_repositorio_y_organizacion, rdf_types.tiene_inicio_periodo_de_relacion_con_organizacion, Literal(inicio_periodo_de_relacion_con_organizacion, datatype=rdf_types.GrossDate)))
+                        (inicio_desde, inicio_hasta) = gross_date_bounds(inicio_periodo_de_relacion_con_organizacion)
+                        gg.set((relacion_repositorio_y_organizacion, rdf_types.tiene_inicio_periodo_de_relacion_con_organizacion_desde, inicio_desde))
+                        gg.set((relacion_repositorio_y_organizacion, rdf_types.tiene_inicio_periodo_de_relacion_con_organizacion_hasta, inicio_hasta))
                     fin_periodo_de_relacion_con_organizacion = responsibility.get('endDate', None)
                     if fin_periodo_de_relacion_con_organizacion:
                         gg.set((relacion_repositorio_y_organizacion, rdf_types.tiene_fin_periodo_de_relacion_con_organizacion, Literal(fin_periodo_de_relacion_con_organizacion, datatype=rdf_types.GrossDate)))
+                        (fin_desde, fin_hasta) = gross_date_bounds(fin_periodo_de_relacion_con_organizacion)
+                        gg.set((relacion_repositorio_y_organizacion, rdf_types.tiene_fin_periodo_de_relacion_con_organizacion_desde, fin_desde))
+                        gg.set((relacion_repositorio_y_organizacion, rdf_types.tiene_fin_periodo_de_relacion_con_organizacion_hasta, fin_hasta))
                     gg.set((relacion_repositorio_y_organizacion, rdf_types.tiene_tipo_de_relacion_con_organizacion, Literal(responsibility_type, datatype=rdf_types.TipoDeRelacionConOrganizacion)))
                 owl_all_different(gg, responsibility_entities)
             owl_all_different(gg, all_items)

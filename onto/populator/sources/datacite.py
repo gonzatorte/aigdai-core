@@ -1,6 +1,5 @@
-import re
 import onto.populator.common as common
-from onto.populator.utils import owl_all_different
+from onto.populator.utils import owl_all_different, gross_date_bounds
 import onto.populator.rdf_types as rdf_types
 from rdflib import Graph, Literal
 from rdflib.namespace import RDF, OWL, XSD
@@ -194,6 +193,7 @@ class DataCiteSource:
 
         estadisticos = graphql_data['datasets']
         generado_en = datetime.datetime.now()
+        (generado_en_desde, generado_en_hasta) = gross_date_bounds(generado_en)
         total_count = estadisticos['totalCount']
         if 'published' in estadisticos:
             for itm in estadisticos['published']:
@@ -204,6 +204,8 @@ class DataCiteSource:
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_repositorio, repositorio))
                 gg.set((estadistico_itm, rdf_types.estadistico_sobre_publicacion_tiene_fecha, Literal(year, datatype=rdf_types.GrossDate)))
                 gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha, Literal(generado_en.isoformat(), datatype=rdf_types.CustomDate)))
+                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha_desde, generado_en_desde))
+                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha_hasta, generado_en_hasta))
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_total, Literal(total_count)))
         if 'fieldsOfScienceCombined' in estadisticos:
             for itm in estadisticos['fieldsOfScienceCombined']:
@@ -221,6 +223,8 @@ class DataCiteSource:
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_repositorio, repositorio))
                 gg.set((estadistico_itm, rdf_types.estadistico_sobre_disciplina_tiene_disciplina, disciplina))
                 gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha, Literal(generado_en.isoformat(), datatype=rdf_types.CustomDate)))
+                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha_desde, generado_en_desde))
+                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha_hasta, generado_en_hasta))
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_total, Literal(total_count)))
         if 'funders' in estadisticos:
             for itm in estadisticos['funders']:
@@ -264,5 +268,7 @@ class DataCiteSource:
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_repositorio, repositorio))
                 gg.set((estadistico_itm, rdf_types.estadistico_sobre_tipo_de_dato_tiene_tipo_de_dato, tipo_de_dato))
                 gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha, Literal(generado_en.isoformat(), datatype=rdf_types.CustomDate)))
+                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha_desde, generado_en_desde))
+                gg.set((estadistico_itm, rdf_types.estadistico_generado_en_fecha_hasta, generado_en_hasta))
                 gg.set((estadistico_itm, rdf_types.estadistico_tiene_total, Literal(total_count)))
 

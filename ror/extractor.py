@@ -144,7 +144,7 @@ def insert_on_rdf(only_org_ids: set[str] | None = None):
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, organizacion))
 
             is_active = status == 'active'
-            g_orgs.set((organizacion, rdf_types.organizacion_esta_activa, Literal(is_active, datatype=XSD.string)))
+            g_orgs.set((organizacion, rdf_types.organizacion_esta_activa, Literal(is_active, datatype=XSD.boolean)))
             if established:
                 g_orgs.set((organizacion, rdf_types.organizacion_fundada_en_anio, Literal(established, datatype=XSD.positiveInteger)))
 

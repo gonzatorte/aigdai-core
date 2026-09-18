@@ -236,8 +236,8 @@ class Re3DataSource:
             # ToDo: Unificar
             licencia_data = rdf_types.Licencia.child_uri_ref(local_id_data_license)
             g_repos.set((licencia_data, RDF.type, rdf_types.Licencia))
-            g_repos.set((licencia_data, rdf_types.tiene_nombre_politica, Literal(data_license['name'], datatype=XSD.string)))
-            g_repos.set((licencia_data, rdf_types.tiene_url_politica, Literal(data_license['url'])))
+            g_repos.set((licencia_data, rdf_types.tiene_nombre_licencia, Literal(data_license['name'], datatype=XSD.string)))
+            g_repos.set((licencia_data, rdf_types.tiene_url_licencia, Literal(data_license['url'])))
             g_repos.add((repositorio, rdf_types.repositorio_permite_licencia, licencia_data))
 
         # data_access_types = [x['type'] for x in repository_info['dataAccess']]

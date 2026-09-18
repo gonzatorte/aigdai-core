@@ -9,6 +9,8 @@
      versionIRI="http://aigdai.base.owl/v0.1">
     <Prefix name="" IRI="http://aigdai.base.owl/"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Prefix name="skos" IRI="http://www.w3.org/2004/02/skos/core#"/>
 
     <Declaration>
         <AnnotationProperty IRI="nombre_usual"/>
@@ -22,4 +24,28 @@
     <Declaration>
         <AnnotationProperty IRI="basado_en"/>
     </Declaration>
+
+    <!-- Alias de anotaciones estandar: las herramientas y razonadores RDFS que conozcan las propiedades padre las pueden aprovechar sin migrar las anotaciones propias -->
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="skos:altLabel"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="skos:definition"/>
+    </Declaration>
+    <SubAnnotationPropertyOf>
+        <AnnotationProperty IRI="nombre_usual"/>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+    </SubAnnotationPropertyOf>
+    <SubAnnotationPropertyOf>
+        <AnnotationProperty IRI="sinonimo"/>
+        <AnnotationProperty abbreviatedIRI="skos:altLabel"/>
+    </SubAnnotationPropertyOf>
+    <SubAnnotationPropertyOf>
+        <AnnotationProperty IRI="descripcion"/>
+        <AnnotationProperty abbreviatedIRI="skos:definition"/>
+    </SubAnnotationPropertyOf>
+    <SubAnnotationPropertyOf>
+        <AnnotationProperty IRI="basado_en"/>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+    </SubAnnotationPropertyOf>
 </Ontology>

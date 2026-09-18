@@ -1,8 +1,10 @@
-from rdflib import URIRef
-from rdflib.namespace import RDF, RDFS, OWL
+from rdflib import URIRef, Literal
+from rdflib.namespace import OWL, XSD
 import config
 import typing
 import re
+import calendar
+import datetime
 
 from onto.populator.ontology import onto_elements
 
@@ -101,6 +103,27 @@ def get_ref_from_ontology(name: str) -> ParentURIRef:
 
 def get_datatype_from_ontology(name: str) -> ParentURIRef:
     return URIRef(name, 'http://aigdai.tbox.owl/')
+
+
+def gross_date_bounds(value: str | datetime.datetime) -> typing.Tuple[Literal, Literal]:
+    # Cotas (_desde, _hasta) en xsd:dateTime de una fecha de granularidad variable (YYYY, YYYY-MM, YYYY-MM-DD)
+    # o de un instante. Las fechas sin zona horaria se interpretan en UTC; un datetime sin zona, en hora local.
+    if isinstance(value, datetime.datetime):
+        instant = value.astimezone(datetime.timezone.utc)
+        return (Literal(instant, datatype=XSD.dateTime), Literal(instant, datatype=XSD.dateTime))
+    if 'T' in value:
+        instant = datetime.datetime.fromisoformat(value)
+        if instant.tzinfo is None:
+            instant = instant.replace(tzinfo=datetime.timezone.utc)
+        return (Literal(instant, datatype=XSD.dateTime), Literal(instant, datatype=XSD.dateTime))
+    parts = [int(x) for x in value.split('-')]
+    year = parts[0]
+    (month_desde, month_hasta) = (parts[1], parts[1]) if len(parts) > 1 else (1, 12)
+    day_desde = parts[2] if len(parts) > 2 else 1
+    day_hasta = parts[2] if len(parts) > 2 else calendar.monthrange(year, month_hasta)[1]
+    desde = datetime.datetime(year, month_desde, day_desde, tzinfo=datetime.timezone.utc)
+    hasta = datetime.datetime(year, month_hasta, day_hasta, 23, 59, 59, tzinfo=datetime.timezone.utc)
+    return (Literal(desde, datatype=XSD.dateTime), Literal(hasta, datatype=XSD.dateTime))
 
 
 if __name__ == '__main__':
