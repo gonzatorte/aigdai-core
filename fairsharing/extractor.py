@@ -167,10 +167,10 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
-    # ToDo: Tambien puedo extraer las organizaciones de fairsharing
-        # Hay registros en fairsharing que no estan en ROR
-        #  será pq no cumplen el criterio de ser considerados organizaciones por fairsharing? (eg: independencia)
-        # ¿y viceversa? hay en ror que no esten indexados por fairsharing?
+    # ToDo: I could also extract the organizations from fairsharing
+        # There are records in fairsharing that are not in ROR
+        #  could it be because they do not meet the criterion to be considered organizations by fairsharing? (eg: independence)
+        # and vice versa? are there some in ror that are not indexed by fairsharing?
         # Tiene tipos diferentes:
         # En ror:
         # Education,

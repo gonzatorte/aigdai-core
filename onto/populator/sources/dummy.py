@@ -60,7 +60,7 @@ DUMMY_VALUES = [
             },
         ],
         "pidSystems": ["ark", "purl"],
-        # ToDo: Tienen fecha de aplicacion tb
+        # ToDo: They also have an application date
         "certificate": ["cts", "trac"],
         "languages": ["eng", "ita"],
         "subjects": ["1001", "210"],
@@ -170,7 +170,7 @@ class DummySource:
                 gg.set((aplicacion_de_cert, RDF.type, rdf_types.AplicacionDeCertificacionARepositorio))
                 gg.set((aplicacion_de_cert, rdf_types.aplicacion_de_certificacion_a_repositorio_tiene_repositorio, repositorio))
                 gg.set((aplicacion_de_cert, rdf_types.aplicacion_de_certificacion_a_repositorio_tiene_certificacion, certificacion))
-                # ToDo: Agregar fecha de aplicacion
+                # ToDo: Add application date
                 # gg.set((aplicacion_de_cert, rdf_types.aplicacion_de_certificacion_a_repositorio_tiene_inicio_periodo, certificacion))
                 # gg.set((aplicacion_de_cert, rdf_types.aplicacion_de_certificacion_a_repositorio_tiene_fin_periodo, certificacion))
             owl_all_different(gg, all_items)

@@ -19,7 +19,7 @@ import {
 } from './types';
 import { List as ImmutableList, Set as ImmutableSet } from 'immutable';
 
-// ToDo: Eliminar la dependencia de schemaGraph
+// ToDo: Remove the dependency on schemaGraph
 export default function InstanceExplorer({
   schemaGraph,
   dataProps,

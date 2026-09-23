@@ -172,7 +172,7 @@ def seed_criterios():
     g = Graph()
     g.bind('', rdf_types.principles_ns)
 
-    # ToDo: Tengo que declarar al menos todas las certificaciones (no "other") de re3data y datacite como criterios de calidad
+    # ToDo: I have to declare at least all the certifications (not "other") from re3data and datacite as quality criteria
     # session.add_all([
     #     Certificacion(
     #         id=x['id'],
@@ -209,7 +209,7 @@ def seed_criterios():
 
         grupo_de_criterio = rdf_types.CriterioDeCalidad.child_uri_ref(category)
         g.add((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
-        # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
+        # ToDo: It still has to be stated which criterio_de_calidad has that grupo_de_criterio
 
     plan_s = rdf_types.CriterioDeCalidad.child_uri_ref("plan_s")
     # ToDo: Map importance to model
@@ -228,7 +228,7 @@ def seed_criterios():
 
         grupo_de_criterio = rdf_types.GrupoDeCriterio.child_uri_ref(category)
         g.add((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
-        # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
+        # ToDo: It still has to be stated which criterio_de_calidad has that grupo_de_criterio
 
     criterio_de_calidad_coar = rdf_types.CriterioDeCalidad.child_uri_ref("coar_v1")
     # ToDo: Map importance to model
@@ -240,11 +240,11 @@ def seed_criterios():
 
         grupo_de_criterio = rdf_types.GrupoDeCriterio.child_uri_ref(category)
         g.add((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
-        # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
+        # ToDo: It still has to be stated which criterio_de_calidad has that grupo_de_criterio
 
     fair = rdf_types.CriterioDeCalidad.child_uri_ref("fair")
     # for (target_id, _) in cts.metricas_fair:
-    #     # ToDo: Tengo que relacionar con (same as) con https://w3id.org/fair/principles/terms/ de https://peta-pico.github.io/FAIR-nanopubs/principles/ontology.xml
+    #     # ToDo: I have to relate (same as) to https://w3id.org/fair/principles/terms/ from https://peta-pico.github.io/FAIR-nanopubs/principles/ontology.xml
     #     pass
     for (target_id, _) in cts.fair_maturity_models:
         target = rdf_types.CriterioDeCalidad.child_uri_ref(target_id)
@@ -252,7 +252,7 @@ def seed_criterios():
         g.add((target, rdf_types.extiende_de_criterio, fair))
     rda_fair_maturity_model = rdf_types.CriterioDeCalidad.child_uri_ref("rda_fair_maturity_model")
     fsf_fair_maturity_model = rdf_types.CriterioDeCalidad.child_uri_ref("fsf_fair_maturity_model")
-    # ToDo: Hacer el DSM
+    # ToDo: Build the DSM
     # dsm_fair_maturity_model = rdf_types.CriterioDeCalidad.child_uri_ref("dsm_fair_maturity_model")
     for (parent_maturity_model, statements) in [
         (rda_fair_maturity_model, cts.rda_fair_maturity_model_statements),
@@ -280,7 +280,7 @@ def seed_criterios():
         target = rdf_types.CriterioDeCalidad.child_uri_ref(target_id)
         g.add((target, RDF.type, rdf_types.CriterioDeCalidad))
 
-        # ToDo: Falta decir que criterio_de_calidad tiene ese grupo_de_criterio
+        # ToDo: It still has to be stated which criterio_de_calidad has that grupo_de_criterio
         grupo_de_criterio = rdf_types.GrupoDeCriterio.child_uri_ref(category)
         g.add((grupo_de_criterio, RDF.type, rdf_types.GrupoDeCriterio))
 

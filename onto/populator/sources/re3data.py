@@ -96,7 +96,7 @@ class Re3DataSource:
                 g_repos.set((r_instance, rdf_types.tiene_nombre_organizacion, Literal(instName['text'].replace('@', ''), lang=instName['lang'])))
 
             if db_instance['institutionCountry'] == 'EEC':
-                # ToDo: Usar de commons
+                # ToDo: Use from commons
                 location = rdf_types.Locacion.child_uri_ref('UE')
                 g_repos.set((location, RDF.type, rdf_types.Locacion))
             elif db_instance['institutionCountry'] == 'AAA':
@@ -135,7 +135,7 @@ class Re3DataSource:
                 idd_org_wo_schema = idd_match.groupdict().get('idd').replace(' ', '').replace(':', '')
                 id_de_organizacion = rdf_types.IdDeOrganizacion.child_uri_ref(idd_org)
                 g_repos.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
-                # ToDo: tipo_de_id_de_organizacion puede ser ROR, RRID, LOCAL y que otro?
+                # ToDo: tipo_de_id_de_organizacion can be ROR, RRID, LOCAL, and what else?
                 #  new Set(db.drepo.aggregate([{$project: {'institutions': 1}}, {$unwind: '$institutions'},{$project: {'institutions.id': 1}}]).toArray().map(a => a.institutions.id.replace(' ', ':').split(/[:.;]/)[0]))
                 g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion))
                 g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(idd_org_wo_schema, datatype=XSD.string)))
@@ -175,21 +175,21 @@ class Re3DataSource:
         if software_name is not None:
             software = rdf_types.Software.child_uri_ref(software_name)
             g_repos.set((software, RDF.type, rdf_types.Software))
-            # ToDo: Tendria que decir que todos los motores recabados por re3data con nombres diferentes son diferentes efectivamente?
-            #  justo con other_algo no pasa eso. other_1 es diferente a ckan, a dataverse, etc... pero no es diferente a other_2...
+            # ToDo: Should I state that all the engines collected by re3data with different names are indeed different?
+            #  that does not hold precisely for other_algo. other_1 is different from ckan, from dataverse, etc... but it is not different from other_2...
             g_repos.set((repositorio, rdf_types.repositorio_asociado_a_software, software))
 
         for api in repository_info['apis']:
             api_type = api['type']
             if api_type == 'other':
                 api_type = "other_%s" % (repository_info['id'],)
-            # ToDo: Unificar con commons
+            # ToDo: Unify with commons
             api_para_cosecha = rdf_types.ProtocoloDeCosecha.child_uri_ref(api_type)
             g_repos.set((api_para_cosecha, RDF.type, rdf_types.ProtocoloDeCosecha))
             # ToDo: Should be inferred
             # g_repos.set((api_para_cosecha, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
-            # ToDo: Habilitar de nuevo
+            # ToDo: Enable again
             # api_para_cosecha_con_url = URIRef("%s/%s" % (rdf_types.ApiParaCosechaConUrl.toPython(), api['url'], ), rdf_types.my_ns)
             # g_repos.set((api_para_cosecha_con_url, RDF.type, rdf_types.ApiParaCosechaConUrl))
             # g_repos.set((api_para_cosecha_con_url, rdf_types.api_para_cosecha_con_url_tiene_url, Literal(api['url'])))
@@ -197,11 +197,11 @@ class Re3DataSource:
             # g_repos.set((api_para_cosecha_con_url, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
         for metadata_standard in repository_info['metadataStandards']:
-            # ToDo: Poner modelo intermedio con evidencia
+            # ToDo: Add an intermediate model with evidence
             metadata_standard_name = metadata_standard['name']
             if metadata_standard_name == 'other':
                 metadata_standard_name = "other_%s" % (repository_info['id'],)
-            # ToDo: Unificar enumerados o declarar same-as
+            # ToDo: Unify enumerated values or declare same-as
             esquema_de_metadatos = rdf_types.EsquemaDeMetadatos.child_uri_ref(metadata_standard_name)
             g_repos.set((esquema_de_metadatos, RDF.type, rdf_types.EsquemaDeMetadatos))
             g_repos.set((repositorio, rdf_types.repositorio_soporta_estandar, esquema_de_metadatos))
@@ -209,7 +209,7 @@ class Re3DataSource:
         for aid_system in repository_info['aidSystems']:
             if aid_system == 'other':
                 aid_system = "other_%s" % (repository_info['id'],)
-            # ToDo: Unificar enumerados o declarar same-as
+            # ToDo: Unify enumerated values or declare same-as
             esquema_de_id_de_autor = rdf_types.EsquemaDeIdDeAutor.child_uri_ref(aid_system)
             g_repos.set((esquema_de_id_de_autor, RDF.type, rdf_types.EsquemaDeIdDeAutor))
             g_repos.set((repositorio, rdf_types.repositorio_soporta_estandar, esquema_de_id_de_autor))
@@ -217,21 +217,21 @@ class Re3DataSource:
         for pid_system in repository_info['pidSystems']:
             if pid_system == 'other':
                 pid_system = "other_%s" % (repository_info['id'],)
-            # ToDo: Unificar enumerados o declarar same-as
+            # ToDo: Unify enumerated values or declare same-as
             esquema_de_id_persistente = rdf_types.EsquemaDeIdPersistente.child_uri_ref(pid_system)
             g_repos.set((esquema_de_id_persistente, RDF.type, rdf_types.EsquemaDeIdPersistente))
             g_repos.set((repositorio, rdf_types.acepta_esquema_de_identificadores_persistentes, esquema_de_id_persistente))
 
         for content_type in repository_info['contentType']:
-            # ToDo: Manejar other, ponerle other_id
-            # ToDo: Unificar enumerados o declarar same-as
+            # ToDo: Handle other, give it an other_id
+            # ToDo: Unify enumerated values or declare same-as
             normal_content_type = self.remap_tipo_de_datos(content_type)
             tipo_de_dato = rdf_types.TipoDeDato.child_uri_ref(normal_content_type)
             g_repos.set((tipo_de_dato, RDF.type, rdf_types.TipoDeDato))
             g_repos.add((repositorio, rdf_types.repositorio_acepta_tipo_de_contenido, tipo_de_dato))
 
         # for quality_management in repository_info['qualityManagement']:
-        #     # ToDo: Revisar si es un ObjectProperty, y si modelarlo como bool
+        #     # ToDo: Check whether it is an ObjectProperty, and whether to model it as bool
         #     servicio_de_curaduria = URIRef("servicio_de_curaduria/%s" % (quality_management, ), rdf_types.my_ns)
         #     g_repos.set((servicio_de_curaduria, RDF.type, rdf_types.ServicioDeCuraduria))
         #     g_repos.set((servicio_de_curaduria, rdf_types.repositorio_aporta_funcionalidad, repositorio))
@@ -253,7 +253,7 @@ class Re3DataSource:
 
         for data_license in repository_info['dataLicenses']:
             local_id_data_license = hashlib.md5(data_license['url'].encode('utf-8')).hexdigest()
-            # ToDo: Unificar
+            # ToDo: Unify
             licencia_data = rdf_types.Licencia.child_uri_ref(local_id_data_license)
             g_repos.set((licencia_data, RDF.type, rdf_types.Licencia))
             g_repos.set((licencia_data, rdf_types.tiene_nombre_licencia, Literal(data_license['name'], datatype=XSD.string)))
@@ -275,7 +275,7 @@ def seed_disciplinas():
     g = Graph()
     g.bind('', rdf_types.my_ns)
 
-    # ToDo: DFG disciplina es una clase definida por todas las disciplinas DFG?
+    # ToDo: Is DFG disciplina a class defined by all the DFG disciplines?
     all_dfg_disciplinas = []
     def tree_walk_disciplina(forest, parent):
         for tr in forest:

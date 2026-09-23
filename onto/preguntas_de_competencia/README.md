@@ -1,19 +1,19 @@
-# Preguntas de competencia
+# Competency questions
 
-Preguntas que la base de conocimiento debe poder responder, tomadas de la sección 4.6 del informe. Cada una tiene su consulta SPARQL en un archivo `.rq` de esta carpeta.
+Questions the knowledge base must be able to answer, taken from section 4.6 of the report. Each one has its SPARQL query in a `.rq` file in this folder.
 
-Se agrupan según el requisito que atienden (ver sección 3.1 del informe):
+They are grouped by the requirement they address (see section 3.1 of the report):
 
-- **CCI**: información general y contextual del repositorio.
-- **CCA**: apoyo institucional.
-- **CCE**: evaluación de calidad.
-- **CCN**: interoperabilidad.
+- **CCI**: general and contextual information about the repository.
+- **CCA**: institutional support.
+- **CCE**: quality assessment.
+- **CCN**: interoperability.
 
-Los valores fijos de cada consulta (tipo de dato, disciplina, institución, repositorio o criterio) son ejemplos; se cambian en el bloque `VALUES` o en el IRI correspondiente.
+The fixed values in each query (data type, discipline, institution, repository or criterion) are examples; change them in the `VALUES` block or in the corresponding IRI.
 
-## Ejecución
+## Running
 
-Contra el endpoint de Fuseki (ver `docker-compose-jena.yml`):
+Against the Fuseki endpoint (see `docker-compose-jena.yml`):
 
 ```sh
 curl -s http://localhost:3030/<dataset>/query \
@@ -21,42 +21,42 @@ curl -s http://localhost:3030/<dataset>/query \
   -H 'Accept: text/csv'
 ```
 
-Con rdflib, sobre un grafo cargado en memoria: `graph.query(open('cci-1.rq').read())`.
+With rdflib, over a graph loaded in memory: `graph.query(open('cci-1.rq').read())`.
 
-## Información general y contextual
+## General and contextual information
 
-### CCI-1: ¿Qué repositorios permiten publicar datos? — [`cci-1.rq`](cci-1.rq)
-Lista los repositorios de datos de investigación (clase `rdd`) con su nombre. En DL equivale a verificar la pertenencia a la clase `dai:rdd`.
+### CCI-1: Which repositories allow publishing data? — [`cci-1.rq`](cci-1.rq)
+Lists the research data repositories (class `rdd`) with their name. In DL it amounts to checking membership in the class `dai:rdd`.
 
-### CCI-2: ¿Qué repositorios son adecuados para cierto tipo de datos? — [`cci-2.rq`](cci-2.rq)
-Combina dos fuentes: los tipos de contenido que el repositorio declara aceptar (`repositorio_acepta_tipo_de_contenido`) y las estadísticas por tipo de dato de sus contenidos. Incluye los subtipos del tipo buscado (`skos:broaderTransitive*`) y, de las estadísticas, usa solo la más reciente de cada repositorio.
+### CCI-2: Which repositories are suitable for a certain type of data? — [`cci-2.rq`](cci-2.rq)
+Combines two sources: the content types the repository declares it accepts (`repositorio_acepta_tipo_de_contenido`) and the per-data-type statistics of its contents. Includes the subtypes of the requested type (`skos:broaderTransitive*`) and, from the statistics, uses only the most recent one for each repository.
 
-### CCI-3: ¿Qué repositorios son afines a cierta disciplina dada? — [`cci-3.rq`](cci-3.rq)
-Igual que CCI-2, pero con disciplinas: afinidad declarada (`repositorio_afin_a_disciplina`) o estadísticas por disciplina, incluyendo las subdisciplinas (`es_sub_disciplina_de*`). El ejemplo usa DFG 111 (Social Sciences).
+### CCI-3: Which repositories are related to a given discipline? — [`cci-3.rq`](cci-3.rq)
+Same as CCI-2, but with disciplines: declared affinity (`repositorio_afin_a_disciplina`) or per-discipline statistics, including subdisciplines (`es_sub_disciplina_de*`). The example uses DFG 111 (Social Sciences).
 
-### CCI-4: ¿Qué repositorio, actualmente activo, brinda servicios de curaduría, control de acceso o soporte técnico?, ¿bajo qué términos? — [`cci-4.rq`](cci-4.rq)
-Para repositorios activos, devuelve los servicios de acceso a datos (con su nivel de acceso), las evaluaciones de curaduría (con su nivel) y la documentación general, junto con la URL donde consultar los términos. Los términos concretos deben revisarse manualmente en esa documentación.
+### CCI-4: Which currently active repository provides curation, access control or technical support services, and under what terms? — [`cci-4.rq`](cci-4.rq)
+For active repositories, returns the data access services (with their access level), the curation assessments (with their level) and the general documentation, along with the URL where the terms can be consulted. The actual terms must be reviewed manually in that documentation.
 
-### CCI-5: ¿Qué políticas y estándares adoptados por un repositorio impulsan la apertura de sus datos alojados? — [`cci-5.rq`](cci-5.rq)
-Repositorios que permiten licencias abiertas (CC0 o CC-BY, por nombre), con sus certificaciones vigentes y las políticas que declaran. "Vigente" usa la cota superior del fin del período (`_hasta >= NOW()`), es decir, que puede seguir vigente.
+### CCI-5: Which policies and standards adopted by a repository promote the openness of the data it hosts? — [`cci-5.rq`](cci-5.rq)
+Repositories that allow open licenses (CC0 or CC-BY, by name), with their current certifications and the policies they declare. "Current" uses the upper bound of the end of the period (`_hasta >= NOW()`), that is, it may still be current.
 
-## Apoyo institucional
+## Institutional support
 
-### CCA-1: ¿Cuáles son los repositorios que cumplen las políticas de determinada institución? — [`cca-1.rq`](cca-1.rq)
-Parte de una institución (ejemplo: Udelar, ROR `030bbe882`), recorre sus organizaciones dependientes (`es_organizacion_antecesora*`), se queda con las activas y devuelve los repositorios con los que mantienen una relación vigente, junto con las políticas del repositorio.
+### CCA-1: Which repositories comply with the policies of a given institution? — [`cca-1.rq`](cca-1.rq)
+Starts from an institution (example: Udelar, ROR `030bbe882`), walks its dependent organizations (`es_organizacion_antecesora*`), keeps the active ones and returns the repositories they have a current relation with, along with the repository's policies.
 
-## Evaluación de calidad
+## Quality assessment
 
-### CCE-1: ¿Qué certificaciones son compatibles o aplicables a este repositorio particular? — [`cce-1.rq`](cce-1.rq)
-Une dos caminos: las certificaciones aplicadas al repositorio y los criterios de mayor nivel que contienen enunciados que el repositorio satisface. Hoy devuelve vacío en el segundo camino (ver `tech-debt.md`).
+### CCE-1: Which certifications are compatible with or applicable to this particular repository? — [`cce-1.rq`](cce-1.rq)
+Joins two paths: the certifications applied to the repository and the higher-level criteria containing statements the repository satisfies. It currently returns nothing on the second path (see `tech-debt.md`).
 
-### CCE-2: ¿Qué características concretas debe tener un repositorio para cumplir una determinada certificación o principio? — [`cce-2.rq`](cce-2.rq)
-Devuelve los enunciados atómicos (hojas) que extienden, directa o indirectamente, un criterio de calidad; el ejemplo usa FAIR. Incluye la descripción de cada enunciado.
+### CCE-2: What concrete characteristics must a repository have to comply with a given certification or principle? — [`cce-2.rq`](cce-2.rq)
+Returns the atomic statements (leaves) that extend a quality criterion, directly or indirectly; the example uses FAIR. Includes the description of each statement.
 
-## Interoperabilidad
+## Interoperability
 
-### CCN-1: ¿Qué repositorios están indexados por agregadores de una disciplina específica? — [`ccn-1.rq`](ccn-1.rq)
-Repositorios cosechados, directa o transitivamente, por agregadores afines a la disciplina (ejemplo: DFG 201) o a sus subdisciplinas.
+### CCN-1: Which repositories are indexed by aggregators of a specific discipline? — [`ccn-1.rq`](ccn-1.rq)
+Repositories harvested, directly or transitively, by aggregators related to the discipline (example: DFG 201) or to its subdisciplines.
 
-### CCN-2: ¿Qué repositorios podrían estar indexados por agregadores de una disciplina específica? — [`ccn-2.rq`](ccn-2.rq)
-Repositorios aún no cosechados por un agregador de la disciplina, pero compatibles con él: comparten software, o soportan un protocolo de cosecha o de métricas que el agregador consume (o una extensión de ese protocolo). Devuelve los elementos en común para evaluar el grado de compatibilidad.
+### CCN-2: Which repositories could be indexed by aggregators of a specific discipline? — [`ccn-2.rq`](ccn-2.rq)
+Repositories not yet harvested by an aggregator of the discipline, but compatible with it: they share software, or support a harvesting or metrics protocol that the aggregator consumes (or an extension of that protocol). Returns the elements in common so the degree of compatibility can be assessed.

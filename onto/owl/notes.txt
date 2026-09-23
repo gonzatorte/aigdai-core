@@ -1,22 +1,22 @@
 
-Propiedades que se pueden inferir por los motores:
-- Integraciones soportadas (API de cosecha, API de métricas)
-- Esquema de identificador persistentes para colecciones (eg: DOI, handle)
-- AidS (eg: ORCID)
-- Esquemas de metadatos?
-- Soporte para comunidades/foros
-- Formato de exportación de citas
-- Métricas disponibles
-- Versionado
-- Soporte para lenguaje
-- Integraciones (con otros software. Todos los motores son software. Acá se incluyen lenguajes de programación).
+Properties that can be inferred from the repository engines:
+- Supported integrations (harvesting API, metrics API)
+- Persistent identifier scheme for collections (e.g.: DOI, handle)
+- AidS (e.g.: ORCID)
+- Metadata schemas?
+- Support for communities/forums
+- Citation export format
+- Available metrics
+- Versioning
+- Language support
+- Integrations (with other software. All engines are software. Programming languages are included here).
 
-Disciplinas:
-- Crosswalk con el esquema dnet de openAIRE (https://api.openaire.eu/vocabularies/dnet:fos). Mapear algunos conceptos
+Disciplines:
+- Crosswalk with openAIRE's dnet scheme (https://api.openaire.eu/vocabularies/dnet:fos). Map some concepts
 
-Sacar de openAIRE y FairSharing codigueras de tipos de archivos y formatos?
+Take code lists of file types and formats from openAIRE and FairSharing?
 
-ToDo: Agregar cosas como el nombre del criterio y la url del mismo
+ToDo: Add things like the name of the criterion and its URL
    <Declaration>
        <DataProperty IRI="explicacion_de_principio"/>
    </Declaration>
@@ -29,8 +29,8 @@ ToDo: Agregar cosas como el nombre del criterio y la url del mismo
        <Datatype abbreviatedIRI="xsd:string"/>
    </DataPropertyRange>
 
-ToDo: Ver si usar extiende_de o reificar (relacion_de_extension + extiende_desde + extiende_hacia) para poder colgar de el nivel de extension, o si es extension negativa o positiva
-    El mayor problema con esto es que no se como hacerla transitiva, asimetrica e irreflexiba. Tengo que ponerle hasKey si quiero reificar
+ToDo: Decide whether to use extiende_de or to reify (relacion_de_extension + extiende_desde + extiende_hacia) so the extension level, or whether the extension is negative or positive, can hang from it
+    The biggest problem with this is that I don't know how to make it transitive, asymmetric and irreflexive. I have to add hasKey if I want to reify
     <Declaration>
         <Class IRI="relacion_de_extension"/>
     </Declaration>

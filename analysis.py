@@ -30,9 +30,9 @@ def analysis():
             # 'subjects': set(xx['datacite_graphql_data.datasets.fieldsOfScience'] + xx['datacite_graphql_data.datasets.fieldsOfScienceCombined'] + xx['datacite_graphql_data.datasets.fieldsOfScienceRepository']),
         }
     repository_info = pandas.DataFrame(map(reformat, infos))
-    # ToDo: Hacer matriz de covarianza como las propuesta en el informe
-    #  la idea es que eso ayude a detectar correlaciones (ppalmente semánticas) entre atributos
-    #   tb relaciones no semánticas pueden verse y usarse para completar información faltante
+    # ToDo: Build a covariance matrix like the ones proposed in the report
+    #  the idea is for it to help detect correlations (mainly semantic ones) between attributes
+    #   non-semantic relations can also be seen and used to fill in missing information
 
 def counting_analysis():
     database = get_database_client()
@@ -172,7 +172,7 @@ def re3data_licences():
     ]
     all_possible_licences = set(sum(record_w_licence_info_normalized, []))
     print(all_possible_licences)
-    #     ToDo: Se puede normalizar a nivel de datos los valores obtenidos
+    #     ToDo: The values obtained can be normalized at the data level
     #  'apache license 2.0',
     #  'bsd',
     #  'cc',
@@ -248,8 +248,8 @@ def re3data_metadata_standards():
         [y['name'].lower() for y in x.get('metadataStandards', [])]
         for x in record_metadata_standard
     ], []))
-    # ToDo: Documentar que el catalogo parece provenir de https://www.dcc.ac.uk/guidance/standards/metadata
-    # ToDo: Agregar a este tipo de cosas, el conteo de cuantas veces aparece y el conteo de cuantos repositorios tienen el valor...
+    # ToDo: Document that the catalog seems to come from https://www.dcc.ac.uk/guidance/standards/metadata
+    # ToDo: Add to this kind of thing the count of how many times each value appears and the count of how many repositories have it...
     # {'abcd - access to biological collection data',
     #  'avm - astronomy visualization metadata',
     #  'cf (climate and forecast) metadata conventions',
@@ -318,7 +318,7 @@ def re3data_institutions():
         ] for x in responsibility_types_arr
     ], []))
     print(institution_types)
-    # ToDo: tipo_de_id_de_organizacion puede ser ROR, RRID, LOCAL y que otro?
+    # ToDo: tipo_de_id_de_organizacion can be ROR, RRID, LOCAL, and what else?
     #  new Set(db.drepo.aggregate([{$project: {'institutions': 1}}, {$unwind: '$institutions'},{$project: {'institutions.id': 1}}]).toArray().map(a => a.institutions.id.replace(' ', ':').split(/[:.;]/)[0]))
 
 def re3data_policies():
@@ -362,16 +362,16 @@ def re3data_software():
     print(len(all_w_single_known_softwares)) # 1828
 
 def record_is_still_up():
-    # ToDo: cuantos de los repositorios siguen activos o vivos?
-    #  usar endDate
-    #  verificaciones del dominio si sigue vivo pueden ser suficiente (consultar los DNS server directamente, nslookup)
-    #  mirar la cantidad de datasets publicados (o actualizados) en el último tiempo). Ojo que quizás no usan DOI y no son indexados
+    # ToDo: how many of the repositories are still active or alive?
+    #  use endDate
+    #  checking whether the domain is still alive may be enough (query the DNS servers directly, nslookup)
+    #  look at the number of datasets published (or updated) recently). Beware that they may not use DOIs and so are not indexed
     pass
 
 def record_is_accessible():
-    # ToDo: cuantos repositorios (además de ser abiertos) prestan APIs para su integracion, tienen softwares conocidos y/o son abiertos?
-    #  la palabra accessible quizas es adecuada puesto que requiere de ser eliminar barreras legales, técnicas y documentales/estandarizacion
-    #  hay que refinar algunos filtros anteriores aqui
+    # ToDo: how many repositories (besides being open) provide APIs for integration, run well-known software and/or are open?
+    #  the word accessible may be appropriate since it requires removing legal, technical and documentation/standardization barriers
+    #  some of the earlier filters need to be refined here
     database = get_database_client()
     re3data_coll = database['drepo']
     apis = re3data_coll.find({'apis.0': {'$exists': True}})
@@ -396,9 +396,9 @@ def record_is_accessible():
 
     dd = re3data_coll.find({'apiType': {'$exists': True}})
     pandas.DataFrame(dd)
-    # ToDo: Ver cuantos tienen varias APIs declaradas
-    #   y cuales tienen dos donde una de ellas es other
-    # ToDo: Ver cuantos comparten las URLs
+    # ToDo: Check how many have several APIs declared
+    #   and which ones have two where one of them is other
+    # ToDo: Check how many share URLs
 
     datacite_coll = database['datacite']
     datacite_only_service_providers = datacite_coll.count_documents({'$and': [
@@ -410,20 +410,20 @@ def record_is_visible():
     pass
 
 def record_is_plural():
-    # ToDo: Medir la variedad de articulos publicados, ya sea solo considerando los contenedores de datos en comun (para no contar las diferentes
-    #  partes de un mismo estudio repetidas veces) o los clusters de autores sin relaciones demasiado fuertes
+    # ToDo: Measure the variety of published items, either considering only the common data containers (so as not to count the different
+    #  parts of the same study several times) or the clusters of authors without overly strong relations
     pass
 
 def record_is_multidisciplinar():
-    # ToDo: Medir la cantidad de estudios que abordan varias disciplinas al mismo tiempo, o aquellos que al contrario,
-    #  albergan varios estudios de diferentes disciplinas pero cada estudio no se mezcla disciplinas.
-    #  Quizas ver la correlación de ambas cosas con la disciplinaridad y las disciplinas declaradas
-    #  eg: puede ser disciplinar pero definir educación y medicina, lo que significa que, para cada disciplina, no se mezclan sus estudios.
-    #  Ver si las disciplinas en si mismo deberian poder tener más de 1 padre (eg: bioinformatica, pertenece a bio o a informatica según DFG o OECD?).
+    # ToDo: Measure the number of studies that address several disciplines at once, or, on the contrary, those that
+    #  host several studies from different disciplines where each study does not mix disciplines.
+    #  Maybe look at the correlation of both with disciplinarity and the declared disciplines
+    #  eg: it can be disciplinary but declare education and medicine, which means that, for each discipline, its studies are not mixed.
+    #  Check whether disciplines themselves should be able to have more than 1 parent (eg: does bioinformatics belong to bio or to computer science according to DFG or OECD?).
     pass
 
 def intitutional_vs_disciplinar():
-    # ToDo: ver que relacion hay entre disciplinar e intitucional y cuan disjuntos son ambos conceptos
+    # ToDo: check how disciplinary and institutional relate and how disjoint both concepts are
     pass
 
 def interop_score_between(repo1: str, repo2: str) -> int:
@@ -451,7 +451,7 @@ def datacite_re3data_integration_analysis():
     print(urls_count, len(ids))
     print(ids)
     # En realidad la culpa de que no tengan el DOI en la api de re3data es de re3data, pues ellos figuran como el publisher de ese DOI...
-    # ToDo: Comparar el fieldOfScience con el subject del repositorio?
+    # ToDo: Compare fieldOfScience with the repository's subject?
 #     collection.find_one({'uid': ids[6][0]})['datacite_graphql_data']['subject']
 #     collection2 = database['drepo']
 #     collection2.find_one({'idd': ids[6][1]})['subjects']

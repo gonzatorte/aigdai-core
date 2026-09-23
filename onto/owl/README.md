@@ -1,53 +1,53 @@
-# Ontología para el modelado de repositorios de datos de investigación y su ecosistema
+# Ontology for modeling research data repositories and their ecosystem
 
-## Estructura de archivos
+## File structure
 
-### Elementos del TBox (en su mayoría):
-- [criterios.owl](./criterios.owl): Ontología que modela las relaciones entre distintos criterios de calidad de repositorios (eg: FAIR, TRUST, CoreTrustSeal, Recomendaciones del NIH, recomendaciones de PLOS, etc).
-- [lenguajes.owl](./lenguajes.owl): Definición del datatype "lenguaje".
-- [aigdai.owx](./aigdai.owx): Ontología principal que importa a las anteriores y los archivos XML que ahora detallo (elementos del ABox).
+### TBox elements (mostly):
+- [criterios.owl](./criterios.owl): Ontology that models the relations between different repository quality criteria (e.g.: FAIR, TRUST, CoreTrustSeal, NIH recommendations, PLOS recommendations, etc.).
+- [lenguajes.owl](./lenguajes.owl): Definition of the "lenguaje" (language) datatype.
+- [aigdai.owx](./aigdai.owx): Main ontology, which imports the previous ones and the XML files detailed below (ABox elements).
 
-### Elementos del ABox:
-- [commons.xml](./commons.xml): Elementos básicos (usados de manera similar a un enumerado) como formatos de archivo, tipos de archivo, esquemas de metadatos, esquema de identificadores, etc).
-- [localizaciones.xml](./localizaciones.xml): Lista de países y regiones y sus relaciones de inclusión.
-- [disciplinas.xml](./disciplinas.xml): Taxonomía de disciplinas tal como son expresadas por la DFG (taxonomía de Frascati y correspondiente crosswalk con DFG disponible pero elaborada aún).
-- [organizaciones.xml](./organizaciones.xml): Una pequeña muestra de ROR de organizaciones de investigación (financiadores, universidades, institutos, etc.) y sus relaciones.
-- [criterios.xml](./criterios.xml): Los elementos del ABox detallando las relaciones definidas en criterios.owl, elaborado a partir de la lectura de varias de las guías y recomendaciones de diferentes fuentes.
-- [repositorios.xml](./repositorios.xml): Una pequeña muestra de los datos de repositorios extraídos desde datacite y re3data y sus relaciones con las demás entidades antes mencionadas.
+### ABox elements:
+- [commons.xml](./commons.xml): Basic elements (used much like an enumeration) such as file formats, file types, metadata schemas, identifier schemes, etc.
+- [localizaciones.xml](./localizaciones.xml): List of countries and regions and their inclusion relations.
+- [disciplinas.xml](./disciplinas.xml): Taxonomy of disciplines as expressed by the DFG (the Frascati taxonomy and the corresponding crosswalk with DFG are available but not yet elaborated).
+- [organizaciones.xml](./organizaciones.xml): A small sample from ROR of research organizations (funders, universities, institutes, etc.) and their relations.
+- [criterios.xml](./criterios.xml): The ABox elements detailing the relations defined in criterios.owl, built from reading several guides and recommendations from different sources.
+- [repositorios.xml](./repositorios.xml): A small sample of repository data extracted from datacite and re3data and their relations with the other entities mentioned above.
 
-## Modelo conceptual
+## Conceptual model
 
 ToDo:
-    Hablar de los 3 mundos?
-        Proceso de investigación
-        corpus de conocimiento disciplinar
-        agentes y recursos tecnológicos
-    Hablar de los distintos niveles de abstracción y dirección de expansión considerados:
-        los catálogos (entidades más o menos fijas).
-        de los agentes y recursos (info relacional sobre objetos tangibles o naturales para los procesos de investigación).
-        de las características o atributos de los mismos (sobre los que se definen criterios, conceptos que abstraen caracteristicas de los repositorios).
+    Talk about the 3 worlds?
+        Research process
+        body of disciplinary knowledge
+        agents and technological resources
+    Talk about the different levels of abstraction and directions of expansion considered:
+        the catalogs (more or less fixed entities).
+        the agents and resources (relational info about objects that are tangible or natural to research processes).
+        their characteristics or attributes (over which criteria are defined, concepts that abstract characteristics of repositories).
     
-    Hablar de la visión de una comunidad por preservar contenidos:
-        Contenidos (recursos, objetos inertes)
-        Comunidades (agentes, eg: organizaciones)
-        Métricas? (+ politicas, + criterios de calidad, etc)
-        Repositorios (nexo entre ambos, la flecha)
+    Talk about the vision of a community for preserving content:
+        Contents (resources, inert objects)
+        Communities (agents, e.g.: organizations)
+        Metrics? (+ policies, + quality criteria, etc.)
+        Repositories (the link between both, the arrow)
     
-    Hablar de la capacidad de la ontología de asociar diferentes lentes o capas a los mismos elementos de la realidad?
-        eg: una misma organización puede ser un consumidor de servicios en un contexto, en otro un prestador de servicio
-    Hablar del dilema de definir una entidad nueva o de atribuir nuevas características a una entidad existente...
-        Hay un patron llamado role-attribution?
-        Las instancias deberían tener una identidad no artificial del propio modelo, sino que un valor e identidad comprensible para el usuario final.
+    Talk about the ontology's ability to associate different lenses or layers with the same elements of reality?
+        e.g.: the same organization can be a consumer of services in one context and a service provider in another
+    Talk about the dilemma of defining a new entity versus attributing new characteristics to an existing entity...
+        Is there a pattern called role-attribution?
+        Instances should not have an identity that is artificial to the model itself, but a value and identity understandable by the end user.
 
-### Conceptos principales y narrativa:
-- repositorio: Los repositorios suelen alojar diferentes tipos de resultados de investigación (esta narrativa tb debería ser parte de anotaciones del modelo?)
+### Main concepts and narrative:
+- repositorio: Repositories usually host different types of research outputs (should this narrative also be part of the model's annotations?)
 - resultado_de_investigacion: 
 - articulo: 
-- cdd (mnemónico de Colección De Datos): 
+- cdd (mnemonic for Colección De Datos, data collection): 
 - criterio_de_calidad: 
 
-Adjuntar modelo semántico (diagrama de drawio):
+Attach the semantic model (drawio diagram):
 
-## Pruebas y guía de uso
+## Testing and usage guide
 
-Probado con https://github.com/protegeproject/rdf-library con Protégé V5
+Tested with https://github.com/protegeproject/rdf-library with Protégé V5

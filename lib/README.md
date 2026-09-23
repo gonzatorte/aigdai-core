@@ -1,2 +1,2 @@
 
-Librerias en general para manejo de asincronía y para acceso a base de datos
+General-purpose libraries for handling asynchrony and database access

@@ -260,13 +260,13 @@ def refine_repository_info(
 
     return {
         "id": decoded["r3d:re3data.orgIdentifier"],
-        # ToDo: Modelar todos los identificadores disponibles.
-        #  Quitar aquellos que YA ESTAN como un identificador de la organizacion
-        #   los de tipo ROR
-        #  Los de tipo RRID suelen venir de a pares y son la misma cosa (SCR de servicio, y el NLX que parece ser interno).
-        #   SI parecen identificar al repositorio y no a la organizacion
-        #  Los de tipo FAIRSHARING si son útiles (referenciar al catalogo de fairsharing)
-        #  Hay otros tipos?
+        # ToDo: Model all available identifiers.
+        #  Remove those that ARE ALREADY an identifier of the organization
+        #   the ROR ones
+        #  The RRID ones usually come in pairs and are the same thing (SCR for service, and NLX, which seems to be internal).
+        #   They DO seem to identify the repository and not the organization
+        #  The FAIRSHARING ones are useful (reference the fairsharing catalog)
+        #  Are there other types?
         "ids": [x for x in decoded.get("r3d:repositoryIdentifier", [])],
         "repositoryName": get_lang_sensible_text(decoded["r3d:repositoryName"]),
         "additionalNames": [get_lang_sensible_text(x) for x in decoded.get("r3d:additionalName", [])],
@@ -302,7 +302,7 @@ def refine_repository_info(
         'metadataStandards': [{'name': x['r3d:metadataStandardName']['$'].lower(), 'url': x['r3d:metadataStandardURL'].lower()} for x in
                               decoded.get("r3d:metadataStandard", [])],
 
-        # ToDo: En versiones intermedias de re3data se consideraba un tipo que podia tener esos enumerados
+        # ToDo: In intermediate versions of re3data there was a type that could take these enumerated values
         # Access policy
         # Collection policy
         # Data policy
@@ -314,8 +314,8 @@ def refine_repository_info(
         # Quality policy
         'policies': [{'name': x['r3d:policyName'], 'url': x['r3d:policyURL']} for x in decoded.get("r3d:policy", [])],
 
-        #  ToDo: normalizar licencias a los siguiente valores del nombre y descartar las otras cosas...
-        #    aunque se podría desempatar usando la "other" y la url...
+        #  ToDo: normalize licenses to the following name values and discard the rest...
+        #    although ties could be broken using the "other" and the url...
         #  'apache license 2.0',
         #  'bsd',
         #  'cc',
@@ -371,7 +371,7 @@ if __name__ == '__main__':
         'isInstitutional': (False,),
         'softwareNames': (['dataverse'],),
         # 'softwareName': ('dataverse',),
-        'size': ('13 dataverses; 3.310 datasets',),  # ToDo: Falta honrrar el atributo updatedAt
+        'size': ('13 dataverses; 3.310 datasets',),  # ToDo: The updatedAt attribute is not honored yet
         'startDate': (None,),
         'endDate': (None,),
         'subjects': (
@@ -495,7 +495,7 @@ Both free-text and fielded searching options. The ability to retrieve, print, an
         'policies': ([{'name': 'Contribution Policy', 'url': 'https://www.archives.gov/developer#toc-contribution-policy'}, {'name': 'Freedom of Information Act - FOAI', 'url': 'https://www.archives.gov/foia'}, {'name': 'Privacy and Use', 'url': 'https://www.archives.gov/global-pages/privacy.html'}],),
         'api': ({'url': 'https://www.archives.gov/developer#toc-application-programming-interfaces-apis-', 'type': 'other'},),
         'metadataStandards': ([],),
-        'pidSystems': (['none'],), # ToDo: Manejar este valor nulo
+        'pidSystems': (['none'],), # ToDo: Handle this null value
         # 'databaseAccess': ('open',),
         'databaseLicense': ([],),
         # 'dataAccess': (

@@ -381,7 +381,7 @@
         <Literal xml:lang="en">System that collects or harvests metadata from source repositories or from other aggregators, for instance via OAI-PMH, which calls it a service provider. It is not strictly a repository: it holds no authoritative information about the contents nor manages their archiving, although it may complement or correct the harvested metadata. A repository and an aggregator sharing software, harvesting protocol or metadata schema eases indexing. Examples: Google Dataset Search, LA Referencia.</Literal>
     </AnnotationAssertion>
 
-<!--  ToDo: Reificar para expresar con que api es cosechando? -->
+<!--  ToDo: Reify to express which API it is being harvested with? -->
     <Declaration>
         <ObjectProperty IRI="repositorio_es_cosechado_por_agregador"/>
     </Declaration>
@@ -1577,7 +1577,7 @@
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="organizacion_esta_activa"/>
-        <!-- ToDo: En realidad, mas que false se puede decir que se supo que se cumplia (o no) eso a tal fecha -->
+        <!-- ToDo: Actually, rather than false, one can say that it was known to hold (or not) at a given date -->
         <Datatype abbreviatedIRI="xsd:boolean"/>
     </DataPropertyRange>
     <FunctionalDataProperty>
@@ -2907,10 +2907,10 @@
         <DataProperty IRI="tiene_contacto_repositorio"/>
         <Class IRI="repositorio"/>
     </DataPropertyDomain>
-    <!-- ToDo: Ver si hacer a contact un objet para poder reutilizarlo con institution_contact -->
+    <!-- ToDo: Consider making contact an object so it can be reused with institution_contact -->
     <DataPropertyRange>
         <DataProperty IRI="tiene_contacto_repositorio"/>
-        <!-- ToDo: hacer un tipo de datos que permita saber el tipo del enlace (eg: administrativo, support, ver el enumerado) -->
+        <!-- ToDo: make a datatype that tells the type of the link (eg: administrativo, support, see the enumeration) -->
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
     <AnnotationAssertion>
@@ -3043,7 +3043,7 @@
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="repositorio_esta_activo"/>
-        <!-- ToDo: En realidad, mas que false se puede decir que se supo que se cumplia (o no) eso a tal fecha -->
+        <!-- ToDo: Actually, rather than false, one can say that it was known to hold (or not) at a given date -->
         <Datatype abbreviatedIRI="xsd:boolean"/>
     </DataPropertyRange>
     <FunctionalDataProperty>
@@ -3289,8 +3289,8 @@
     </AnnotationAssertion>
 
 <!--
-    ToDo: Quizas es mejor hacer un admite_estandar y que luego se vea para que se usa ese formato?
-      Quizas no, puesto que esto representa usar el formato pero en un sentido particular
+    ToDo: Maybe it is better to have an admite_estandar and then see what that format is used for?
+      Maybe not, since this represents using the format but in a particular sense
 -->
     <Declaration>
         <ObjectProperty IRI="admite_formato_de_sindicacion"/>
@@ -3410,7 +3410,7 @@
         <Literal xml:lang="en">Research repository specialized in research datasets. According to re3data, it is a sustainable information infrastructure providing long-term storage and access to data underlying scholarly publications. Unlike articles, data comes in very diverse formats and structures, which conditions its curation and preservation. It is the central object of study of the ontology: its quality variables (FAIR, TRUST, certifications) support choosing the right repository to deposit data. Examples: Zenodo, Harvard Dataverse.</Literal>
     </AnnotationAssertion>
 
-    <!-- ToDo: Poblar con los niveles definidos en https://zenodo.org/records/11476980 -->
+    <!-- ToDo: Populate with the levels defined in https://zenodo.org/records/11476980 -->
     <Declaration>
         <DataProperty IRI="nivel_de_curaduria"/>
     </Declaration>
@@ -3503,9 +3503,9 @@
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
         <ObjectProperty IRI="repositorio_acepta_tipo_de_contenido"/>
-        <!-- ToDo: Apuntar a tipo_de_dato o a un schema nuevo?
-        En re3data, corresponde a los datos especificados por COAR: http://purl.org/coar/resource_type/c_ddb1 .
-        Ver como se hace el autodescubrimiento y enlazado con otros estándares a partir de lo declarado allí (creo que usan SKOS) -->
+        <!-- ToDo: Point to tipo_de_dato or to a new schema?
+        In re3data, it corresponds to the data specified by COAR: http://purl.org/coar/resource_type/c_ddb1 .
+        See how autodiscovery and linking with other standards are done from what is declared there (I think they use SKOS) -->
         <Class IRI="tipo_de_dato"/>
     </ObjectPropertyRange>
     <SubObjectPropertyOf>
@@ -4995,10 +4995,10 @@
         <ObjectProperty IRI="extiende_de_estandar"/>
     </SubObjectPropertyOf>
 
-<!--  ToDo: Los esquemas de identificador de autor y PID son tb estandares? -->
-<!--  ToDo: Algunos ppios son tb estandar -->
+<!--  ToDo: Are author identifier and PID schemes also standards? -->
+<!--  ToDo: Some principles are also standards -->
 
-<!--  ToDo: Agregar la relacion con repositorios y extender su transitividad a esa relacion con extiende_a_esquema_de_metadatos -->
+<!--  ToDo: Add the relation with repositories and extend its transitivity to that relation with extiende_a_esquema_de_metadatos -->
 
     <Declaration>
         <Class IRI="formato_de_archivo"/>
@@ -5162,7 +5162,7 @@
         <ObjectProperty IRI="formato_codifica_tipo_de_dato"/>
         <Class IRI="tipo_de_dato"/>
     </ObjectPropertyRange>
-    <!--  ToDo: relacion entre formato y tipo de dato falta -->
+    <!--  ToDo: the relation between format and data type is missing -->
     <!-- END Cosas relativas a los estándares -->
 
     <Declaration>
@@ -5227,8 +5227,8 @@
     </AnnotationAssertion>
 
     <!-- START cosas relativas a criterios de calidad -->
-    <!-- ToDo: Revisar si siguen siendo instancias los Criterios de calidad -->
-    <!-- ToDo: Ojo que con la relacion con certificacion fue reificada, y ademas apunta a cualquier repositorio_de_investigacion no solo a los rdd -->
+    <!-- ToDo: Check whether the quality criteria are still instances -->
+    <!-- ToDo: Beware that the relation with certificacion was reified, and it also points to any repositorio_de_investigacion, not only to rdd -->
     <Declaration>
         <ObjectProperty IRI="repositorio_satisface_criterio"/>
     </Declaration>
@@ -5370,7 +5370,7 @@
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
 
-    <!-- ToDo: esto o la desreificacion de esto puede ser una subobjectproperty de repositorio_satisface_criterio -->
+    <!-- ToDo: this, or its dereification, can be a subobjectproperty of repositorio_satisface_criterio -->
     <Declaration>
         <Class IRI="aplicacion_de_certificacion_a_repositorio"/>
     </Declaration>
@@ -5697,7 +5697,7 @@
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="soporta_enlace_con_articulo"/>
-        <!-- ToDo: En realidad, mas que false se puede decir que se supo que se cumplia (o no) eso a tal fecha -->
+        <!-- ToDo: Actually, rather than false, one can say that it was known to hold (or not) at a given date -->
         <Datatype abbreviatedIRI="xsd:boolean"/>
     </DataPropertyRange>
     <FunctionalDataProperty>
@@ -6558,7 +6558,7 @@
         <Literal xml:lang="en">States that a policy recommends or requires depositing in a given repository (e.g. the recommended repository lists of journals or funders).</Literal>
     </AnnotationAssertion>
 
-    <!-- ToDo: Ver si el embargo tiene que ver con el control, nivel o politica de acceso -->
+    <!-- ToDo: Check whether the embargo is related to access control, access level or access policy -->
     <Declaration>
         <DataProperty IRI="maxima_duracion_periodo_de_embargo"/>
     </Declaration>
@@ -7090,7 +7090,7 @@
         <ObjectProperty IRI="aplicacion_de_politica_de_preservacion_en_repositorio_tiene_politica"/>
     </FunctionalObjectProperty>
 
-    <!-- ToDo: la curaduria podria estar asociado a un servicio. En ese caso -->
+    <!-- ToDo: curation could be associated with a service. In that case -->
     <Declaration>
         <Class IRI="aplicacion_de_curaduria_en_repositorio"/>
     </Declaration>
@@ -7239,10 +7239,10 @@
     </TransitiveObjectProperty>
 
 <!--
-    ToDo: Tambien hay que considerar a otros agregadores que ofrecen acceso. Alli hay otro punto de contacto
-    ¿otro nombre como metodo o mecanismo de acceso quizas?
+    ToDo: Other aggregators that offer access must also be considered. There is another point of contact there
+    maybe another name, such as access method or mechanism?
 
-    ToDo: Seria bueno enganchar con los software y las herramientas tb
+    ToDo: It would be good to hook this up with the software and tools too
 -->
     <Declaration>
         <Class IRI="servicio_de_acceso_a_datos"/>
@@ -7399,8 +7399,8 @@
     <ObjectPropertyRange>
         <ObjectProperty IRI="servicio_de_acceso_a_datos_tiene_metodo_de_acceso"/>
         <!--
-            ToDo: Aca seria bueno enganchar con protocolos de acceso... estandar o protocolo_de_cosecha?
-             ojo que no quede por fuera los accesos "humanos" o "manuales"/"no automáticos"
+            ToDo: Here it would be good to hook this up with access protocols... estandar or protocolo_de_cosecha?
+             make sure "humanos" or "manuales"/"no automáticos" access is not left out
         -->
         <Class IRI="estandar"/>
     </ObjectPropertyRange>
@@ -7515,13 +7515,13 @@
     </DataPropertyRange>
 
 <!--
- ToDo: Todo el tema de metodo/servicio de acceso, permiso de acceso y politica de acceso esta bastante correlacionado
-  se podria crear el concepto de proceso o actividad que modele la lectura, depósito, cosecha (de datos o metadatos)
-  asi como tambien otras actividad de gestion como compartición, curaduria, revision
-  u otras actividad disciplinares (recoleccion, etc) a definir
+ ToDo: The whole matter of access method/service, access permission and access policy is quite correlated
+  one could create the concept of a process or activity that models reading, deposit, harvesting (of data or metadata)
+  as well as other management activities such as sharing, curation, review
+  or other disciplinary activities (collection, etc.) to be defined
 -->
 
-<!-- ToDo: No tengo esta info de ningun lado... aunque puede ser util por ser mencionado por criterios de calidad -->
+<!-- ToDo: I don't get this info from anywhere... although it may be useful because quality criteria mention it -->
 <!--     <Declaration> -->
 <!--         <Class IRI="control_de_acceso"/> -->
 <!--     </Declaration> -->
@@ -7817,7 +7817,7 @@
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="soporta_versionado_repositorio"/>
-        <!-- ToDo: En realidad, mas que false se puede decir que se supo que se cumplia (o no) eso a tal fecha -->
+        <!-- ToDo: Actually, rather than false, one can say that it was known to hold (or not) at a given date -->
         <Datatype abbreviatedIRI="xsd:boolean"/>
     </DataPropertyRange>
     <FunctionalDataProperty>
@@ -7977,8 +7977,8 @@
         <DataProperty IRI="tiene_url_software"/>
     </FunctionalDataProperty>
 
-    <!-- ToDo: Tambien puede estar asociado a un agregador... aunque no se si vale la pena decirlo -->
-    <!-- ToDo: Ojo que todo agregador es repositorio_de_investigacion -->
+    <!-- ToDo: It can also be associated with an aggregator... although I'm not sure it is worth saying -->
+    <!-- ToDo: Beware that every agregador is a repositorio_de_investigacion -->
     <Declaration>
         <ObjectProperty IRI="repositorio_asociado_a_software"/>
     </Declaration>

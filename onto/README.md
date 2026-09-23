@@ -1,6 +1,6 @@
-# Ontologías
+# Ontologies
 
-Este repositorio contiene scripts utilizados para la generación de ontologías e instanciación de las mismas.
+This repository contains scripts used to generate ontologies and to instantiate them.
 
 ./generator: 
 ./populator: 

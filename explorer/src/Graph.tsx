@@ -478,7 +478,7 @@ export default function Graph({
     const nodes = nodesAndLinks.map(({ links: _links, ...node }) => {
       const internalNode = internalNodesRef.current.get(node.id);
       if (!internalNode) {
-        // ToDo: Crear una instancia separada aca
+        // ToDo: Create a separate instance here
         const nnode = {
           ...node,
           kind: normalizeKinds(node.kind),

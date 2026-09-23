@@ -65,7 +65,7 @@ class FairSharingSource:
             palabra_clave = rdf_types.PalabraClave.child_uri_ref(user_defined_tag['id'])
             all_items.append(palabra_clave)
             self.gg.add((palabra_clave, rdf_types.tiene_sinonimo_palabra_clave, Literal(user_defined_tag['label'], datatype=XSD.string)))
-            # ToDo: No esta capturando el atributo definitions
+            # ToDo: It is not capturing the definitions attribute
             # for definition in user_defined_tag['definitions']:
             #     if palabra_clave != 'N/A':
             #         self.gg.add((palabra_clave, rdf_types.definicion_de, Literal(definition)))
@@ -78,14 +78,14 @@ class FairSharingSource:
         gg = self.gg
         all_disciplinas = []
         for info in infos:
-            # ToDo: Ponerle un id bueno, quizás el mismo atributo iri?
+            # ToDo: Give it a good id, maybe the iri attribute itself?
             disciplina = rdf_types.Disciplina.child_uri_ref(info['id'])
             all_disciplinas.append(disciplina)
             gg.add((disciplina, RDF.type, rdf_types.Disciplina))
 
             gg.add((disciplina, rdf_types.nombre_de_disciplina, Literal(info['label'], datatype=XSD.string)))
-            # ToDo: Usar el campo "definitions" que es un array de str
-            # ToDo: Ponerle el esquema que corresponda
+            # ToDo: Use the "definitions" field, which is an array of str
+            # ToDo: Assign the appropriate scheme
             gg.add((disciplina, rdf_types.disciplina_tiene_esquema, Literal('dfg', datatype=XSD.string)))
             for synonym in info['synonyms']:
                 gg.add((disciplina, rdf_types.nombre_de_disciplina, Literal(synonym, datatype=XSD.string)))
@@ -115,7 +115,7 @@ class FairSharingSource:
                 if not idd_match:
                     raise Exception()
                 idd_org = idd_match.groupdict()['idd']
-                # ToDo: Hacer bien el espacio de nombres de ror, usar algun prefijo y asegurar que no pueda ser usado por otro IdDeOrganizacion
+                # ToDo: Do the ror namespace properly: use some prefix and make sure it cannot be used by another IdDeOrganizacion
                 id_de_organizacion = rdf_types.IdDeOrganizacion.child_uri_ref("ror-%s" % (idd_org,))
                 gg.add((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
                 gg.add((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, common.ror_id_schema))
@@ -148,7 +148,7 @@ class FairSharingSource:
         # ToDo: No relations between repo and country defined at onto
         # info['countries']
         for subject in info['subjects']:
-            # ToDo: Ponerle un id bueno, quizás el mismo atributo iri?
+            # ToDo: Give it a good id, maybe the iri attribute itself?
             disciplina = rdf_types.Disciplina.child_uri_ref(subject['id'])
             gg.add((repositorio, rdf_types.repositorio_afin_a_disciplina, disciplina))
         for organisationLink in info['organisationLinks']:
@@ -165,11 +165,11 @@ class FairSharingSource:
                 responsibility_type,
                 datatype=rdf_types.TipoDeRelacionConOrganizacion
             )))
-            # ToDo: Falta la relacion con el grant
+            # ToDo: The relation with the grant is missing
             # organisationLink['grant']
         for object_type in info['objectTypes']:
-            # ToDo: Manejar other, ponerle other_id
-            # ToDo: Unificar enumerados o declarar same-as
+            # ToDo: Handle other, give it an other_id
+            # ToDo: Unify enumerated values or declare same-as
             normal_content_type = self.remap_tipo_de_datos(object_type['id'])
             tipo_de_dato = rdf_types.TipoDeDato.child_uri_ref(normal_content_type)
             gg.add((tipo_de_dato, RDF.type, rdf_types.TipoDeDato))

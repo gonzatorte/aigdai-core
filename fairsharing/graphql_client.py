@@ -54,8 +54,8 @@ METADATA_FIELDS = [
     'certifications_and_community_badges', # array of url, name
 ]
 def normalize_metadata_field(metadata_field):
-    # ToDo: Algunos campos dependen de su validez del registry type o del record type
-    # ToDo: Normalizar a arrays vacios todos los campos array
+    # ToDo: The validity of some fields depends on the registry type or the record type
+    # ToDo: Normalize all array fields to empty arrays
     return metadata_field
 
 

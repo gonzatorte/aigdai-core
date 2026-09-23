@@ -87,7 +87,7 @@ def insert_on_rdf(only_org_ids: set[str] | None = None):
         g_orgs.bind('', rdf_types.my_ns)
         # count_v1 = 0
 
-        # ToDo: Ya definido en commons...
+        # ToDo: Already defined in commons...
         tipo_de_id_de_organizacion_ror = rdf_types.TipoDeIdDeOrganizacion.child_uri_ref('ROR')
         g_orgs.set((tipo_de_id_de_organizacion_ror, RDF.type, rdf_types.TipoDeIdDeOrganizacion))
 
@@ -118,7 +118,7 @@ def insert_on_rdf(only_org_ids: set[str] | None = None):
             idd_w_schema = 'ROR:%s' % (idd,)
             more_ids = []
             for (typee, external_id) in external_ids:
-                # ToDo: Tendria que normalizar los tipo_de_id_de_organizacion (typee) con los usadas en re3data
+                # ToDo: Should normalize the tipo_de_id_de_organizacion (typee) with the ones used in re3data
                 more_ids.append((typee.upper(), external_id))
             more_ids_formatted = {"%s:%s" % x for x in more_ids}
             if only_org_ids is not None and idd_w_schema not in only_org_ids and not more_ids_formatted.intersection(only_org_ids):
@@ -133,7 +133,7 @@ def insert_on_rdf(only_org_ids: set[str] | None = None):
 
             for (typee, external_id) in more_ids:
                 tipo_de_id_de_organizacion = rdf_types.TipoDeIdDeOrganizacion.child_uri_ref(typee)
-                # ToDo: Tendria que hacer que todos los tipo_de_id_de_organizacion descritos aqui sean diferentes entre si??
+                # ToDo: Should I make all the tipo_de_id_de_organizacion described here different from each other??
                 external_idd = "%s:%s" % (typee, external_id)
                 g_orgs.set((tipo_de_id_de_organizacion, RDF.type, rdf_types.TipoDeIdDeOrganizacion))
 
@@ -203,7 +203,7 @@ def insert_on_rdf(only_org_ids: set[str] | None = None):
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(other_org_id_raw, datatype=XSD.string)))
                 g_orgs.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, other_org))
 
-    # ToDo: Tendria que declarar que todas estas organizaciones son distintas entre si por ser verificadas por un mismo proveedor de datos?
+    # ToDo: Should I declare that all these organizations are distinct from each other because they are verified by the same data provider?
 
     # print('count_v1', count_v1, 'out of', len(registries))
     return g_orgs

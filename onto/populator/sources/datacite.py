@@ -134,7 +134,7 @@ class DataCiteSource:
                 pid_system = "other_%s" % (uid,)
             else:
                 pid_system = pid_d_system
-            # ToDo: Unificar enumerados o declarar same-as
+            # ToDo: Unify enumerated values or declare same-as
             #     "_id" : "doi",
             #     "_id" : "none",
             #     "_id" : "hdl",
@@ -152,10 +152,10 @@ class DataCiteSource:
                 cert = "other_%s" % (uid,)
             else:
                 cert = self.CERT_NAME_MAP[cert_d]
-            # ToDo: Unificar enumerados o declarar same-as
+            # ToDo: Unify enumerated values or declare same-as
             certificacion = rdf_types.Certificacion.child_uri_ref(cert)
             gg.set((certificacion, RDF.type, rdf_types.Certificacion))
-            # ToDo: All different las certificaciones o es algo que ya se dijo antes?
+            # ToDo: All different for the certifications, or is it something already stated before?
             aplicacion_de_cert = rdf_types.AplicacionDeCertificacionARepositorio.child_uri_ref("%s-%s" % (uid, cert))
             gg.set((aplicacion_de_cert, RDF.type, rdf_types.AplicacionDeCertificacionARepositorio))
             gg.set((aplicacion_de_cert, rdf_types.aplicacion_de_certificacion_a_repositorio_tiene_repositorio, repositorio))
@@ -180,7 +180,7 @@ class DataCiteSource:
             all_items.append(disciplina)
             gg.set((disciplina, rdf_types.nombre_de_disciplina, Literal(subject['name'], datatype=XSD.string)))
             gg.set((disciplina, rdf_types.disciplina_tiene_esquema, Literal('dfg', datatype=XSD.string)))
-            # ToDo: Usar el campo "description" que es un array de str
+            # ToDo: Use the "description" field, which is an array of str
             # gg.set((disciplina, rdf_types.descripcion_de_disciplina, Literal(subject['description'], datatype=XSD.string)))
             gg.add((repositorio, rdf_types.repositorio_afin_a_disciplina, disciplina))
         owl_all_different(gg, all_items)

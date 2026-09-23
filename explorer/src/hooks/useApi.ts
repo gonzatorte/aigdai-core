@@ -4,7 +4,7 @@ export type Fetcher<T, P = void> = (params: P) => Promise<T>;
 
 export type ApiStatus = 'idle' | 'loading' | 'success' | 'error';
 
-// ToDo: Deberia usar un valor sentinela para marcar que no hay nada en data o en error, diferente a null que es un valor valido como retorno de la API
+// ToDo: Should use a sentinel value to mark that there is nothing in data or in error, other than null, which is a valid API return value
 export type UseApiReturn<T, E = Error> = { refetch: () => Promise<void> } & (
   | {
       data: null;
