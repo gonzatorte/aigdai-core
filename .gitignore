@@ -101,6 +101,7 @@ config.py
 
 agraph-config/
 agraph-data/
+fuseki-data/
 fuseki-data/databases/
 fuseki-data/sample-storage/
 fuseki-data/system_files/
