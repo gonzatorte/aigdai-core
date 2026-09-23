@@ -156,8 +156,7 @@ class DataCiteSource:
             certificacion = rdf_types.Certificacion.child_uri_ref(cert)
             gg.set((certificacion, RDF.type, rdf_types.Certificacion))
             # ToDo: All different las certificaciones o es algo que ya se dijo antes?
-            # ToDo: El id es solo del cert, tiene que tener parte del repo...
-            aplicacion_de_cert = rdf_types.AplicacionDeCertificacionARepositorio.child_uri_ref(cert)
+            aplicacion_de_cert = rdf_types.AplicacionDeCertificacionARepositorio.child_uri_ref("%s-%s" % (uid, cert))
             gg.set((aplicacion_de_cert, RDF.type, rdf_types.AplicacionDeCertificacionARepositorio))
             gg.set((aplicacion_de_cert, rdf_types.aplicacion_de_certificacion_a_repositorio_tiene_repositorio, repositorio))
             gg.set((aplicacion_de_cert, rdf_types.aplicacion_de_certificacion_a_repositorio_tiene_certificacion, certificacion))

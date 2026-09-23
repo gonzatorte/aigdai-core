@@ -11,9 +11,11 @@ import urllib.parse
 from dotenv import load_dotenv
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent
+# Archivo del que se leen las variables. Es siempre este y no el que la librería encuentre por su cuenta.
+ENV_FILE = BASE_DIR / '.env'
 
 # Las variables ya definidas en el entorno tienen prioridad sobre las del archivo.
-load_dotenv(BASE_DIR / '.env', override=False)
+load_dotenv(dotenv_path=ENV_FILE, override=False)
 
 
 def _build_mongo_url() -> str:
@@ -45,6 +47,6 @@ JAVA_EXE_PATH = os.environ.get('JAVA_EXE_PATH', '/usr/bin/java')
 def require_fairsharing_credentials() -> tuple[str, str]:
     if not FAIRSHARING_USERNAME or not FAIRSHARING_PASSWORD:
         raise RuntimeError(
-            'Faltan FAIRSHARING_USERNAME y FAIRSHARING_PASSWORD. Definilas en el entorno o en .env (ver .env.example).'
+            'Faltan FAIRSHARING_USERNAME y FAIRSHARING_PASSWORD. Definilas en el entorno o en %s (ver .env.example).' % (ENV_FILE,)
         )
     return (FAIRSHARING_USERNAME, FAIRSHARING_PASSWORD)

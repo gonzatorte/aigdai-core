@@ -6,9 +6,19 @@
 
 ## Configuración
 
-La configuración se lee del entorno y, si existe, del archivo `.env` de la raíz (`settings.py`). Las mismas variables las usan los `docker-compose*.yml`, así que las credenciales de desarrollo se definen una sola vez y no se versionan.
+La configuración se lee del entorno y del archivo `.env` de la raíz. Las mismas variables las usan los `docker-compose*.yml`, así que las credenciales de desarrollo se definen una sola vez y no se versionan.
 
 Para empezar: copiar `.env.example` a `.env` y completar los valores.
+
+El archivo se indica siempre de forma explícita, para no depender de lo que cada herramienta busque por su cuenta:
+
+- Python: `settings.py` lo carga con `load_dotenv(dotenv_path=ENV_FILE)`, donde `ENV_FILE` es el `.env` de la raíz del repositorio.
+- Docker: pasar `--env-file`.
+
+```sh
+docker compose --env-file .env up -d
+docker compose --env-file .env -f docker-compose-jena.yml up -d
+```
 
 ## Documentos
 

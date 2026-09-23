@@ -1,4 +1,6 @@
 
+# Las variables ${...} se interpolan desde el archivo .env de esta carpeta.
+# Invocar siempre con el archivo explícito: docker compose --env-file .env ...
 services:
   mongo:
     image: mongo:7.0.5-jammy

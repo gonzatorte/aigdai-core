@@ -1,6 +1,6 @@
 import re
 import onto.populator.common as common
-from onto.populator.utils import owl_all_different, find_or_fail
+from onto.populator.utils import owl_all_different, find_or_fail, gross_date_bounds
 from re3data.extract_from_repo import BLACKLIST
 import onto.cts as cts
 import onto.populator.rdf_types as rdf_types
@@ -52,6 +52,17 @@ class Re3DataSource:
         elif relation_type == 'technical':
             return 'tecnica'
         raise Exception()
+
+    def set_periodo(self, g_repos: Graph, relacion, valor: str, prop, prop_desde, prop_hasta):
+        # El valor conserva la granularidad declarada (gross_date) y se agregan las cotas comparables.
+        g_repos.set((relacion, prop, Literal(valor, datatype=rdf_types.GrossDate)))
+        try:
+            (desde, hasta) = gross_date_bounds(valor)
+        except ValueError:
+            print("Fecha de periodo no interpretable: %s" % (valor,))
+            return
+        g_repos.set((relacion, prop_desde, desde))
+        g_repos.set((relacion, prop_hasta, hasta))
 
     def refine_iterator(self, iterator):
         schema = load_schema()
@@ -130,18 +141,27 @@ class Re3DataSource:
                 g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_literal, Literal(idd_org_wo_schema, datatype=XSD.string)))
                 g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_organizacion, r_instance))
 
-            # ToDo: Aca esta buscando la clave equivocada, responsibilityTypes en vez de inicio de periodo
-            inicio_periodo_de_relacion_con_organizacion = db_instance.get('responsibilityTypes', None)
-            fin_periodo_de_relacion_con_organizacion = db_instance.get('responsibilityTypes', None)
+            inicio_periodo_de_relacion_con_organizacion = db_instance.get('responsibilityStartDate', None)
+            fin_periodo_de_relacion_con_organizacion = db_instance.get('responsibilityEndDate', None)
             for responsibilityType in db_instance.get('responsibilityTypes', []):
                 relacion_repositorio_y_organizacion = rdf_types.RelacionRepositorioYOrganizacion.child_uri_ref("%s-%s-%s" % (id_org, repository_info['id'], responsibilityType))
                 g_repos.set((relacion_repositorio_y_organizacion, RDF.type, rdf_types.RelacionRepositorioYOrganizacion))
                 g_repos.set((relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_repositorio, repositorio))
                 g_repos.set((relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_organizacion, r_instance))
                 if inicio_periodo_de_relacion_con_organizacion:
-                    g_repos.set((relacion_repositorio_y_organizacion, rdf_types.tiene_inicio_periodo_de_relacion_con_organizacion, Literal(inicio_periodo_de_relacion_con_organizacion)))
+                    self.set_periodo(
+                        g_repos, relacion_repositorio_y_organizacion, inicio_periodo_de_relacion_con_organizacion,
+                        rdf_types.tiene_inicio_periodo_de_relacion_con_organizacion,
+                        rdf_types.tiene_inicio_periodo_de_relacion_con_organizacion_desde,
+                        rdf_types.tiene_inicio_periodo_de_relacion_con_organizacion_hasta,
+                    )
                 if fin_periodo_de_relacion_con_organizacion:
-                    g_repos.set((relacion_repositorio_y_organizacion, rdf_types.tiene_fin_periodo_de_relacion_con_organizacion, Literal(fin_periodo_de_relacion_con_organizacion)))
+                    self.set_periodo(
+                        g_repos, relacion_repositorio_y_organizacion, fin_periodo_de_relacion_con_organizacion,
+                        rdf_types.tiene_fin_periodo_de_relacion_con_organizacion,
+                        rdf_types.tiene_fin_periodo_de_relacion_con_organizacion_desde,
+                        rdf_types.tiene_fin_periodo_de_relacion_con_organizacion_hasta,
+                    )
                 if responsibilityType:
                     g_repos.set((relacion_repositorio_y_organizacion, rdf_types.tiene_tipo_de_relacion_con_organizacion, Literal(
                         self.remap_institution_relation_type(responsibilityType),

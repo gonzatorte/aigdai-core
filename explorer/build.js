@@ -4,8 +4,8 @@ const dotenv = require('dotenv');
 
 // Development build
 async function build() {
-  // Load environment variables
-  dotenv.config();
+  // Variables de entorno: siempre desde el .env de esta carpeta, no el que dotenv encuentre por su cuenta.
+  dotenv.config({ path: path.resolve(__dirname, '.env') });
   
   const isWatch = process.argv.includes('--watch');
   const isDev = process.argv.includes('--dev');
