@@ -1,0 +1,9 @@
+PREFIX cri: <http://aigdai.criterios.owl/>
+
+SELECT ?enunciado ?descripcion
+WHERE {
+  ?enunciado cri:extiende_de_criterio+ <http://aigdai.criterios.owl/criterio_de_calidad/fair> .
+  FILTER NOT EXISTS { ?hijo cri:extiende_de_criterio ?enunciado }
+  OPTIONAL { ?enunciado cri:criterio_tiene_descripcion ?descripcion }
+}
+ORDER BY ?enunciado

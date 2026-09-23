@@ -1,0 +1,26 @@
+PREFIX dai: <http://aigdai.tbox.owl/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?repo ?tipo_de_dato ?cantidad ?total
+WHERE {
+  VALUES ?tipo_buscado { <http://aigdai.tbox.owl/tipo_de_dato/audiovisual_data> }
+  ?tipo_de_dato skos:broaderTransitive* ?tipo_buscado .
+  {
+    ?repo dai:repositorio_acepta_tipo_de_contenido ?tipo_de_dato .
+  } UNION {
+    ?est a dai:estadistico_sobre_tipo_de_dato ;
+         dai:estadistico_sobre_tipo_de_dato_tiene_tipo_de_dato ?tipo_de_dato ;
+         dai:estadistico_tiene_repositorio ?repo ;
+         dai:estadistico_generado_en_fecha_hasta ?fecha ;
+         dai:estadistico_tiene_valor ?cantidad ;
+         dai:estadistico_tiene_total ?total .
+    FILTER NOT EXISTS {
+      ?est_nuevo a dai:estadistico_sobre_tipo_de_dato ;
+                 dai:estadistico_sobre_tipo_de_dato_tiene_tipo_de_dato ?tipo_de_dato ;
+                 dai:estadistico_tiene_repositorio ?repo ;
+                 dai:estadistico_generado_en_fecha_desde ?fecha_nueva .
+      FILTER (?fecha_nueva > ?fecha)
+    }
+  }
+}
+ORDER BY ?repo

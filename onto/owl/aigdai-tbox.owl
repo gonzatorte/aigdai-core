@@ -2129,7 +2129,6 @@
         <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
         <Class IRI="relacion_repositorio_y_organizacion"/>
     </DataPropertyDomain>
-    <!-- ToDo: Tendria que ser gross_date o null -->
     <DataPropertyRange>
         <DataProperty IRI="tiene_fin_periodo_de_relacion_con_organizacion"/>
         <Datatype IRI="gross_date"/>
@@ -5611,7 +5610,6 @@
         <DataProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_fin_periodo"/>
         <Class IRI="aplicacion_de_certificacion_a_repositorio"/>
     </DataPropertyDomain>
-    <!-- ToDo: Tendria que ser gross_date o null -->
     <DataPropertyRange>
         <DataProperty IRI="aplicacion_de_certificacion_a_repositorio_tiene_fin_periodo"/>
         <Datatype IRI="gross_date"/>

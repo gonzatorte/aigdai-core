@@ -1146,8 +1146,6 @@ same_individuals = [
 ]
 
 # ToDo: Usar dublicCore:hasPart?
-# ToDo: Usar skos/core#definition?
-#  skos/core#definition es una AnnotationProperty. ¿Se pueden las consultar AnnotationProperty y usar para establecer reglas al igual que una Data u Object Property?
 # ###  https://w3id.org/fair/principles/terms/F3
 # <https://w3id.org/fair/principles/terms/F3> rdf:type owl:NamedIndividual ,
 #                                             rdfs:isDefinedBy <https://w3id.org/fair/principles/latest/F3> ;

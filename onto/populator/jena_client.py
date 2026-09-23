@@ -1,7 +1,7 @@
 import typing
 import httpx
 import rdflib
-from config import JENA_BASE_PATH
+from settings import JENA_BASE_PATH
 
 # from rdflib.plugins.sparql import prepareUpdate
 

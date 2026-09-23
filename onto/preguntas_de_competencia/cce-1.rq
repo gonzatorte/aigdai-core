@@ -1,0 +1,15 @@
+PREFIX dai: <http://aigdai.tbox.owl/>
+PREFIX cri: <http://aigdai.criterios.owl/>
+
+SELECT DISTINCT ?certificacion
+WHERE {
+  VALUES ?repo { <http://aigdai.tbox.owl/repositorio/r3d100013353> }
+  {
+    ?aplicacion dai:aplicacion_de_certificacion_a_repositorio_tiene_repositorio ?repo ;
+                dai:aplicacion_de_certificacion_a_repositorio_tiene_certificacion ?certificacion .
+  } UNION {
+    ?repo dai:repositorio_satisface_criterio ?enunciado .
+    ?enunciado cri:considera_criterio* ?certificacion .
+    FILTER NOT EXISTS { ?certificacion cri:considera_criterio ?otro }
+  }
+}

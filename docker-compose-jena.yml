@@ -8,7 +8,7 @@ services:
 #      FUSEKI_DATASET_1: /opt/ontop/input/aigdai.ttl
 #      FUSEKI_DATASET_2: /opt/ontop/input/aigdai.ttl
 #      JVM_ARGS: "-Xmx2g"
-      ADMIN_PASSWORD: pw123
+      ADMIN_PASSWORD: ${FUSEKI_ADMIN_PASSWORD:?definir FUSEKI_ADMIN_PASSWORD en .env (ver .env.example)}
 #      TDB: 2
     volumes:
       - ./fuseki-data:/fuseki

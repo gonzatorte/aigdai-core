@@ -8,7 +8,7 @@ BASE_PATH = 'https://api.openaire.eu/graph/v1/'
 async def fetch_multiple_doi(doi_list: iter((str, T)), chunk_size: int, sleep: float):
     async with httpx.AsyncClient() as http_client:
         async def fetch_single_doi_local(dd: (str, T)):
-            return await fetch_single_doi(dd[0], http_client)
+            return await fetch_single_org_page(dd[0], http_client)
         async for (metadata, doi_w_context) in run_in_parallel(fetch_single_doi_local, doi_list, chunk_size, sleep):
             yield metadata, doi_w_context
 

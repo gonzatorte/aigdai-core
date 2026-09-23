@@ -1,3 +1,4 @@
+import argparse
 import asyncio
 from timeit import default_timer as timer
 import typing
@@ -364,9 +365,37 @@ def sync_specific_bunch_id(uid_s: [str], update_flow: bool=False):
 def sync_specific_bunch_cursor(cursors: [str], update_flow: bool=False):
     return enrich_generated(update_flow, cursor_bulk(1, 1, 800, 0, cursors, update_flow))
 
-if __name__ == '__main__':
+def _comma_separated(raw: str):
+    return [x.strip() for x in raw.split(',') if x.strip()]
+
+
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description='Extrae repositorios de la API GraphQL de DataCite y los guarda en Mongo.')
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('--from-cursor', default=None,
+                       help='Recorrido completo a partir de este cursor. Sin valor, empieza desde el principio (modo por defecto).')
+    group.add_argument('--ids', type=_comma_separated, default=None,
+                       help='Reprocesar solo estos uid de repositorio, separados por coma.')
+    group.add_argument('--cursors', type=_comma_separated, default=None,
+                       help='Reprocesar solo estos cursores, separados por coma.')
+    parser.add_argument('--update', action='store_true',
+                        help='Actualizar los registros existentes en lugar de insertarlos por primera vez.')
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
+
     async def run():
-        await sync_cursor_walk(None)
-        # await sync_specific_bunch(failed, True)
-        # await sync_specific_bunch_cursor([])
+        if args.ids:
+            await sync_specific_bunch_id(args.ids, args.update)
+        elif args.cursors:
+            await sync_specific_bunch_cursor(args.cursors, args.update)
+        else:
+            await sync_cursor_walk(args.from_cursor, args.update)
+
     asyncio.run(run())
+
+
+if __name__ == '__main__':
+    main()

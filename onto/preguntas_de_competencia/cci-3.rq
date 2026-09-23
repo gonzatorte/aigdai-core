@@ -1,0 +1,25 @@
+PREFIX dai: <http://aigdai.tbox.owl/>
+
+SELECT ?repo ?disciplina ?cantidad ?total
+WHERE {
+  VALUES ?disciplina_buscada { <http://aigdai.tbox.owl/disciplina/111> }  # DFG 111: Social Sciences
+  ?disciplina dai:es_sub_disciplina_de* ?disciplina_buscada .
+  {
+    ?repo dai:repositorio_afin_a_disciplina ?disciplina .
+  } UNION {
+    ?est a dai:estadistico_sobre_disciplina ;
+         dai:estadistico_sobre_disciplina_tiene_disciplina ?disciplina ;
+         dai:estadistico_tiene_repositorio ?repo ;
+         dai:estadistico_generado_en_fecha_hasta ?fecha ;
+         dai:estadistico_tiene_valor ?cantidad ;
+         dai:estadistico_tiene_total ?total .
+    FILTER NOT EXISTS {
+      ?est_nuevo a dai:estadistico_sobre_disciplina ;
+                 dai:estadistico_sobre_disciplina_tiene_disciplina ?disciplina ;
+                 dai:estadistico_tiene_repositorio ?repo ;
+                 dai:estadistico_generado_en_fecha_desde ?fecha_nueva .
+      FILTER (?fecha_nueva > ?fecha)
+    }
+  }
+}
+ORDER BY ?repo

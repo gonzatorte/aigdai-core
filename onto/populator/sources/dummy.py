@@ -232,7 +232,6 @@ class DummySource:
                     gg.set((relacion_repositorio_y_organizacion, RDF.type, rdf_types.RelacionRepositorioYOrganizacion))
                     gg.set((relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_repositorio, repositorio))
                     gg.set((relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_organizacion, org_instance))
-                    # ToDo: Ver como funciona el casteo a date u otros datatypes cuando es un literal
                     inicio_periodo_de_relacion_con_organizacion = responsibility.get('startDate', None)
                     if inicio_periodo_de_relacion_con_organizacion:
                         gg.set((relacion_repositorio_y_organizacion, rdf_types.tiene_inicio_periodo_de_relacion_con_organizacion, Literal(inicio_periodo_de_relacion_con_organizacion, datatype=rdf_types.GrossDate)))

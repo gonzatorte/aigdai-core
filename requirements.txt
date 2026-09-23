@@ -32,6 +32,7 @@ ptyprocess==0.7.0
 pure-eval==0.2.2
 pyDataverse==0.3.1
 pymongo==4.6.2
+python-dotenv==1.0.1
 python-slugify==8.0.4
 pytz==2024.1
 rdflib==7.0.0

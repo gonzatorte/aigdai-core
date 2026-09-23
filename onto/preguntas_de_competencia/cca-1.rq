@@ -1,0 +1,14 @@
+PREFIX dai: <http://aigdai.tbox.owl/>
+
+SELECT ?repo ?org_directa ?politica
+WHERE {
+  VALUES ?institucion { <http://aigdai.tbox.owl/organizacion/ror_030bbe882> }
+  ?institucion dai:es_organizacion_antecesora* ?org_directa .
+  ?org_directa dai:organizacion_esta_activa true .
+  ?relacion dai:relacion_repositorio_y_organizacion_tiene_organizacion ?org_directa ;
+            dai:relacion_repositorio_y_organizacion_tiene_repositorio ?repo .
+  OPTIONAL { ?relacion dai:tiene_fin_periodo_de_relacion_con_organizacion_hasta ?fin }
+  FILTER (!BOUND(?fin) || ?fin >= NOW())
+  OPTIONAL { ?repo dai:repositorio_usa_politica ?politica }
+}
+ORDER BY ?repo

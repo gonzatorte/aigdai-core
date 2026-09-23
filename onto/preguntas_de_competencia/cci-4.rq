@@ -1,0 +1,22 @@
+PREFIX dai: <http://aigdai.tbox.owl/>
+
+SELECT ?repo ?servicio ?detalle ?documentacion
+WHERE {
+  ?repo dai:repositorio_esta_activo true .
+  {
+    ?srv dai:servicio_de_acceso_a_datos_tiene_repositorio ?repo ;
+         dai:servicio_de_acceso_a_datos_tiene_nivel_de_acceso ?detalle .
+    OPTIONAL { ?srv dai:servicio_de_acceso_a_datos_tiene_documentacion ?documentacion }
+    BIND ("control de acceso" AS ?servicio)
+  } UNION {
+    ?cur a dai:aplicacion_de_curaduria_en_repositorio ;
+         dai:evaluacion_de_repositorio_tiene_repositorio ?repo ;
+         dai:aplicacion_de_curaduria_en_repositorio_tiene_nivel_de_curaduria ?detalle .
+    OPTIONAL { ?cur dai:evaluacion_de_repositorio_tiene_url ?documentacion }
+    BIND ("curaduría" AS ?servicio)
+  } UNION {
+    ?repo dai:repositorio_tiene_documentacion ?documentacion .
+    BIND ("soporte y documentación" AS ?servicio)
+  }
+}
+ORDER BY ?repo ?servicio

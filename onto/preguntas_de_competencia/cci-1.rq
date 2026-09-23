@@ -1,0 +1,9 @@
+PREFIX dai: <http://aigdai.tbox.owl/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?r ?n
+WHERE {
+  ?r rdf:type dai:rdd .
+  ?r dai:tiene_nombre_repositorio ?n .
+}
+ORDER BY ASC(?n)

@@ -1,6 +1,6 @@
 from rdflib import URIRef, Literal
 from rdflib.namespace import OWL, XSD
-import config
+import settings
 import typing
 import re
 import calendar
@@ -20,7 +20,7 @@ def reason_on_memory():
     # g_orgs = insert_on_rdf()
     import owlready2 as ow
 
-    ow.JAVA_EXE = config.JAVA_EXE_PATH
+    ow.JAVA_EXE = settings.JAVA_EXE_PATH
     ow.onto_path.append('../owl/')
 
     # from io import BytesIO

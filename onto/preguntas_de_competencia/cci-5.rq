@@ -1,0 +1,16 @@
+PREFIX dai: <http://aigdai.tbox.owl/>
+
+SELECT ?repo ?licencia ?certificacion ?politica
+WHERE {
+  ?repo dai:repositorio_permite_licencia ?licencia .
+  ?licencia dai:tiene_nombre_licencia ?nombre_licencia .
+  FILTER (REGEX(?nombre_licencia, "CC0|CC[- ]?BY", "i"))
+  OPTIONAL {
+    ?aplicacion dai:aplicacion_de_certificacion_a_repositorio_tiene_repositorio ?repo ;
+                dai:aplicacion_de_certificacion_a_repositorio_tiene_certificacion ?certificacion .
+    OPTIONAL { ?aplicacion dai:aplicacion_de_certificacion_a_repositorio_tiene_fin_periodo_hasta ?fin }
+    FILTER (!BOUND(?fin) || ?fin >= NOW())
+  }
+  OPTIONAL { ?repo dai:repositorio_usa_politica ?politica }
+}
+ORDER BY ?repo

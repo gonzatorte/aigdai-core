@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import motor.motor_asyncio
 
 
-MONGO_URL = "mongodb://aigdai-user:aigdai-password@localhost:27017/aigdai?authSource=admin"
+from settings import MONGO_URL
 
 
 def get_database_client():

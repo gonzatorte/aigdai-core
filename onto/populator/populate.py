@@ -1,5 +1,6 @@
-from config import JENA_DATASET
+from settings import JENA_DATASET
 from lib import chunks
+import argparse
 import asyncio
 from onto.populator.common import seed_commons, seed_locaciones
 from onto.populator.jena_client import JenaClient
@@ -16,19 +17,26 @@ from rdflib.namespace import RDF, OWL, XSD
 from rdflib.plugins.sparql import prepareQuery
 from ror.extractor import insert_on_rdf as ror_insert_on_rdf
 
+ALL_SOURCES = ('re3data', 'fairsharing', 'datacite', 'dummy')
+DEFAULT_SOURCES = ('re3data', 'fairsharing', 'datacite')
+ALL_SEEDS = ('commons', 'locaciones')
+DEFAULT_SEEDS = ()
+DEFAULT_REDUCED_LIMIT = 500
+
+
 def walk_dummy(gg: Graph):
     source = DummySource(gg)
     source.process()
 
-def walk_datacite(gg: Graph):
+def walk_datacite(gg: Graph, reduced: bool=False, skip: int=None, limit: int=None):
     database = get_database_client()
 
     source = DataCiteSource(gg)
     source.mappings()
 
     col_datacite = database['datacite']
-    skip_count = 0
-    limit_count = 0
+    skip_count = skip if skip is not None else 0
+    limit_count = limit if limit is not None else (DEFAULT_REDUCED_LIMIT if reduced else 0)
     instances = col_datacite.find({}).sort({'_id': -1}).skip(skip_count).limit(limit_count)
     total = col_datacite.count_documents({})
     for idx, r_info in enumerate(instances):
@@ -37,7 +45,7 @@ def walk_datacite(gg: Graph):
             print("ready %s out of %s" % (idx, total))
 
 
-def walk_fairsharing(gg: Graph, reduced: bool=False):
+def walk_fairsharing(gg: Graph, reduced: bool=False, skip: int=None, limit: int=None):
     database = get_database_client()
 
     source = FairSharingSource(gg)
@@ -47,8 +55,8 @@ def walk_fairsharing(gg: Graph, reduced: bool=False):
         subjects = col_subjects.find({}).sort({'_id': -1})
         source.process_subjects(list(subjects))
 
-    skip_org_count = 0 if not reduced else 100
-    limit_org_count = -1 if not reduced else 500
+    skip_org_count = skip if skip is not None else (100 if reduced else 0)
+    limit_org_count = limit if limit is not None else (500 if reduced else -1)
     col_orgs = database['fs_orgs']
     orgs = col_orgs.find({}).sort({'_id': -1}).skip(skip_org_count).limit(limit_org_count)
     org_list = list(orgs)
@@ -66,8 +74,8 @@ def walk_fairsharing(gg: Graph, reduced: bool=False):
         source.process_keywords(list(keywords))
 
     col_registry = database['fs_registry']
-    skip_count = 0 if not reduced else 1000
-    limit_count = -1 if not reduced else 200
+    skip_count = skip if skip is not None else (1000 if reduced else 0)
+    limit_count = limit if limit is not None else (200 if reduced else -1)
     instances = col_registry.find({}).sort({'_id': -1}).skip(skip_count).limit(limit_count)
     total = col_registry.count_documents({})
     for idx, r_info in enumerate(instances):
@@ -76,11 +84,11 @@ def walk_fairsharing(gg: Graph, reduced: bool=False):
             print("ready %s out of %s" % (idx, total))
 
 
-def walk_re3data(g_repos: Graph, reduced: bool=False):
+def walk_re3data(g_repos: Graph, reduced: bool=False, skip: int=None, limit: int=None):
     database = get_database_client()
     raw_drepo_collection = database['raw_drepo_2']
-    skip_count = 0 if not reduced else 0
-    limit_count = -1 if not reduced else 500
+    skip_count = skip if skip is not None else 0
+    limit_count = limit if limit is not None else (500 if reduced else -1)
     instances = raw_drepo_collection.find({}).sort({'idd': -1}).skip(skip_count).limit(limit_count)
     # instances_count = raw_drepo_collection.count_documents({})
 
@@ -95,22 +103,28 @@ def walk_re3data(g_repos: Graph, reduced: bool=False):
             print("ready %s out of %s" % (counter, total))
 
 
-def refine_and_insert_on_rdf():
+def refine_and_insert_on_rdf(sources=DEFAULT_SOURCES, seeds=DEFAULT_SEEDS, reduced: bool=True, skip: int=None, limit: int=None):
     (g_criterios, ) = seed_criterios()
     (g_disciplinas, ) = seed_disciplinas()
     g_commons = Graph()
     g_commons.bind('', rdf_types.my_ns)
-    # seed_commons(g_commons)
+    if 'commons' in seeds:
+        seed_commons(g_commons)
     g_locaciones = Graph()
     g_locaciones.bind('', rdf_types.my_ns)
-    # seed_locaciones(g_locaciones)
+    if 'locaciones' in seeds:
+        seed_locaciones(g_locaciones)
 
     g_repos = Graph()
     g_repos.bind('', rdf_types.my_ns)
-    # walk_dummy(g_repos)
-    walk_re3data(g_repos, True)
-    walk_fairsharing(g_repos, True)
-    walk_datacite(g_repos)
+    if 'dummy' in sources:
+        walk_dummy(g_repos)
+    if 're3data' in sources:
+        walk_re3data(g_repos, reduced, skip, limit)
+    if 'fairsharing' in sources:
+        walk_fairsharing(g_repos, reduced, skip, limit)
+    if 'datacite' in sources:
+        walk_datacite(g_repos, reduced, skip, limit)
 
     id_repo_same_as_query = prepareQuery("""
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -289,8 +303,8 @@ def extract_ror_involved_orgs(gg: Graph):
     return ror_insert_on_rdf(orgs_types_literals)
 
 
-def serialize_file():
-    g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones = refine_and_insert_on_rdf()
+def serialize_file(**kwargs):
+    g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones = refine_and_insert_on_rdf(**kwargs)
     gg = Graph()
     gg.bind('', rdf_types.my_ns)
     gg += g_commons
@@ -311,8 +325,8 @@ def serialize_file():
     gg.serialize(destination='../owl/all_2.xml', format="xml")
 
 
-async def serialize_jena():
-    g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones = refine_and_insert_on_rdf()
+async def serialize_jena(**kwargs):
+    g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones = refine_and_insert_on_rdf(**kwargs)
     gg = Graph()
     gg.bind('', rdf_types.my_ns)
     gg += g_commons
@@ -368,13 +382,62 @@ async def serialize_schema_jena():
                 print("%s out of %s" % (CHUNKS_SIZE * (idx + 1), schema_items_count))
 
 
-async def serialize_all():
+async def serialize_all(**kwargs):
     await serialize_schema_jena()
-    await serialize_jena()
+    await serialize_jena(**kwargs)
+
+
+def _comma_separated(valid: tuple, name: str):
+    def parse(raw: str):
+        if raw.strip() in ('', 'none'):
+            return ()
+        values = tuple(x.strip() for x in raw.split(',') if x.strip())
+        unknown = [x for x in values if x not in valid]
+        if unknown:
+            raise argparse.ArgumentTypeError('%s inválido(s): %s. Opciones: %s' % (name, ', '.join(unknown), ', '.join(valid)))
+        return values
+    return parse
+
+
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description='Puebla la base de conocimiento a partir de los datos crudos en Mongo.')
+    parser.add_argument('--target', choices=('file', 'jena'), default='jena',
+                        help='Dónde escribir el resultado: archivos XML en onto/owl (file) o el dataset de Jena (jena). Por defecto: jena.')
+    parser.add_argument('--what', choices=('schema', 'data', 'all'), default='all',
+                        help='Qué publicar en Jena: solo el esquema, solo las instancias o ambos. Por defecto: all. Con --target file se ignora.')
+    parser.add_argument('--sources', type=_comma_separated(ALL_SOURCES, 'fuente'), default=DEFAULT_SOURCES,
+                        help='Fuentes a recorrer, separadas por coma (%s). Por defecto: %s.' % (', '.join(ALL_SOURCES), ', '.join(DEFAULT_SOURCES)))
+    parser.add_argument('--seeds', type=_comma_separated(ALL_SEEDS, 'semilla'), default=DEFAULT_SEEDS,
+                        help='Semillas a sembrar, separadas por coma (%s). Por defecto: ninguna.' % ', '.join(ALL_SEEDS))
+    reduced_group = parser.add_mutually_exclusive_group()
+    reduced_group.add_argument('--reduced', dest='reduced', action='store_true', default=True,
+                               help='Recorrer una muestra en lugar de todos los registros (por defecto).')
+    reduced_group.add_argument('--full', dest='reduced', action='store_false',
+                               help='Recorrer todos los registros.')
+    parser.add_argument('--skip', type=int, default=None, help='Saltear los primeros N registros de cada fuente.')
+    parser.add_argument('--limit', type=int, default=None, help='Procesar como máximo N registros por fuente.')
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
+    walk_kwargs = {
+        'sources': args.sources,
+        'seeds': args.seeds,
+        'reduced': args.reduced,
+        'skip': args.skip,
+        'limit': args.limit,
+    }
+    if args.target == 'file':
+        serialize_file(**walk_kwargs)
+        return
+    if args.what == 'schema':
+        asyncio.run(serialize_schema_jena())
+    elif args.what == 'data':
+        asyncio.run(serialize_jena(**walk_kwargs))
+    else:
+        asyncio.run(serialize_all(**walk_kwargs))
 
 
 if __name__ == '__main__':
-    # serialize_file()
-    # asyncio.run(serialize_schema_jena())
-    # asyncio.run(serialize_jena())
-    asyncio.run(serialize_all())
+    main()

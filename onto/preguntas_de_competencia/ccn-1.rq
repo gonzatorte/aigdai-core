@@ -1,0 +1,10 @@
+PREFIX dai: <http://aigdai.tbox.owl/>
+
+SELECT DISTINCT ?repo ?agregador ?disciplina
+WHERE {
+  # DFG 201: Basic Biological and Medical Research
+  ?disciplina dai:es_sub_disciplina_de* <http://aigdai.tbox.owl/disciplina/201> .
+  ?agregador dai:repositorio_afin_a_disciplina ?disciplina .
+  ?repo dai:repositorio_es_cosechado_por_agregador+ ?agregador .
+}
+ORDER BY ?repo

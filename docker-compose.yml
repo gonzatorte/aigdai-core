@@ -4,8 +4,8 @@ services:
     image: mongo:7.0.5-jammy
     restart: no
     environment:
-      MONGO_INITDB_ROOT_USERNAME: aigdai-user
-      MONGO_INITDB_ROOT_PASSWORD: aigdai-password
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-aigdai-user}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:?definir MONGO_PASSWORD en .env (ver .env.example)}
     volumes:
       - './mongo-data:/data/db'
     ports:

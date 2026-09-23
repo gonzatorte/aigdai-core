@@ -1,9 +1,10 @@
+import argparse
 import asyncio
 import typing
 
 import pymongo.collection
 
-from config import FAIRSHARING_USERNAME, FAIRSHARING_PASSWORD
+from settings import require_fairsharing_credentials
 from fairsharing.graphql_client import walk_graphql_registry, walk_graphql_licence, walk_graphql_keywords, \
     walk_graphql_orgs, walk_graphql_subjects, walk_graphql_grants, walk_graphql_object_types, walk_graphql_countries
 
@@ -38,78 +39,131 @@ async def store_entity(coll: pymongo.collection.Collection, walker: typing.Async
         count += 1
 
 
-async def extract_and_store(username: str, password: str):
+GRAPHQL_COLLECTIONS = {
+    'licences': ('fs_licence', lambda: walk_graphql_licence(20, 2, 1)),
+    'keywords': ('fs_keyword', lambda: walk_graphql_keywords(20, 2, 1)),
+    'orgs': ('fs_orgs', lambda: walk_graphql_orgs(100, 2, 1)),
+    'grants': ('fs_grants', lambda: walk_graphql_grants(20, 2, 1)),
+    'subjects': ('fs_subjects', lambda: walk_graphql_subjects(20, 2, 1)),
+    'object_types': ('fs_object_types', lambda: walk_graphql_object_types(20, 2, 1)),
+    'registry': ('fs_registry', lambda: walk_graphql_registry(10, 3, 1)),
+    'countries': ('fs_country', lambda: walk_graphql_countries(20, 2, 1)),
+}
+# Colecciones que se extraen con el cliente REST, no con GraphQL.
+REST_COLLECTIONS = ('databases', 'standards', 'policies')
+ALL_COLLECTIONS = tuple(GRAPHQL_COLLECTIONS) + REST_COLLECTIONS
+DEFAULT_COLLECTIONS = tuple(GRAPHQL_COLLECTIONS)
+DOI_COLLECTIONS = ('fairsharing', 'standards', 'policies')
+
+
+async def store_rest_databases(database, client: FairsharingClient):
+    collection_repo = database['fairsharing']
+    collection_repo.create_index('id', unique=True)
+    with_doi = []
+    for rr in client.iter_databases(size=25, page=1):
+        collection_repo.update_one(
+            {'_id': rr['id']},
+            {'$set': rr},
+            upsert=True,
+        )
+        doi = rr.get('doi', None)
+        if doi:
+            with_doi.append((doi, rr['id']))
+
+    async for (doi_data, (_, idd)) in fetch_multiple_doi(with_doi, 25, 1):
+        collection_repo.update_one(
+            {'_id': idd},
+            {'$set': {'doi_data': doi_data}},
+        )
+
+
+async def store_rest_standards(database, client: FairsharingClient):
+    collection_standard = database['standards']
+    collection_standard.create_index('id', unique=True)
+    for rr in client.iter_standards(size=25, page=1):
+        collection_standard.update_one(
+            {'_id': rr['id']},
+            {'$set': rr},
+            upsert=True,
+        )
+
+
+async def store_rest_policies(database, client: FairsharingClient):
+    collection_policy = database['policies']
+    collection_policy.create_index('id', unique=True)
+    for rr in client.iter_policies(size=25, page=1):
+        collection_policy.update_one(
+            {'_id': rr['id']},
+            {'$set': rr},
+            upsert=True,
+        )
+
+
+REST_STORERS = {
+    'databases': store_rest_databases,
+    'standards': store_rest_standards,
+    'policies': store_rest_policies,
+}
+
+
+async def extract_and_store(collections=DEFAULT_COLLECTIONS, username: str=None, password: str=None):
     database = get_database_client()
-    # client = FairsharingClient(username, password)
 
-    # collection_repo = database['fairsharing']
-    # collection_repo.create_index('id', unique=True)
-    # with_doi = []
-    # for rr in client.iter_databases(size=25, page=1):
-    #     collection_repo.update_one(
-    #         {'_id': rr['id']},
-    #         {'$set': rr},
-    #         upsert=True,
-    #     )
-    #     doi = rr.get('doi', None)
-    #     if doi:
-    #         with_doi.append((doi, rr['id']))
-    #
-    # async for (doi_data, (_, idd)) in fetch_multiple_doi(with_doi, 25, 1):
-    #     collection_repo.update_one(
-    #         {'_id': idd},
-    #         {'$set': {'doi_data': doi_data}},
-    #     )
-    #
-    # collection_standard = database['standards']
-    # collection_standard.create_index('id', unique=True)
-    # for rr in client.iter_standards(size=25, page=1):
-    #     collection_standard.update_one(
-    #         {'_id': rr['id']},
-    #         {'$set': rr},
-    #         upsert=True,
-    #     )
-    #
-    # collection_policy = database['policies']
-    # collection_policy.create_index('id', unique=True)
-    # for rr in client.iter_policies(size=25, page=1):
-    #     collection_policy.update_one(
-    #         {'_id': rr['id']},
-    #         {'$set': rr},
-    #         upsert=True,
-    #     )
+    rest_collections = [c for c in collections if c in REST_COLLECTIONS]
+    if rest_collections:
+        if not username or not password:
+            (username, password) = require_fairsharing_credentials()
+        client = FairsharingClient(username, password)
+        for name in rest_collections:
+            await REST_STORERS[name](database, client)
 
-    fs_licence = database['fs_licence']
-    fs_licence.create_index('id', unique=True)
-    await store_entity(fs_licence, walk_graphql_licence(20, 2, 1))
+    for name in [c for c in collections if c in GRAPHQL_COLLECTIONS]:
+        (collection_name, walker) = GRAPHQL_COLLECTIONS[name]
+        coll = database[collection_name]
+        coll.create_index('id', unique=True)
+        await store_entity(coll, walker())
 
-    fs_keyword = database['fs_keyword']
-    fs_keyword.create_index('id', unique=True)
-    await store_entity(fs_keyword, walk_graphql_keywords(20, 2, 1))
 
-    fs_orgs = database['fs_orgs']
-    fs_orgs.create_index('id', unique=True)
-    await store_entity(fs_orgs, walk_graphql_orgs(100, 2, 1))
+def _comma_separated(valid: tuple, kind: str):
+    def parse(raw: str):
+        if raw.strip() in ('', 'none'):
+            return ()
+        values = tuple(x.strip() for x in raw.split(',') if x.strip())
+        unknown = [x for x in values if x not in valid]
+        if unknown:
+            raise argparse.ArgumentTypeError(
+                '%s invalido(s): %s. Opciones: %s' % (kind, ', '.join(unknown), ', '.join(valid))
+            )
+        return values
+    return parse
 
-    fs_grants = database['fs_grants']
-    fs_grants.create_index('id', unique=True)
-    await store_entity(fs_grants, walk_graphql_grants(20, 2, 1))
 
-    fs_subjects = database['fs_subjects']
-    fs_subjects.create_index('id', unique=True)
-    await store_entity(fs_subjects, walk_graphql_subjects(20, 2, 1))
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description='Extrae los registros de FAIRsharing y los guarda en Mongo.')
+    parser.add_argument(
+        '--collections', type=_comma_separated(ALL_COLLECTIONS, 'coleccion'), default=DEFAULT_COLLECTIONS,
+        help=('Colecciones a extraer, separadas por coma (' + ', '.join(ALL_COLLECTIONS) + '). '
+              'Las ultimas tres usan el cliente REST y piden credenciales. '
+              'Por defecto: ' + ', '.join(DEFAULT_COLLECTIONS) + '.'),
+    )
+    parser.add_argument(
+        '--doi', type=_comma_separated(DOI_COLLECTIONS, 'coleccion'), default=(),
+        help=('Completar los metadatos de DOI faltantes en estas colecciones, separadas por coma ('
+              + ', '.join(DOI_COLLECTIONS) + ').'),
+    )
+    return parser.parse_args(argv)
 
-    fs_object_types = database['fs_object_types']
-    fs_object_types.create_index('id', unique=True)
-    await store_entity(fs_object_types, walk_graphql_object_types(20, 2, 1))
 
-    fs_registry = database['fs_registry']
-    fs_registry.create_index('id', unique=True)
-    await store_entity(fs_registry, walk_graphql_registry(10, 3, 1))
+def main(argv=None):
+    args = parse_args(argv)
 
-    fs_country = database['fs_country']
-    fs_country.create_index('id', unique=True)
-    await store_entity(fs_country, walk_graphql_countries(20, 2, 1))
+    async def run():
+        if args.collections:
+            await extract_and_store(collections=args.collections)
+        for collection_name in args.doi:
+            await add_doi_data(collection_name)
+
+    asyncio.run(run())
 
 
 if __name__ == "__main__":
@@ -139,7 +193,4 @@ if __name__ == "__main__":
         # "Research institute"
         # "Undefined"
         # "University"
-    asyncio.run(extract_and_store(username=FAIRSHARING_USERNAME, password=FAIRSHARING_PASSWORD))
-    # asyncio.run(add_doi_data('fairsharing'))
-    # asyncio.run(add_doi_data('standards'))
-    # asyncio.run(add_doi_data('policies'))
+    main()

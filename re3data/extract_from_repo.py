@@ -1,4 +1,5 @@
 from re3data.extractor import extract, list_repositories, raw_extract
+import argparse
 import asyncio
 from lib import run_in_parallel
 from lib.no_relational_database import get_database_client, get_database_client_async
@@ -242,7 +243,29 @@ async def download_and_store_refined():
                 drepo_collection.insert_one(repository_info)
 
 
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description='Descarga los registros de re3data y los refina hacia la colección drepo.')
+    parser.add_argument('--stage', choices=('raw', 'refine', 'all', 'direct'), default='refine',
+                        help=('raw: descarga los XML crudos a raw_drepo_2. '
+                              'refine: refina lo ya descargado hacia drepo_2 y completa los DOI (por defecto). '
+                              'all: hace raw y después refine. '
+                              'direct: camino viejo que descarga y refina en un solo paso hacia drepo.'))
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
+
+    async def run():
+        if args.stage in ('raw', 'all'):
+            await download_and_store_raw()
+        if args.stage in ('refine', 'all'):
+            await raw_and_store_refined()
+        if args.stage == 'direct':
+            await download_and_store_refined()
+
+    asyncio.run(run())
+
+
 if __name__ == '__main__':
-    # asyncio.run(download_and_store_refined())
-    # asyncio.run(download_and_store_raw())
-    asyncio.run(raw_and_store_refined())
+    main()

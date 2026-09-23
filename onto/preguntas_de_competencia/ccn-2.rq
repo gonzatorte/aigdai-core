@@ -1,0 +1,28 @@
+PREFIX dai: <http://aigdai.tbox.owl/>
+
+SELECT DISTINCT ?repo ?agregador ?software ?protocolo_de_cosecha ?protocolo_de_metricas
+WHERE {
+  # DFG 201: Basic Biological and Medical Research
+  ?disciplina dai:es_sub_disciplina_de* <http://aigdai.tbox.owl/disciplina/201> .
+  ?agregador a dai:agregador ;
+             dai:repositorio_afin_a_disciplina ?disciplina .
+  ?repo a dai:repositorio_de_investigacion .
+  FILTER (?repo != ?agregador)
+  FILTER NOT EXISTS { ?repo dai:repositorio_es_cosechado_por_agregador ?agregador }
+  OPTIONAL {
+    ?agregador dai:repositorio_asociado_a_software ?software .
+    ?repo dai:repositorio_asociado_a_software ?software .
+  }
+  OPTIONAL {
+    ?agregador dai:consume_protocolo_de_cosecha ?protocolo_de_cosecha .
+    ?repo dai:soporta_protocolo_de_cosecha ?protocolo_repo_c .
+    ?protocolo_repo_c dai:extiende_de_estandar* ?protocolo_de_cosecha .
+  }
+  OPTIONAL {
+    ?agregador dai:consume_protocolo_de_metricas ?protocolo_de_metricas .
+    ?repo dai:soporta_protocolo_de_metricas ?protocolo_repo_m .
+    ?protocolo_repo_m dai:extiende_de_estandar* ?protocolo_de_metricas .
+  }
+  FILTER (BOUND(?software) || BOUND(?protocolo_de_cosecha) || BOUND(?protocolo_de_metricas))
+}
+ORDER BY ?repo

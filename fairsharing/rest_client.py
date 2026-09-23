@@ -2,7 +2,7 @@ from typing import Any, Iterable, Mapping, MutableMapping, Optional
 import requests
 import asyncio
 from urllib.parse import urlparse, parse_qs
-from config import FAIRSHARING_USERNAME, FAIRSHARING_PASSWORD
+from settings import FAIRSHARING_USERNAME, FAIRSHARING_PASSWORD
 
 from lib.no_relational_database import get_database_client
 from doi import fetch_multiple_doi
