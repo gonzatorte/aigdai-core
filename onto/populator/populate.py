@@ -394,28 +394,28 @@ def _comma_separated(valid: tuple, name: str):
         values = tuple(x.strip() for x in raw.split(',') if x.strip())
         unknown = [x for x in values if x not in valid]
         if unknown:
-            raise argparse.ArgumentTypeError('%s inválido(s): %s. Opciones: %s' % (name, ', '.join(unknown), ', '.join(valid)))
+            raise argparse.ArgumentTypeError('%s invalid: %s. Options: %s' % (name, ', '.join(unknown), ', '.join(valid)))
         return values
     return parse
 
 
 def parse_args(argv=None):
-    parser = argparse.ArgumentParser(description='Puebla la base de conocimiento a partir de los datos crudos en Mongo.')
+    parser = argparse.ArgumentParser(description='Populates the knowledge base from the raw data in Mongo.')
     parser.add_argument('--target', choices=('file', 'jena'), default='jena',
-                        help='Dónde escribir el resultado: archivos XML en onto/owl (file) o el dataset de Jena (jena). Por defecto: jena.')
+                        help='Where to write the result: XML files in onto/owl (file) or the Jena dataset (jena). Default: jena.')
     parser.add_argument('--what', choices=('schema', 'data', 'all'), default='all',
-                        help='Qué publicar en Jena: solo el esquema, solo las instancias o ambos. Por defecto: all. Con --target file se ignora.')
-    parser.add_argument('--sources', type=_comma_separated(ALL_SOURCES, 'fuente'), default=DEFAULT_SOURCES,
-                        help='Fuentes a recorrer, separadas por coma (%s). Por defecto: %s.' % (', '.join(ALL_SOURCES), ', '.join(DEFAULT_SOURCES)))
-    parser.add_argument('--seeds', type=_comma_separated(ALL_SEEDS, 'semilla'), default=DEFAULT_SEEDS,
-                        help='Semillas a sembrar, separadas por coma (%s). Por defecto: ninguna.' % ', '.join(ALL_SEEDS))
+                        help='What to publish in Jena: only the schema, only the instances or both. Default: all. Ignored with --target file.')
+    parser.add_argument('--sources', type=_comma_separated(ALL_SOURCES, 'source'), default=DEFAULT_SOURCES,
+                        help='Sources to walk, comma separated (%s). Default: %s.' % (', '.join(ALL_SOURCES), ', '.join(DEFAULT_SOURCES)))
+    parser.add_argument('--seeds', type=_comma_separated(ALL_SEEDS, 'seed'), default=DEFAULT_SEEDS,
+                        help='Seeds to sow, comma separated (%s). Default: none.' % ', '.join(ALL_SEEDS))
     reduced_group = parser.add_mutually_exclusive_group()
     reduced_group.add_argument('--reduced', dest='reduced', action='store_true', default=True,
-                               help='Recorrer una muestra en lugar de todos los registros (por defecto).')
+                               help='Walk a sample instead of all the records (default).')
     reduced_group.add_argument('--full', dest='reduced', action='store_false',
-                               help='Recorrer todos los registros.')
-    parser.add_argument('--skip', type=int, default=None, help='Saltear los primeros N registros de cada fuente.')
-    parser.add_argument('--limit', type=int, default=None, help='Procesar como máximo N registros por fuente.')
+                               help='Walk all the records.')
+    parser.add_argument('--skip', type=int, default=None, help='Skip the first N records of each source.')
+    parser.add_argument('--limit', type=int, default=None, help='Process at most N records per source.')
     return parser.parse_args(argv)
 
 

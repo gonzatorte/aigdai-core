@@ -54,7 +54,7 @@ def counting_analysis():
     ])
 
 def re3data_dataproviders():
-    # Cuantos son al menos data providers y cuantos directamente no declaran nada?
+    # How many are at least data providers, and how many declare nothing at all?
     database = get_database_client()
     collection = database['drepo']
     not_declared_providers = collection.count_documents({'isServiceProvider': False, 'isDataProvider': False})
@@ -65,7 +65,7 @@ def re3data_dataproviders():
     print(not_declared_providers, only_service_providers, only_data_providers, service_and_data_providers, service_or_data_providers)
 
 def re3data_doi():
-    # Cuantos usan DOI y cuantos usan DOI junto con otro sistema de identificadores?
+    # How many use DOI, and how many use DOI together with another identifier system?
     database = get_database_client()
     collection = database['drepo']
     not_declared = collection.count_documents({'pidSystems.0': {'$exists': False}}) # ~500
@@ -78,7 +78,7 @@ def re3data_doi():
     print(not_declared, uses_at_least_doi, uses_only_doi)
 
 def re3data_certificated():
-    # Cuantos tienen certificados?
+    # How many have certificates?
     database = get_database_client()
     re3data_coll = database['drepo']
 
@@ -91,14 +91,14 @@ def re3data_certificated():
 
     not_or_none_declared = re3data_coll.count_documents({'certificates.0': {'$exists': False}}) # ~2923
     not_declared = re3data_coll.count_documents({'certificates': {'$exists': False}}) # ~40
-    # cuantos tienen solo other?
+    # how many have only other?
     only_other = re3data_coll.count_documents({'$and': [
         {'certificates': {'$all': ['other']}},
         {'certificates': {'$size': 1}},
     ]}) # ~124
-    # cuantos tienen uno que sea other?
+    # how many have one that is other?
     some_but_other = re3data_coll.count_documents({'certificates': 'other'}) # ~168
-    # cuantos tienen uno que no sea other?
+    # how many have one that is not other?
     some_but_not_other = re3data_coll.count_documents({"certificates.0": {'$exists': True}, "certificates": {'$ne': 'other'}}) # ~105
     print(not_or_none_declared, not_declared, only_other, some_but_other, some_but_not_other)
 
@@ -116,11 +116,11 @@ def re3data_certificated():
     #  'wds',
 
 def re3data_openness():
-    # cuantos se los puede considerar abiertos?
+    # how many can be considered open?
     database = get_database_client()
     re3data_coll = database['drepo']
 
-    # tienen al menos un access de tipo open (en database o data)
+    # they have at least one access of type open (in database or data)
     no_access_declared = re3data_coll.count_documents({'$and': [{'dataAccess.0': {'$exists': False}}, {'databaseAccess': {'$exists': False}}]})
     print(no_access_declared) # 4
     no_database_access_declared = re3data_coll.count_documents({'$and': [{'databaseAccess': {'$exists': False}}]})
@@ -134,7 +134,7 @@ def re3data_openness():
     only_open_access = re3data_coll.count_documents({'dataAccess': {'$size': 1, '$elemMatch': {'type': 'open'}}})
     print(only_open_access) # 1452
 
-    # Ver si el estado CLOSED se relacion más a que el servidor esté offline en vez de los temas de permisos
+    # Check whether the CLOSED status relates more to the server being offline than to permission issues
     re3data_coll.count_documents({'databaseAccess.type': 'closed'})  # 22
     re3data_coll.count_documents({'databaseAccess.type': 'restricted'})  # 161
 
@@ -151,11 +151,11 @@ def re3data_openness():
     print(fee_required) # 224
 
 def re3data_licences():
-    # cuantos se los puede considerar abiertos?
+    # how many can be considered open?
     database = get_database_client()
     re3data_coll = database['drepo']
 
-    # no tienen informacion de licencia (ni en database ni data)
+    # they have no licence information (neither in database nor data)
     no_licence_info = re3data_coll.count_documents({'$and': [{'databaseLicense.0': {'$exists': False}}, {'dataLicense.0': {'$exists': False}}]})
     print(no_licence_info) # 54
     no_db_licence_info = re3data_coll.count_documents({'$and': [{'databaseLicense.0': {'$exists': False}}]})
@@ -163,7 +163,7 @@ def re3data_licences():
     no_data_licence_info = re3data_coll.count_documents({'$and': [{'dataLicense.0': {'$exists': False}}]})
     print(no_data_licence_info) # 55
 
-    # sacar todos los enumerados posibles de licence (tomando el name lowercase o la url)
+    # extract all the possible enumerated values of licence (taking the lowercase name or the url)
     record_w_licence_info = list(re3data_coll.find({}, {'databaseLicense': True, 'dataLicense': True, 'idd': True}))
     record_w_licence_info_normalized = [
         [y['name'].lower() for y in x.get('databaseLicense', [])] + [y['name'].lower() for y in
@@ -185,7 +185,7 @@ def re3data_licences():
     #  'other',
     #  'public domain',
     #  'rl',
-    # tienen al menos una licencia abierta aceptada (en data o database)
+    # they have at least one accepted open licence (in data or database)
     open_licences = {
         'apache license 2.0',
         'bsd',
@@ -238,7 +238,7 @@ def re3data_licences():
     # [ll for ll in other_licences if 'creativecommons' in ll]
 
 def re3data_metadata_standards():
-    # cuales son los posibles enumerados de metadataStandards?
+    # what are the possible enumerated values of metadataStandards?
     database = get_database_client()
     collection = database['drepo']
     count_w_metadata_standards = collection.count_documents({'metadataStandards.0': {'$exists': True}})
@@ -286,11 +286,11 @@ def re3data_metadata_standards():
     print(record_w_other2_metadata_standard) # 217
 
 def re3data_keywords():
-    # cuales son los posibles enumerados de keywords?
+    # what are the possible enumerated values of keywords?
     database = get_database_client()
     collection = database['drepo']
     count_w_keywords = collection.count_documents({'keywords.0': {'$exists': True}})
-    # cuantas keywords suele tener un repositorio? Demasiadas keywords dejan de ser realmente de ayuda...
+    # how many keywords does a repository usually have? Too many keywords stop being really helpful...
     print(count_w_keywords) # 3149
     count_w_keywords = list(collection.aggregate([{'$match': {'keywords': {'$exists': True}}}, {'$addFields': {'ks': {'$size': '$keywords'}}}, {'$group': {'_id': '$idd', 'kc': {'$sum': '$ks'}}}, {'$sort': {'kc': 1}}]))
     record_keyword = list(collection.find({}, {'keywords': True}))
@@ -300,7 +300,7 @@ def re3data_keywords():
     print(len(keywords)) # 10756
 
 def re3data_institutions():
-    # cuales son los posibles enumerados de responsibilityType?
+    # what are the possible enumerated values of responsibilityType?
     database = get_database_client()
     collection = database['drepo']
     count_w_institutions = collection.count_documents({'institutions.0': {'$exists': True}})
@@ -322,7 +322,7 @@ def re3data_institutions():
     #  new Set(db.drepo.aggregate([{$project: {'institutions': 1}}, {$unwind: '$institutions'},{$project: {'institutions.id': 1}}]).toArray().map(a => a.institutions.id.replace(' ', ':').split(/[:.;]/)[0]))
 
 def re3data_policies():
-    # cuales son los posibles enumerados de politicas?
+    # what are the possible enumerated values of policies?
     database = get_database_client()
     collection = database['drepo']
     count_w_metadata_policies = collection.count_documents({'policies.0': {'$exists': True}})
@@ -335,7 +335,7 @@ def re3data_policies():
     print(len(policies)) # 3098 (vs 5149 sin repetir, el indice de reutilizacion es bajo)
 
 def re3data_software():
-    # cuantos de los repositorios tienen 1 solo software NO other?
+    # how many of the repositories have a single software that is NOT other?
     database = get_database_client()
     collection = database['drepo']
     count_w_softwares = collection.count_documents({'softwareNames.0': {'$exists': True}})
@@ -380,7 +380,7 @@ def record_is_accessible():
     ]
     api_types = set(sum(api_types_by_repo, []))
     print(api_types)
-    # acorde a lo declarado, son todos estos los tipos
+    # according to what is declared, these are all the types
     # {'ftp',
     #  'netcdf',
     #  'oai-pmh',
@@ -450,21 +450,21 @@ def datacite_re3data_integration_analysis():
     ids = [(x[0], extract_re3data_id(x[1])) for x in urls if extract_re3data_id(x[1]) is not None]
     print(urls_count, len(ids))
     print(ids)
-    # En realidad la culpa de que no tengan el DOI en la api de re3data es de re3data, pues ellos figuran como el publisher de ese DOI...
+    # Actually, re3data is to blame for them not having the DOI in the re3data api, since re3data is listed as the publisher of that DOI...
     # ToDo: Compare fieldOfScience with the repository's subject?
 #     collection.find_one({'uid': ids[6][0]})['datacite_graphql_data']['subject']
 #     collection2 = database['drepo']
 #     collection2.find_one({'idd': ids[6][1]})['subjects']
 
 def fields_of_science_analysis_part2():
-    # Ver si los disciplinarios tienen pocas disciplinas y si en cambio los institucionales tienen muchas...?
-    # Corroborar que las disciplinas de re3data se mapean a fieldOfScienceRepository
-    # los datasets solo pueden pertener a 1 disciplina? En ese caso, el conteo de datasets debería ser menor que la suma de cada categoría
-    #   o hay datasets que NO tienen declarada disciplina
+    # Check whether disciplinary ones declare few disciplines while institutional ones declare many...?
+    # Confirm that re3data disciplines map to fieldOfScienceRepository
+    # can datasets belong to only 1 discipline? In that case the dataset count should be lower than the sum of each category
+    #   or are there datasets with NO declared discipline
     pass
 
 def fields_of_science_analysis():
-    # Obtener todos los valores posibles de fieldOfScience (y luego ver de mapearlos a frascatti/OECD)
+    # Get all the possible values of fieldOfScience (and then see about mapping them to frascatti/OECD)
 
     database = get_database_client()
     collection = database['datacite']
@@ -485,7 +485,7 @@ def fields_of_science_analysis():
         c: len(list(filter(lambda xx: xx[1][0] == c[0] and idx_c != xx[0], subjects_enumerated)))
         for (idx_c, c) in subjects_enumerated
     }
-    # Assert que todos tienen 0
+    # Assert that all of them have 0
     print(name_duplicated_subjects)
     print(subjects_pairs)
 
@@ -587,7 +587,7 @@ def fields_of_science_analysis():
     #     },
     # ])
 
-    # Hay alguno donde el combined sea vacio pero los otros no?
+    # Is there any where combined is empty but the others are not?
     # db.datacite.count(
     # 	{
     # 		$and: [
@@ -598,7 +598,7 @@ def fields_of_science_analysis():
     # 	}
     # )
 
-    # Esto se podria hacer con un project mejor...
+    # This could be done with a better project...
     # db.datacite.aggregate([
     #     {
     #         $group: {
@@ -616,8 +616,8 @@ def fields_of_science_analysis():
     # ]).toArray()
 
 
-    # mirar las facetas de certificates, years, repositoryTypes, software, etc
-    # que son los members?
+    # look at the facets of certificates, years, repositoryTypes, software, etc
+    # what are the members?
 
 def known_repos():
     database = get_database_client()
@@ -639,7 +639,7 @@ def known_repos():
     id_datacite_unr = '9z2c8d3' # re3data = 'r3d100013960'
     id_datacite_lattes = '51qc79x' # re3data not found
 
-    id_datacite_redata = 'r3d100014380' # aun no indexado por datacite?
+    id_datacite_redata = 'r3d100014380' # not indexed by datacite yet?
 
     compare_data_sources(id_datacite_unr)
     compare_data_sources(id_datacite_lattes)
@@ -714,7 +714,7 @@ def fairsharing_enums():
     with_re3data_cross_refs = fairsharing.count_documents({'record_type': {'$in': ['knowledgebase_and_repository', 'repository']}, 'metadata.cross_references.portal': 're3data'})
     print(with_re3data_cross_refs) # 685
 
-    # revisar cuantos estan activos. Ver el status, deprecation_reason, deprecation_date, tombstone, resource_sustainability
+    # check how many are active. See status, deprecation_reason, deprecation_date, tombstone, resource_sustainability
     deprecated_repos = fairsharing.count_documents({
         'record_type': {'$in': ['knowledgebase_and_repository', 'repository']},
         'metadata.status': 'deprecated',
@@ -758,7 +758,7 @@ def fairsharing_enums():
     })
     print(active_repos) # 1111
 
-    # revisar cuantos son abiertos, o sea, cuantos tienen en data_access_condition o data_deposition_condition el valor controlled?
+    # check how many are open, that is, how many have controlled in data_access_condition or data_deposition_condition?
     no_open_access_repos = fairsharing.count_documents({
         'record_type': {'$in': ['knowledgebase_and_repository', 'repository']},
         'metadata.data_access_condition.type': 'controlled',
@@ -770,7 +770,7 @@ def fairsharing_enums():
     })
     print(no_open_upload_repos) # 388
 
-    # revisar cuantos son de educacion
+    # check how many are from education
     # fairsharing.count_documents({'doi_data.attributes.subjects': {'$exists': False}})
     education_subjects = ['Education Science', 'Applied Linguistics', 'Educational Psychologyncit', 'Professional Socialization', 'Research on Teaching, Learning and Training']
     education_count = fairsharing.find({
@@ -780,7 +780,7 @@ def fairsharing_enums():
         'metadata.certifications_and_community_badges.0': {'$exists': True}
     })
     print(education_count) # 17
-    # revisar tambien los multidisciplinarios
+    # check the multidisciplinary ones as well
     education_records = list(fairsharing.find({
         'record_type': {'$in': ['knowledgebase_and_repository', 'repository']},
         # 'doi_data.attributes.subjects': {'$exists': False},
@@ -789,7 +789,7 @@ def fairsharing_enums():
     }))
     print([(x['metadata']['name'], x['metadata']['status'], x['countries']) for x in education_records])
 
-    # revisar cuantos estan certificados
+    # check how many are certified
     bb = [
         {'id': x['id'], 'certs': [re.sub(r"\s+", "", y['name'].lower()).strip() for y in x['metadata']['certifications_and_community_badges']]}
         # [re.sub(r"\s+", " ", y['name'].lower()).strip() for y in x['metadata']['certifications_and_community_badges']]

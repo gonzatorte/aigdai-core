@@ -17,7 +17,7 @@ Against the Fuseki endpoint (see `docker-compose-jena.yml`):
 
 ```sh
 curl -s http://localhost:3030/<dataset>/query \
-  --data-urlencode "query@onto/preguntas_de_competencia/cci-1.rq" \
+  --data-urlencode "query@onto/competency_questions/cci-1.rq" \
   -H 'Accept: text/csv'
 ```
 

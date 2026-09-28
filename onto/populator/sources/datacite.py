@@ -239,7 +239,7 @@ class DataCiteSource:
                     continue
         if 'licenses' in estadisticos:
             for itm in estadisticos['licenses']:
-                # ojo con __missing__
+                # beware of __missing__
                 if itm['id'] == '__missing__':
                     continue
                 if itm['id'] == 'cc-by-3.0':

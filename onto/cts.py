@@ -880,13 +880,13 @@ criterios_de_calidad = [
     #  ('din_31644', 'German Institute for Standardization - Criteria for trustworthy digital archives', 'https://www.dinmedia.de/en/standard/din-31644/147058907'),
     #  The nestor seal can be obtained as a standalone solution. In 2010, the three initiatives of DIN, ISO and the Data Seal of Approval agreed to incorporate their approaches into a European certification procedure. Accordingly, the nestor seal leads to the acquisition of "extended certification". However, these approaches were no longer pursued after the initial declaration of intent.
     #  The extended self-assessment process for digital archives developed and offered by nestor on the basis of the DIN 31644 standard “Criteria for trustworthy digital archives” offers digital archives a harmonised and practical method of checking whether they are trustworthy. If the reviewed assessment yields a positive result they are entitled to publicise this by using the nestor Seal for Trustworthy Digital Archives. A fee of 500 € applies. Further information is available in the Explanatory Notes on the nestor seal below.
-    ('nestor_seal', 'Network of Expertise in long-term Storage and Accessibility of Digital Resources in Germany - Seal for Trustworthy Digital Archives', 'https://www.langzeitarchivierung.de/Webs/nestor/EN/Zertifizierung/nestor_Siegel/siegel.html'), # Es lo mismo que DIN-31644
-    ('trac', 'Trustworthy Repositories Audit & Certification', 'https://www.crl.edu/sites/default/files/d6/attachments/pages/trac_0.pdf'), # tb https://www.crl.edu/archiving-preservation/digital-archives/metrics-assessing-and-certifying/trac . El iso16363 ya la incluye
-    ('efacdr', 'European Framework for Audit and Certification of Digital Repositories', None), # Es el mismo que otro mencionado mas usualmente
+    ('nestor_seal', 'Network of Expertise in long-term Storage and Accessibility of Digital Resources in Germany - Seal for Trustworthy Digital Archives', 'https://www.langzeitarchivierung.de/Webs/nestor/EN/Zertifizierung/nestor_Siegel/siegel.html'), # It is the same as DIN-31644
+    ('trac', 'Trustworthy Repositories Audit & Certification', 'https://www.crl.edu/sites/default/files/d6/attachments/pages/trac_0.pdf'), # also https://www.crl.edu/archiving-preservation/digital-archives/metrics-assessing-and-certifying/trac . iso16363 already includes it
+    ('efacdr', 'European Framework for Audit and Certification of Digital Repositories', None), # It is the same as another one more commonly mentioned
 ]
 
-# Si lo extiende, entonces lo considera
-# target_criterio, criterios a los que extiende, criterios que considera
+# If it extends it, then it considers it
+# target_criterio, criteria it extends, criteria it considers
 criterio_de_calidad_extiende_de = [
     ('coar_v1', [], ['cts_2022', 'trust', 'fair', 'plan_s', 'nih', 'plos', 'dcrsdr']),
     ('coar_v2', ['coar_v1'], ['cts_2022', 'trust', 'fair', 'plan_s', 'nih', 'plos', 'dcrsdr']),
@@ -930,7 +930,7 @@ criterio_de_calidad_extiende_de = [
 
 fair_maturity_models = [
     ('rda_fair_maturity_model', 'https://zenodo.org/records/3909563'),
-    ('fsf_fair_maturity_model', 'https://zenodo.org/records/6461229'), # Una lista accionable en https://www.fairsfair.eu/fairsfair-data-object-assessment-metrics-request-comments
+    ('fsf_fair_maturity_model', 'https://zenodo.org/records/6461229'), # An actionable list at https://www.fairsfair.eu/fairsfair-data-object-assessment-metrics-request-comments
     ('dsm_fair_maturity_model', 'https://fairplus.github.io/Data-Maturity/'),
 ]
 
@@ -1115,7 +1115,7 @@ metricas_cts_2022 = [
 #  See https://peta-pico.github.io/FAIR-nanopubs/principles/ontology.xml
 #  Accesible same as fairvoc:Accesible, and likewise with the other principles
 #  It is only necessary to say that they are a quality criterion
-# Prefix con https://w3id.org/fair/principles/terms/
+# Prefix with https://w3id.org/fair/principles/terms/
 metricas_fair = [
     ('fair_F',''),
     ('fair_A',''),

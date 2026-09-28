@@ -2,7 +2,7 @@
 
 ## 1. CCE-1 returns nothing on its criteria path
 
-The CCE-1 question (`onto/preguntas_de_competencia/cce-1.rq`) joins two paths: the certifications applied to the repository and the quality criteria the repository satisfies. The second path never returns results, for three reasons:
+The CCE-1 question (`onto/competency_questions/cce-1.rq`) joins two paths: the certifications applied to the repository and the quality criteria the repository satisfies. The second path never returns results, for three reasons:
 
 1. **`repositorio_satisface_criterio` is not populated.** No source writes that property; it only exists in the TBox (with the chain `repositorio_satisface_criterio ∘ inv(extiende_de_criterio)`, which would propagate the satisfaction of a criterion to its statements).
 2. **Certifications and criteria are not linked.** datacite generates `certificacion/cts` (class `certificacion`, a subclass of `criterio_de_calidad`) and the criteria population generates `criterio_de_calidad/cts_2022` with its statements. They are distinct individuals with no relation between them, so having the certification does not connect to its statements. The populator already flags this: `ToDo: I have to declare at least all the certifications (not "other") from re3data and datacite as quality criteria` (`onto/populator/populate.py`).

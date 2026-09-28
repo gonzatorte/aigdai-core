@@ -10,7 +10,7 @@ capacities_tree = (['soporte'], 'capacidad_de_rdd', 'capacidad de rdd', 'capacit
     (['soporte'], 'servicio_de_curaduria', 'curatorial service', 'servicio de curaduría', []),
     (['soporte'], 'servicio_de_versionado', 'versioning service', 'servicio de versionado', []),
     (['soporte'], 'lenguaje_de_interfaz', 'gui language', 'lenguaje de interfaz', []), # ToDo: Subclasses are not declared explicitly...
-    # Se puede soportar declarar (en metadatos), o se puede soportar alojar... o que otra accion relativa a un repositorio? curar? adminstrar? previsualizar? cosechar? que relacion hay entre esas acciones?
+    # Hosting can be supported, or declaring (in metadata) can be supported... or what other action related to a repository? curating? administering? previewing? harvesting? what relation is there between those actions?
     (['soporte', 'declarar'], 'caracteristica_de_cdd' 'dataset characteristic', 'caracteristica de cdd', [
         ('tipo_de_dato', '', '', []), # ToDo: Reify
         ('formato_de_archivo', '', '', []), # ToDo: Relation with tipo_de_dato?

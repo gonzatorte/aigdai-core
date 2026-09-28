@@ -8,7 +8,7 @@ from re3data.xsd_transform import load_schema, refine_repository_info
 from doi import fetch_multiple_doi
 import re
 
-# mal formateados de alguna manera (posiblemente por tags repetidos o atributos requeridos faltantes). Errores del estilo:
+# Repositories that are malformed in some way (possibly because of repeated tags or missing required attributes). Errors of the form:
 #   Unexpected child with tag 'dataLicense' at position XX. Tag 'dataAccess' expected.
 #   Unexpected child with tag 'keyword' at position XX. Tag 'providerType' expected.
 #   Unexpected child with tag 'size' at position XX. Tag 'type' expected.
@@ -244,12 +244,12 @@ async def download_and_store_refined():
 
 
 def parse_args(argv=None):
-    parser = argparse.ArgumentParser(description='Descarga los registros de re3data y los refina hacia la colección drepo.')
+    parser = argparse.ArgumentParser(description='Downloads the re3data records and refines them into the drepo collection.')
     parser.add_argument('--stage', choices=('raw', 'refine', 'all', 'direct'), default='refine',
-                        help=('raw: descarga los XML crudos a raw_drepo_2. '
-                              'refine: refina lo ya descargado hacia drepo_2 y completa los DOI (por defecto). '
-                              'all: hace raw y después refine. '
-                              'direct: camino viejo que descarga y refina en un solo paso hacia drepo.'))
+                        help=('raw: downloads the raw XML into raw_drepo_2. '
+                              'refine: refines what was already downloaded into drepo_2 and fills in the DOIs (default). '
+                              'all: does raw and then refine. '
+                              'direct: old path that downloads and refines in a single step into drepo.'))
     return parser.parse_args(argv)
 
 

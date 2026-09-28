@@ -106,8 +106,8 @@ def get_datatype_from_ontology(name: str) -> ParentURIRef:
 
 
 def gross_date_bounds(value: str | datetime.datetime) -> typing.Tuple[Literal, Literal]:
-    # Cotas (_desde, _hasta) en xsd:dateTime de una fecha de granularidad variable (YYYY, YYYY-MM, YYYY-MM-DD)
-    # o de un instante. Las fechas sin zona horaria se interpretan en UTC; un datetime sin zona, en hora local.
+    # Bounds (_desde, _hasta) in xsd:dateTime of a date with variable granularity (YYYY, YYYY-MM, YYYY-MM-DD)
+    # or of an instant. Dates without a time zone are interpreted as UTC; a datetime without one, as local time.
     if isinstance(value, datetime.datetime):
         instant = value.astimezone(datetime.timezone.utc)
         return (Literal(instant, datatype=XSD.dateTime), Literal(instant, datatype=XSD.dateTime))

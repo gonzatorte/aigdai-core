@@ -910,6 +910,56 @@
     <FunctionalDataProperty>
         <DataProperty IRI="id_de_resultado_de_investigacion_tiene_literal"/>
     </FunctionalDataProperty>
+
+    <Declaration>
+        <ObjectProperty IRI="resultado_de_investigacion_es_relativo_a_disciplina"/>
+    </Declaration>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>resultado_de_investigacion_es_relativo_a_disciplina</IRI>
+        <Literal xml:lang="es">resultado de investigacion es relativo a disciplina</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>resultado_de_investigacion_es_relativo_a_disciplina</IRI>
+        <Literal xml:lang="en">research output is related to subject</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:sinonimo"/>
+        <IRI>resultado_de_investigacion_es_relativo_a_disciplina</IRI>
+        <Literal xml:lang="es">disciplina del resultado de investigacion</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:sinonimo"/>
+        <IRI>resultado_de_investigacion_es_relativo_a_disciplina</IRI>
+        <Literal xml:lang="en">subject of research output</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>resultado_de_investigacion_es_relativo_a_disciplina</IRI>
+        <Literal xml:lang="es">Relaciona un resultado de investigación con una disciplina sobre la que la investigación se refiere.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>resultado_de_investigacion_es_relativo_a_disciplina</IRI>
+        <Literal xml:lang="en">Links a research output to a discipline the research is about.</Literal>
+    </AnnotationAssertion>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="resultado_de_investigacion_es_relativo_a_disciplina"/>
+        <Class IRI="resultado_de_investigacion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="resultado_de_investigacion_es_relativo_a_disciplina"/>
+        <Class IRI="disciplina"/>
+    </ObjectPropertyRange>
+    <SubObjectPropertyOf>
+        <ObjectPropertyChain>
+            <ObjectProperty IRI="resultado_de_investigacion_es_relativo_a_disciplina"/>
+            <ObjectProperty IRI="es_sub_disciplina_de"/>
+        </ObjectPropertyChain>
+        <ObjectProperty IRI="resultado_de_investigacion_es_relativo_a_disciplina"/>
+    </SubObjectPropertyOf>
+
     <Declaration>
         <Class IRI="articulo"/>
     </Declaration>
@@ -1224,9 +1274,7 @@
     <SubObjectPropertyOf>
         <ObjectPropertyChain>
             <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
-            <ObjectInverseOf>
-                <ObjectProperty IRI="es_sub_disciplina_de"/>
-            </ObjectInverseOf>
+            <ObjectProperty IRI="es_sub_disciplina_de"/>
         </ObjectPropertyChain>
         <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
     </SubObjectPropertyOf>

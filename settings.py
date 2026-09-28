@@ -1,8 +1,8 @@
-"""Configuración del proyecto, leída del entorno.
+"""Project configuration, read from the environment.
 
-Las variables se toman del entorno y, si existe, del archivo `.env` de la raíz del
-repositorio (ver `.env.example`). Las mismas variables las usa `docker-compose*.yml`,
-así que las credenciales de desarrollo se definen una sola vez y no se versionan.
+Variables are taken from the environment and, if it exists, from the `.env` file at the
+repository root (see `.env.example`). The same variables are used by `docker-compose*.yml`,
+so development credentials are defined once and are not versioned.
 """
 import os
 import pathlib
@@ -11,10 +11,10 @@ import urllib.parse
 from dotenv import load_dotenv
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent
-# Archivo del que se leen las variables. Es siempre este y no el que la librería encuentre por su cuenta.
+# File the variables are read from. It is always this one, not whatever the library finds on its own.
 ENV_FILE = BASE_DIR / '.env'
 
-# Las variables ya definidas en el entorno tienen prioridad sobre las del archivo.
+# Variables already defined in the environment take precedence over the ones in the file.
 load_dotenv(dotenv_path=ENV_FILE, override=False)
 
 
@@ -47,6 +47,6 @@ JAVA_EXE_PATH = os.environ.get('JAVA_EXE_PATH', '/usr/bin/java')
 def require_fairsharing_credentials() -> tuple[str, str]:
     if not FAIRSHARING_USERNAME or not FAIRSHARING_PASSWORD:
         raise RuntimeError(
-            'Faltan FAIRSHARING_USERNAME y FAIRSHARING_PASSWORD. Definilas en el entorno o en %s (ver .env.example).' % (ENV_FILE,)
+            'Missing FAIRSHARING_USERNAME and FAIRSHARING_PASSWORD. Define them in the environment or in %s (see .env.example).' % (ENV_FILE,)
         )
     return (FAIRSHARING_USERNAME, FAIRSHARING_PASSWORD)

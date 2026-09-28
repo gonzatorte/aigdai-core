@@ -1,0 +1,25 @@
+[project]
+name = "aigdai-core"
+version = "0.1.0"
+requires-python = "==3.10.*"
+dependencies = [
+    "httpx",
+    "jpype1",
+    "lxml",
+    "matplotlib",
+    "motor",
+    "owlready2",
+    "pandas",
+    "pymongo",
+    "python-dotenv",
+    "rdflib",
+    "requests",
+    "seaborn",
+    "xmlschema",
+]
+
+[dependency-groups]
+dev = [
+    "ruff",
+]
+

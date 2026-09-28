@@ -49,7 +49,7 @@ GRAPHQL_COLLECTIONS = {
     'registry': ('fs_registry', lambda: walk_graphql_registry(10, 3, 1)),
     'countries': ('fs_country', lambda: walk_graphql_countries(20, 2, 1)),
 }
-# Colecciones que se extraen con el cliente REST, no con GraphQL.
+# Collections extracted with the REST client, not with GraphQL.
 REST_COLLECTIONS = ('databases', 'standards', 'policies')
 ALL_COLLECTIONS = tuple(GRAPHQL_COLLECTIONS) + REST_COLLECTIONS
 DEFAULT_COLLECTIONS = tuple(GRAPHQL_COLLECTIONS)
@@ -132,23 +132,23 @@ def _comma_separated(valid: tuple, kind: str):
         unknown = [x for x in values if x not in valid]
         if unknown:
             raise argparse.ArgumentTypeError(
-                '%s invalido(s): %s. Opciones: %s' % (kind, ', '.join(unknown), ', '.join(valid))
+                '%s invalid: %s. Options: %s' % (kind, ', '.join(unknown), ', '.join(valid))
             )
         return values
     return parse
 
 
 def parse_args(argv=None):
-    parser = argparse.ArgumentParser(description='Extrae los registros de FAIRsharing y los guarda en Mongo.')
+    parser = argparse.ArgumentParser(description='Extracts the FAIRsharing records and stores them in Mongo.')
     parser.add_argument(
-        '--collections', type=_comma_separated(ALL_COLLECTIONS, 'coleccion'), default=DEFAULT_COLLECTIONS,
-        help=('Colecciones a extraer, separadas por coma (' + ', '.join(ALL_COLLECTIONS) + '). '
-              'Las ultimas tres usan el cliente REST y piden credenciales. '
-              'Por defecto: ' + ', '.join(DEFAULT_COLLECTIONS) + '.'),
+        '--collections', type=_comma_separated(ALL_COLLECTIONS, 'collection'), default=DEFAULT_COLLECTIONS,
+        help=('Collections to extract, comma separated (' + ', '.join(ALL_COLLECTIONS) + '). '
+              'The last three use the REST client and require credentials. '
+              'Default: ' + ', '.join(DEFAULT_COLLECTIONS) + '.'),
     )
     parser.add_argument(
-        '--doi', type=_comma_separated(DOI_COLLECTIONS, 'coleccion'), default=(),
-        help=('Completar los metadatos de DOI faltantes en estas colecciones, separadas por coma ('
+        '--doi', type=_comma_separated(DOI_COLLECTIONS, 'collection'), default=(),
+        help=('Fill in the missing DOI metadata in these collections, comma separated ('
               + ', '.join(DOI_COLLECTIONS) + ').'),
     )
     return parser.parse_args(argv)

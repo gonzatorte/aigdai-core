@@ -54,7 +54,7 @@ class Re3DataSource:
         raise Exception()
 
     def set_periodo(self, g_repos: Graph, relacion, valor: str, prop, prop_desde, prop_hasta):
-        # El valor conserva la granularidad declarada (gross_date) y se agregan las cotas comparables.
+        # The value keeps the declared granularity (gross_date) and the comparable bounds are added.
         g_repos.set((relacion, prop, Literal(valor, datatype=rdf_types.GrossDate)))
         try:
             (desde, hasta) = gross_date_bounds(valor)

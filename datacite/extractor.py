@@ -69,8 +69,8 @@ REPOSITORY_ATTRS = [
     'alternateName',
     'pidSystem',
     'certificate',
-    'downloadCount', # Es la suma de las descargas de cada uno de sus datasets contenidos, como se explica en https://support.datacite.org/docs/repository-finder
-    'viewCount', # Es la suma de las vistas de cada uno de sus datasets contenidos, como se explica en https://support.datacite.org/docs/repository-finder
+    'downloadCount', # It is the sum of the downloads of each of its contained datasets, as explained in https://support.datacite.org/docs/repository-finder
+    'viewCount', # It is the sum of the views of each of its contained datasets, as explained in https://support.datacite.org/docs/repository-finder
     'providerType',
     ('subject', '''
     {
@@ -370,16 +370,16 @@ def _comma_separated(raw: str):
 
 
 def parse_args(argv=None):
-    parser = argparse.ArgumentParser(description='Extrae repositorios de la API GraphQL de DataCite y los guarda en Mongo.')
+    parser = argparse.ArgumentParser(description='Extracts repositories from the DataCite GraphQL API and stores them in Mongo.')
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--from-cursor', default=None,
-                       help='Recorrido completo a partir de este cursor. Sin valor, empieza desde el principio (modo por defecto).')
+                       help='Full walk starting from this cursor. Without a value, it starts from the beginning (default mode).')
     group.add_argument('--ids', type=_comma_separated, default=None,
-                       help='Reprocesar solo estos uid de repositorio, separados por coma.')
+                       help='Reprocess only these repository uids, comma separated.')
     group.add_argument('--cursors', type=_comma_separated, default=None,
-                       help='Reprocesar solo estos cursores, separados por coma.')
+                       help='Reprocess only these cursors, comma separated.')
     parser.add_argument('--update', action='store_true',
-                        help='Actualizar los registros existentes en lugar de insertarlos por primera vez.')
+                        help='Update the existing records instead of inserting them for the first time.')
     return parser.parse_args(argv)
 
 
