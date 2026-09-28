@@ -316,13 +316,13 @@ def serialize_file(**kwargs):
     g_orgs = extract_ror_involved_orgs(gg)
     gg += g_orgs
 
-    g_repos.serialize(destination='../owl/repositorios.xml', format="xml")
-    g_criterios.serialize(destination='../owl/criterios.xml', format="xml")
-    g_disciplinas.serialize(destination='../owl/disciplinas.xml', format="xml")
-    g_commons.serialize(destination='../owl/commons.xml', format="xml")
-    g_locaciones.serialize(destination='../owl/localizaciones.xml', format="xml")
-    g_orgs.serialize(destination='../owl/organizaciones.xml', format="xml")
-    gg.serialize(destination='../owl/all_2.xml', format="xml")
+    g_repos.serialize(destination='onto/owl/repositorios.xml', format="xml")
+    g_criterios.serialize(destination='onto/owl/criterios.xml', format="xml")
+    g_disciplinas.serialize(destination='onto/owl/disciplinas.xml', format="xml")
+    g_commons.serialize(destination='onto/owl/commons.xml', format="xml")
+    g_locaciones.serialize(destination='onto/owl/localizaciones.xml', format="xml")
+    g_orgs.serialize(destination='onto/owl/organizaciones.xml', format="xml")
+    gg.serialize(destination='onto/owl/all_2.xml', format="xml")
 
 
 async def serialize_jena(**kwargs):

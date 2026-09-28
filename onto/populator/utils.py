@@ -5,6 +5,7 @@ import typing
 import re
 import calendar
 import datetime
+import os
 
 from onto.populator.ontology import onto_elements
 
@@ -21,14 +22,14 @@ def reason_on_memory():
     import owlready2 as ow
 
     ow.JAVA_EXE = settings.JAVA_EXE_PATH
-    ow.onto_path.append('../owl/')
+    ow.onto_path.append('onto/owl/')
 
     # from io import BytesIO
     # my_str_as_bytes = str.encode(my_str)  # convert to binary
     # fobj = BytesIO(my_str_as_bytes)
     # abox = ow.get_ontology("some-random-path").load(fileobj=fobj)
 
-    tbox = ow.get_ontology('file://../owl/aigdai-tbox.owl').load(only_local=True)
+    tbox = ow.get_ontology('file://onto/owl/aigdai-tbox.owl').load(only_local=True)
 
     for data_file_path in [
         'repositorios.xml',
@@ -40,7 +41,7 @@ def reason_on_memory():
     ]:
         # ow.get_ontology('file://%s' % (data_file_path,)).load(only_local=True)
         # tbox.imported_ontologies.append(ow.get_ontology('file://../owl/%s' % (data_file_path,)))
-        tbox.imported_ontologies.append(ow.get_ontology('file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/%s' % (data_file_path,)))
+        tbox.imported_ontologies.append(ow.get_ontology('file://%s' % (os.path.abspath('onto/owl/%s' % (data_file_path,)),)))
         # tbox.imported_ontologies.append('file://%s' % (data_file_path,))
 
     ow.sync_reasoner([tbox], ignore_unsupported_datatypes=True, infer_property_values=True)

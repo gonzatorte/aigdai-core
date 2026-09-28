@@ -18,10 +18,21 @@ The remaining scripts switch flows by editing the code: one call is commented ou
 
 | Where | What is switched on or off today | Proposed CLI option |
 |---|---|---|
-| `onto/populator/ontology.py` | `onto_base_path` alternates between `'../owl/'` and `'onto/owl/'` depending on where it is run from | Resolve the path relative to `__file__`, or `--owl-dir` |
-| `onto/populator/populate.py` (`serialize_file`), `reasoner/*.py`, `onto/populator/utils.py` (`reason_on_memory`) | Hardcoded read and write paths: `'../owl/…'`, `'./onto/owl/…'` and an absolute path under `/home/…` | `--owl-dir`, `--output` |
+| `onto/populator/populate.py` (`serialize_file`), `reasoner/*.py`, `onto/populator/utils.py` (`reason_on_memory`) | Read and write paths hardcoded to `onto/owl/`, relative to the repository root | `--owl-dir`, `--output` |
 | `analysis.py` (`__main__`) | Which analysis to run (`re3data_institutions`, `analysis`, `fields_of_science_analysis`, …) | `analysis <name>` |
 | `onto/populator/utils.py` (`reason_on_memory`) | Reasoner: `sync_reasoner` (HermiT) or `sync_reasoner_pellet` | `reason --reasoner hermit\|pellet` |
 | `reasoner/elk_reasoner.py`, `reasoner/hermit_reasoner.py` | Alternative classpath commented out; hardcoded input ontology | `--ontology`, `--classpath` |
 | `re3data/extractor.py` (`__main__`) | Test with a hardcoded id (`r3d100000001`) | `--id` |
-| `re3data/xsd_transform.py` | Alternative XSD schema commented out (`base_xsd_path`); the `__main__` is a test with samples 3 to 8 commented out | `--xsd`; move the samples to tests (`pytest`) |
+| `re3data/xsd_transform.py` | Alternative XSD schema commented out (`base_xsd_path`) | `--xsd` |
+
+## 3. Integrating and reconciling data with OpenAIRE
+
+Pending work: add the [OpenAIRE Graph](https://api.openaire.eu/graph/v1/) as an additional source and reconcile its records with the ones already extracted from re3data, DataCite, FAIRsharing and ROR. OpenAIRE aggregates organizations, data sources and research products, so it is useful both to complete organization data and to cross-check which repositories are indexed and how much they publish (one of the ways proposed in `analysis.md` to tell whether a repository is still alive).
+
+**`openaire/` is dead code, and it is kept on purpose.** It has no importers, no `__main__`, and `fetch_single_org_page` cannot run as written: `dd` is undefined and the format string has one `%s` for two arguments, so it raises `TypeError: not all arguments converted during string formatting` on the first call. What is worth keeping is the survey of the organizations API in the comments at the end of the module: the query parameters, the endpoint for looking an organization up by its ROR (`organizations?pid=https://ror.org/...`) and a sample response. That is the starting point for this work, so the module stays as a note rather than as working code.
+
+**Pending decisions:**
+- The reconciliation key. OpenAIRE exposes `pids` per organization, so ROR is the natural join with `ror/` and with the `institutionIdentifier` of re3data, but not every record has one. For repositories there is no equivalent to `r3d…`, so it needs to be decided whether to match by URL, by name or through the DOIs of their contents.
+- Where the raw data lands: its own Mongo collection, following the pattern of `drepo`, `datacite` and the FAIRsharing collections.
+- Which populator source consumes it (`onto/populator/sources/`), and whether it feeds organizations, repositories or both.
+- Whether the two bugs above are fixed or the module is rewritten from scratch once the above is decided.

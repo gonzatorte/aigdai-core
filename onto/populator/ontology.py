@@ -1,7 +1,6 @@
 import owlready2 as ow
 
-onto_base_path = '../owl/'
-# onto_base_path = 'onto/owl/'
+onto_base_path = 'onto/owl/'
 # ow.onto_path.append('./%s' % (onto_base_path,))
 # ow.PREDEFINED_ONTOLOGIES['http://aigdai.base.owl/v0.1/'] = './%sbase.owl' % (onto_base_path,)
 # ow.default_world.ontologies

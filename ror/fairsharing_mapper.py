@@ -12,7 +12,7 @@ import json
 #     rorLink
 #   }
 # }
-FAIRSHARING_ROR_MAPPING_FILEPATH = './ror_fairsharing_map.json'
+FAIRSHARING_ROR_MAPPING_FILEPATH = './ror/ror_fairsharing_map.json'
 ROR_PREFIX = 'https://ror.org/'
 
 def fairsharing_2_ror(fairsharing_org_id: int):
@@ -51,11 +51,3 @@ def guess_fairsharing_org_into_ror(org_data):
     # https://github.com/ror-community/ror-utilities/blob/main/fairsharing-match-scripts/matching_urls.py
     # https://github.com/ror-community/ror-utilities/blob/main/fairsharing-match-scripts/matching_name_shortname.py
     pass
-
-if __name__ == "__main__":
-    assert fairsharing_2_ror(6) == '05rex1605'
-    assert fairsharing_2_ror(1) is None
-    assert fairsharing_2_ror(1111111) is None
-
-    assert ror_2_fairsharing('05rex1605') == 6
-    assert ror_2_fairsharing('cafecafec') is None

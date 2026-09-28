@@ -1,6 +1,6 @@
 from jpype import *
 import jpype.imports
-jpype.addClassPath('HermiT/HermiT.jar')
+jpype.addClassPath('reasoner/HermiT/HermiT.jar')
 jpype.startJVM(convertStrings=False)
 
 # java.lang.System.out.println(jpype.getClassPath())

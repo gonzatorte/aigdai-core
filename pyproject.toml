@@ -20,6 +20,11 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "pytest",
     "ruff",
 ]
 
+
+[tool.pytest.ini_options]
+# The defaults plus the Docker data volumes, which are not readable by the user
+norecursedirs = [".*", "*.egg", "build", "dist", "node_modules", "venv", "fuseki-data", "mongo-data", "postgres-data"]
