@@ -14,7 +14,7 @@ DUMMY_VALUES = [
             },
             {
                 "value": "dummy/123.123.123",
-                "catalog": common.CatalogoDoi,
+                "catalog": common.catalogo_doi("dummy/123.123.123"),
             },
         ],
         "names": ["sample repo", "repo ejemplo"], "description": "my example repo",
@@ -73,7 +73,7 @@ DUMMY_VALUES = [
             },
             {
                 "value": "dummy/456.456.456",
-                "catalog": common.CatalogoDoi,
+                "catalog": common.catalogo_doi("dummy/456.456.456"),
             },
         ],
         "names": ["other repo", "otro repo"], "description": "their another repo",
@@ -129,25 +129,25 @@ class DummySource:
             repo_id = info['ids'][0]["value"] if len(info['ids']) > 0 else f"{idx}-of-dummy"
             repositorio = rdf_types.Repositorio.child_uri_ref(repo_id)
             repo_entities.append(repositorio)
-            gg.set((repositorio, RDF.type, rdf_types.Repositorio))
+            gg.add((repositorio, RDF.type, rdf_types.Repositorio))
 
             for name in info.get('names', []):
-                gg.set((repositorio, rdf_types.tiene_nombre_repositorio, Literal(name, lang=ENG_LNG_CODE)))
-            gg.set((repositorio, rdf_types.tiene_descripcion_repositorio, Literal(info['description'], lang=ENG_LNG_CODE)))
+                gg.add((repositorio, rdf_types.tiene_nombre_repositorio, Literal(name, lang=ENG_LNG_CODE)))
+            gg.add((repositorio, rdf_types.tiene_descripcion_repositorio, Literal(info['description'], lang=ENG_LNG_CODE)))
             gg.set((repositorio, rdf_types.repositorio_creado_en_anio, Literal(info['createdAtYear'])))
             gg.set((repositorio, rdf_types.repositorio_esta_activo, Literal(bool(info['isActive']))))
 
             if info.get('isDataProvider', None):
-                gg.set((repositorio, RDF.type, rdf_types.Rdd))
+                gg.add((repositorio, RDF.type, rdf_types.Rdd))
             if info.get('isServiceProvider', None):
-                gg.set((repositorio, RDF.type, rdf_types.Agregador))
+                gg.add((repositorio, RDF.type, rdf_types.Agregador))
 
             all_items = []
             for composed_id in info.get("ids", []):
                 catalog_id = composed_id["catalog"].local_uri
                 id_repo = rdf_types.IdDeRepositorio.child_uri_ref("%s-%s" % (catalog_id, composed_id["value"]))
                 all_items.append(id_repo)
-                gg.set((id_repo, RDF.type, rdf_types.IdDeRepositorio))
+                gg.add((id_repo, RDF.type, rdf_types.IdDeRepositorio))
                 gg.set((id_repo, rdf_types.id_de_repositorio_tiene_repositorio, repositorio))
                 gg.set((id_repo, rdf_types.id_de_repositorio_tiene_literal, Literal(composed_id["value"])))
                 gg.set((id_repo, rdf_types.id_de_repositorio_tiene_catalogo, composed_id["catalog"]))
@@ -157,17 +157,17 @@ class DummySource:
             for pid_system in info.get('pidSystems', []):
                 esquema_de_id_persistente = rdf_types.EsquemaDeIdPersistente.child_uri_ref(pid_system)
                 all_items.append(esquema_de_id_persistente)
-                gg.set((esquema_de_id_persistente, RDF.type, rdf_types.EsquemaDeIdPersistente))
-                gg.set((repositorio, rdf_types.acepta_esquema_de_identificadores_persistentes, esquema_de_id_persistente))
+                gg.add((esquema_de_id_persistente, RDF.type, rdf_types.EsquemaDeIdPersistente))
+                gg.add((repositorio, rdf_types.acepta_esquema_de_identificadores_persistentes, esquema_de_id_persistente))
             owl_all_different(gg, all_items)
 
             all_items = []
             for cert_d in info.get('certificate', []):
-                certificacion = rdf_types.Certificacion.child_uri_ref(cert_d)
+                certificacion = common.certification_ref(cert_d)
                 all_items.append(certificacion)
-                gg.set((certificacion, RDF.type, rdf_types.Certificacion))
+                gg.add((certificacion, RDF.type, rdf_types.Certificacion))
                 aplicacion_de_cert = rdf_types.AplicacionDeCertificacionARepositorio.child_uri_ref("%s-%s" % (repo_id, cert_d))
-                gg.set((aplicacion_de_cert, RDF.type, rdf_types.AplicacionDeCertificacionARepositorio))
+                gg.add((aplicacion_de_cert, RDF.type, rdf_types.AplicacionDeCertificacionARepositorio))
                 gg.set((aplicacion_de_cert, rdf_types.aplicacion_de_certificacion_a_repositorio_tiene_repositorio, repositorio))
                 gg.set((aplicacion_de_cert, rdf_types.aplicacion_de_certificacion_a_repositorio_tiene_certificacion, certificacion))
                 # ToDo: Add application date
@@ -176,13 +176,13 @@ class DummySource:
             owl_all_different(gg, all_items)
 
             for lang in info.get('languages', []):
-                gg.set((repositorio, rdf_types.usa_lenguaje_repositorio, Literal(lang)))
+                gg.add((repositorio, rdf_types.usa_lenguaje_repositorio, Literal(lang)))
 
             all_items = []
             for subject in info.get('subjects', []):
                 disciplina = rdf_types.Disciplina.child_uri_ref(subject)
                 all_items.append(disciplina)
-                gg.set((disciplina, rdf_types.nombre_de_disciplina, Literal(subject)))
+                gg.add((disciplina, rdf_types.nombre_de_disciplina, Literal(subject)))
                 gg.set((disciplina, rdf_types.disciplina_tiene_esquema, Literal('dfg')))
                 gg.add((repositorio, rdf_types.repositorio_afin_a_disciplina, disciplina))
             owl_all_different(gg, all_items)
@@ -193,19 +193,19 @@ class DummySource:
                 id_org = "%s-%s" % (id_aliases[0]["type"], id_aliases[0]["value"]) if len(id_aliases) > 0 else f"org-{idx_org}-of-{repo_id}"
                 org_instance = rdf_types.Organizacion.child_uri_ref(id_org)
                 all_items.append(org_instance)
-                gg.set((org_instance, RDF.type, rdf_types.Organizacion))
+                gg.add((org_instance, RDF.type, rdf_types.Organizacion))
 
                 for instName in organization.get('names', []):
-                    gg.set((org_instance, rdf_types.tiene_nombre_organizacion, Literal(instName.replace('@', ''))))
+                    gg.add((org_instance, rdf_types.tiene_nombre_organizacion, Literal(instName.replace('@', ''))))
 
                 for country in organization.get('countries', []):
                     if country == 'AAA':
                         location = common.locacion_internacional
-                        gg.set((location, RDF.type, rdf_types.Locacion))
+                        gg.add((location, RDF.type, rdf_types.Locacion))
                     else:
                         location = rdf_types.Pais.child_uri_ref(country)
-                        gg.set((location, RDF.type, rdf_types.Pais))
-                    gg.set((org_instance, rdf_types.organizacion_se_ubica_en, location))
+                        gg.add((location, RDF.type, rdf_types.Pais))
+                    gg.add((org_instance, rdf_types.organizacion_se_ubica_en, location))
 
                 for org_type in organization.get('types', []):
                     gg.add((org_instance, rdf_types.tiene_tipo_de_organizacion, Literal(org_type, datatype=rdf_types.TipoDeOrganizacion)))
@@ -214,7 +214,7 @@ class DummySource:
                 for id_alias in id_aliases:
                     id_de_organizacion = rdf_types.IdDeOrganizacion.child_uri_ref(id_alias['value'])
                     id_aliases_entities.append(id_de_organizacion)
-                    gg.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
+                    gg.add((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
                     tipo_de_id_de_organizacion = find_or_fail(
                         common.ORG_ID_SCHEMAS,
                         lambda x: id_alias['type'] in [tt.upper() for tt in x[1]]
@@ -229,7 +229,7 @@ class DummySource:
                     responsibility_type = responsibility['type']
                     relacion_repositorio_y_organizacion = rdf_types.RelacionRepositorioYOrganizacion.child_uri_ref("%s-%s-%s" % (id_org, repo_id, responsibility_type))
                     responsibility_entities.append(relacion_repositorio_y_organizacion)
-                    gg.set((relacion_repositorio_y_organizacion, RDF.type, rdf_types.RelacionRepositorioYOrganizacion))
+                    gg.add((relacion_repositorio_y_organizacion, RDF.type, rdf_types.RelacionRepositorioYOrganizacion))
                     gg.set((relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_repositorio, repositorio))
                     gg.set((relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_organizacion, org_instance))
                     inicio_periodo_de_relacion_con_organizacion = responsibility.get('startDate', None)

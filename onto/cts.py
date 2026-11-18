@@ -384,6 +384,68 @@ dfg_subjects = [
                                                                                            'Geotechnics, Hydraulic Engineering')])])]),
 ]
 
+# OECD Fields of Science and Technology (FOS), 2007 revision. DataCite identifies each field by a slug of its name
+# instead of the code; the slug is the one DataCite uses most, which for 2.10, 3.4 and 6.4 follows the names of the
+# Frascati Manual 2015 (nanotechnology, medical biotechnology, arts).
+# Columns: code, name, DataCite slug, fields
+oecd_fos = [
+    ('1', 'Natural sciences', 'natural_sciences', [
+        ('1.1', 'Mathematics', 'mathematics'),
+        ('1.2', 'Computer and information sciences', 'computer_and_information_sciences'),
+        ('1.3', 'Physical sciences', 'physical_sciences'),
+        ('1.4', 'Chemical sciences', 'chemical_sciences'),
+        ('1.5', 'Earth and related environmental sciences', 'earth_and_related_environmental_sciences'),
+        ('1.6', 'Biological sciences', 'biological_sciences'),
+        ('1.7', 'Other natural sciences', 'other_natural_sciences'),
+    ]),
+    ('2', 'Engineering and technology', 'engineering_and_technology', [
+        ('2.1', 'Civil engineering', 'civil_engineering'),
+        ('2.2', 'Electrical engineering, electronic engineering, information engineering',
+         'electrical_engineering_electronic_engineering_information_engineering'),
+        ('2.3', 'Mechanical engineering', 'mechanical_engineering'),
+        ('2.4', 'Chemical engineering', 'chemical_engineering'),
+        ('2.5', 'Materials engineering', 'materials_engineering'),
+        ('2.6', 'Medical engineering', 'medical_engineering'),
+        ('2.7', 'Environmental engineering', 'environmental_engineering'),
+        ('2.8', 'Environmental biotechnology', 'environmental_biotechnology'),
+        ('2.9', 'Industrial biotechnology', 'industrial_biotechnology'),
+        ('2.10', 'Nano-technology', 'nanotechnology'),
+        ('2.11', 'Other engineering and technologies', 'other_engineering_and_technologies'),
+    ]),
+    ('3', 'Medical and health sciences', 'medical_and_health_sciences', [
+        ('3.1', 'Basic medicine', 'basic_medicine'),
+        ('3.2', 'Clinical medicine', 'clinical_medicine'),
+        ('3.3', 'Health sciences', 'health_sciences'),
+        ('3.4', 'Health biotechnology', 'medical_biotechnology'),
+        ('3.5', 'Other medical sciences', 'other_medical_sciences'),
+    ]),
+    ('4', 'Agricultural sciences', 'agricultural_sciences', [
+        ('4.1', 'Agriculture, forestry, and fisheries', 'agriculture_forestry_and_fisheries'),
+        ('4.2', 'Animal and dairy science', 'animal_and_dairy_science'),
+        ('4.3', 'Veterinary science', 'veterinary_sciences'),
+        ('4.4', 'Agricultural biotechnology', 'agricultural_biotechnology'),
+        ('4.5', 'Other agricultural sciences', 'other_agricultural_sciences'),
+    ]),
+    ('5', 'Social sciences', 'social_sciences', [
+        ('5.1', 'Psychology', 'psychology'),
+        ('5.2', 'Economics and business', 'economics_and_business'),
+        ('5.3', 'Educational sciences', 'educational_sciences'),
+        ('5.4', 'Sociology', 'sociology'),
+        ('5.5', 'Law', 'law'),
+        ('5.6', 'Political science', 'political_science'),
+        ('5.7', 'Social and economic geography', 'social_and_economic_geography'),
+        ('5.8', 'Media and communications', 'media_and_communications'),
+        ('5.9', 'Other social sciences', 'other_social_sciences'),
+    ]),
+    ('6', 'Humanities', 'humanities', [
+        ('6.1', 'History and archaeology', 'history_and_archaeology'),
+        ('6.2', 'Languages and literature', 'languages_and_literature'),
+        ('6.3', 'Philosophy, ethics and religion', 'philosophy_ethics_and_religion'),
+        ('6.4', 'Art (arts, history of arts, performing arts, music)', 'arts_arts_history_of_arts_performing_arts_music'),
+        ('6.5', 'Other humanities', 'other_humanities'),
+    ]),
+]
+
 coar_content_types = [(x[0], "http://purl.org/coar/resource_type/%s" % (x[1], )) for x in [
     ('dataset', 'c_ddb1'),
     ('aggregated data', 'ACF7-8YT9'),
@@ -858,6 +920,25 @@ softwares = [
 
 # ToDo: Link with communities and organizations
 # ToDo: Add release year and links to other languages?
+# Certifications known to be different from each other (ids as the sources normalize them, see
+# onto/populator/sources/datacite.py CERT_NAME_MAP). Left out on purpose: 'clarin' (it may be the same as 'clarin_b')
+# and 'tdr' (a generic name, "Trusted Digital Repository"). CoreTrustSeal is handled apart: its versions
+# (versiones_de_cts) are different from each other and from these, and the unversioned 'cts' is different from these
+# but not from its versions, since it may be any of them. Two owl:AllDifferent groups state it (seed_criterios).
+certificaciones_distintas = [
+    'dsa',
+    'wds',
+    'din31644',
+    'dini',
+    'clarin_b',
+    'ratswd',
+]
+
+versiones_de_cts = [
+    'cts_2022',
+    'cts_2025',
+]
+
 criterios_de_calidad = [
     ('fair', 'FAIR Principles', 'https://doi.org/10.1038/sdata.2016.18'), # ToDo: Each of the statements could be added
     ('trust', 'TRUST Principles for Digital Repositories', 'https://doi.org/10.1038/s41597-020-0486-7'), # ToDo: Each of the statements could be added
@@ -866,6 +947,8 @@ criterios_de_calidad = [
     ('coar_v2', 'COAR Next Generation Repositories Technologies v2', 'https://doi.org/10.5281/zenodo.7108101'), # coar_v2 extends from coar_v1
     ('cts_2025', 'Core Trust Seal 2025', 'https://doi.org/10.5281/zenodo.7051012'),
     ('cts_2022', 'Core Trust Seal 2022', 'https://doi.org/10.5281/zenodo.3638211'),
+    # CoreTrustSeal when the source does not say which version. It is not declared different from the versioned ones.
+    ('cts', 'Core Trust Seal (version not stated)', 'https://www.coretrustseal.org/'),
     ('nih', 'National Institution of Health', 'https://sharing.nih.gov/data-management-and-sharing-policy/sharing-scientific-data/selecting-a-data-repository#desirable-characteristics-for-all-data-repositories'),
     ('plos', 'Public Library of Science', 'https://journals.plos.org/plosone/s/recommended-repositories'),
     ('dcrsdr', 'data citation roadmap for scholarly data repositories', 'https://doi.org/10.1038/s41597-019-0031-8'),
@@ -1403,3 +1486,107 @@ protocolo_de_metricas = [
     'counter_5_crd',
     'make_data_count',
 ]
+
+
+# Levels taken from FAIRsharing's database records (metadata.data_access_condition, data_curation and
+# data_deposition_condition), as they come, without "not found" or "not applicable". Access levels go from the broadest
+# to the narrowest (es_acceso_mas_amplio); the curation kinds are not ordered.
+niveles_de_acceso_fairsharing = ['open', 'partially open', 'controlled']
+niveles_de_curaduria_fairsharing = ['none', 'automated', 'manual', 'manual/automated']
+niveles_de_deposito_fairsharing = ['open', 'controlled']
+
+# re3data's access levels (dataAccess, databaseAccess, dataUpload), as they come. 'open' is the same individual as
+# FAIRsharing's 'open'; the other values are kept apart and not ordered.
+niveles_de_acceso_re3data = ['open', 'embargoed', 'restricted', 'closed']
+
+# Certification names as re3data and DataCite give them, in lower case, and the certification id they stand for
+nombres_de_certificaciones = {
+    'coretrustseal': 'cts',
+    'dsa': 'dsa',
+    'wds': 'wds',
+    'din 31644': 'din31644',
+    'dini': 'dini',
+    'dini certificate': 'dini',
+    'clarin': 'clarin',
+    'clarin certificate b': 'clarin_b',
+    'ratswd': 'ratswd',
+    'trusted digital repository': 'tdr',
+    'iso 16363': 'iso_16363',
+}
+
+# Access methods of FAIRsharing's data processes that are harvesting protocols (cts.apis_para_cosecha ids)
+metodos_de_acceso_fairsharing = {
+    'REST': 'rest',
+    'FTP': 'ftp',
+    'OAI-PMH': 'oai-pmh',
+    'SPARQL': 'sparql',
+    'SOAP': 'soap',
+}
+
+# FAIRsharing's free-text certification names (metadata.certifications_and_community_badges) that name a known
+# certification, matched in lower case by substring. The rest (ELIXIR, ISO 27001, COAR...) are left out.
+certificaciones_fairsharing = [
+    ('coretrustseal', 'cts'),
+    ('core trust seal', 'cts'),
+    ('clarin b-centre', 'clarin_b'),
+]
+
+# FAIRsharing record of each enumerated value of re3data, DataCite and this file, by the class of the value. The ids
+# are those of https://fairsharing.org/<id>; values the sources use for the same thing share the record. Left out:
+# values with no record (REST, SOAP, FTP, SWORD, OpenDAP, RSS, ResearcherID, AuthorClaim, DSA, WDS, DINI, RatSWD,
+# ISO 16363, DIN 31644, COUNTER, Make Data Count) and ambiguous ones (DDI: Codebook or Lifecycle; IVOA: a family of
+# specifications; CIM: FAIRsharing's record may be another CIM). Checked by name on 17-nov-2026.
+fairsharing_de_enumerados = {
+    'esquema_de_metadatos': {
+        'dublin core': 'FAIRsharing.3nx7t',  # Dublin Core Metadata Element Set
+        'dc': 'FAIRsharing.3nx7t',
+        'datacite metadata schema': 'FAIRsharing.me4qwe',
+        'doi-datacite': 'FAIRsharing.me4qwe',
+        'iso 19115': 'FAIRsharing.t7mby9',  # ISO 19115-1:2014
+        'oai-ore - open archives initiative object reuse and exchange': 'FAIRsharing.3mtaee',
+        'fgdc/csdgm - federal geographic data committee content standard for digital geospatial metadata': '1445',  # deprecated
+        'cf (climate and forecast) metadata conventions': 'FAIRsharing.hp9s46',
+        'darwin core': 'FAIRsharing.xvf5y3',
+        'dif - directory interchange format': 'FAIRsharing.esxaaq',
+        'eml - ecological metadata language': 'FAIRsharing.r3vtvx',
+        'dcat - data catalog vocabulary': 'FAIRsharing.h4j3qm',
+        'rdf data cube vocabulary': 'FAIRsharing.c3b573',
+        'abcd - access to biological collection data': 'FAIRsharing.kr3215',
+        'isa-tab': 'FAIRsharing.53gp75',
+        'fits - flexible image transport system': 'FAIRsharing.xvash1',
+        'prov': 'FAIRsharing.2rm2b3',  # PROV-O
+        'cif - crystallographic information framework': 'FAIRsharing.zr52g5',
+        'mibbi - minimum information for biological and biomedical investigations': '3518',  # a collection, deprecated
+        'sdmx - statistical data and metadata exchange': 'FAIRsharing.cea9zc',
+        'spase data model': 'FAIRsharing.w4g3sj',
+        'avm - astronomy visualization metadata': 'FAIRsharing.338ze0',
+        'qudex - qualitative data exchange format': 'FAIRsharing.d42cb9',
+        'midas-heritage': 'FAIRsharing.q0hgq',
+        'schemaorg': 'FAIRsharing.hzdzq8',
+        # 'oai-pmh' of esquemas_de_metadatos is left out: mapped here and as a protocol, owl:sameAs would merge both
+    },
+    'esquema_de_id_persistente': {
+        'doi': 'FAIRsharing.hFLKCn',
+        'hdl': 'FAIRsharing.0b7e54',
+        'handle': 'FAIRsharing.0b7e54',
+        'urn': 'FAIRsharing.981c26',
+        'purl': 'FAIRsharing.3e603c',
+        'ark': 'FAIRsharing.f928f1',
+        'igsn': 'FAIRsharing.c7f365',
+    },
+    'esquema_de_id_de_autor': {
+        'orcid': 'FAIRsharing.OrNi1L',
+        'isni': 'FAIRsharing.29924b',  # ISO 27729:2012
+    },
+    'protocolo_de_cosecha': {
+        'oai-pmh': 'FAIRsharing.0417cf',
+        'sparql': 'FAIRsharing.87ccfd',
+        'netcdf': 'FAIRsharing.995b08',
+    },
+    'formato_de_sindicacion': {
+        'atom': 'FAIRsharing.d19a5f',
+    },
+    'certificacion': {
+        'cts': 'FAIRsharing.469e84',  # CoreTrustSeal requirements
+    },
+}

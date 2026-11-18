@@ -1,0 +1,17 @@
+# Repository records reconciled between catalogues (owl:sameAs, followed transitively).
+# The source of each record is the catalogue that minted its IRI:
+#   re3data -> repositorio/r3d..., FAIRsharing -> repositorio/fairsharing-<id>, DataCite -> repositorio/datacite-<uid>,
+#   DOI -> repositorio/doi-<doi>.
+# For each pair of sources it counts the records of each side linked to at least one record of the other side.
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?fuente_a ?fuente_b (COUNT(DISTINCT ?a) AS ?registros_a) (COUNT(DISTINCT ?b) AS ?registros_b)
+WHERE {
+  ?a (owl:sameAs|^owl:sameAs)+ ?b .
+  FILTER (STRSTARTS(STR(?a), "http://aigdai.tbox.owl/repositorio/") && STRSTARTS(STR(?b), "http://aigdai.tbox.owl/repositorio/"))
+  BIND (IF(STRSTARTS(STR(?a), "http://aigdai.tbox.owl/repositorio/doi-"), "doi", IF(STRSTARTS(STR(?a), "http://aigdai.tbox.owl/repositorio/r3d"), "re3data", IF(STRSTARTS(STR(?a), "http://aigdai.tbox.owl/repositorio/fairsharing-"), "fairsharing", IF(STRSTARTS(STR(?a), "http://aigdai.tbox.owl/repositorio/datacite-"), "datacite", "other")))) AS ?fuente_a)
+  BIND (IF(STRSTARTS(STR(?b), "http://aigdai.tbox.owl/repositorio/doi-"), "doi", IF(STRSTARTS(STR(?b), "http://aigdai.tbox.owl/repositorio/r3d"), "re3data", IF(STRSTARTS(STR(?b), "http://aigdai.tbox.owl/repositorio/fairsharing-"), "fairsharing", IF(STRSTARTS(STR(?b), "http://aigdai.tbox.owl/repositorio/datacite-"), "datacite", "other")))) AS ?fuente_b)
+  # DOI records (catalogs doi-<prefix>) are not a source of their own: they are only a path between records
+  FILTER (?fuente_a < ?fuente_b && ?fuente_a != "doi" && ?fuente_b != "doi")
+}
+GROUP BY ?fuente_a ?fuente_b
+ORDER BY ?fuente_a ?fuente_b

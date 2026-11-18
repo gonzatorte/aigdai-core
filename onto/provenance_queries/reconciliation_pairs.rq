@@ -1,0 +1,18 @@
+# The reconciliation rule as a query: pairs of repository records that share an identifier, that is, an
+# identifier with the same catalog and literal (the HasKey of id_de_repositorio).
+# The populator applies the same rule in Python (reconcile_repositories in onto/populator/populate.py) and asserts
+# owl:sameAs between each pair; this query documents the rule and checks that both give the same pairs.
+# Identifiers built with the same IRI by two catalogs (re3data and the FAIRsharing cross-references) appear here
+# as ?id1 = ?id2.
+PREFIX : <http://aigdai.tbox.owl/>
+SELECT DISTINCT ?registro_1 ?registro_2 ?catalogo ?literal
+WHERE {
+  ?id1 :id_de_repositorio_tiene_catalogo ?catalogo ;
+       :id_de_repositorio_tiene_literal ?literal ;
+       :id_de_repositorio_tiene_repositorio ?registro_1 .
+  ?id2 :id_de_repositorio_tiene_catalogo ?catalogo ;
+       :id_de_repositorio_tiene_literal ?literal ;
+       :id_de_repositorio_tiene_repositorio ?registro_2 .
+  FILTER (STR(?registro_1) < STR(?registro_2))
+}
+ORDER BY ?registro_1 ?registro_2

@@ -53,7 +53,7 @@ GRAPHQL_COLLECTIONS = {
 REST_COLLECTIONS = ('databases', 'standards', 'policies')
 ALL_COLLECTIONS = tuple(GRAPHQL_COLLECTIONS) + REST_COLLECTIONS
 DEFAULT_COLLECTIONS = tuple(GRAPHQL_COLLECTIONS)
-DOI_COLLECTIONS = ('fairsharing', 'standards', 'policies')
+DOI_COLLECTIONS = ('fairsharing', 'standards', 'policies', 'fs_registry')
 
 
 async def store_rest_databases(database, client: FairsharingClient):
@@ -112,6 +112,7 @@ async def extract_and_store(collections=DEFAULT_COLLECTIONS, username: str=None,
     rest_collections = [c for c in collections if c in REST_COLLECTIONS]
     if rest_collections:
         if not username or not password:
+            # ToDo: I dont like the way this is coupled!
             (username, password) = require_fairsharing_credentials()
         client = FairsharingClient(username, password)
         for name in rest_collections:

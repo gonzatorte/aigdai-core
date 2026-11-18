@@ -1,0 +1,14 @@
+# Repository records per source (same IRI convention as reconciled_by_source_pair.rq), and how many are reconciled with a
+# record of another catalog.
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX : <http://aigdai.tbox.owl/>
+SELECT ?fuente (COUNT(DISTINCT ?r) AS ?registros) (COUNT(DISTINCT ?enlazado) AS ?reconciliados)
+WHERE {
+  { SELECT DISTINCT ?r WHERE { ?r ?p ?o . FILTER (STRSTARTS(STR(?r), "http://aigdai.tbox.owl/repositorio/")) } }
+  BIND (IF(STRSTARTS(STR(?r), "http://aigdai.tbox.owl/repositorio/doi-"), "doi", IF(STRSTARTS(STR(?r), "http://aigdai.tbox.owl/repositorio/r3d"), "re3data", IF(STRSTARTS(STR(?r), "http://aigdai.tbox.owl/repositorio/fairsharing-"), "fairsharing", IF(STRSTARTS(STR(?r), "http://aigdai.tbox.owl/repositorio/datacite-"), "datacite", "other")))) AS ?fuente)
+  # Reconciled: linked, possibly through DOI records, to a record that is not a DOI record
+  OPTIONAL { ?r (owl:sameAs|^owl:sameAs)+ ?x . FILTER (?x != ?r && !STRSTARTS(STR(?x), "http://aigdai.tbox.owl/repositorio/doi-")) BIND (?r AS ?enlazado) }
+  # DOI records (catalogs doi-<prefix>) are not a source of their own
+  FILTER (?fuente != "doi")
+}
+GROUP BY ?fuente ORDER BY ?fuente

@@ -22,7 +22,6 @@
     <Import>http://aigdai.criterios.owl</Import>
     <Import>http://aigdai.lenguajes.owl</Import>
 <!--     <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/disciplinas.xml</Import> -->
-    <Import>file:///home/gonzalo/workspace/propio/AIGDAI/aigdai-core/onto/owl/all.xml</Import>
 
     <Declaration>
         <Datatype IRI="escala"/>
@@ -1275,6 +1274,20 @@
         <ObjectPropertyChain>
             <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
             <ObjectProperty IRI="es_sub_disciplina_de"/>
+        </ObjectPropertyChain>
+        <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectPropertyChain>
+            <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
+            <ObjectProperty abbreviatedIRI="skos:broadMatch"/>
+        </ObjectPropertyChain>
+        <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectPropertyChain>
+            <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
+            <ObjectProperty abbreviatedIRI="skos:exactMatch"/>
         </ObjectPropertyChain>
         <ObjectProperty IRI="repositorio_afin_a_disciplina"/>
     </SubObjectPropertyOf>
@@ -3639,11 +3652,107 @@
         <Literal xml:lang="en">System in charge of cataloging (listing, sorting, classifying and characterizing) repositories. Although other models treat it as a repository of semantic objects, here it is modeled separately because it records the provenance of each repository's metadata and which catalogs exchange information with each other. Examples: re3data, FAIRsharing.</Literal>
     </AnnotationAssertion>
     <Declaration>
+        <Class IRI="metadato_en_catalogo"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="metadato_en_catalogo"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>metadato_en_catalogo</IRI>
+        <Literal xml:lang="es">metadato en catálogo</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>metadato_en_catalogo</IRI>
+        <Literal xml:lang="en">catalog metadata</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>metadato_en_catalogo</IRI>
+        <Literal xml:lang="es">Dato sobre un repositorio emitido por un catálogo de repositorios. Conserva la procedencia del dato: qué catálogo lo emitió y sobre qué repositorio, de modo que se puedan comparar las afirmaciones de distintos catálogos sobre un mismo repositorio. Por ahora se instancia para los identificadores, la URL y el estado de actividad; las demás características del repositorio se modelan como propiedades directas, sin procedencia.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>metadato_en_catalogo</IRI>
+        <Literal xml:lang="en">Piece of data about a repository issued by a repository catalog. It keeps the provenance of the data: which catalog issued it and which repository it is about, so that the statements of different catalogs about the same repository can be compared. For now it is instantiated for identifiers, the URL and the activity status; the other characteristics of a repository are modeled as direct properties, without provenance.</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <ObjectProperty IRI="metadato_en_catalogo_emitido_por_catalogo"/>
+    </Declaration>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>metadato_en_catalogo_emitido_por_catalogo</IRI>
+        <Literal xml:lang="es">metadato en catálogo emitido por catálogo</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>metadato_en_catalogo_emitido_por_catalogo</IRI>
+        <Literal xml:lang="en">catalog metadata issued by catalog</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>metadato_en_catalogo_emitido_por_catalogo</IRI>
+        <Literal xml:lang="es">Relaciona un metadato con el catálogo que lo emitió.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>metadato_en_catalogo_emitido_por_catalogo</IRI>
+        <Literal xml:lang="en">Links a piece of metadata to the catalog that issued it.</Literal>
+    </AnnotationAssertion>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="metadato_en_catalogo_emitido_por_catalogo"/>
+        <Class IRI="metadato_en_catalogo"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="metadato_en_catalogo_emitido_por_catalogo"/>
+        <Class IRI="catalogo_de_repositorios"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="metadato_en_catalogo_emitido_por_catalogo"/>
+    </FunctionalObjectProperty>
+    <Declaration>
+        <ObjectProperty IRI="metadato_en_catalogo_sobre_repositorio"/>
+    </Declaration>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>metadato_en_catalogo_sobre_repositorio</IRI>
+        <Literal xml:lang="es">metadato en catálogo sobre repositorio</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>metadato_en_catalogo_sobre_repositorio</IRI>
+        <Literal xml:lang="en">catalog metadata about repository</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>metadato_en_catalogo_sobre_repositorio</IRI>
+        <Literal xml:lang="es">Relaciona un metadato con el repositorio al que se refiere.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>metadato_en_catalogo_sobre_repositorio</IRI>
+        <Literal xml:lang="en">Links a piece of metadata to the repository it refers to.</Literal>
+    </AnnotationAssertion>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="metadato_en_catalogo_sobre_repositorio"/>
+        <Class IRI="metadato_en_catalogo"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="metadato_en_catalogo_sobre_repositorio"/>
+        <Class IRI="repositorio"/>
+    </ObjectPropertyRange>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="metadato_en_catalogo_sobre_repositorio"/>
+    </FunctionalObjectProperty>
+
+    <Declaration>
         <Class IRI="id_de_repositorio"/>
     </Declaration>
     <SubClassOf>
         <Class IRI="id_de_repositorio"/>
-        <Class abbreviatedIRI="owl:Thing"/>
+        <Class IRI="metadato_en_catalogo"/>
     </SubClassOf>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
@@ -3668,6 +3777,10 @@
     <Declaration>
         <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
     </Declaration>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
+        <ObjectProperty IRI="metadato_en_catalogo_emitido_por_catalogo"/>
+    </SubObjectPropertyOf>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
         <IRI>id_de_repositorio_tiene_catalogo</IRI>
@@ -3681,12 +3794,12 @@
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:descripcion"/>
         <IRI>id_de_repositorio_tiene_catalogo</IRI>
-        <Literal xml:lang="es">Relaciona un identificador de repositorio con el catálogo que lo emitió.</Literal>
+        <Literal xml:lang="es">Relaciona un identificador de repositorio con el catálogo que lo emitió. Especializa metadato_en_catalogo_emitido_por_catalogo para que la clave de id_de_repositorio se defina solo sobre identificadores.</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:descripcion"/>
         <IRI>id_de_repositorio_tiene_catalogo</IRI>
-        <Literal xml:lang="en">Links a repository identifier to the catalog that issued it.</Literal>
+        <Literal xml:lang="en">Links a repository identifier to the catalog that issued it. It specializes metadato_en_catalogo_emitido_por_catalogo so that the key of id_de_repositorio is defined over identifiers only.</Literal>
     </AnnotationAssertion>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
@@ -3702,6 +3815,10 @@
     <Declaration>
         <ObjectProperty IRI="id_de_repositorio_tiene_repositorio"/>
     </Declaration>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="id_de_repositorio_tiene_repositorio"/>
+        <ObjectProperty IRI="metadato_en_catalogo_sobre_repositorio"/>
+    </SubObjectPropertyOf>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
         <IRI>id_de_repositorio_tiene_repositorio</IRI>
@@ -3715,12 +3832,12 @@
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:descripcion"/>
         <IRI>id_de_repositorio_tiene_repositorio</IRI>
-        <Literal xml:lang="es">Relaciona un identificador de repositorio con el repositorio que identifica.</Literal>
+        <Literal xml:lang="es">Relaciona un identificador de repositorio con el repositorio que identifica. Especializa metadato_en_catalogo_sobre_repositorio para que la clave de repositorio se defina solo sobre sus identificadores.</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="base:descripcion"/>
         <IRI>id_de_repositorio_tiene_repositorio</IRI>
-        <Literal xml:lang="en">Links a repository identifier to the repository it identifies.</Literal>
+        <Literal xml:lang="en">Links a repository identifier to the repository it identifies. It specializes metadato_en_catalogo_sobre_repositorio so that the key of repositorio is defined over its identifiers only.</Literal>
     </AnnotationAssertion>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="id_de_repositorio_tiene_repositorio"/>
@@ -3733,7 +3850,6 @@
     <FunctionalObjectProperty>
         <ObjectProperty IRI="id_de_repositorio_tiene_repositorio"/>
     </FunctionalObjectProperty>
-
     <Declaration>
         <DataProperty IRI="id_de_repositorio_tiene_literal"/>
     </Declaration>
@@ -3783,6 +3899,130 @@
         <ObjectProperty IRI="id_de_repositorio_tiene_catalogo"/>
         <DataProperty IRI="id_de_repositorio_tiene_literal"/>
     </HasKey>
+
+    <Declaration>
+        <Class IRI="url_en_catalogo"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="url_en_catalogo"/>
+        <Class IRI="metadato_en_catalogo"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>url_en_catalogo</IRI>
+        <Literal xml:lang="es">URL en catálogo</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>url_en_catalogo</IRI>
+        <Literal xml:lang="en">catalog URL</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>url_en_catalogo</IRI>
+        <Literal xml:lang="es">URL de un repositorio tal como la declara un catálogo. Convive con la propiedad directa tiene_url_repositorio, que no conserva la procedencia.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>url_en_catalogo</IRI>
+        <Literal xml:lang="en">URL of a repository as a catalog declares it. It coexists with the direct property tiene_url_repositorio, which does not keep the provenance.</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="url_en_catalogo_tiene_url"/>
+    </Declaration>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>url_en_catalogo_tiene_url</IRI>
+        <Literal xml:lang="es">URL en catálogo tiene URL</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>url_en_catalogo_tiene_url</IRI>
+        <Literal xml:lang="en">catalog URL has URL</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>url_en_catalogo_tiene_url</IRI>
+        <Literal xml:lang="es">Valor de la URL que el catálogo declara para el repositorio.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>url_en_catalogo_tiene_url</IRI>
+        <Literal xml:lang="en">Value of the URL that the catalog declares for the repository.</Literal>
+    </AnnotationAssertion>
+    <DataPropertyDomain>
+        <DataProperty IRI="url_en_catalogo_tiene_url"/>
+        <Class IRI="url_en_catalogo"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="url_en_catalogo_tiene_url"/>
+        <Datatype IRI="url"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="url_en_catalogo_tiene_url"/>
+    </FunctionalDataProperty>
+
+    <Declaration>
+        <Class IRI="estado_en_catalogo"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="estado_en_catalogo"/>
+        <Class IRI="metadato_en_catalogo"/>
+    </SubClassOf>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>estado_en_catalogo</IRI>
+        <Literal xml:lang="es">estado en catálogo</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>estado_en_catalogo</IRI>
+        <Literal xml:lang="en">catalog status</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>estado_en_catalogo</IRI>
+        <Literal xml:lang="es">Estado de actividad de un repositorio tal como lo declara un catálogo. Solo se crea cuando el catálogo declara el estado de forma explícita. Convive con la propiedad directa repositorio_esta_activo, que no conserva la procedencia.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>estado_en_catalogo</IRI>
+        <Literal xml:lang="en">Activity status of a repository as a catalog declares it. It is only created when the catalog states the status explicitly. It coexists with the direct property repositorio_esta_activo, which does not keep the provenance.</Literal>
+    </AnnotationAssertion>
+    <Declaration>
+        <DataProperty IRI="estado_en_catalogo_esta_activo"/>
+    </Declaration>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>estado_en_catalogo_esta_activo</IRI>
+        <Literal xml:lang="es">estado en catálogo está activo</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:nombre_usual"/>
+        <IRI>estado_en_catalogo_esta_activo</IRI>
+        <Literal xml:lang="en">catalog status is active</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>estado_en_catalogo_esta_activo</IRI>
+        <Literal xml:lang="es">Indica si el catálogo declara al repositorio activo (true) o inactivo (false).</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="base:descripcion"/>
+        <IRI>estado_en_catalogo_esta_activo</IRI>
+        <Literal xml:lang="en">Whether the catalog declares the repository active (true) or inactive (false).</Literal>
+    </AnnotationAssertion>
+    <DataPropertyDomain>
+        <DataProperty IRI="estado_en_catalogo_esta_activo"/>
+        <Class IRI="estado_en_catalogo"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="estado_en_catalogo_esta_activo"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="estado_en_catalogo_esta_activo"/>
+    </FunctionalDataProperty>
 
     <Declaration>
         <Class IRI="autor"/>

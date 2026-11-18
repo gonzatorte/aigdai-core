@@ -1,0 +1,27 @@
+# Reconciled records that one catalog declares inactive while another catalog that describes the same
+# repository states no status at all. It is not a contradiction (re3data without an end date states nothing),
+# but it points at records that may be outdated in one of the catalogs.
+# The catalog that describes a record is taken from its url_en_catalogo, which only the catalog of the record emits
+# (identifiers do not work for this: a cross-reference identifier is issued by another catalog).
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX : <http://aigdai.tbox.owl/>
+SELECT ?catalogo_inactivo ?registro_inactivo ?catalogo_sin_estado ?registro_sin_estado (SAMPLE(?nombre) AS ?un_nombre)
+WHERE {
+  ?estado a :estado_en_catalogo ;
+          :metadato_en_catalogo_sobre_repositorio ?registro_inactivo ;
+          :metadato_en_catalogo_emitido_por_catalogo ?catalogo_inactivo ;
+          :estado_en_catalogo_esta_activo "false"^^xsd:boolean .
+  ?registro_inactivo (owl:sameAs|^owl:sameAs)+ ?registro_sin_estado .
+  ?url a :url_en_catalogo ;
+       :metadato_en_catalogo_sobre_repositorio ?registro_sin_estado ;
+       :metadato_en_catalogo_emitido_por_catalogo ?catalogo_sin_estado .
+  FILTER (?catalogo_sin_estado != ?catalogo_inactivo)
+  FILTER NOT EXISTS {
+    ?otro_estado a :estado_en_catalogo ;
+                 :metadato_en_catalogo_sobre_repositorio ?registro_sin_estado .
+  }
+  OPTIONAL { ?registro_inactivo :tiene_nombre_repositorio ?nombre }
+}
+GROUP BY ?catalogo_inactivo ?registro_inactivo ?catalogo_sin_estado ?registro_sin_estado
+ORDER BY ?registro_inactivo

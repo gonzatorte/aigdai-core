@@ -158,7 +158,8 @@ def refine_repository_info(
 
     def get_lang_sensible_text(urr):
         if isinstance(urr, dict):
-            return {'lang': urr.get('language', None), 'text': urr['$'] if '$' in urr else urr}
+            # xmlschema decodes the XML attributes with the '@' prefix
+            return {'lang': urr.get('@language', None), 'text': urr['$'] if '$' in urr else urr}
         return {'lang': None, 'text': urr}
 
     def coerce_single(key, postprocess=lambda x: x, remove_dup: bool = False, empty_value = None, other_value = None):

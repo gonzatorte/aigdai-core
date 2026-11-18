@@ -1,0 +1,22 @@
+# Reconciled records whose catalogs declare different URLs (url_en_catalogo).
+# Before comparing, the URLs are normalized: lower case, without scheme, without "www." and without trailing
+# slashes, so that "http://www.x.org/" and "https://x.org" count as the same URL.
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX : <http://aigdai.tbox.owl/>
+SELECT DISTINCT ?catalogo_a ?registro_a ?url_a ?catalogo_b ?registro_b ?url_b
+WHERE {
+  ?metadato_a a :url_en_catalogo ;
+              :metadato_en_catalogo_sobre_repositorio ?registro_a ;
+              :metadato_en_catalogo_emitido_por_catalogo ?catalogo_a ;
+              :url_en_catalogo_tiene_url ?url_a .
+  ?registro_a (owl:sameAs|^owl:sameAs)+ ?registro_b .
+  ?metadato_b a :url_en_catalogo ;
+              :metadato_en_catalogo_sobre_repositorio ?registro_b ;
+              :metadato_en_catalogo_emitido_por_catalogo ?catalogo_b ;
+              :url_en_catalogo_tiene_url ?url_b .
+  FILTER (STR(?catalogo_a) < STR(?catalogo_b))
+  BIND (REPLACE(REPLACE(LCASE(STR(?url_a)), "^[a-z]+://(www\\.)?", ""), "/+$", "") AS ?normal_a)
+  BIND (REPLACE(REPLACE(LCASE(STR(?url_b)), "^[a-z]+://(www\\.)?", ""), "/+$", "") AS ?normal_b)
+  FILTER (?normal_a != ?normal_b)
+}
+ORDER BY ?registro_a

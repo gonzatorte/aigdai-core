@@ -1,9 +1,12 @@
 PREFIX dai: <http://aigdai.tbox.owl/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 SELECT DISTINCT ?repo ?agregador ?software ?protocolo_de_cosecha ?protocolo_de_metricas
 WHERE {
   # DFG 201: Basic Biological and Medical Research
-  ?disciplina dai:es_sub_disciplina_de* <http://aigdai.tbox.owl/disciplina/201> .
+  # Subdisciplines in any taxonomy: every step goes to an equal or broader discipline. closeMatch and relatedMatch
+  # are left out because, chained, they drift to unrelated fields (see tech-debt.md, [dfg-fos]).
+  ?disciplina (dai:es_sub_disciplina_de|skos:broadMatch|skos:exactMatch|^skos:exactMatch|^skos:narrowMatch)* <http://aigdai.tbox.owl/disciplina/201> .
   ?agregador a dai:agregador ;
              dai:repositorio_afin_a_disciplina ?disciplina .
   ?repo a dai:repositorio_de_investigacion .

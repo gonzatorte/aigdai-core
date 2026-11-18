@@ -8,12 +8,8 @@
 - [aigdai.owx](./aigdai.owx): Main ontology, which imports the previous ones and the XML files detailed below (ABox elements).
 
 ### ABox elements:
-- [commons.xml](./commons.xml): Basic elements (used much like an enumeration) such as file formats, file types, metadata schemas, identifier schemes, etc.
-- [localizaciones.xml](./localizaciones.xml): List of countries and regions and their inclusion relations.
-- [disciplinas.xml](./disciplinas.xml): Taxonomy of disciplines as expressed by the DFG (the Frascati taxonomy and the corresponding crosswalk with DFG are available but not yet elaborated).
-- [organizaciones.xml](./organizaciones.xml): A small sample from ROR of research organizations (funders, universities, institutes, etc.) and their relations.
-- [criterios.xml](./criterios.xml): The ABox elements detailing the relations defined in criterios.owl, built from reading several guides and recommendations from different sources.
-- [repositorios.xml](./repositorios.xml): A small sample of repository data extracted from datacite and re3data and their relations with the other entities mentioned above.
+The ABox (commons, locations, disciplines, ROR organizations, quality criteria and repositories) is built by the populator and written to an N-Triples file together with the TBox, to load into Fuseki (see [Populating Fuseki](../README.md#populating-fuseki)).
+- [disciplinas.xml](./disciplinas.xml): Taxonomy of disciplines as expressed by the DFG (the Frascati taxonomy and the corresponding crosswalk with DFG are available but not yet elaborated). An earlier output of the populator, kept because aigdai.owx imports it; it is no longer regenerated.
 
 ## Conceptual model
 

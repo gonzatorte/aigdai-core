@@ -1,0 +1,42 @@
+# Worked example: re3data and FAIRsharing describe MIDRC (Medical Imaging and Data Resource Center) with
+# different names and URLs.
+# Starting from its re3data identifier, it returns every record reconciled with it (owl:sameAs in both
+# directions, transitively) and what is stated about each record:
+#   - with provenance (metadato_en_catalogo): identifiers, URL and activity status, with the catalog that issued them;
+#   - without provenance (direct properties): names, URL and activity status, where the catalog can only be
+#     guessed from the record IRI (re3data: repositorio/r3d..., FAIRsharing: repositorio/fairsharing-<id>,
+#     DataCite: repositorio/datacite-<uid>, DOI: repositorio/doi-<doi>).
+# Run it on a dataset without reasoner: with owl:sameAs reasoning every value would be copied to every record.
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX : <http://aigdai.tbox.owl/>
+SELECT DISTINCT ?registro ?con_procedencia ?catalogo ?propiedad ?valor
+WHERE {
+  ?id :id_de_repositorio_tiene_literal "r3d100014283"^^xsd:string ;
+      :id_de_repositorio_tiene_catalogo <http://aigdai.tbox.owl/catalogo_de_repositorios/re3data> ;
+      :id_de_repositorio_tiene_repositorio ?alguno .
+  ?alguno (owl:sameAs|^owl:sameAs)* ?registro .
+  {
+    # Without a reasoner the subproperties used by id_de_repositorio are reached through rdfs:subPropertyOf
+    ?sobre rdfs:subPropertyOf* :metadato_en_catalogo_sobre_repositorio .
+    ?emitido rdfs:subPropertyOf* :metadato_en_catalogo_emitido_por_catalogo .
+    ?metadato ?sobre ?registro ;
+              ?emitido ?catalogo_iri ;
+              ?propiedad ?valor .
+    VALUES ?propiedad { :id_de_repositorio_tiene_literal :url_en_catalogo_tiene_url :estado_en_catalogo_esta_activo }
+    BIND (STRAFTER(STR(?catalogo_iri), "catalogo_de_repositorios/") AS ?catalogo)
+    BIND ("si" AS ?con_procedencia)
+  }
+  UNION
+  {
+    VALUES ?propiedad { :tiene_nombre_repositorio :tiene_url_repositorio :repositorio_esta_activo }
+    ?registro ?propiedad ?valor .
+    BIND (IF(STRSTARTS(STR(?registro), "http://aigdai.tbox.owl/repositorio/doi-"), "doi (by IRI)",
+          IF(STRSTARTS(STR(?registro), "http://aigdai.tbox.owl/repositorio/r3d"), "re3data (by IRI)",
+          IF(STRSTARTS(STR(?registro), "http://aigdai.tbox.owl/repositorio/fairsharing-"), "fairsharing (by IRI)",
+          IF(STRSTARTS(STR(?registro), "http://aigdai.tbox.owl/repositorio/datacite-"), "datacite (by IRI)", "other (by IRI)")))) AS ?catalogo)
+    BIND ("no" AS ?con_procedencia)
+  }
+}
+ORDER BY ?con_procedencia ?propiedad ?catalogo ?registro

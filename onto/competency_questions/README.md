@@ -32,7 +32,7 @@ Lists the research data repositories (class `rdd`) with their name. In DL it amo
 Combines two sources: the content types the repository declares it accepts (`repositorio_acepta_tipo_de_contenido`) and the per-data-type statistics of its contents. Includes the subtypes of the requested type (`skos:broaderTransitive*`) and, from the statistics, uses only the most recent one for each repository.
 
 ### CCI-3: Which repositories are related to a given discipline? — [`cci-3.rq`](cci-3.rq)
-Same as CCI-2, but with disciplines: declared affinity (`repositorio_afin_a_disciplina`) or per-discipline statistics, including subdisciplines (`es_sub_disciplina_de*`). The example uses DFG 111 (Social Sciences).
+Same as CCI-2, but with disciplines: declared affinity (`repositorio_afin_a_disciplina`) or per-discipline statistics, including subdisciplines in any taxonomy (`es_sub_disciplina_de` plus the SKOS mappings between DFG, OECD FOS and SRAO). The example uses DFG 111 (Social Sciences). DataCite's statistics are per FOS field, broader than any DFG code, so they are only reached when the discipline asked for is a FOS one (e.g. `disciplina/social_sciences`).
 
 ### CCI-4: Which currently active repository provides curation, access control or technical support services, and under what terms? — [`cci-4.rq`](cci-4.rq)
 For active repositories, returns the data access services (with their access level), the curation assessments (with their level) and the general documentation, along with the URL where the terms can be consulted. The actual terms must be reviewed manually in that documentation.
@@ -43,12 +43,12 @@ Repositories that allow open licenses (CC0 or CC-BY, by name), with their curren
 ## Institutional support
 
 ### CCA-1: Which repositories comply with the policies of a given institution? — [`cca-1.rq`](cca-1.rq)
-Starts from an institution (example: Udelar, ROR `030bbe882`), walks its dependent organizations (`es_organizacion_antecesora*`), keeps the active ones and returns the repositories they have a current relation with, along with the repository's policies.
+Starts from an institution (examples: NIH, ROR `01cwqze88`, and the University of Göttingen, ROR `01y9bpm73`; Udelar is in none of the sources), walks its dependent organizations (`es_organizacion_antecesora*`), keeps the active ones and returns the repositories they have a current relation with, along with the repository's policies.
 
 ## Quality assessment
 
 ### CCE-1: Which certifications are compatible with or applicable to this particular repository? — [`cce-1.rq`](cce-1.rq)
-Joins two paths: the certifications applied to the repository and the higher-level criteria containing statements the repository satisfies. It currently returns nothing on the second path (see `tech-debt.md`).
+Joins two paths: the certifications applied to the repository and the higher-level criteria containing statements the repository satisfies. Both start from every record of the repository (`owl:sameAs` in both directions), since the applications usually hang from the DataCite record. Only CoreTrustSeal is linked to a quality criterion (see `tech-debt.md`).
 
 ### CCE-2: What concrete characteristics must a repository have to comply with a given certification or principle? — [`cce-2.rq`](cce-2.rq)
 Returns the atomic statements (leaves) that extend a quality criterion, directly or indirectly; the example uses FAIR. Includes the description of each statement.
@@ -56,7 +56,7 @@ Returns the atomic statements (leaves) that extend a quality criterion, directly
 ## Interoperability
 
 ### CCN-1: Which repositories are indexed by aggregators of a specific discipline? — [`ccn-1.rq`](ccn-1.rq)
-Repositories harvested, directly or transitively, by aggregators related to the discipline (example: DFG 201) or to its subdisciplines.
+Repositories harvested directly by aggregators related to the discipline (example: DFG 201) or to its subdisciplines, in any taxonomy through the SKOS mappings. The transitive path is not used: FAIRsharing records that are both knowledgebase and repository are stated as harvesting in both directions, and the cycles would relate almost every repository to every aggregator.
 
 ### CCN-2: Which repositories could be indexed by aggregators of a specific discipline? — [`ccn-2.rq`](ccn-2.rq)
 Repositories not yet harvested by an aggregator of the discipline, but compatible with it: they share software, or support a harvesting or metrics protocol that the aggregator consumes (or an extension of that protocol). Returns the elements in common so the degree of compatibility can be assessed.

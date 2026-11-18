@@ -1,0 +1,22 @@
+# Reconciled records whose catalogs state opposite activity statuses.
+# It compares the estado_en_catalogo of each catalog: FAIRsharing states active ("ready") or inactive
+# ("deprecated"); re3data only states inactive, when the record has an end date.
+# Run it on a dataset without reasoner, so that each status stays attached to the record of its catalog.
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX : <http://aigdai.tbox.owl/>
+SELECT ?catalogo_a ?registro_a ?activo_a ?catalogo_b ?registro_b ?activo_b (SAMPLE(?nombre) AS ?un_nombre)
+WHERE {
+  ?estado_a a :estado_en_catalogo ;
+            :metadato_en_catalogo_sobre_repositorio ?registro_a ;
+            :metadato_en_catalogo_emitido_por_catalogo ?catalogo_a ;
+            :estado_en_catalogo_esta_activo ?activo_a .
+  ?registro_a (owl:sameAs|^owl:sameAs)+ ?registro_b .
+  ?estado_b a :estado_en_catalogo ;
+            :metadato_en_catalogo_sobre_repositorio ?registro_b ;
+            :metadato_en_catalogo_emitido_por_catalogo ?catalogo_b ;
+            :estado_en_catalogo_esta_activo ?activo_b .
+  FILTER (STR(?catalogo_a) < STR(?catalogo_b) && ?activo_a != ?activo_b)
+  OPTIONAL { ?registro_a :tiene_nombre_repositorio ?nombre }
+}
+GROUP BY ?catalogo_a ?registro_a ?activo_a ?catalogo_b ?registro_b ?activo_b
+ORDER BY ?activo_a ?registro_a

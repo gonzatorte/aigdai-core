@@ -1,0 +1,10 @@
+# Repositories described by the three catalogues: a re3data record linked (transitively) to a FAIRsharing and to a DataCite record.
+# The path may go through DOI records (catalogs doi-<prefix>), which do not count as a catalogue of their own.
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT (COUNT(DISTINCT ?r3) AS ?repositorios_en_las_tres)
+WHERE {
+  ?r3 (owl:sameAs|^owl:sameAs)+ ?fs , ?dc .
+  FILTER (STRSTARTS(STR(?r3), "http://aigdai.tbox.owl/repositorio/r3d"))
+  FILTER (STRSTARTS(STR(?fs), "http://aigdai.tbox.owl/repositorio/fairsharing-"))
+  FILTER (STRSTARTS(STR(?dc), "http://aigdai.tbox.owl/repositorio/datacite-"))
+}

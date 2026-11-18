@@ -1,59 +1,25 @@
-from rdflib import URIRef, Literal
-from rdflib.namespace import OWL, XSD
-import settings
+from rdflib import BNode, URIRef, Literal
+from rdflib.collection import Collection
+from rdflib.namespace import OWL, RDF, XSD
 import typing
 import re
 import calendar
 import datetime
-import os
 
 from onto.populator.ontology import onto_elements
 
 
 def owl_all_different(g, instances):
-    for (idx, instance1) in enumerate(instances):
-        for instance2 in instances[idx+1:]:
-            g.add((instance1, OWL.differentFrom, instance2))
-
-
-def reason_on_memory():
-    # g_repos, g_commons, g_criterios, g_disciplinas, g_locaciones = refine_and_insert_on_rdf()
-    # g_orgs = insert_on_rdf()
-    import owlready2 as ow
-
-    ow.JAVA_EXE = settings.JAVA_EXE_PATH
-    ow.onto_path.append('onto/owl/')
-
-    # from io import BytesIO
-    # my_str_as_bytes = str.encode(my_str)  # convert to binary
-    # fobj = BytesIO(my_str_as_bytes)
-    # abox = ow.get_ontology("some-random-path").load(fileobj=fobj)
-
-    tbox = ow.get_ontology('file://onto/owl/aigdai-tbox.owl').load(only_local=True)
-
-    for data_file_path in [
-        'repositorios.xml',
-        'criterios.xml',
-        'disciplinas.xml',
-        'commons.xml',
-        'localizaciones.xml',
-        'organizaciones.xml',
-    ]:
-        # ow.get_ontology('file://%s' % (data_file_path,)).load(only_local=True)
-        # tbox.imported_ontologies.append(ow.get_ontology('file://../owl/%s' % (data_file_path,)))
-        tbox.imported_ontologies.append(ow.get_ontology('file://%s' % (os.path.abspath('onto/owl/%s' % (data_file_path,)),)))
-        # tbox.imported_ontologies.append('file://%s' % (data_file_path,))
-
-    ow.sync_reasoner([tbox], ignore_unsupported_datatypes=True, infer_property_values=True)
-    # ow.sync_reasoner_pellet([tbox], infer_data_property_values=True, infer_property_values=True, debug=2)
-    # with tbox:
-    #     ow.sync_reasoner()
-
-    if len(list(ow.default_world.inconsistent_classes())) != 0:
-        raise Exception('Inconsistent ontology')
-
-    print(list(tbox.individuals()))
-    # print(list(tbox.graph.triples((None, None, None))))
+    # A single owl:AllDifferent per group instead of an owl:differentFrom per pair, which grows with the square of
+    # the group. It uses owl:distinctMembers (OWL 1) and not owl:members (OWL 2): the Jena rules (distinct2) only
+    # recognize the former, and the OWL API and owlready2 read both. HermiT and Jena expand it to pairs internally.
+    if len(instances) < 2:
+        return
+    all_different = BNode()
+    members = BNode()
+    Collection(g, members, list(instances))
+    g.add((all_different, RDF.type, OWL.AllDifferent))
+    g.add((all_different, OWL.distinctMembers, members))
 
 
 T = typing.TypeVar('T')
@@ -126,6 +92,3 @@ def gross_date_bounds(value: str | datetime.datetime) -> typing.Tuple[Literal, L
     hasta = datetime.datetime(year, month_hasta, day_hasta, 23, 59, 59, tzinfo=datetime.timezone.utc)
     return (Literal(desde, datatype=XSD.dateTime), Literal(hasta, datatype=XSD.dateTime))
 
-
-if __name__ == '__main__':
-    reason_on_memory()

@@ -6,7 +6,10 @@ import onto.cts as cts
 import onto.populator.rdf_types as rdf_types
 from re3data.xsd_transform import refine_repository_info, load_schema
 from rdflib import Graph, Literal
-from rdflib.namespace import RDF, XSD
+from rdflib.namespace import RDF, SKOS, XSD
+import datacite.oecd_dfg_mapping as oecd_dfg_mapping
+import datacite.oecd_dfg_derived as oecd_dfg_derived
+import datacite.srao_dfg_mapping as srao_dfg_mapping
 import hashlib
 
 
@@ -74,38 +77,91 @@ class Re3DataSource:
             refined.append(rrr)
         return refined
 
+    def process_access(self, repositorio, repository_info):
+        # dataAccess: an access service per type. databaseAccess: openness for reading the database. dataUpload:
+        # openness for depositing. The levels are re3data's (cts.niveles_de_acceso_re3data).
+        g_repos = self.gg
+        rid = repository_info['id']
+        for access in repository_info.get('dataAccess') or []:
+            if access.get('type') not in cts.niveles_de_acceso_re3data:
+                continue
+            nivel = rdf_types.NivelDeAcceso.child_uri_ref(access['type'])
+            g_repos.add((nivel, RDF.type, rdf_types.NivelDeAcceso))
+            servicio = rdf_types.ServicioDeAccesoADatos.child_uri_ref("%s-%s" % (rid, access['type']))
+            g_repos.add((servicio, RDF.type, rdf_types.ServicioDeAccesoADatos))
+            g_repos.add((servicio, rdf_types.servicio_de_acceso_a_datos_tiene_repositorio, repositorio))
+            g_repos.add((servicio, rdf_types.servicio_de_acceso_a_datos_tiene_nivel_de_acceso, nivel))
+        database_access = repository_info.get('databaseAccess') or {}
+        if database_access.get('type') in cts.niveles_de_acceso_re3data:
+            nivel = rdf_types.NivelDeAperturaParaLectura.child_uri_ref(database_access['type'])
+            g_repos.add((nivel, RDF.type, rdf_types.NivelDeAperturaParaLectura))
+            apertura = rdf_types.AperturaDeRepositorio.child_uri_ref("%s-lectura" % (rid,))
+            g_repos.add((apertura, RDF.type, rdf_types.AperturaDeRepositorio))
+            g_repos.add((apertura, rdf_types.evaluacion_de_repositorio_tiene_repositorio, repositorio))
+            g_repos.add((apertura, rdf_types.apertura_de_repositorio_tiene_nivel_de_apertura, nivel))
+        for upload in repository_info.get('dataUpload') or []:
+            if upload.get('type') not in cts.niveles_de_acceso_re3data:
+                continue
+            nivel = rdf_types.NivelDeAperturaParaEscritura.child_uri_ref(upload['type'])
+            g_repos.add((nivel, RDF.type, rdf_types.NivelDeAperturaParaEscritura))
+            apertura = rdf_types.AperturaDeRepositorio.child_uri_ref("%s-deposito-%s" % (rid, upload['type']))
+            g_repos.add((apertura, RDF.type, rdf_types.AperturaDeRepositorio))
+            g_repos.add((apertura, rdf_types.evaluacion_de_repositorio_tiene_repositorio, repositorio))
+            g_repos.add((apertura, rdf_types.apertura_de_repositorio_tiene_nivel_de_apertura, nivel))
+
     def process(self, repository_info, reduced: bool=False):
         g_repos = self.gg
         repositorio = rdf_types.Repositorio.child_uri_ref(repository_info['id'])
-        g_repos.set((repositorio, RDF.type, rdf_types.Repositorio))
-        g_repos.set((repositorio, rdf_types.tiene_nombre_repositorio, Literal(repository_info['repositoryName']['text'].replace('@', ''), lang=repository_info['repositoryName']['lang'])))
-        g_repos.set((repositorio, rdf_types.tiene_descripcion_repositorio, Literal(repository_info['description']['text'].replace('@', ''), lang=repository_info['description']['lang'])))
-        g_repos.set((repositorio, rdf_types.tiene_url_repositorio, Literal(repository_info['repositoryURL'])))
+        g_repos.add((repositorio, RDF.type, rdf_types.Repositorio))
+        g_repos.add((repositorio, rdf_types.tiene_nombre_repositorio, Literal(repository_info['repositoryName']['text'].replace('@', ''), lang=repository_info['repositoryName']['lang'])))
+        g_repos.add((repositorio, rdf_types.tiene_descripcion_repositorio, Literal(repository_info['description']['text'].replace('@', ''), lang=repository_info['description']['lang'])))
+        g_repos.add((repositorio, rdf_types.tiene_url_repositorio, Literal(repository_info['repositoryURL'])))
+
+        # Same IRI that FAIRsharing uses for its cross-references to re3data, so both records share the identifier
+        id_repo = rdf_types.IdDeRepositorio.child_uri_ref("re3data-%s" % (repository_info['id'],))
+        g_repos.add((id_repo, RDF.type, rdf_types.IdDeRepositorio))
+        g_repos.add((id_repo, rdf_types.id_de_repositorio_tiene_repositorio, repositorio))
+        g_repos.add((id_repo, rdf_types.id_de_repositorio_tiene_literal, Literal(repository_info['id'], datatype=XSD.string)))
+        g_repos.add((id_repo, rdf_types.id_de_repositorio_tiene_catalogo, common.CatalogoRe3Data))
+
+        # The URL and the status again, keeping which catalog states them, so that they can be compared between catalogs
+        url_en_catalogo = rdf_types.UrlEnCatalogo.child_uri_ref("re3data-%s" % (repository_info['id'],))
+        g_repos.add((url_en_catalogo, RDF.type, rdf_types.UrlEnCatalogo))
+        g_repos.add((url_en_catalogo, rdf_types.metadato_en_catalogo_sobre_repositorio, repositorio))
+        g_repos.add((url_en_catalogo, rdf_types.metadato_en_catalogo_emitido_por_catalogo, common.CatalogoRe3Data))
+        g_repos.add((url_en_catalogo, rdf_types.url_en_catalogo_tiene_url, Literal(repository_info['repositoryURL'])))
+        # re3data has no status field. An end date means it is no longer active; without one, it states nothing.
+        if repository_info['endDate']:
+            estado_en_catalogo = rdf_types.EstadoEnCatalogo.child_uri_ref("re3data-%s" % (repository_info['id'],))
+            g_repos.add((estado_en_catalogo, RDF.type, rdf_types.EstadoEnCatalogo))
+            g_repos.add((estado_en_catalogo, rdf_types.metadato_en_catalogo_sobre_repositorio, repositorio))
+            g_repos.add((estado_en_catalogo, rdf_types.metadato_en_catalogo_emitido_por_catalogo, common.CatalogoRe3Data))
+            g_repos.add((estado_en_catalogo, rdf_types.estado_en_catalogo_esta_activo, Literal(False, datatype=XSD.boolean)))
         if repository_info['isDataProvider']:
-            g_repos.set((repositorio, RDF.type, rdf_types.Rdd))
+            g_repos.add((repositorio, RDF.type, rdf_types.Rdd))
         if repository_info['isServiceProvider']:
-            g_repos.set((repositorio, RDF.type, rdf_types.Agregador))
+            g_repos.add((repositorio, RDF.type, rdf_types.Agregador))
 
         for db_instance in repository_info['institutions']:
             id_org = db_instance['id'].replace(' ', '')
             r_instance = rdf_types.Organizacion.child_uri_ref(id_org)
-            g_repos.set((r_instance, RDF.type, rdf_types.Organizacion))
+            g_repos.add((r_instance, RDF.type, rdf_types.Organizacion))
 
-            g_repos.set((r_instance, rdf_types.tiene_nombre_organizacion, Literal(db_instance['institutionName']['text'].replace('@', ''), lang=db_instance['institutionName']['lang'])))
+            g_repos.add((r_instance, rdf_types.tiene_nombre_organizacion, Literal(db_instance['institutionName']['text'].replace('@', ''), lang=db_instance['institutionName']['lang'])))
             for instName in db_instance['institutionAdditionalNames']:
-                g_repos.set((r_instance, rdf_types.tiene_nombre_organizacion, Literal(instName['text'].replace('@', ''), lang=instName['lang'])))
+                g_repos.add((r_instance, rdf_types.tiene_nombre_organizacion, Literal(instName['text'].replace('@', ''), lang=instName['lang'])))
 
             if db_instance['institutionCountry'] == 'EEC':
                 # ToDo: Use from commons
                 location = rdf_types.Locacion.child_uri_ref('UE')
-                g_repos.set((location, RDF.type, rdf_types.Locacion))
+                g_repos.add((location, RDF.type, rdf_types.Locacion))
             elif db_instance['institutionCountry'] == 'AAA':
                 location = common.locacion_internacional
-                g_repos.set((location, RDF.type, rdf_types.Locacion))
+                g_repos.add((location, RDF.type, rdf_types.Locacion))
             else:
                 location = rdf_types.Pais.child_uri_ref(db_instance['institutionCountry'])
-                g_repos.set((location, RDF.type, rdf_types.Pais))
-            g_repos.set((r_instance, rdf_types.organizacion_se_ubica_en, location))
+                g_repos.add((location, RDF.type, rdf_types.Pais))
+            g_repos.add((r_instance, rdf_types.organizacion_se_ubica_en, location))
 
             g_repos.add((r_instance, rdf_types.tiene_tipo_de_organizacion, Literal(
                 self.remap_institution_type(db_instance['institutionType']),
@@ -134,7 +190,7 @@ class Re3DataSource:
                     continue
                 idd_org_wo_schema = idd_match.groupdict().get('idd').replace(' ', '').replace(':', '')
                 id_de_organizacion = rdf_types.IdDeOrganizacion.child_uri_ref(idd_org)
-                g_repos.set((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
+                g_repos.add((id_de_organizacion, RDF.type, rdf_types.IdDeOrganizacion))
                 # ToDo: tipo_de_id_de_organizacion can be ROR, RRID, LOCAL, and what else?
                 #  new Set(db.drepo.aggregate([{$project: {'institutions': 1}}, {$unwind: '$institutions'},{$project: {'institutions.id': 1}}]).toArray().map(a => a.institutions.id.replace(' ', ':').split(/[:.;]/)[0]))
                 g_repos.set((id_de_organizacion, rdf_types.id_de_organizacion_tiene_tipo, tipo_de_id_de_organizacion))
@@ -145,7 +201,7 @@ class Re3DataSource:
             fin_periodo_de_relacion_con_organizacion = db_instance.get('responsibilityEndDate', None)
             for responsibilityType in db_instance.get('responsibilityTypes', []):
                 relacion_repositorio_y_organizacion = rdf_types.RelacionRepositorioYOrganizacion.child_uri_ref("%s-%s-%s" % (id_org, repository_info['id'], responsibilityType))
-                g_repos.set((relacion_repositorio_y_organizacion, RDF.type, rdf_types.RelacionRepositorioYOrganizacion))
+                g_repos.add((relacion_repositorio_y_organizacion, RDF.type, rdf_types.RelacionRepositorioYOrganizacion))
                 g_repos.set((relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_repositorio, repositorio))
                 g_repos.set((relacion_repositorio_y_organizacion, rdf_types.relacion_repositorio_y_organizacion_tiene_organizacion, r_instance))
                 if inicio_periodo_de_relacion_con_organizacion:
@@ -174,10 +230,10 @@ class Re3DataSource:
             software_name = "other_%s" % (repository_info['id'],)
         if software_name is not None:
             software = rdf_types.Software.child_uri_ref(software_name)
-            g_repos.set((software, RDF.type, rdf_types.Software))
+            g_repos.add((software, RDF.type, rdf_types.Software))
             # ToDo: Should I state that all the engines collected by re3data with different names are indeed different?
             #  that does not hold precisely for other_algo. other_1 is different from ckan, from dataverse, etc... but it is not different from other_2...
-            g_repos.set((repositorio, rdf_types.repositorio_asociado_a_software, software))
+            g_repos.add((repositorio, rdf_types.repositorio_asociado_a_software, software))
 
         for api in repository_info['apis']:
             api_type = api['type']
@@ -185,7 +241,8 @@ class Re3DataSource:
                 api_type = "other_%s" % (repository_info['id'],)
             # ToDo: Unify with commons
             api_para_cosecha = rdf_types.ProtocoloDeCosecha.child_uri_ref(api_type)
-            g_repos.set((api_para_cosecha, RDF.type, rdf_types.ProtocoloDeCosecha))
+            g_repos.add((api_para_cosecha, RDF.type, rdf_types.ProtocoloDeCosecha))
+            g_repos.add((repositorio, rdf_types.soporta_protocolo_de_cosecha, api_para_cosecha))
             # ToDo: Should be inferred
             # g_repos.set((api_para_cosecha, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
@@ -203,31 +260,31 @@ class Re3DataSource:
                 metadata_standard_name = "other_%s" % (repository_info['id'],)
             # ToDo: Unify enumerated values or declare same-as
             esquema_de_metadatos = rdf_types.EsquemaDeMetadatos.child_uri_ref(metadata_standard_name)
-            g_repos.set((esquema_de_metadatos, RDF.type, rdf_types.EsquemaDeMetadatos))
-            g_repos.set((repositorio, rdf_types.repositorio_soporta_estandar, esquema_de_metadatos))
+            g_repos.add((esquema_de_metadatos, RDF.type, rdf_types.EsquemaDeMetadatos))
+            g_repos.add((repositorio, rdf_types.repositorio_soporta_estandar, esquema_de_metadatos))
 
         for aid_system in repository_info['aidSystems']:
             if aid_system == 'other':
                 aid_system = "other_%s" % (repository_info['id'],)
             # ToDo: Unify enumerated values or declare same-as
             esquema_de_id_de_autor = rdf_types.EsquemaDeIdDeAutor.child_uri_ref(aid_system)
-            g_repos.set((esquema_de_id_de_autor, RDF.type, rdf_types.EsquemaDeIdDeAutor))
-            g_repos.set((repositorio, rdf_types.repositorio_soporta_estandar, esquema_de_id_de_autor))
+            g_repos.add((esquema_de_id_de_autor, RDF.type, rdf_types.EsquemaDeIdDeAutor))
+            g_repos.add((repositorio, rdf_types.repositorio_soporta_estandar, esquema_de_id_de_autor))
 
         for pid_system in repository_info['pidSystems']:
             if pid_system == 'other':
                 pid_system = "other_%s" % (repository_info['id'],)
             # ToDo: Unify enumerated values or declare same-as
             esquema_de_id_persistente = rdf_types.EsquemaDeIdPersistente.child_uri_ref(pid_system)
-            g_repos.set((esquema_de_id_persistente, RDF.type, rdf_types.EsquemaDeIdPersistente))
-            g_repos.set((repositorio, rdf_types.acepta_esquema_de_identificadores_persistentes, esquema_de_id_persistente))
+            g_repos.add((esquema_de_id_persistente, RDF.type, rdf_types.EsquemaDeIdPersistente))
+            g_repos.add((repositorio, rdf_types.acepta_esquema_de_identificadores_persistentes, esquema_de_id_persistente))
 
         for content_type in repository_info['contentType']:
             # ToDo: Handle other, give it an other_id
             # ToDo: Unify enumerated values or declare same-as
             normal_content_type = self.remap_tipo_de_datos(content_type)
             tipo_de_dato = rdf_types.TipoDeDato.child_uri_ref(normal_content_type)
-            g_repos.set((tipo_de_dato, RDF.type, rdf_types.TipoDeDato))
+            g_repos.add((tipo_de_dato, RDF.type, rdf_types.TipoDeDato))
             g_repos.add((repositorio, rdf_types.repositorio_acepta_tipo_de_contenido, tipo_de_dato))
 
         # for quality_management in repository_info['qualityManagement']:
@@ -237,17 +294,33 @@ class Re3DataSource:
         #     g_repos.set((servicio_de_curaduria, rdf_types.repositorio_aporta_funcionalidad, repositorio))
 
         # databaseLicenses
-        # databaseAccess
         # dataLicenses
-        # dataAccess
         # dataUploadLicenses
-        # dataUpload
+
+        for cert_name in repository_info.get('certificates') or []:
+            cert_name = cert_name.lower()
+            if cert_name == 'other':
+                cert_id = "other_%s" % (repository_info['id'],)
+            else:
+                cert_id = cts.nombres_de_certificaciones.get(cert_name, cert_name)
+            certificacion = common.certification_ref(cert_id)
+            g_repos.add((certificacion, RDF.type, rdf_types.Certificacion))
+            aplicacion_de_cert = rdf_types.AplicacionDeCertificacionARepositorio.child_uri_ref("%s-%s" % (repository_info['id'], cert_id))
+            g_repos.add((aplicacion_de_cert, RDF.type, rdf_types.AplicacionDeCertificacionARepositorio))
+            g_repos.set((aplicacion_de_cert, rdf_types.aplicacion_de_certificacion_a_repositorio_tiene_repositorio, repositorio))
+            g_repos.set((aplicacion_de_cert, rdf_types.aplicacion_de_certificacion_a_repositorio_tiene_certificacion, certificacion))
+
+        # The access services and the openness evaluations range over rdd: only data providers get them, so that a
+        # service provider is not inferred to be a data repository. The restrictions (registration, fee, institutional
+        # membership...) are not mapped.
+        if repository_info['isDataProvider']:
+            self.process_access(repositorio, repository_info)
 
         for policy in repository_info['policies']:
             local_id_politica = hashlib.md5(policy['url'].encode('utf-8')).hexdigest()
             politica = rdf_types.Politica.child_uri_ref(local_id_politica)
-            g_repos.set((politica, RDF.type, rdf_types.Politica))
-            g_repos.set((politica, rdf_types.tiene_nombre_politica, Literal(policy['name'], datatype=XSD.string)))
+            g_repos.add((politica, RDF.type, rdf_types.Politica))
+            g_repos.add((politica, rdf_types.tiene_nombre_politica, Literal(policy['name'], datatype=XSD.string)))
             g_repos.set((politica, rdf_types.tiene_url_politica, Literal(policy['url'])))
             g_repos.add((repositorio, rdf_types.repositorio_usa_politica, politica))
 
@@ -255,16 +328,10 @@ class Re3DataSource:
             local_id_data_license = hashlib.md5(data_license['url'].encode('utf-8')).hexdigest()
             # ToDo: Unify
             licencia_data = rdf_types.Licencia.child_uri_ref(local_id_data_license)
-            g_repos.set((licencia_data, RDF.type, rdf_types.Licencia))
+            g_repos.add((licencia_data, RDF.type, rdf_types.Licencia))
             g_repos.set((licencia_data, rdf_types.tiene_nombre_licencia, Literal(data_license['name'], datatype=XSD.string)))
             g_repos.set((licencia_data, rdf_types.tiene_url_licencia, Literal(data_license['url'])))
             g_repos.add((repositorio, rdf_types.repositorio_permite_licencia, licencia_data))
-
-        # data_access_types = [x['type'] for x in repository_info['dataAccess']]
-        # is_open_access_supported = 'open' in data_access_types
-        # is_restricted_access_supported = 'restricted' in data_access_types
-        # # restrictions
-        # is_closed_access_supported = 'closed' in data_access_types
 
         for subject in repository_info['subjects']:
             disciplina = rdf_types.Disciplina.child_uri_ref(subject)
@@ -281,17 +348,56 @@ def seed_disciplinas():
         for tr in forest:
             disciplina = rdf_types.Disciplina.child_uri_ref(tr[0])
             all_dfg_disciplinas.append(disciplina)
-            g.set((disciplina, RDF.type, rdf_types.Disciplina))
-            g.set((disciplina, rdf_types.nombre_de_disciplina, Literal(tr[1], datatype=XSD.string)))
+            g.add((disciplina, RDF.type, rdf_types.Disciplina))
+            g.add((disciplina, rdf_types.nombre_de_disciplina, Literal(tr[1], datatype=XSD.string)))
             g.set((disciplina, rdf_types.disciplina_tiene_esquema, Literal('dfg', datatype=XSD.string)))
 
             if parent is not None:
                 parent_g = rdf_types.Disciplina.child_uri_ref(parent)
-                g.set((disciplina, rdf_types.es_sub_disciplina_de, parent_g))
+                g.add((disciplina, rdf_types.es_sub_disciplina_de, parent_g))
             if len(tr) >= 3:
                 children = tr[2]
                 tree_walk_disciplina(children, tr[0])
     tree_walk_disciplina(cts.dfg_subjects, None)
     owl_all_different(g, all_dfg_disciplinas)
 
+    # OECD FOS, identified by the DataCite slug so that they are the same disciplines DataCite's statistics refer to
+    all_fos_disciplinas = []
+    fos_by_code = {}
+    for (area_code, area_name, area_slug, fields) in cts.oecd_fos:
+        area = rdf_types.Disciplina.child_uri_ref(area_slug)
+        for (code, name, slug, parent) in [(area_code, area_name, area_slug, None)] + [f + (area,) for f in fields]:
+            disciplina = rdf_types.Disciplina.child_uri_ref(slug)
+            fos_by_code[code] = disciplina
+            all_fos_disciplinas.append(disciplina)
+            g.add((disciplina, RDF.type, rdf_types.Disciplina))
+            g.add((disciplina, rdf_types.nombre_de_disciplina, Literal(name, datatype=XSD.string)))
+            g.set((disciplina, rdf_types.disciplina_tiene_esquema, Literal('fos', datatype=XSD.string)))
+            if parent is not None:
+                g.add((disciplina, rdf_types.es_sub_disciplina_de, parent))
+    owl_all_different(g, all_fos_disciplinas)
+
+    # The crosswalk doesn't state the relation: DFG subjects are almost always finer than an OECD field (31201 and 11103
+    # are equivalent to 1.1 and 5.8), while review boards may be equivalent to one (110 Psychology, 5.1), span it
+    # (205 Medicine, 3.1) or be finer (102 History, 6.1)
+    for (dfg, _, oecd, _) in oecd_dfg_mapping.mapping:
+        relation = SKOS.broadMatch if len(dfg) == 5 else SKOS.closeMatch
+        g.add((rdf_types.Disciplina.child_uri_ref(dfg), relation, fos_by_code[oecd]))
+
+    # The other direction, derived by us: OECD fields contained in a DFG node (see oecd_dfg_derived.py)
+    for (oecd, _, dfg, _) in oecd_dfg_derived.mapping:
+        g.add((fos_by_code[oecd], SKOS.broadMatch, rdf_types.Disciplina.child_uri_ref(dfg)))
+
+    for (srao, _, relation, dfg, _) in srao_dfg_mapping.mapping:
+        srao_disciplina = rdf_types.Disciplina.child_uri_ref(srao)
+        g.add((srao_disciplina, SRAO_RELATIONS[relation], rdf_types.Disciplina.child_uri_ref(dfg)))
+
     return (g,)
+
+
+SRAO_RELATIONS = {
+    'exact': SKOS.exactMatch,
+    'narrower': SKOS.broadMatch,
+    'broader': SKOS.narrowMatch,
+    'related': SKOS.relatedMatch,
+}

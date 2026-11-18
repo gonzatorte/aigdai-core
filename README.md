@@ -8,7 +8,7 @@
 | [`re3data/`](./re3data) | Extractor for the re3data API, plus the XSD-driven refinement (`xsd_transform.py`) and the schema variants needed to parse malformed records. | `uv run python -m re3data.extract_from_repo --help` |
 | [`fairsharing/`](./fairsharing) | Extractor for FAIRsharing, over GraphQL (`graphql_client.py`) and REST (`rest_client.py`, which requires credentials). | `uv run python -m fairsharing.extractor --help` |
 | [`ror/`](./ror) | Extractor working from a dump of the official ROR site (the dump goes in `ror/data/`, not versioned), plus `fairsharing_mapper.py`, the ROR ↔ FAIRsharing id map. | `uv run python -m ror.extractor` |
-| [`openaire/`](./openaire) | Survey of the OpenAIRE organizations API. **Not in use and does not run**; kept as a note for future work, see [`tech-debt.md`](./tech-debt.md) section 3. | — |
+| [`openaire/`](./openaire) | Survey of the OpenAIRE organizations API. **Not in use and does not run**; kept as a note for future work, see [`tech-debt.md`](./tech-debt.md), section [openaire]. | — |
 | [`doi/`](./doi) | Looks up DOI metadata against the DataCite API. Used by the extractors to complete records. | library |
 | [`onto/`](./onto) | The ontology: OWL artifacts, the populator that builds the knowledge base, the controlled vocabularies and the competency questions. See [`onto/README.md`](./onto/README.md). | `uv run python -m onto.populator.populate --help` |
 | [`reasoner/`](./reasoner) | Runs the ELK and HermiT reasoners over the ontology through `jpype`. The jars are vendored here. | `uv run python reasoner/elk_reasoner.py` |

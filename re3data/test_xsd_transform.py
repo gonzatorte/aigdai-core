@@ -73,16 +73,16 @@ EXPECTED_ITEM_1 = {
                      {'name': 'UNC Dataverse terms of use',
                       'url': 'https://odum.unc.edu/files/2020/01/Policy_UNCDataverseTermsofUse_20170501.pdf'},
                  ],),
-    'api': (None,),
+    'apis': ([],),
     'metadataStandards': ([{'name': 'ddi - data documentation initiative', 'url': 'http://www.dcc.ac.uk/resources/metadata-standards/ddi-data-documentation-initiative'}, {'name': 'datacite metadata schema', 'url': 'http://www.dcc.ac.uk/resources/metadata-standards/datacite-metadata-schema'}, {'name': 'dublin core', 'url': 'http://www.dcc.ac.uk/resources/metadata-standards/dublin-core'}],),
-    'pidSystems': (['DOI'],),
+    'pidSystems': (['doi'],),
     # 'databaseAccess': ('open',),
-    'databaseLicense': ([{
+    'databaseLicenses': ([{
         'name': 'CC0', 'url': 'https://creativecommons.org/share-your-work/public-domain/cc0',
     }],),
     # 'dataAccess': (
     #     ['embargoed', 'open', {'type': 'restricted', 'restrictions': ['institutional membership', 'other']}],),
-    'dataLicense': ([{
+    'dataLicenses': ([{
         'name': 'CC', 'url': 'https://creativecommons.org/share-your-work/public-domain/cc0',
     },
                         {
@@ -107,12 +107,12 @@ EXPECTED_ITEM_2 = {
     'additionalNames': ([{'text': 'AAD', 'lang': 'eng'}],),
     'repositoryURL': ('https://aad.archives.gov/aad/',),
     'description': (
-        {'text': ''''You will find in the Access to Archival Databases (AAD) resource online access to records in a small selection of historic databases preserved permanently in NARA. Out of the nearly 200,000 data files in its holdings, NARA has selected approximately 475 of them for public searching through AAD. We selected these data because the records identify specific persons, geographic areas, organizations, and dates. The records cover a wide variety of civilian and military functions and have many genealogical, social, political, and economic research uses. AAD provides: Access to over 85 million historic electronic records created by more than 30 agencies of the U.S. federal government and from collections of donated historical materials.
+        {'text': '''You will find in the Access to Archival Databases (AAD) resource online access to records in a small selection of historic databases preserved permanently in NARA. Out of the nearly 200,000 data files in its holdings, NARA has selected approximately 475 of them for public searching through AAD. We selected these data because the records identify specific persons, geographic areas, organizations, and dates. The records cover a wide variety of civilian and military functions and have many genealogical, social, political, and economic research uses. AAD provides: Access to over 85 million historic electronic records created by more than 30 agencies of the U.S. federal government and from collections of donated historical materials.
 Both free-text and fielded searching options. The ability to retrieve, print, and download records with the specific information that you seek. Information to help you find and understand the records.''', 'lang': 'eng'},),
     'repositoryContact': (['https://www.archives.gov/contact'],),
     'isDisciplinar': (True,),
     'isInstitutional': (False,),
-    'softwareNames': (['unknown'],),
+    'softwareNames': ([],),
     # 'softwareName': ('dataverse',),
     'size': (None,),
     'startDate': ('1985',),
@@ -137,14 +137,14 @@ Both free-text and fielded searching options. The ability to retrieve, print, an
     #                      }
     #                  ],),
     'policies': ([{'name': 'Contribution Policy', 'url': 'https://www.archives.gov/developer#toc-contribution-policy'}, {'name': 'Freedom of Information Act - FOAI', 'url': 'https://www.archives.gov/foia'}, {'name': 'Privacy and Use', 'url': 'https://www.archives.gov/global-pages/privacy.html'}],),
-    'api': ({'url': 'https://www.archives.gov/developer#toc-application-programming-interfaces-apis-', 'type': 'other'},),
+    'apis': ([{'url': 'https://www.archives.gov/developer#toc-application-programming-interfaces-apis-', 'type': 'other'}],),
     'metadataStandards': ([],),
-    'pidSystems': (['none'],), # ToDo: Handle this null value
+    'pidSystems': ([],),
     # 'databaseAccess': ('open',),
-    'databaseLicense': ([],),
+    'databaseLicenses': ([],),
     # 'dataAccess': (
     #     ['embargoed', 'open', {'type': 'restricted', 'restrictions': ['institutional membership', 'other']}],),
-    'dataLicense': ([{'name': 'Copyrights', 'url': 'https://www.archives.gov/global-pages/privacy.html#copyright'}],),
+    'dataLicenses': ([{'name': 'Copyrights', 'url': 'https://www.archives.gov/global-pages/privacy.html#copyright'}],),
     # 'dataUpload': ({
     #                    'type': 'restricted', 'restriction': 'institutional membership',
     #                },),

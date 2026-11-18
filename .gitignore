@@ -106,3 +106,11 @@ fuseki-data/databases/
 fuseki-data/sample-storage/
 fuseki-data/system_files/
 
+
+# Java runtime and Jena jar downloaded for the reasoners (see onto/README.md)
+reasoner/jre/
+reasoner/jdk/
+reasoner/jena/
+
+# N-Triples written by the populator (--output), loaded by hand with tdb2.tdbloader
+*.nt

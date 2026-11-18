@@ -8,7 +8,6 @@ dependencies = [
     "lxml",
     "matplotlib",
     "motor",
-    "owlready2",
     "pandas",
     "pymongo",
     "python-dotenv",

@@ -1,9 +1,12 @@
 PREFIX dai: <http://aigdai.tbox.owl/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 SELECT ?repo ?disciplina ?cantidad ?total
 WHERE {
   VALUES ?disciplina_buscada { <http://aigdai.tbox.owl/disciplina/111> }  # DFG 111: Social Sciences
-  ?disciplina dai:es_sub_disciplina_de* ?disciplina_buscada .
+  # Subdisciplines in any taxonomy: every step goes to an equal or broader discipline. closeMatch and relatedMatch
+  # are left out because, chained, they drift to unrelated fields (see tech-debt.md, [dfg-fos]).
+  ?disciplina (dai:es_sub_disciplina_de|skos:broadMatch|skos:exactMatch|^skos:exactMatch|^skos:narrowMatch)* ?disciplina_buscada .
   {
     ?repo dai:repositorio_afin_a_disciplina ?disciplina .
   } UNION {

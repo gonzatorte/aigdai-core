@@ -12,7 +12,6 @@ dependencies = [
     { name = "lxml" },
     { name = "matplotlib" },
     { name = "motor" },
-    { name = "owlready2" },
     { name = "pandas" },
     { name = "pymongo" },
     { name = "python-dotenv" },
@@ -35,7 +34,6 @@ requires-dist = [
     { name = "lxml" },
     { name = "matplotlib" },
     { name = "motor" },
-    { name = "owlready2" },
     { name = "pandas" },
     { name = "pymongo" },
     { name = "python-dotenv" },
@@ -356,12 +354,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/1b/cd/1cc4d347118df8ba3f58de2dd95a57f755d486b238946917d5cbf6af903a/numpy-1.26.3-cp310-cp310-win32.whl", hash = "sha256:21a9484e75ad018974a2fdaa216524d64ed4212e418e0a551a2d83403b0531d3", size = 20790435, upload-time = "2024-01-02T22:23:21.575Z" },
     { url = "https://files.pythonhosted.org/packages/be/b0/611101990ddac767e54e2d27d1f4576ae1662cca64e2d55ef0e62558ec26/numpy-1.26.3-cp310-cp310-win_amd64.whl", hash = "sha256:9e1591f6ae98bcfac2a4bbf9221c0b92ab49762228f38287f6eeb5f3f55905ce", size = 15808671, upload-time = "2024-01-02T22:23:50.604Z" },
 ]
-
-[[package]]
-name = "owlready2"
-version = "0.46"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/61/38/95f5353f10e9d7a7c46574b739f8e4d77b2e81dd8e389afb15f741969541/owlready2-0.46.tar.gz", hash = "sha256:3c1b06dbe85df77dfa2de5a13ba1d11b4b8543c1c0ccdc5be252a81e3c0de55a", size = 27354377, upload-time = "2024-04-05T09:03:48.311Z" }
 
 [[package]]
 name = "packaging"

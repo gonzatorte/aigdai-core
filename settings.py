@@ -35,13 +35,13 @@ def _build_mongo_url() -> str:
 
 MONGO_URL = _build_mongo_url()
 
-JENA_BASE_PATH = os.environ.get('JENA_BASE_PATH', 'http://localhost:3030/')
-JENA_DATASET = os.environ.get('JENA_DATASET', 'aigdai')
+# Java runtime of the reasoners (HermiT and Jena run in the same JVM, through jpype). Jena 5 needs Java 17 or later;
+# the default is the JRE downloaded into reasoner/jre (see onto/README.md). The heap is shared by both reasoners.
+REASONER_JAVA_HOME = os.environ.get('REASONER_JAVA_HOME', 'reasoner/jre/jdk-21.0.12.1+1-jre')
+REASONER_HEAP = os.environ.get('REASONER_HEAP', '16g')
 
 FAIRSHARING_USERNAME = os.environ.get('FAIRSHARING_USERNAME', '')
 FAIRSHARING_PASSWORD = os.environ.get('FAIRSHARING_PASSWORD', '')
-
-JAVA_EXE_PATH = os.environ.get('JAVA_EXE_PATH', '/usr/bin/java')
 
 
 def require_fairsharing_credentials() -> tuple[str, str]:

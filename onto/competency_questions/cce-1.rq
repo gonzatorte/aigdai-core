@@ -1,3 +1,4 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX dai: <http://aigdai.tbox.owl/>
 PREFIX cri: <http://aigdai.criterios.owl/>
 
@@ -5,10 +6,13 @@ SELECT DISTINCT ?certificacion
 WHERE {
   VALUES ?repo { <http://aigdai.tbox.owl/repositorio/r3d100013353> }
   {
-    ?aplicacion dai:aplicacion_de_certificacion_a_repositorio_tiene_repositorio ?repo ;
+    # The records of the same repository are linked with owl:sameAs and the dataset has no equality reasoning
+    ?repo (owl:sameAs|^owl:sameAs)* ?registro .
+    ?aplicacion dai:aplicacion_de_certificacion_a_repositorio_tiene_repositorio ?registro ;
                 dai:aplicacion_de_certificacion_a_repositorio_tiene_certificacion ?certificacion .
   } UNION {
-    ?repo dai:repositorio_satisface_criterio ?enunciado .
+    ?repo (owl:sameAs|^owl:sameAs)* ?registro .
+    ?registro dai:repositorio_satisface_criterio ?enunciado .
     ?enunciado cri:considera_criterio* ?certificacion .
     FILTER NOT EXISTS { ?certificacion cri:considera_criterio ?otro }
   }

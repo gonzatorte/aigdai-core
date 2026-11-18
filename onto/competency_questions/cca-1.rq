@@ -1,8 +1,13 @@
 PREFIX dai: <http://aigdai.tbox.owl/>
 
-SELECT ?repo ?org_directa ?politica
+SELECT ?institucion ?repo ?org_directa ?politica
 WHERE {
-  VALUES ?institucion { <http://aigdai.tbox.owl/organizacion/ror_030bbe882> }
+  # NIH (ROR 01cwqze88), with institutes such as the National Cancer Institute; and the University of Göttingen
+  # (ROR 01y9bpm73), with its library (Universitätsbibliothek Göttingen). Udelar, the original example, is in no source.
+  VALUES ?institucion {
+    <http://aigdai.tbox.owl/organizacion/ror_01cwqze88>
+    <http://aigdai.tbox.owl/organizacion/ror_01y9bpm73>
+  }
   ?institucion dai:es_organizacion_antecesora* ?org_directa .
   ?org_directa dai:organizacion_esta_activa true .
   ?relacion dai:relacion_repositorio_y_organizacion_tiene_organizacion ?org_directa ;
@@ -11,4 +16,4 @@ WHERE {
   FILTER (!BOUND(?fin) || ?fin >= NOW())
   OPTIONAL { ?repo dai:repositorio_usa_politica ?politica }
 }
-ORDER BY ?repo
+ORDER BY ?institucion ?repo
